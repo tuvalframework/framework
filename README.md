@@ -34,3 +34,14 @@ Make sure docker is running before you start the installation.
 ```sh
 npx create-tuval
 ```
+You can also install TF libraries separately.
+
+### TF Core
+
+TF Core is available as an [npm package](https://www.npmjs.com/package/@tuval/core).
+
+**npm:**
+
+```sh
+npm install @tuval/core
+```
