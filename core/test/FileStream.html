@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="../dist_web/tuval-core.js"></script>
+</head>
+
+<body></body>
+<script>
+    debugger
+    with(Tuval) {
+        var memory = new WebAssembly.Memory({
+            initial: 100,
+            maximum: 100
+        })
+        updateGlobalBufferAndViews(memory.buffer)
+
+        const allocator = new Allocator(memory.buffer) // heap could also be an ArrayBuffer
+        console.log(allocator.inspect())
+        const input = 'Hello World'
+        const offset = allocator.alloc(20)
+        setValue(offset, 25, 'i8')
+        console.log(getValue(offset, 'i8'))
+        console.log(allocator.sizeOf(offset))
+        console.log('freed', allocator.free(offset), 'bytes')
+        const fs = new FileStream('C:\\test\\son\\myfile.ext', FileMode.Create, FileAccess.Write);
+        const array1 = Encoding.UTF8.GetBytes('😃 😄 😁 😆 😅 😂 🤣 ☺️ 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗 😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🤩 🥳 😏 😒 😞 😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨 😰 😥 😓 🤗 🤔 🤭 🤫 🤥 😶 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴 🤤 😪 😵 🤐 🥴 🤢 🤮 🤧 😷 🤒 🤕 🤑 🤠 😈 👿 👹 👺 🤡 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾');
+        fs.Write(array1, 0, array1.length);
+        fs.Flush();
+        fs.Close();
+
+        SystemEvents.OnFileSystemReady.add(() => {
+            /*  const fs1 = new FileStream('C:\\test\\son\\text.txt', FileMode.Open, FileAccess.Write);
+                  const sw = new StreamWriter(fs1);
+                  sw.WriteString('Yeni test için yazıldı.');
+                  sw.Flush();
+                  fs1.Close(); */
+
+            const fsRead1 = new FileStream('C:\\test\\son\\text.txt', FileMode.Open, FileAccess.Read)
+            const stat1 = FS.stat('C/test/son/text.txt')
+            const bufferRead1 = New.ByteArray(stat1.size)
+            fsRead1.Read(bufferRead1, 0, stat1.size)
+            console.log(Encoding.UTF8.GetString(bufferRead1))
+            fsRead1.Close()
+
+            console.log('file system ready')
+            const fsRead = new FileStream('C:\\test\\son\\myfile.ext', FileMode.Open, FileAccess.Read)
+            const stat = FS.stat('C/test/son/myfile.ext')
+            const bufferRead = New.ByteArray(stat.size)
+            fsRead.Read(bufferRead, 0, stat.size)
+            console.log(Encoding.UTF8.GetString(bufferRead))
+            fsRead.Close()
+        })
+
+        // FS.mount(IDBFS, {}, '/C');
+        /*  FS.mkdir('/data');
+           FS.mount(IDBFS, {}, '/data');
+           var data = new Uint8Array(32);
+           var stream = FS.open('dummy', 'w+');
+           FS.write(stream, data, 0, data.length, 0);
+           FS.close(stream); */
+        /*  try {
+              var stat = FS.stat('/C/test/myfile.ext');
+              Console.WriteLine(stat);
+          } catch (e) {
+              const fs = new FileStream('C:\\test\\son\\myfile.ext', FileMode.Create, FileAccess.Write);
+              const array1 = Encoding.UTF8.GetBytes('😃 😄 😁 😆 😅 😂 🤣 ☺️ 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗 😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🤩 🥳 😏 😒 😞 😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨 😰 😥 😓 🤗 🤔 🤭 🤫 🤥 😶 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴 🤤 😪 😵 🤐 🥴 🤢 🤮 🤧 😷 🤒 🤕 🤑 🤠 😈 👿 👹 👺 🤡 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾');
+              fs.Write(array1, 0, array1.length);
+              fs.Flush();
+              fs.Close();
+          } */
+    }
+
+    /*   const fsRead = new FileStream('C:\\test\\myfile.ext', FileMode.Open,FileAccess.Read);
+      const stat = FS.stat('C/test/myfile.ext');
+      const bufferRead = New.ByteArray(stat.size);
+      fsRead.Read(bufferRead, 0, stat.size);
+      console.log(Encoding.UTF8.GetString(bufferRead));
+      fsRead.Close(); */
+</script>
+
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="../dist/tuval-core.js"></script>
+  </head>
+
+  <body></body>
+  <script>
+    debugger
+    with (Tuval) {
+      for (let i = 0; i < 100; i++) {
+        const p = new POINT()
+        p.X = i
+        p.Y = i * 100
+        //console.log('POINT: Pointer -> ' + p.pointer + ' X: ' + p.X + ', Y: ' + p.Y);
+        //p.Dispose();
+
+        const rect = new RECT()
+        rect.X = 10 * i
+        rect.Y = i / 3
+        rect.Width = 210
+        rect.Height = 130
+
+        console.log(
+          'RECT: Pointer -> ' +
+            rect.pointer +
+            ' X: ' +
+            rect.X +
+            ', Y: ' +
+            rect.Y +
+            ' Width: ' +
+            rect.Width +
+            ', Height: ' +
+            rect.Height
+        )
+      }
+      const m = new MINMAXINFO()
+      m.test = 45
+      m.ptReserved.X = 123
+      m.ptReserved.Y = 13
+      m.test2 = 90
+      m.test3 = '😃s😃dsfsğğşşÜİd😄d😁😆😅😂🤣😂🤣dsff'
+      m.test4 = '😃dsd😁😆😅😂🤣😂'
+      m.test5 = '😃'
+
+      m.ptMaxSize.X = 153
+      m.ptMaxSize.Y = 193
+      console.log(m.test3)
+      console.log(m.ptMaxSize)
+      console.log(m)
+      m.Dispose()
+
+      const winpos = new WINDOWPOS()
+      winpos.hwnd = 1235
+      console.log(winpos)
+
+      const pointer = Marshal.AllocHGlobal(1)
+      console.log(pointer)
+      console.log(Marshal.ReadByte(pointer, 0))
+      Marshal.WriteByte(pointer, 0, 100)
+      console.log(Marshal.ReadByte(pointer, 0))
+      Marshal.FreeHGlobal(pointer)
+
+      // Allocate unmanaged memory.
+      const elementSize = 4
+      const unmanagedArray = Marshal.AllocHGlobal(10 * elementSize)
+
+      // Set the 10 elements of the C-style unmanagedArray
+      for (let i = 0; i < 10; i++) {
+        Marshal.WriteInt32(unmanagedArray, i * elementSize, i + 1)
+      }
+      Console.WriteLine('Unmanaged memory written.')
+
+      Console.WriteLine('Reading unmanaged memory:')
+      // Print the 10 elements of the C-style unmanagedArray
+      for (let i = 0; i < 10; i++) {
+        Console.WriteLine(Marshal.ReadInt32(unmanagedArray, i * elementSize))
+      }
+
+      Marshal.FreeHGlobal(unmanagedArray)
+
+      Console.WriteLine('Done. Press Enter to continue.')
+
+      // Create a point struct.
+      const p = new POINT()
+      p.X = 1
+      p.Y = 1
+
+      Console.WriteLine('The value of first point is ' + p.X + ' and ' + p.Y + '.')
+
+      // Initialize unmanged memory to hold the struct.
+      const pnt = Marshal.AllocHGlobal(Marshal.SizeOf(p))
+
+      try {
+        // Copy the struct to unmanaged memory.
+        Marshal.StructureToPtr(p, pnt)
+        p.X = 90
+        p.Y = 45
+        Console.WriteLine('The value of new point is ' + p.X + ' and ' + p.Y + '.')
+
+        // Create another point.
+        let anotherP
+
+        // Set this Point to the value of the
+        // Point in unmanaged memory.
+        anotherP = Marshal.PtrToStructure(pnt, type(System.Types.UMP.POINT))
+
+        Console.WriteLine('The value of new point is ' + anotherP.X + ' and ' + anotherP.Y + '.');
+        Console.WriteLine('The value of new point is ' + p.X + ' and ' + p.Y + '.');
+      } finally {
+        // Free the unmanaged memory.
+        Marshal.FreeHGlobal(pnt)
+      }
+      const rect = new RECT_();
+        rect.top.X = 10;
+        rect.Width = 100;
+        rect.name = '😁😆😅😂🤣';
+        rect.minmaxinfo.test = 90;
+        rect.minmaxinfo.test3 = 'sdfsdfds';
+        Console.WriteLine('The value of new point is ' +  rect.top.X + ' and ' + rect.Width +  ' , ' + rect.name + ' .' );
+        //console.log(rect.minmaxinfo);
+        Console.WriteLine('Min max info ' +  rect.minmaxinfo.test + ' and ' + rect.minmaxinfo.test3);
+        const rect_ptr = Marshal.AllocHGlobal(Marshal.SizeOf(rect));
+        try {
+        // Copy the struct to unmanaged memory.
+        Marshal.StructureToPtr(rect, rect_ptr)
+        rect.top.X = 21;
+        rect.Width = 600;
+        rect.name = 'test';
+        rect.minmaxinfo.test = 45;
+        rect.minmaxinfo.test3 = 'sdf😅sdfds';
+        Console.WriteLine('The value of new point is ' +  rect.top.X + ' and ' + rect.Width +  ' , ' + rect.name + ' .' );
+        Console.WriteLine('Min max info ' +  rect.minmaxinfo.test + ' and ' + rect.minmaxinfo.test3);
+        // Create another point.
+        let anotherRect
+
+        // Set this Point to the value of the
+        // Point in unmanaged memory.
+        anotherRect = Marshal.PtrToStructure(rect_ptr, type(System.Types.UMP.RECT))
+
+        Console.WriteLine('The value of new point is ' +  anotherRect.top.X + ' and ' + anotherRect.Width +  ' , ' + anotherRect.name + ' .' );
+        Console.WriteLine('The value of new point is ' +  rect.top.X + ' and ' + rect.Width +  ' , ' + rect.name + ' .' );
+        Console.WriteLine('Min max info ' +  anotherRect.minmaxinfo.test + ' and ' + anotherRect.minmaxinfo.test3);
+      } finally {
+        // Free the unmanaged memory.
+        Marshal.FreeHGlobal(pnt)
+      }
+    }
+
+    /*   const fsRead = new FileStream('C:\\test\\myfile.ext', FileMode.Open,FileAccess.Read);
+      const stat = FS.stat('C/test/myfile.ext');
+      const bufferRead = New.ByteArray(stat.size);
+      fsRead.Read(bufferRead, 0, stat.size);
+      console.log(Encoding.UTF8.GetString(bufferRead));
+      fsRead.Close(); */
+  </script>
+</html>

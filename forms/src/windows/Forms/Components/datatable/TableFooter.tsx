@@ -1,0 +1,33 @@
+import { Teact } from "../Teact";
+import React from '../../../../preact/compat';
+import { FooterCell } from './FooterCell';
+
+export class TableFooter extends React.Component {
+
+    createFooterCells(root, column?, i?) {
+        let children = React.Children.toArray(root.props.children);
+
+        return React.Children.map(children, (column,i) => {
+            return <FooterCell key={i} {...column.props} />;
+        });
+    }
+
+    render() {
+        let content;
+        if(this.props.columnGroup) {
+            let rows = React.Children.toArray(this.props.columnGroup.props.children);
+            content = rows.map((row, i) => {
+                return <tr key={i} role="row">{this.createFooterCells(row)}</tr>;
+            });
+        }
+        else {
+            content = <tr role="row">{this.createFooterCells(this)}</tr>;
+        }
+
+        return (
+            <tfoot className="p-datatable-tfoot">
+                {content}
+            </tfoot>
+        );
+    }
+}

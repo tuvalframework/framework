@@ -1,0 +1,7 @@
+import { char } from "./float";
+
+const buffer: Int16Array = new Int16Array(1);
+export function toChar(value: number): char {
+    buffer[0] = value;
+    return buffer[0];
+}

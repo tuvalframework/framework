@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="../dist_web/tuval-core.js"></script>
+  </head>
+
+  <body></body>
+  <script>
+    with (Tuval) {
+      Console.Write(sprintf('%-20s %-30s %-20s', 'ADI','SOYADI', 'YASI'));
+      Console.Write(sprintf('%-20s %-30s %-20s', '__________________','_______________________', '____________'));
+    Console.Write(sprintf('%-20s %-30s %-40d', 'Hans','Mayer', 45));
+    Console.Write(sprintf('%-20s %-30s %-40d', 'George','Mürş', 35));
+      Console.Write(
+        vsprintf('The first 4 letters of the english alphabet are: %s, %s, %s and %s', [
+          'a',
+          'b',
+          'c',
+          'd'
+        ])
+      );
+    }
+  </script>
+</html>

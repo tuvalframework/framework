@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="../dist_web/tuval-core.js"></script>
+</head>
+
+<body></body>
+<script>
+    with(Tuval) {
+        // Creates and initializes a CultureInfo.
+        Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo('tr-TR');
+        const provider = CultureInfo.InvariantCulture;
+        var result = DateTime.ParseExact("25.3.10 17:09", "d.M.yy H:mm", provider);
+        console.log(result);
+        /*   const dt = new DateTime(2017,06,19);
+                const format =  new CultureInfo("tr-TR").DateTimeFormat.ShortDatePattern;
+                Console.WriteLine(dt.ToString(format)); */
+
+    }
+</script>
+
+</html>

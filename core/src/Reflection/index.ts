@@ -1,0 +1,12 @@
+export * from './PrimitiveTypes_/VoidType';
+export * from './PrimitiveTypes_/StringType';
+export * from './PrimitiveTypes_/PrimitiveTypes';
+export * from './PrimitiveTypes_/NumberType';
+export * from './PrimitiveTypes_/BooleanType';
+export * from './PrimitiveTypes_/ArrayType';
+export * from './Type';
+export * from './TypeInfo';
+export { ClassInfo, sealed, Override, Virtual, Internal, typeOf, Package } from './Decorators/ClassInfo';
+export * from './Decorators/Class';
+export * from './Assembly';
+export * from './Reflect';

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Drawing A Point</title>
+    <script src="../dist/tuval-core.js"></script>
+</head>
+
+<body>
+    <iframe id = 'myFrame'></iframe>
+    <button onclick="setFrame()">Test</button>
+
+    <script>
+        console.log(Tuval.Guid.NewGuid());
+          function setFrame() {
+            const iframe = document.getElementById('myFrame');
+            iframe.src = './frame.html';
+    }
+        function iframeRef( frameRef ) {
+            return frameRef.contentWindow;
+        }
+        const iframe = document.getElementById('myFrame');
+        iframe.onload = function() {
+    // just do anything
+        const tuv = iframe.contentWindow.Tuval;
+        const Arac = new tuv.Dictionary();
+        for(let i = 0;i< 10000; i++) {
+            Arac.add(`${i} KD 234`, "Alfa Romeo");
+        }
+        console.log('-------------------------');
+        console.log(Arac);
+
+  };
+
+
+
+
+        const Arac = new Tuval.Dictionary();
+        for(let i = 0;i< 10000; i++) {
+            Arac.add(`${i} KD 234`, "Alfa Romeo");
+        }
+
+        Arac.add(`23 KDD 234`, "Alfa Romeo");
+        if (Arac.containsKey('45 KKD 234')) {
+            console.log('var');
+        }  else {
+            console.log('yok');
+        }
+      /*   Arac.add("41 ABC 123", "Alfa Romeo");
+        Arac.add("56 ABC 456", "Audi");
+        Arac.add("25 ABC 789", "Mercedes-Benz"); */
+        const Plaka = '56 ABC 456';
+        // Arac.remove("41 ABC 123");
+             Tuval.foreach(Arac.Keys, (key) =>{
+            //console.log(key);
+        } );
+
+        const list = new Tuval.List();
+        list.add(10);
+        list.add(20);
+        list.add(30);
+        const l = list
+        .where(item => item > 15)
+        .select(item => {
+            return {
+                num: item
+            };
+        });
+        console.log(l);
+    </script>
+</body>
+
+</html>

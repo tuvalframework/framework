@@ -1,0 +1,116 @@
+{
+    "name": "@tuval/graphics",
+    "version": "0.0.10",
+    "description": "",
+    "keywords": [],
+    "main": "index.js",
+    "module": "index.js",
+    "typings": "index.d.ts",
+    "files": [
+        "index.js",
+        "index.d.ts"
+    ],
+    "author": "tuvalframework <tuvalframework@gmail.com>",
+    "repository": {
+        "type": "git",
+        "url": ""
+    },
+    "license": "MIT",
+    "engines": {
+        "node": ">=6.0.0"
+    },
+    "scripts": {
+        "patch": "node publish.js",
+        "build": "node shell.js",
+        "buildprod": "webpack --config webpack.prod.config.js",
+        "buildweb": "webpack --config webwebpack.config.js",
+        "wpbuild": "webpack --config wpwebpack.config.js",
+        "buildwp": "node shell_wp.js",
+        "lint": "tslint  --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
+        "prebuild": "rimraf dist",
+        "b": "tsc --module commonjs && rollup -c rollup.config.ts",
+        "_build": "webpack && tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
+        "wbuild": "webpack",
+        "prodbuild": "webpack --config webpack.prod.config.js",
+        "rbuild": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
+        "web": "",
+        "start": "rollup -c rollup.config.ts -w",
+        "test": "jest --coverage",
+        "test:watch": "jest --coverage --watch",
+        "test:prod": "npm run lint && npm run test -- --no-cache",
+        "deploy-docs": "ts-node tools/gh-pages-publish",
+        "report-coverage": "cat ./coverage/lcov.info | coveralls",
+        "commit": "git-cz",
+        "semantic-release": "semantic-release",
+        "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
+        "precommit": "lint-staged",
+        "travis-deploy-once": "travis-deploy-once",
+        "uglify": "uglifyjs ./dist/tuval-graphics.js  -o ./dist/tuval-graphics.min.js -c -m",
+        "build:doc": "typedoc --out docs --target es6 --theme minimal --mode file src --ignoreCompilerErrors",
+        "asbuild:untouched": "asc assembly/index.ts -b assembly/untouched.tvl -t assembly/untouched.wat --validate --sourceMap --debug",
+        "asbuild:optimized": "asc assembly/index.ts -b assembly/optimized.tvl -t assembly/optimized.wat --validate --sourceMap --optimize",
+        "asbuild": "npm run asbuild:untouched && npm run asbuild:optimized"
+    },
+    "lint-staged": {
+        "{src,test}/**/*.ts": [
+            "prettier --write",
+            "git add"
+        ]
+    },
+    "config": {
+        "commitizen": {
+            "path": "node_modules/cz-conventional-changelog"
+        }
+    },
+    "jest": {
+        "transform": {
+            ".(ts|tsx)": "ts-jest"
+        },
+        "testEnvironment": "node",
+        "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+        "moduleFileExtensions": [
+            "ts",
+            "tsx",
+            "js"
+        ],
+        "coveragePathIgnorePatterns": [
+            "/node_modules/",
+            "/test/"
+        ],
+        "coverageThreshold": {
+            "global": {
+                "branches": 90,
+                "functions": 95,
+                "lines": 95,
+                "statements": 95
+            }
+        },
+        "collectCoverageFrom": [
+            "src/*.{js,ts}"
+        ]
+    },
+    "prettier": {
+        "semi": false,
+        "singleQuote": true
+    },
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-conventional"
+        ]
+    },
+    "devDependencies": {
+        "binary-loader": "^0.0.1",
+        "css-loader": "^6.3.0",
+        "declaration-bundler-webpack-plugin": "^1.0.3",
+        "dts-bundle": "^0.7.3",
+        "ifdef-loader": "^2.3.0",
+        "rimraf": "^3.0.2",
+        "shelljs": "^0.8.4",
+        "to-string-loader": "^1.1.6",
+        "ts-loader": "^9.2.6",
+        "typescript": "^4.4.3",
+        "url-loader": "^4.1.1",
+        "webpack": "^5.57.0",
+        "webpack-cli": "^4.8.0"
+    }
+}

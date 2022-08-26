@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="./settings.js"></script>
+    <script src="../dist_web/tuval-core.js"></script>
+    <title>AES</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="-1">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0,viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="apple-touch-icon" sizes="57x57" href="resources/appicon/icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="resources/appicon/icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="resources/appicon/icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="resources/appicon/icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="resources/appicon/icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="resources/appicon/icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="resources/appicon/icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="resources/appicon/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="resources/appicon/icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="resources/appicon/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="resources/appicon/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="resources/appicon/icon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="resources/appicon/icon-16x16.png">
+    <link rel="manifest" href="resources/appicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="resources/appicon/icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <style type="text/css">
+        #output {
+            width: 100%;
+            height: 200px;
+            margin: 0 auto;
+            margin-top: 10px;
+            border-left: 0px;
+            border-right: 0px;
+            padding-left: 0px;
+            padding-right: 0px;
+            display: block;
+            background-color: black;
+            color: white;
+            font-family: 'Lucida Console', Monaco, monospace;
+            outline: none;
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000000;
+            font-family: Roboto, IBM Plex Mono, sans-serif;
+        }
+    </style>
+</head>
+
+<body></body>
+<script>
+    with (Tuval) {
+        const tvc = new TextConsole();
+        const ascii = new ASCIIEncoding();
+
+        // A Unicode string with two characters outside the ASCII code range.
+        const unicodeString =
+            "This Unicode string contains two characters " +
+            "with codes outside the ASCII code range, " +
+            "Pi (\u03a0) and Sigma (\u03a3).";
+        tvc.WriteLine("Original string:");
+        tvc.WriteLine(unicodeString);
+
+        // Save positions of the special characters for later reference.
+        const indexOfPi = unicodeString.indexOf('\u03a0');
+        const indexOfSigma = unicodeString.indexOf('\u03a3');
+
+        const encodedBytes = ascii.GetBytes(unicodeString);
+        tvc.WriteLine();
+        tvc.WriteLine("Encoded bytes:");
+        tvc.WriteHex(encodedBytes);
+        tvc.WriteLine();
+
+        // Notice that the special characters have been replaced with
+        // the value 63, which is the ASCII character code for '?'.
+        tvc.WriteLine();
+        tvc.WriteLine(
+            "Value at position of Pi character: {0}",
+            encodedBytes[indexOfPi]
+        );
+        tvc.WriteLine(
+            "Value at position of Sigma character: {0}",
+            encodedBytes[indexOfSigma]
+        );
+
+        // Decode bytes back to string.
+        // Notice missing Pi and Sigma characters.
+        const decodedString = ascii.GetString(encodedBytes);
+        tvc.WriteLine();
+        tvc.WriteLine("Decoded bytes:");
+        tvc.WriteLine(decodedString);
+
+        console.log(Tuval.axios);
+        Tuval.HttpClient.Post('http://127.0.0.1:5000/organizations', { name: 'heyy' }, {
+            headers: {
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0QGJwbWdlbmVzaXMuY29tIiwiZXhwIjoxNjM4NzAwOTU0fQ.CSFWd-JPC1fn-KUwXi-Py-ZProZKjRuDgu4TeyNZXN8'
+            }
+        }).then(response => console.log(response));
+    }
+</script>
+
+</html>

@@ -1,0 +1,34 @@
+
+indexOfAny = function( source /*String*/ , anyOf /*Array*/ , startIndex /*uint*/ , count /*int*/ ) /*int*/
+{
+    startIndex = isNaN(startIndex) ? 0 : startIndex ;
+    if ( startIndex < 0 )
+    {
+        startIndex = 0 ;
+    }
+
+    count = isNaN(count) ? -1 : ( ( count >= 0 ) ? count : -1 ) ;
+
+    if( anyOf != null && source != null && source != "" )
+    {
+        var i /*int*/ ;
+        var l /*int*/ = anyOf.length ;
+        var endIndex /*int*/ ;
+        if( ( count < 0 ) || ( count > l - startIndex ) )
+        {
+            endIndex = l - 1;
+        }
+        else
+        {
+            endIndex = startIndex + count - 1;
+        }
+        for( i = startIndex ; i <= endIndex ; i++ )
+        {
+            if( source.indexOf( anyOf[i] ) > - 1 )
+            {
+                return i ;
+            }
+        }
+    }
+    return - 1 ;
+};

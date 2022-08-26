@@ -1,0 +1,98 @@
+.p-dropdown {
+    display: -moz-inline-box;
+    display: inline-flex;
+    cursor: pointer;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+.p-dropdown-clear-icon {
+    position: absolute;
+    top: 50%;
+    margin-top: -.5rem
+}
+
+.p-dropdown-trigger {
+    display: -moz-box;
+    display: flex;
+    -moz-box-align: center;
+    align-items: center;
+    -moz-box-pack: center;
+    justify-content: center;
+    flex-shrink: 0
+}
+
+.p-dropdown-label {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    -moz-box-flex: 1;
+    flex: 1 1 auto;
+    width: 1%;
+    text-overflow: ellipsis;
+    cursor: pointer
+}
+
+.p-dropdown-label-empty {
+    overflow: hidden;
+    visibility: hidden
+}
+
+input.p-dropdown-label {
+    cursor: default
+}
+
+.p-dropdown .p-dropdown-panel {
+    min-width: 100%
+}
+
+.p-dropdown-panel {
+    position: absolute;
+    top: 0;
+    left: 0
+}
+
+.p-dropdown-items-wrapper {
+    overflow: auto
+}
+
+.p-dropdown-item {
+    cursor: pointer;
+    font-weight: 400;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden
+}
+
+.p-dropdown-items {
+    margin: 0;
+    padding: 0;
+    list-style-type: none
+}
+
+.p-dropdown-filter {
+    width: 100%
+}
+
+.p-dropdown-filter-container {
+    position: relative
+}
+
+.p-dropdown-filter-clear-icon,
+.p-dropdown-filter-icon {
+    position: absolute;
+    top: 50%;
+    margin-top: -.5rem
+}
+
+.p-fluid .p-dropdown {
+    display: -moz-box;
+    display: flex
+}
+
+.p-fluid .p-dropdown .p-dropdown-label {
+    width: 1%
+}

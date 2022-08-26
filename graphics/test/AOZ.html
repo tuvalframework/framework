@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="../dist_web/tuval-graphics.js"></script>
+    <style>
+        <title>My AOZ Application</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta http-equiv="cache-control" content="no-cache" /><meta http-equiv="pragma" content="no-cache"><meta http-equiv="expires" content="-1"><meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes" /><meta name="apple-mobile-web-app-status-bar-style" content="black" /><link rel="apple-touch-icon" sizes="57x57" href="resources/appicon/icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="resources/appicon/icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="resources/appicon/icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="resources/appicon/icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="resources/appicon/icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="resources/appicon/icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="resources/appicon/icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="resources/appicon/icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="resources/appicon/icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="resources/appicon/icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="resources/appicon/icon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="resources/appicon/icon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="resources/appicon/icon-16x16.png"><link rel="manifest" href="resources/appicon/manifest.json"><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="resources/appicon/icon-144x144.png"><meta name="theme-color" content="#ffffff"><style type="text/css">
+        /* roboto-100 - latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext */
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 100;
+            src: local('Roboto Thin'), local('Roboto-Thin'), url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-100.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+            url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-100.woff') format('woff');
+            /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+        }
+        /* roboto-100italic - latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext */
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 100;
+            src: local('Roboto Thin Italic'), local('Roboto-ThinItalic'), url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-100italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+            url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-100italic.woff') format('woff');
+            /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+        }
+        /* roboto-300 - latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext */
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 300;
+            src: local('Roboto Light'), local('Roboto-Light'), url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-300.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+            url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-300.woff') format('woff');
+            /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+        }
+        /* roboto-300italic - latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext */
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 300;
+            src: local('Roboto Light Italic'), local('Roboto-LightItalic'), url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-300italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+            url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-300italic.woff') format('woff');
+            /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+        }
+        /* roboto-regular - latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext */
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Roboto'), local('Roboto-Regular'), url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+            url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-regular.woff') format('woff');
+            /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+        }
+        /* roboto-500 - latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext */
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 500;
+            src: local('Roboto Medium'), local('Roboto-Medium'), url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-500.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+            url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-500.woff') format('woff');
+            /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+        }
+        /* roboto-500italic - latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext */
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 500;
+            src: local('Roboto Medium Italic'), local('Roboto-MediumItalic'), url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-500italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+            url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-500italic.woff') format('woff');
+            /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+        }
+        /* roboto-italic - latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext */
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 400;
+            src: local('Roboto Italic'), local('Roboto-Italic'), url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+            url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-italic.woff') format('woff');
+            /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+        }
+        /* roboto-700italic - latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext */
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 700;
+            src: local('Roboto Bold Italic'), local('Roboto-BoldItalic'), url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-700italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+            url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-700italic.woff') format('woff');
+            /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+        }
+        /* roboto-900 - latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext */
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 900;
+            src: local('Roboto Black'), local('Roboto-Black'), url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-900.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+            url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-900.woff') format('woff');
+            /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+        }
+        /* roboto-700 - latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext */
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 700;
+            src: local('Roboto Bold'), local('Roboto-Bold'), url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+            url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-700.woff') format('woff');
+            /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+        }
+        /* roboto-900italic - latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext */
+
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 900;
+            src: local('Roboto Black Italic'), local('Roboto-BlackItalic'), url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-900italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+            url('./resources/fonts/google/roboto-v20-latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext-900italic.woff') format('woff');
+            /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+        }
+        /* ibm-plex-mono-100 - latin-ext_cyrillic_latin_cyrillic-ext */
+
+        @font-face {
+            font-family: 'IBM Plex Mono';
+            font-style: normal;
+            font-weight: 100;
+            src: url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-100.eot');
+            /* IE9 Compat Modes */
+            src: local('IBM Plex Mono Thin'), local('IBMPlexMono-Thin'), url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-100.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-100.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-100.woff') format('woff'), /* Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-100.ttf') format('truetype'), /* Safari, Android, iOS */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-100.svg#IBMPlexMono') format('svg');
+            /* Legacy iOS */
+        }
+        /* ibm-plex-mono-100italic - latin-ext_cyrillic_latin_cyrillic-ext */
+
+        @font-face {
+            font-family: 'IBM Plex Mono';
+            font-style: italic;
+            font-weight: 100;
+            src: url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-100italic.eot');
+            /* IE9 Compat Modes */
+            src: local('IBM Plex Mono Thin Italic'), local('IBMPlexMono-ThinItalic'), url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-100italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-100italic.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-100italic.woff') format('woff'), /* Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-100italic.ttf') format('truetype'), /* Safari, Android, iOS */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-100italic.svg#IBMPlexMono') format('svg');
+            /* Legacy iOS */
+        }
+        /* ibm-plex-mono-200 - latin-ext_cyrillic_latin_cyrillic-ext */
+
+        @font-face {
+            font-family: 'IBM Plex Mono';
+            font-style: normal;
+            font-weight: 200;
+            src: url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-200.eot');
+            /* IE9 Compat Modes */
+            src: local('IBM Plex Mono ExtraLight'), local('IBMPlexMono-ExtraLight'), url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-200.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-200.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-200.woff') format('woff'), /* Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-200.ttf') format('truetype'), /* Safari, Android, iOS */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-200.svg#IBMPlexMono') format('svg');
+            /* Legacy iOS */
+        }
+        /* ibm-plex-mono-200italic - latin-ext_cyrillic_latin_cyrillic-ext */
+
+        @font-face {
+            font-family: 'IBM Plex Mono';
+            font-style: italic;
+            font-weight: 200;
+            src: url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-200italic.eot');
+            /* IE9 Compat Modes */
+            src: local('IBM Plex Mono ExtraLight Italic'), local('IBMPlexMono-ExtraLightItalic'), url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-200italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-200italic.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-200italic.woff') format('woff'), /* Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-200italic.ttf') format('truetype'), /* Safari, Android, iOS */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-200italic.svg#IBMPlexMono') format('svg');
+            /* Legacy iOS */
+        }
+        /* ibm-plex-mono-300 - latin-ext_cyrillic_latin_cyrillic-ext */
+
+        @font-face {
+            font-family: 'IBM Plex Mono';
+            font-style: normal;
+            font-weight: 300;
+            src: url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-300.eot');
+            /* IE9 Compat Modes */
+            src: local('IBM Plex Mono Light'), local('IBMPlexMono-Light'), url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-300.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-300.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-300.woff') format('woff'), /* Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-300.ttf') format('truetype'), /* Safari, Android, iOS */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-300.svg#IBMPlexMono') format('svg');
+            /* Legacy iOS */
+        }
+        /* ibm-plex-mono-300italic - latin-ext_cyrillic_latin_cyrillic-ext */
+
+        @font-face {
+            font-family: 'IBM Plex Mono';
+            font-style: italic;
+            font-weight: 300;
+            src: url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-300italic.eot');
+            /* IE9 Compat Modes */
+            src: local('IBM Plex Mono Light Italic'), local('IBMPlexMono-LightItalic'), url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-300italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-300italic.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-300italic.woff') format('woff'), /* Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-300italic.ttf') format('truetype'), /* Safari, Android, iOS */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-300italic.svg#IBMPlexMono') format('svg');
+            /* Legacy iOS */
+        }
+        /* ibm-plex-mono-regular - latin-ext_cyrillic_latin_cyrillic-ext */
+
+        @font-face {
+            font-family: 'IBM Plex Mono';
+            font-style: normal;
+            font-weight: 400;
+            src: url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-regular.eot');
+            /* IE9 Compat Modes */
+            src: local('IBM Plex Mono'), local('IBMPlexMono'), url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-regular.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-regular.woff') format('woff'), /* Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-regular.svg#IBMPlexMono') format('svg');
+            /* Legacy iOS */
+        }
+        /* ibm-plex-mono-italic - latin-ext_cyrillic_latin_cyrillic-ext */
+
+        @font-face {
+            font-family: 'IBM Plex Mono';
+            font-style: italic;
+            font-weight: 400;
+            src: url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-italic.eot');
+            /* IE9 Compat Modes */
+            src: local('IBM Plex Mono Italic'), local('IBMPlexMono-Italic'), url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-italic.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-italic.woff') format('woff'), /* Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-italic.ttf') format('truetype'), /* Safari, Android, iOS */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-italic.svg#IBMPlexMono') format('svg');
+            /* Legacy iOS */
+        }
+        /* ibm-plex-mono-500 - latin-ext_cyrillic_latin_cyrillic-ext */
+
+        @font-face {
+            font-family: 'IBM Plex Mono';
+            font-style: normal;
+            font-weight: 500;
+            src: url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-500.eot');
+            /* IE9 Compat Modes */
+            src: local('IBM Plex Mono Medium'), local('IBMPlexMono-Medium'), url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-500.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-500.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-500.woff') format('woff'), /* Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-500.ttf') format('truetype'), /* Safari, Android, iOS */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-500.svg#IBMPlexMono') format('svg');
+            /* Legacy iOS */
+        }
+        /* ibm-plex-mono-500italic - latin-ext_cyrillic_latin_cyrillic-ext */
+
+        @font-face {
+            font-family: 'IBM Plex Mono';
+            font-style: italic;
+            font-weight: 500;
+            src: url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-500italic.eot');
+            /* IE9 Compat Modes */
+            src: local('IBM Plex Mono Medium Italic'), local('IBMPlexMono-MediumItalic'), url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-500italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-500italic.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-500italic.woff') format('woff'), /* Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-500italic.ttf') format('truetype'), /* Safari, Android, iOS */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-500italic.svg#IBMPlexMono') format('svg');
+            /* Legacy iOS */
+        }
+        /* ibm-plex-mono-600 - latin-ext_cyrillic_latin_cyrillic-ext */
+
+        @font-face {
+            font-family: 'IBM Plex Mono';
+            font-style: normal;
+            font-weight: 600;
+            src: url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-600.eot');
+            /* IE9 Compat Modes */
+            src: local('IBM Plex Mono SemiBold'), local('IBMPlexMono-SemiBold'), url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-600.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-600.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-600.woff') format('woff'), /* Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-600.ttf') format('truetype'), /* Safari, Android, iOS */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-600.svg#IBMPlexMono') format('svg');
+            /* Legacy iOS */
+        }
+        /* ibm-plex-mono-700 - latin-ext_cyrillic_latin_cyrillic-ext */
+
+        @font-face {
+            font-family: 'IBM Plex Mono';
+            font-style: normal;
+            font-weight: 700;
+            src: url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-700.eot');
+            /* IE9 Compat Modes */
+            src: local('IBM Plex Mono Bold'), local('IBMPlexMono-Bold'), url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-700.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-700.woff') format('woff'), /* Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-700.ttf') format('truetype'), /* Safari, Android, iOS */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-700.svg#IBMPlexMono') format('svg');
+            /* Legacy iOS */
+        }
+        /* ibm-plex-mono-600italic - latin-ext_cyrillic_latin_cyrillic-ext */
+
+        @font-face {
+            font-family: 'IBM Plex Mono';
+            font-style: italic;
+            font-weight: 600;
+            src: url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-600italic.eot');
+            /* IE9 Compat Modes */
+            src: local('IBM Plex Mono SemiBold Italic'), local('IBMPlexMono-SemiBoldItalic'), url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-600italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-600italic.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-600italic.woff') format('woff'), /* Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-600italic.ttf') format('truetype'), /* Safari, Android, iOS */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-600italic.svg#IBMPlexMono') format('svg');
+            /* Legacy iOS */
+        }
+        /* ibm-plex-mono-700italic - latin-ext_cyrillic_latin_cyrillic-ext */
+
+        @font-face {
+            font-family: 'IBM Plex Mono';
+            font-style: italic;
+            font-weight: 700;
+            src: url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-700italic.eot');
+            /* IE9 Compat Modes */
+            src: local('IBM Plex Mono Bold Italic'), local('IBMPlexMono-BoldItalic'), url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-700italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-700italic.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-700italic.woff') format('woff'), /* Modern Browsers */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-700italic.ttf') format('truetype'), /* Safari, Android, iOS */
+            url('./resources/fonts/google/ibm-plex-mono-v5-latin-ext_cyrillic_latin_cyrillic-ext-700italic.svg#IBMPlexMono') format('svg');
+            /* Legacy iOS */
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000000;
+            font-family: Roboto|IBM Plex Mono, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id='myCanvas'></canvas>
+</body>
+<script>
+    with(Tuval) {
+
+        const consoleQueue = new Queue();
+
+
+        function v1_0_textwindows(aoz, args) {
+            this.aoz = aoz;
+            this.parent = this;
+            this.root = this;
+            this.manifest = JSON.parse(atob('eyJ2ZXJzaW9uIjoiOSIsInZlcnNpb25Nb2R1bGUiOiIxIiwiaW5mb3MiOnsiYXBwbGljYXRpb25OYW1lIjoiVGhlIFRleHQgV2luZG93IEluc3RydWN0aW9ucyIsImF1dGhvciI6IkJ5IEZyYW5jb2lzIExpb25ldCIsInZlcnNpb24iOiJWZXJzaW9uIDAuOTkiLCJkYXRlIjoiMTEvMTEvMjAxOSIsImNvcHlyaWdodCI6IihjKSBBT1ogU3R1ZGlvIDIwMTkiLCJzdGFydCI6InRleHR3aW5kb3dzLmFveiIsIm5hbWUiOiJ0ZXh0d2luZG93cyJ9LCJjb21waWxhdGlvbiI6eyJub1dhcm5pbmciOlsiaW5zdHJ1Y3Rpb25fbm90X2ltcGxlbWVudGVkIl0sImVycm9ycyI6eyJlbiI6W10sImZyIjpbXX0sImRpc3BsYXlFbmRBbGVydCI6ZmFsc2UsImRpc3BsYXlFcnJvckFsZXJ0Ijp0cnVlfSwiYm9vdFNjcmVlbiI6eyJhY3RpdmUiOmZhbHNlLCJ3YWl0U291bmRzIjpmYWxzZSwiY2xpY2tTb3VuZHMiOmZhbHNlfSwiZXJyb3JzIjp7fX0='));
+            this.vars = typeof args == 'undefined' ? {} : args;
+            this.contextName = 'v1_0_textwindows';
+            this.aoz["module" + "Textwindows"] = this;
+            this.aoz.finalWait++;
+
+
+            this.blocks = [];
+            this.blocks[0] = function(aoz, args) {
+                aoz.sourcePos = "0:40:0";
+                // Javascript
+                this.aoz.moduleTextWindows = this;
+                this.readText = function(args) {
+                    var self = this;
+                    this.read_done = false;
+                    var address = args[1];
+                    var length = args[2];
+                    if (typeof address == 'undefined') {
+                        var descriptor = this.aoz.filesystem.getFile(args[0]);
+                        this.aoz.filesystem.loadFile(descriptor, {
+                            responseType: 'text'
+                        }, function(response, text, extra) {
+                            if (response) {
+                                var reader = new TextReader(this.aoz, descriptor.filename, text, {}, function(response, data, extra) {
+                                    self.read_done = true;
+                                });
+                            } else {
+                                self.read_done = false;
+                                self.error = {
+                                    error: 'cannot_load_file',
+                                    parameter: address
+                                };
+                            }
+                        });
+                    } else {
+                        var info = self.aoz.getMemory(address);
+                        var text = info.block.extractString(info.start, typeof length != 'undefined' ? length : info.length);
+                        var reader = new TextReader(this.aoz, args[0], text, {}, function(response, data, extra) {
+                            self.read_done = true;
+                        });
+                    }
+                };
+                this.read_wait = function() {
+                    if (this.read_done) {
+                        if (this.error)
+                            throw this.error;
+                        return true;
+                    }
+                    return false;
+                };
+                // End Javascript
+                return {
+                    type: 0
+                }
+            };
+            this.blocks[1] = function(aoz, args) {
+                return {
+                    type: 0
+                }
+            };
+            this.aoz.run(this, 0, null);
+        };
+
+        function Application(canvasId, args) {
+            this.root = this;
+            this.parent = this;
+            this.contextName = 'application';
+            this.manifest = JSON.parse(atob('eyJ2ZXJzaW9uIjoiOSIsImluZm9zIjp7ImFwcGxpY2F0aW9uTmFtZSI6Ik5hbWUgb2YgeW91ciBhcHBsaWNhdGlvbi4iLCJhdXRob3IiOiJCeSBZb3UiLCJ2ZXJzaW9uIjoiVmVyc2lvbiAwLjAiLCJkYXRlIjoiQ3JlYXRlZCBvbiB0aGUgLi4uIiwiY29weXJpZ2h0IjoiKGMpIFlvdXIgQ29ycG9yYXRpb24gVW5saW1pdGVkIiwic3RhcnQiOiJtYWluLmFveiJ9LCJjb21waWxhdGlvbiI6eyJwbGF0Zm9ybSI6ImFveiIsImtleW1hcCI6ImFveiIsIm1hY2hpbmUiOiJtb2Rlcm4iLCJzcGVlZCI6ImZhc3QiLCJzeW50YXgiOiJlbmhhbmNlZCIsImVuZGlhbiI6ImxpdHRsZSIsInN0cmluZ0Jhc2VJbmRleCI6MSwibm9XYXJuaW5nIjpbXSwiZGlzcGxheUVuZEFsZXJ0IjpmYWxzZSwiZGlzcGxheUVycm9yQWxlcnQiOnRydWUsInVzZUxvY2FsVGFicyI6dHJ1ZX0sImRpc3BsYXkiOnsidHZTdGFuZGFyZCI6InBhbCIsIndpZHRoIjoxOTIwLCJoZWlnaHQiOjEwODAsImJhY2tncm91bmQiOiJjb2xvciIsImJhY2tncm91bmRDb2xvciI6IiMwMDAwMDAiLCJib2R5QmFja2dyb3VuZENvbG9yIjoiIzAwMDAwMCIsImJvZHlCYWNrZ3JvdW5kSW1hZ2UiOiIuL3J1bnRpbWUvcmVzb3VyY2VzL3N0YXJfbmlnaHQuanBlZyIsInNtb290aGluZyI6ZmFsc2UsInNjYWxlWCI6MSwic2NhbGVZIjoxLCJzY3JlZW5TY2FsZSI6MSwiZnBzIjpmYWxzZSwiZnBzRm9udCI6IjEycHggVmVyZGFuYSIsImZwc0NvbG9yIjoiI0ZGRkYwMCIsImZwc1giOjEwLCJmcHNZIjoxNiwiZnVsbFBhZ2UiOnRydWUsImZ1bGxTY3JlZW4iOnRydWUsImtlZXBQcm9wb3J0aW9ucyI6dHJ1ZSwiZnVsbFNjcmVlbkljb24iOmZhbHNlLCJmdWxsU2NyZWVuSWNvblgiOi0zNCwiZnVsbFNjcmVlbkljb25ZIjoyLCJmdWxsU2NyZWVuSWNvbkltYWdlIjoiLi9ydW50aW1lL3Jlc291cmNlcy9mdWxsX3NjcmVlbi5wbmciLCJzbWFsbFNjcmVlbkljb25JbWFnZSI6Ii4vcnVudGltZS9yZXNvdXJjZXMvc21hbGxfc2NyZWVuLnBuZyJ9LCJib290U2NyZWVuIjp7ImFjdGl2ZSI6dHJ1ZSwid2FpdFNvdW5kcyI6MCwiY2xpY2tTb3VuZHMiOmZhbHNlfSwic3ByaXRlcyI6eyJjb2xsaXNpb25Cb3hlZCI6ZmFsc2UsImNvbGxpc2lvblByZWNpc2lvbiI6MSwiY29sbGlzaW9uQWxwaGFUaHJlc2hvbGQiOjF9LCJyYWluYm93cyI6eyJtb2RlIjoic2xvdyJ9LCJmb250cyI6eyJsaXN0Rm9udHMiOiJQQyIsImFtaWdhIjpbXSwiZ29vZ2xlIjpbInJvYm90byJdfSwic291bmRzIjp7Im1vZGUiOiJQQyIsInZvbHVtZSI6MSwicHJlbG9hZCI6dHJ1ZSwibnVtYmVyT2ZTb3VuZHNUb1ByZWxvYWQiOjMyLCJzb3VuZFBvb2xTaXplIjozMn0sImdhbWVwYWQiOnsibWFwcGluZyI6eyJ1cCI6IkFycm93VXAiLCJkb3duIjoiQXJyb3dEb3duIiwibGVmdCI6IkFycm93TGVmdCIsInJpZ2h0IjoiQXJyb3dSaWdodCIsImZpcmUiOiJTcGFjZSJ9fSwiZmlsZVN5c3RlbSI6eyJjYXNlU2Vuc2l0aXZlIjpmYWxzZX0sImRlZmF1bHQiOnsic2NyZWVuIjp7IngiOjAsInkiOjAsIndpZHRoIjoxOTIwLCJoZWlnaHQiOjEwODAsIm51bWJlck9mQ29sb3JzIjozMiwicGl4ZWxNb2RlIjoibG93cmVzIiwicGFsZXR0ZSI6WyIjMDAwMDAwIiwiI0ZGRkZGRiIsIiMwMDAwMDAiLCIjMjIyMjIyIiwiI0ZGMDAwMCIsIiMwMEZGMDAiLCIjMDAwMEZGIiwiIzY2NjY2NiIsIiM1NTU1NTUiLCIjMzMzMzMzIiwiIzc3MzMzMyIsIiMzMzc3MzMiLCIjNzc3NzMzIiwiIzMzMzM3NyIsIiM3NzMzNzciLCIjMzM3Nzc3IiwiIzAwMDAwMCIsIiNFRUNDODgiLCIjQ0M2NjAwIiwiI0VFQUEwMCIsIiMyMjc3RkYiLCIjNDQ5OUREIiwiIzU1QUFFRSIsIiNBQURERkYiLCIjQkJEREZGIiwiI0NDRUVGRiIsIiNGRkZGRkYiLCIjNDQwMDg4IiwiI0FBMDBFRSIsIiNFRTAwRUUiLCIjRUUwMDg4IiwiI0VFRUVFRSJdLCJ3aW5kb3ciOnsieCI6MCwieSI6MCwid2lkdGgiOjgwLCJoZWlnaHQiOjI1LCJib3JkZXIiOjAsInBhcGVyIjowLCJwZW4iOjEsImJhY2tncm91bmQiOiJvcGFxdWUiLCJmb250Ijp7Im5hbWUiOiJJQk0gUGxleCBNb25vIiwidHlwZSI6Imdvb2dsZSIsImhlaWdodCI6NDB9LCJjdXJzb3JPbiI6ZmFsc2UsImN1cnNvckltYWdlIjoiLi9ydW50aW1lL3Jlc291cmNlcy9jdXJzb3JfcGMucG5nIiwiY3Vyc29yQ29sb3JzIjpbeyJyIjo2OCwiZyI6NjgsImIiOjAsImEiOjEyOH0seyJyIjoxMzYsImciOjEzNiwiYiI6MCwiYSI6MTI4fSx7InIiOjE4NywiZyI6MTg3LCJiIjowLCJhIjoxMjh9LHsiciI6MjIxLCJnIjoyMjEsImIiOjAsImEiOjEyOH0seyJyIjoyMzgsImciOjIzOCwiYiI6MCwiYSI6MTI4fSx7InIiOjI1NSwiZyI6MjU1LCJiIjozNCwiYSI6MTI4fSx7InIiOjI1NSwiZyI6MjU1LCJiIjoxMzYsImEiOjEyOH0seyJyIjoyNTUsImciOjI1NSwiYiI6MjA0LCJhIjoxMjh9LHsiciI6MjU1LCJnIjoyNTUsImIiOjI1NSwiYSI6MTI4fSx7InIiOjE3MCwiZyI6MTcwLCJiIjoyNTUsImEiOjEyOH0seyJyIjoxMzYsImciOjEzNiwiYiI6MjA0LCJhIjoxMjh9LHsiciI6MTAyLCJnIjoxMDIsImIiOjE3MCwiYSI6MTI4fSx7InIiOjM0LCJnIjozNCwiYiI6MTAyLCJhIjoxMjh9LHsiciI6MCwiZyI6MCwiYiI6NjgsImEiOjEyOH0seyJyIjowLCJnIjowLCJiIjoxNywiYSI6MTI4fSx7InIiOjAsImciOjAsImIiOjAsImEiOjEyOH1dfX19fQ=='));
+            var options = {
+                manifest: this.manifest,
+                sources: JSON.parse(atob('W3sicGF0aCI6IkM6L0FPWiBTdHVkaW8gKDY0IGJpdHMpL1R1dG9yaWFscy8xIExlc3NvbnMgdG8gc3RhcnQgd2l0aCAtIEVOR0xJU0gvQU9aIFN0dWRpbyBMZXNzb24gMS9tYWluLmFveiIsInNvdXJjZSI6Ii8vIC4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLlxyXG4vL1xyXG4vLyAgICAgIF9fXyAgIF9fX18gIF9fX19fICAgICAgX19fX18gX18gICAgICAgICAgICBfX18gICAgICAgICAgX19cclxuLy8gICAgIC8gICB8IC8gX18gXFwvX18gIC8gICAgIC8gX19fLy8gL19fXyAgX19fX19fLyAoXylfX18gICAgIC8gLyAgIF9fXyAgX19fX19fX19fX19fX18gIF9fX18gIF9fX19fXHJcbi8vICAgIC8gL3wgfC8gLyAvIC8gIC8gLyAgICAgIFxcX18gXFwvIF9fLyAvIC8gLyBfXyAgLyAvIF9fIFxcICAgLyAvICAgLyBfIFxcLyBfX18vIF9fXy8gX18gXFwvIF9fIFxcLyBfX18vXHJcbi8vICAgLyBfX18gLyAvXy8gLyAgLyAvX18gICAgX19fLyAvIC9fLyAvXy8gLyAvXy8gLyAvIC9fLyAvICAvIC9fX18vICBfXyhfXyAgfF9fICApIC9fLyAvIC8gLyAoX18gIClcclxuLy8gIC9fLyAgfF9cXF9fX18vICAvX19fXy8gICAvX19fXy9cXF9fL1xcX18sXy9cXF9fLF8vXy9cXF9fX18vICAvX19fX18vXFxfX18vX19fXy9fX19fL1xcX19fXy9fLyAvXy9fX19fL1xyXG4vL1xyXG4vLyAuLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi5cclxuLy9cclxuLy8gV2VsY29tZSB0byB5b3VyIEFPWiBTdHVkaW8gTGVzc29uIDFcclxuLy9cclxuLy8gTm90ZTogWW91IHNlZSB0aGVzZSBkb3VibGUgc2xhc2ggKC8vKSAtPiB0aGF0IG1lYW5zIHRoYXQgYW55dGhpbmcgYWZ0ZXJ3YXJkcyAoYWxsIG1hcmtlZCBpbiBncmVlbilcclxuLy8gaXMgYSBjb21tZW50LiBBZnRlciB0aGUgLy8geW91IGNhbiBwdXQgcmVtYXJrcywgbm90ZXMsIGV4cGxhbmF0aW9ucywgbm90IHByb2dyYW0gaW5zdHJ1Y3Rpb25zLlxyXG4vL1xyXG4vLyBMZXQncyBzdGFydCFcclxuLy9cclxuLy9cclxuLy8gVGhlIFByaW50IGluc3RydWN0aW9uLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXHJcbi8vIEJlbG93IGlzIGEgUHJpbnQgaW5zdHJ1Y3Rpb24gKG5vdGUgbm8gLy8gaW4gZnJvbnQgb2YgaXQpLlxyXG4vLyBQcmludCB3aWxsIGRpc3BsYXkgb24gdGhlIHNjcmVlbiB0aGUgc2VudGVuY2UgYmV0d2VlbiB0aGUgXCIgXCIuIEV4YW1wbGU6XHJcblByaW50IFwiSGVsbG8uIEdvIGJhY2sgdG8gcHJvZ3JhbSBjb2RlIGJ5IGNsaWNraW5nIG9uIG1haW4uYW96IFRBQiBhYm92ZSB0aGlzIHdpbmRvd1wiXHJcblxyXG4vLyBUT0RPOiBDbGljayBub3cgb24gdGhlIFwiUnVuIGluIEFUT01cIiBidXR0b24gb24gdGhlIHZlcnkgdG9wIGNlbnRlciBvZiB0aGUgd2luZG93IChpdCBsb29rcyBsaWtlIGEgZmxvd2VyKVxyXG4vLyBXYWl0IGFib3V0IDEwIHNlY29uZHMgZm9yIHRoZSBjb21waWxhdGlvbiB0byBvY2N1ciwgdGhpcyBpcyB0aGUgcHJvY2VzcyB0byB0cmFuc2Zvcm0geW91clxyXG4vLyBwcm9ncmFtIG1hZGUgb2YgQU9aIEluc3RydWN0aW9ucyAoZWFzeSB0byB1bmRlcnN0YW5kIGZvciBodW1hbnMpIGludG8gZXhlY3V0YWJsZSBpbnN0cnVjdGlvbnNcclxuLy8gKHRoYXQgeW91ciBjb21wdXRlciBtYXkgdW5kZXJzdGFuZCBhbmQgUnVuKS5cclxuXHJcbi8vIFlvdSBzaG91bGQgaGF2ZSBzZWVuIHRoZSBcIkhlbGxvLiBHbyBiYWNrIHRvLi4uXCIgaW4gdGhlIGF1dG9tYXRpY2FsbHkgb3BlbmVkIHdpbmRvdy5cclxuXHJcbi8vIE5vdGU6IGlmIHlvdSB3YW50IHRvIHNlZSB5b3VyIHByb2dyYW0gaW4gYSB3ZWIgYnJvd3NlciBsaWtlIENocm9tZSwgQ2xpY2sgb24gdGhlIFwiUnVuIGluIGJyb3dzZXJcIiBidXR0b25cclxuLy8gVGhlIGJ1dHRvbiB3aXRoIGEgc3F1YXJlIGFuZCBhbiBhcnJvdyBpbiBpdCAob24gdGhlIGxlZnQgb2YgdGhlIGZsb3dlciBidXR0b24pLlxyXG4vL1xyXG4vLyBTby4uLiB5ZXMsIHlvdSBhcmUgYSBwcm9ncmFtbWVyIVxyXG5cclxuLy8gR3JlYXQsIG5vdyBvbmUgc3RlcCBmdXJ0aGVyLiBUcnkgcHV0dGluZyB5b3VyIG93biB3b3Jkcywgb3IgXCJzdHJpbmdcIiBiZXR3ZWVuIHRoZSBzcGVlY2hcclxuLy8gbWFya3MgKFwiIFwiKSBvZiB0aGUgUHJpbnQgaW4gbGluZSAyMiBhbmQgUHJlc3MgUnVuIGluIEF0b20gKGZsb3dlciBidXR0b24pIGFnYWluLlxyXG5cclxuRW5kXHJcbi8vIE5vdyBsZXQncyBjb250aW51ZSB0aGUgbGVzc29uLiBGaXJzdCBkZWxldGUgdGhlIEVuZCBpbnN0cnVjdGlvbiBhYm92ZSwgb3IgYWRkIDIgc2xhc2hlcyAvLyBpbiBmcm9udCBvZiBpdC5cclxuLy8gVGhhdCB3aWxsIGFsbG93IHlvdXIgcHJvZ3JhbSBub3QgdG8gc3RvcCBhbmQgdGhlIGZvbGxvd2luZyBpbnN0cnVjdGlvbnMgdG8gYmUgZXhlY3V0ZWQgYXMgd2VsbDpcclxuXHJcbi8vIFRoZSBMb2NhdGUgaW5zdHJ1Y3Rpb24tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1cclxuLy8gTG9jYXRlIHRlbGxzIHRoZSBwcm9ncmFtIHdoZXJlIHRvIFByaW50IHRoZSBzdHJpbmcgb24gdGhlIHNjcmVlbi5cclxuTG9jYXRlIDUsMlxyXG5QcmludCBcIlByaW50ZWQgYXQgNSwyXCJcclxuRW5kXHJcblxyXG4vLyBUaGUgbnVtYmVycyBhZnRlciBcIkxvY2F0ZVwiIHRlbGwgdGhlIGNvbXB1dGVyIHRoZSBudW1iZXIgb2YgdGV4dCBjb2x1bW5zLCBkb3duIGFuZCBhY3Jvc3M7XHJcbi8vIGluIHRoaXMgY2FzZSA1IGFjcm9zcyBhbmQgMiBkb3duIGZyb20gdGhlIHRvcFxyXG4vL1xyXG4vLyBQcmVzcyB0aGUgUHJlc3MgJ1J1biBpbiBBdG9tIChmbG93ZXIgYnV0dG9uKSBhZ2FpblxyXG4vL1xyXG4vLyBZb3UgaGF2ZSBzZWVuIHRoZSBuZXcgUHJpbnRlZCBsaW5lPyBHcmVhdCBub3csIGRlbGV0ZSB0aGUgbGFzdCBFbmQgaW5zdHJ1Y3Rpb24gYWJvdmUsXHJcbi8vIHNvIHRoZSBmb2xsb3dpbmcgaW5zdHJ1Y3Rpb25zIHdpbGwgYmUgZXhlY3V0ZWQgYXMgd2VsbDpcclxuXHJcbi8vIFRoZSBJbnB1dCBpbnN0cnVjdGlvbi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1cclxuLy8gSW5wdXQgYWxsb3dzIHlvdSB0byBhc2sgZm9yIGluZm9ybWF0aW9uIGFuZCB1c2UgaXQgaW4gdGhlIHByb2dyYW1cclxuSW5wdXQgXCJXaGF0IGlzIHlvdXIgbmFtZT9cIjtuYW1lJFxyXG5QcmludCBuYW1lJFxyXG5JbnB1dCBcIkhvdyBvbGQgYXJlIHlvdT9cIjthZ2VcclxuUHJpbnQgXCJZb3VyIGFnZSBpczogXCI7YWdlXHJcbkVuZFxyXG5cclxuLy8gVGhlIGZpcnN0IFwiSW5wdXRcIiBhc2tzIGZvciBhIG5hbWUgYW5kIHRoYXQgaXMgYSBzdHJpbmcgc28gdGhlIHN0cmluZyB2YXJpYWJsZSBuYW1lJCB3YXNcclxuLy8gY2hvc2VuIGluIHRoaXMgZXhhbXBsZSAoV2UgbWlnaHQgaGF2ZSB1c2VkIE15TmFtZSQgb3IgcmFiYml0JCBvciAuLi4uKVxyXG4vLyBJdCBtYWtlcyBzZW5zZSB0byB1c2UgYSB3b3JkIHRoYXQgbWVhbnMgc29tZXRoaW5nIHRvIHlvdSB0aGUgcHJvZ3JhbW1lci5cclxuLy8gVGhlIHNlY29uZCB1c2Ugb2YgXCJJbnB1dFwiYXNrcyBmb3IgYSBudW1iZXIgYW5kIHN0b3JlcyBpdCBpbiB0aGUgdmFyaWFibGUgXCJhZ2VcIi5cclxuLy9cclxuLy8gTm90aWNlIGhvdyB0aGUgc2VtaS1jb2xvbiwgKDspIGFsbG93cyB1cyB0byBjb21iaW5lIHRoZSBwcmludGVkXHJcbi8vIFwiWW91ciBhZ2UgaXM6IFwiIHRvIHRoZSB2YXJpYWJsZSBzdG9yZWQgaW4gYWdlXHJcbi8vXHJcbi8vIFByZXNzIHRoZSBSVU4gaW4gQXRvbSAoYnV0dG9uKVxyXG4vLyBOb3RlOiB5b3UgbWF5IGhhdmUgdG8gY2xpY2sgaW4gdGhlIHdpbmRvdyBiZWZvcmUgZW50ZXJpbmcgdGhlIElucHV0IHF1ZXN0aW9uICh0byBmb2N1cyB0aGUgd2luZG93KVxyXG4vLyBOb3csIHJlbW92ZSB0aGUgRW5kIGluc3RydWN0aW9uIGFib3ZlLCBzbyB0aGUgZm9sbG93aW5nIGluc3RydWN0aW9ucyB3aWxsIGJlIGV4ZWN1dGVkIGFzIHdlbGw6XHJcblxyXG4vLyBUaGUgUGVuIGluc3RydWN0aW9uIGFuZCB0aGUgRm9yLXRvLU5leHQgaW5zdHJ1Y3Rpb24tLS0tLS0tLS0tLS0tLS1cclxuLy8gUGVuIGluc3RydWN0aW9uIHNldHMgdGhlIGNvbG91ciBvZiB0aGUgdGV4dC5cclxuLy8gRm9yLXRvLU5leHQgaW5zdHJ1Y3Rpb24gaXMgYSBjb21iaW5lZCBvbmUgdG8gY3JlYXRlIGEgbG9vcCBvZiBhdXRvbWF0aWNhbGx5IHJlcGV0aXRpdmUgaW5zdHJ1Y3Rpb25zXHJcbkZvciBuID0gMSB0byAxNVxyXG4gICAgUGVuIG5cclxuICAgIExvY2F0ZSA0MCxuXHJcbiAgICBQcmludCBuYW1lJCArIFwiIGlzIGdyZWF0IVwiXHJcbiAgICBXYWl0IDAuNVxyXG5OZXh0XHJcbkVuZFxyXG5cclxuLy8gVGhpcyBhYm92ZSBjb2RlIHdpbGwgcnVuIHRocm91Z2ggbWFueSBjb2xvdXJzIGZvciB0aGUgb24tc3JlZW4gdGV4dCwgdGhlIHZhcmlhYmxlIG4gd2lsbFxyXG4vLyBzdGVwIGJ5IHN0ZXAgaW5jcmVhc2UgZnJvbSAxIHRvIDE1XHJcbi8vIFRoZSBmaXJzdCB0aW1lIGluIHRoZSBGb3ItdG8tTmV4dCBsb29wIG49MSBhbmQgdGhlcmVmb3JlIHdpbGwgZXhlY3V0ZTpcclxuLy8gICAtIHRoZSBpbnN0cnVjdGlvbiBQZW4gMSB0aGF0IHdpbGwgZGlzcGxheSB0aGF0IGNvbG9yIDEgKHdoaXRlKVxyXG4vLyAgIC0gc2V0IHRoZSBwb3NpdGlvbiBvZiBMb2NhdGUgNDAgKHdpZHRoKSwgMSAoaGVpZ2h0KVxyXG4vLyAgIC0gdGhlbiB3aWxsIGRvIHRoZSBQcmludFxyXG4vLyB3aGVuIHRoZSBwcm9ncmFtIGV4ZWN1dGUgdGhlIE5leHQgSW5zdHJ1Y3Rpb24sIGxpa2UgYSBsb29wIGl0IHdpbGwgc3RhcnRzIGJhY2sgb24gdGhlIGxpbmU6IEZvciBuPSAxIHRvIDIwXHJcbi8vIHdoaWxlIGluY3JlYXNpbmcgdGhlIHZhbHVlIG9mIG5cclxuLy8gU28gbm93IG49MiBhbmQgdGhlcmVmb3JlIFBlbiAyIGFuZCBMb2NhdGUgNDAsMiB0aGlzIHdpbGwgbW92ZSB0aGUgbmV4dCBQcmludCBvbmUgbGluZSBiZWxvdyAobGluZSAyKVxyXG4vLyB3aXRoIHRoZSBuZXh0IGNvbG9yICgyKSBldGMsIGV0YywgdXAgdG8uLi4gbj0xNSwgdGhpcyB3aWxsIGJlIHRoZSBlbmQgb2YgdGhlIEZvci4uLnRvLi4uTmV4dCBsb29wXHJcbi8vIGFuZCB0aGUgcHJvZ3JhbSB3aWxsIGNvbnRpbnVlIHRoZSBpbnN0cnVjdGlvbnMgYWZ0ZXIgdGhlIHdvcmQgXCJOZXh0XCJcclxuXHJcbi8vIElmIHlvdSBkbyBub3QgZ2V0IGl0IHJpZ2h0IGF3YXksIG5vIHdvcnJpZXMuIFlvdSBjYW4gdHJ5IHdpdGggYSBzaW1wbGUgcHJvZ3JhbSBvbmx5IHdpdGggRm9yLXRvLU5leHRcclxuLy8gbG9vcCB3aXRoIGEgUHJpbnQgaW5zaWRlIGxpa2U6XHJcbi8vIEZvciBuID0gMSB0byA1XHJcbi8vICAgICBQcmludCBuXHJcbi8vIE5leHRcclxuXHJcbi8vIE5vdGUgdGhhdCB0aGUgV2FpdCBpbnN0cnVjdGlvbiBpcyBwYXVzaW5nIHRoZSBwcm9ncmFtIGZvciB0aGUgdmFsdWUgaGVyZSBvZiAwLjIgc2Vjb25kcywgc28geW91IGNhbiBzZWUgdGhlIFByaW50XHJcbi8vIG9uZSBieSBvbmUuIERvIG5vdCB3b3JyeSBhYm91dCB1bmRlcnN0YW5kaW5nIGFsbCBvZiBpdC4gSGF2ZSBmdW4gdHJ5aW5nIHRvIGNoYW5nZSB0ZXh0IGFuZCB2YWx1ZXMuXHJcbi8vXHJcbi8vIE9LIGxvdCBvZiBleHBsYW5hdGlvbnMsIHNvIG5vdyBsZXQgc2VlIHdoYXQgaXQgZG9lcy5cclxuLy8gUHJlc3MgdGhlIFJVTiBpbiBBVE9NICh0aGUgZmxvd2VyIGJ1dHRvbikgb3IgUExBWVxyXG4vLyBXZSB3aWxsIGxhdGVyIHVzZSB0aGUgd29yZCBcIlBMQVlcIiB0byBzYXkgUHJlc3Mgb25lIG9mIHRoZSB0aHJlZSBjb21waWxhdGlvbiBidXR0b24gKGNvbXBpbGF0aW9uIGZvciB0aGUgZWRpdG9yIEFUT00sIFdlYiBicm93c2VyIG9yIGluIHRoZSBBT1ogVFYpXHJcblxyXG5cclxuLy8gICAgXyAgICAgICBfXyAgICAgX19fXyAgICAgICBfXyAgICAgICAgICAgICAgICAgX19cclxuLy8gICB8IHwgICAgIC8gL19fICAvIC8gLyAgX19fXy8gL19fXyAgX19fXyAgX19fICAvIC9cclxuLy8gICB8IHwgL3wgLyAvIF8gXFwvIC8gLyAgLyBfXyAgLyBfXyBcXC8gX18gXFwvIF8gXFwvIC9cclxuLy8gICB8IHwvIHwvIC8gIF9fLyAvIC8gIC8gL18vIC8gL18vIC8gLyAvIC8gIF9fL18vXHJcbi8vICAgfF9fL3xfXy9cXF9fXy9fL18vICAgXFxfXyxfL1xcX19fXy9fLyAvXy9cXF9fXyhfKVxyXG5cclxuLy8gV2VsbCwgY29uZ3JhdHVsYXRpb25zISBUaGF0J3MgdGhlIGVuZCBvZiBsZXNzb24gMS4gWW91IGFyZSByZWFkeSB0byBtb3ZlIHRvIExlc3NvbiAyIDopXHJcblxuY2xhcGZpblxuIiwibnVtYmVyIjowLCJwYXJlbnQiOm51bGx9XQ==')),
+                localTags: JSON.parse(atob('e30=')),
+                globalTags: JSON.parse(atob('e30=')),
+                developerMode: false,
+                gotoDirectMode: false
+            };
+            this.aoz = new AOZ(canvasId, options);
+            this.vars = (typeof args == 'undefined' ? {} : args);
+            this.procParam$ = '';
+            this.procParam = 0;
+
+            // Compiled program begins here
+            // ----------------------------
+            this.vars.age$ = "";
+            this.blocks = [];
+            this.blocks[0] = function(aoz, vars) {
+                // From source: C:/Users/john/Documents/My AOZ Applications/Console/Console.aoz
+                aoz.sourcePos = "0:0:0";
+                aoz.currentScreen.currentTextWindow.print("Hello World!", true);
+                // Do  // Start the second program loop the Do..Loop
+                aoz.sourcePos = "0:2:0";
+            };
+            this.blocks[1] = function(aoz, vars) {
+                // Input "How old are you?";age$
+
+                if (consoleQueue.Count > 0) {
+                    const str = consoleQueue.Dequeue();
+                    //aoz.currentScreen.currentTextWindow.print(str, true);
+                    aoz.sourcePos = "0:3:0";
+                    return {
+                        type: 8,
+                        instruction: "input",
+                        args: {
+                            text: str,
+                            variables: [{
+                                name: "age$",
+                                type: 2
+                            }],
+                            newLine: true
+                        }
+                    };
+                }
+                return {
+                    type: 1,
+                    label: 1
+                };
+
+            };
+            this.blocks[2] = function(aoz, vars) {
+                // Loop
+                aoz.sourcePos = "0:4:0";
+                return {
+                    type: 1,
+                    label: 1
+                };
+            };
+            this.blocks[3] = function(aoz, vars) {
+                return {
+                    type: 0
+                }
+            };
+            this.blocks[4] = function(aoz, vars) {
+                return {
+                    type: 0
+                }
+            };
+            this.aoz.run(this, 0, args);
+            //this.aoz.v1_0_textwindows = new v1_0_textwindows(this.aoz, args);
+            /*  this.aoz.v1_0_collisions = new v1_0_collisions(this.aoz, args);
+             this.aoz.v1_0_sprites = new v1_0_sprites(this.aoz, args);
+
+             this.aoz.v1_0_time = new v1_0_time(this.aoz, args); */
+        };
+        window.addEventListener("load", function() {
+            window.application = new Application('myCanvas');
+        }, false);
+
+        /* consoleQueue.Enqueue('test');
+        consoleQueue.Enqueue('Lütfen giriş yapınız.'); */
+        for (let i = 0; i < 100; i++) {
+            consoleQueue.Enqueue('Komut:>');
+        }
+    }
+</script>
+
+</html>

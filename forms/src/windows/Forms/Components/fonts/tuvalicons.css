@@ -1,0 +1,28 @@
+.tvi {
+    font-family: 'tuvalicons';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.tvi-home:before {
+    content: "\F015";
+}
+
+.tvi-trophy:before {
+    content: "\F091";
+}
+
+.tvi-star:before {
+    content: "\F005";
+}
+
+.tvi-star-o:before {
+    content: "\E786";
+}

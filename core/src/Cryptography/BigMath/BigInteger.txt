@@ -1,0 +1,472 @@
+import { Convert } from "../../convert";
+import { ArgumentException } from "../../Exceptions/ArgumentException";
+import { FormatException } from "../../Extensions/FormatException";
+import { TArray } from "../../Extensions/TArray";
+import { ByteArray, int, IntArray, long, New, ulong } from "../../float";
+import { CultureInfo } from "../../Globalization/CultureInfo";
+import { NumberFormatInfo } from "../../Globalization/NumberFormatInfo";
+import { NumberStyles } from "../../Globalization/NumberStyles";
+import { IComparable } from "../../IComparable";
+import { IEquatable } from "../../IEquatable";
+import { IFormatProvider } from "../../IFormatProvider";
+import { IFormattable } from "../../IFormattable";
+import { Random } from "../../Random";
+import { typeOf } from "../../type";
+
+export class BigInteger implements IComparable<BigInteger>, IEquatable<BigInteger>, IFormattable {
+    // The primes b/w 2 and ~2^10
+    /*
+            3   5   7   11  13  17  19  23  29
+        31  37  41  43  47  53  59  61  67  71
+        73  79  83  89  97  101 103 107 109 113
+        127 131 137 139 149 151 157 163 167 173
+        179 181 191 193 197 199 211 223 227 229
+        233 239 241 251 257 263 269 271 277 281
+        283 293 307 311 313 317 331 337 347 349
+        353 359 367 373 379 383 389 397 401 409
+        419 421 431 433 439 443 449 457 461 463
+        467 479 487 491 499 503 509 521 523 541
+        547 557 563 569 571 577 587 593 599 601
+        607 613 617 619 631 641 643 647 653 659
+        661 673 677 683 691 701 709 719 727 733
+        739 743 751 757 761 769 773 787 797 809
+        811 821 823 827 829 839 853 857 859 863
+        877 881 883 887 907 911 919 929 937 941
+        947 953 967 971 977 983 991 997
+        1009 1013 1019 1021 1031
+    */
+
+    // Each list has a product < 2^31
+    private static readonly Mask: long = 0xffffffff;
+    private static readonly Umask: ulong = BigInteger.Mask;
+    private static readonly BitsPerByte: int = 8;
+    private static readonly BitsPerInt: int = 32;
+    private static readonly BytesPerInt: int = 4;
+    private static readonly Chunk2: int = 1; // TODO Parse 64 bits at a time
+    private static readonly Chunk10: int = 19;
+    private static readonly Chunk16: int = 16;
+    private static readonly PrimeLists: IntArray[] = [
+        New.IntArray([3, 5, 7, 11, 13, 17, 19, 23]),
+        New.IntArray([29, 31, 37, 41, 43]),
+        New.IntArray([47, 53, 59, 61, 67]),
+        New.IntArray([71, 73, 79, 83]),
+        New.IntArray([89, 97, 101, 103]),
+        New.IntArray([107, 109, 113, 127]),
+        New.IntArray([131, 137, 139, 149]),
+        New.IntArray([151, 157, 163, 167]),
+        New.IntArray([173, 179, 181, 191]),
+        New.IntArray([193, 197, 199, 211]),
+        New.IntArray([223, 227, 229]),
+        New.IntArray([233, 239, 241]),
+        New.IntArray([251, 257, 263]),
+        New.IntArray([269, 271, 277]),
+        New.IntArray([281, 283, 293]),
+        New.IntArray([307, 311, 313]),
+        New.IntArray([317, 331, 337]),
+        New.IntArray([347, 349, 353]),
+        New.IntArray([359, 367, 373]),
+        New.IntArray([379, 383, 389]),
+        New.IntArray([397, 401, 409]),
+        New.IntArray([419, 421, 431]),
+        New.IntArray([433, 439, 443]),
+        New.IntArray([449, 457, 461]),
+        New.IntArray([463, 467, 479]),
+        New.IntArray([487, 491, 499]),
+        New.IntArray([503, 509, 521]),
+        New.IntArray([523, 541, 547]),
+        New.IntArray([557, 563, 569]),
+        New.IntArray([571, 577, 587]),
+        New.IntArray([593, 599, 601]),
+        New.IntArray([607, 613, 617]),
+        New.IntArray([619, 631, 641]),
+        New.IntArray([643, 647, 653]),
+        New.IntArray([659, 661, 673]),
+        New.IntArray([677, 683, 691]),
+        New.IntArray([701, 709, 719]),
+        New.IntArray([727, 733, 739]),
+        New.IntArray([743, 751, 757]),
+        New.IntArray([761, 769, 773]),
+        New.IntArray([787, 797, 809]),
+        New.IntArray([811, 821, 823]),
+        New.IntArray([827, 829, 839]),
+        New.IntArray([853, 857, 859]),
+        New.IntArray([863, 877, 881]),
+        New.IntArray([883, 887, 907]),
+        New.IntArray([911, 919, 929]),
+        New.IntArray([937, 941, 947]),
+        New.IntArray([953, 967, 971]),
+        New.IntArray([977, 983, 991]),
+        New.IntArray([997, 1009, 1013]),
+        New.IntArray([1019, 1021, 1031])
+    ];
+
+    private static readonly PrimeProducts: IntArray;
+
+    private static readonly ZeroMagnitude: IntArray = New.IntArray(0);
+    private static readonly ZeroEncoding: ByteArray = New.ByteArray(0);
+
+    public static readonly Zero: BigInteger = new BigInteger(0, ZeroMagnitude, false);
+    public static readonly One: BigInteger = CreateUValueOf(1);
+    public static readonly Two: BigInteger = CreateUValueOf(2);
+    public static readonly Three: BigInteger = CreateUValueOf(3);
+    public static readonly Ten: BigInteger = CreateUValueOf(10);
+
+    private static readonly Radix2: BigInteger = ValueOf(2);
+    private static readonly Radix2E: BigInteger = BigInteger.Radix2.Pow(BigInteger.Chunk2);
+
+    private static readonly Radix10: BigInteger = ValueOf(10);
+    private static readonly Radix10E: BigInteger = BigInteger.Radix10.Pow(BigInteger.Chunk10);
+
+    private static readonly Radix16: BigInteger = ValueOf(16);
+    private static readonly Radix16E: BigInteger = BigInteger.Radix16.Pow(BigInteger.Chunk16);
+
+    private static readonly RandomSource: Random = new Random();
+    private static readonly RndMask: ByteArray = New.ByteArray([255, 127, 63, 31, 15, 7, 3, 1]);
+
+    private static readonly BitCounts: ByteArray = New.ByteArray([
+        0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 1, 2, 2, 3, 2, 3,
+        3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4,
+        5, 4, 5, 5, 6, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5,
+        2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 2, 3, 3, 4, 3,
+        4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 4, 5, 5, 6, 5, 6, 6, 7, 5, 6,
+        6, 7, 6, 7, 7, 8
+    ]);
+
+
+    private _mQuote: long = -1; // -m^(-1) mod b, b = 2^32 (see Montgomery mult.)
+    private _magnitude: IntArray; // Array of ints with [0] being the most significant (Big-endian).
+    private _nBitLength: int = -1; // cache calcBitLength() value
+    private _nBits: int = -1; // cache BitCount() value
+    private _sign: int = 0; // -1 means -ve; +1 means +ve; 0 means 0;
+
+    public static StaticConstructor() {
+        BigInteger.PrimeProducts = New.IntArray(BigInteger.PrimeLists.length);
+
+        for (let i: int = 0; i < BigInteger.PrimeLists.length; ++i) {
+            const primeList: IntArray = BigInteger.PrimeLists[i];
+            let product: int = 1;
+            for (let j: int = 0; j < primeList.length; ++j) {
+                product *= primeList[j];
+            }
+            BigInteger.PrimeProducts[i] = product;
+        }
+    }
+    private constructor1() {
+    }
+    private constructor2(signum: int, mag: IntArray, checkMag: boolean) {
+        if (checkMag) {
+            let i: int = 0;
+            while (i < mag.length && mag[i] === 0)
+                ++i;
+
+            if (i === mag.length)
+                this._magnitude = BigInteger.ZeroMagnitude;
+            else {
+                this._sign = signum;
+
+                if (i == 0)
+                    this._magnitude = mag;
+                else {
+                    // strip leading 0 words
+                    this._magnitude = New.IntArray(mag.length - i);
+                    TArray.Copy(mag, i, this._magnitude, 0, this._magnitude.length);
+                }
+            }
+        }
+        else {
+            this._sign = signum;
+            this._magnitude = mag;
+        }
+    }
+    public constructor3(value: string) {
+        this(value, 10);
+    }
+    public constructor4(str: string, radix: int) {
+        this(str, radix, null as any);
+    }
+    public constructor5(str: string, radix: int, formatProvider: IFormatProvider) {
+        if (str.length === 0)
+            throw new FormatException("Zero length BigInteger");
+
+        if (formatProvider == null)
+            formatProvider = CultureInfo.InvariantCulture;
+        var nfi = <NumberFormatInfo>formatProvider.GetFormat(typeOf(NumberFormatInfo));
+
+        let style: NumberStyles;
+        let chunk: int;
+        let r: BigInteger;
+        let rE: BigInteger;
+
+        switch (radix) {
+            case 2:
+                // Is there anyway to restrict to binary digits?
+                style = NumberStyles.Integer;
+                chunk = BigInteger.Chunk2;
+                r = BigInteger.Radix2;
+                rE = BigInteger.Radix2E;
+                break;
+            case 10:
+                // This style seems to handle spaces and minus sign already (our processing redundant?)
+                style = NumberStyles.Integer;
+                chunk = BigInteger.Chunk10;
+                r = BigInteger.Radix10;
+                rE = BigInteger.Radix10E;
+                break;
+            case 16:
+                // TODO Should this be HexNumber?
+                style = NumberStyles.AllowHexSpecifier;
+                chunk = BigInteger.Chunk16;
+                r = BigInteger.Radix16;
+                rE = BigInteger.Radix16E;
+                break;
+            default:
+                throw new FormatException("Only bases 2, 10, or 16 are allowed.");
+        }
+
+        let index: int = 0;
+        this._sign = 1;
+
+        if (str.startsWith(nfi.NegativeSign)) {
+            if (str.length === nfi.NegativeSign.length)
+                throw new FormatException("Zero length BigInteger.");
+
+            this._sign = -1;
+            index = nfi.NegativeSign.length;
+        }
+
+        // strip leading zeros from the string str
+        while (index < str.length && Int32.Parse(str[index].ToString(), style) === 0)
+            index++;
+
+        if (index >= str.length) {
+            // zero value - we're done
+            this._sign = 0;
+            this._magnitude = BigInteger.ZeroMagnitude;
+            return;
+        }
+
+        //////
+        // could we work out the max number of ints required to store
+        // str.Length digits in the given base, then allocate that
+        // storage in one hit?, then Generate the magnitude in one hit too?
+        //////
+
+        let b: BigInteger = BigInteger.Zero;
+
+        let next: int = index + chunk;
+
+        if (next <= str.length) {
+            do {
+                const s: string = str.substring(index, index + chunk);
+                const i: ulong = ulong.Parse(s, style);
+                const bi: BigInteger = CreateUValueOf(i);
+
+                switch (radix) {
+                    case 2:
+                        // TODO Need this because we are parsing in radix 10 above
+                        if (i > 1)
+                            throw new FormatException("Bad character in radix 2 string: " + s);
+
+                        // TODO Parse 64 bits at a time
+                        b = b.ShiftLeft(1);
+                        break;
+                    case 16:
+                        b = b.ShiftLeft(64);
+                        break;
+                    default:
+                        b = b.Multiply(rE);
+                        break;
+                }
+
+                b = b.Add(bi);
+
+                index = next;
+                next += chunk;
+            }
+            while (next <= str.length);
+        }
+
+        if (index < str.length) {
+            const s: string = str.substring(index);
+            const i: ulong = ulong.Parse(s, style);
+            const bi: BigInteger = CreateUValueOf(i);
+
+            if (b._sign > 0) {
+                if (radix == 2) {
+                    // NB: Can't reach here since we are parsing one char at a time
+                    Debug.Assert(false);
+
+                    // TODO Parse all bits at once
+                    //						b = b.ShiftLeft(s.Length);
+                }
+                else if (radix == 16)
+                    b = b.ShiftLeft(s.length << 2);
+                else
+                    b = b.Multiply(r.Pow(s.length));
+
+                b = b.Add(bi);
+            }
+            else
+                b = bi;
+        }
+
+        // Note: This is the previous (slower) algorithm
+        //			while (index < value.Length)
+        //            {
+        //				char c = value[index];
+        //				string s = c.ToString();
+        //				int i = Int32.Parse(s, style);
+        //
+        //                b = b.Multiply(r).Add(ValueOf(i));
+        //                index++;
+        //            }
+
+        this._magnitude = b._magnitude;
+    }
+
+    public constructor6(bytes: ByteArray) {
+        this.constructor7(bytes, 0, bytes.length)
+    }
+    public constructor7(bytes: ByteArray, offset: int, length: int) {
+        if (length == 0)
+            throw new FormatException("Zero length BigInteger");
+
+        // TODO Move this processing into MakeMagnitude (provide sign argument)
+        if (Convert.ToSByte(bytes[offset]) < 0) {
+            this._sign = -1;
+
+            const end: int = offset + length;
+
+            let iBval: int;
+            // strip leading sign bytes
+            for (iBval = offset; iBval < end && (Convert.ToSByte(bytes[iBval]) === -1); iBval++) {
+            }
+
+            if (iBval >= end)
+                this._magnitude = BigInteger.One._magnitude;
+            else {
+                const numBytes: int = end - iBval;
+                var inverse = New.ByteArray(numBytes);
+
+                let index: int = 0;
+                while (index < numBytes)
+                    inverse[index++] = Convert.ToByte(~bytes[iBval++]);
+
+                Debug.Assert(iBval == end);
+
+                while (inverse[--index] === Convert.ToByte(0xFF) /* byte.MaxValue */)
+                    inverse[index] = 0;/* byte.MinValue */;
+
+                inverse[index]++;
+
+                this._magnitude = MakeMagnitude(inverse, 0, inverse.length);
+            }
+        }
+        else {
+            // strip leading zero bytes and return magnitude bytes
+            this._magnitude = MakeMagnitude(bytes, offset, length);
+            this._sign = this._magnitude.length > 0 ? 1 : 0;
+        }
+    }
+    public constructor8(sign: int, bytes: ByteArray) {
+        this.constructor9(sign, bytes, 0, bytes.length)
+    }
+
+    public constructor9(sign: int, bytes: ByteArray, offset: int, length: int) {
+        if (sign < -1 || sign > 1)
+            throw new FormatException("Invalid sign value");
+
+        if (sign == 0) {
+            //this.sign = 0;
+            this._magnitude = BigInteger.ZeroMagnitude;
+        }
+        else {
+            // copy bytes
+            this._magnitude = MakeMagnitude(bytes, offset, length);
+            this._sign = this._magnitude.length < 1 ? 0 : sign;
+        }
+    }
+    public constructor10(sizeInBits: int, random: Random) {
+        if (sizeInBits < 0)
+            throw new ArgumentException("sizeInBits must be non-negative");
+
+        this._nBits = -1;
+        this._nBitLength = -1;
+
+        if (sizeInBits == 0) {
+            //				this.sign = 0;
+            this._magnitude = BigInteger.ZeroMagnitude;
+            return;
+        }
+
+        const nBytes: int = GetByteLength(sizeInBits);
+        const b = New.ByteArray(nBytes);
+        random.NextBytes(b);
+
+        // strip off any excess bits in the MSB
+        b[0] &= BigInteger.RndMask[Convert.ToInt32(BigInteger.BitsPerByte * nBytes - sizeInBits)];
+
+        this._magnitude = MakeMagnitude(b, 0, b.length);
+        this._sign = this._magnitude.length < 1 ? 0 : 1;
+    }
+    public BigInteger (int bitLength, int certainty, Random random)
+			{
+			if (bitLength < 2)
+				throw new ArithmeticException ("bitLength < 2");
+
+			_sign = 1;
+			_nBitLength = bitLength;
+
+			if (bitLength == 2)
+				{
+				_magnitude = random.Next (2) == 0 ? Two._magnitude : Three._magnitude;
+				return;
+				}
+
+			int nBytes = GetByteLength (bitLength);
+			var b = new byte[nBytes];
+
+			int xBits = BitsPerByte * nBytes - bitLength;
+			byte mask = RndMask[xBits];
+
+			for (;;)
+				{
+				random.NextBytes (b);
+
+				// strip off any excess bits in the MSB
+				b[0] &= mask;
+
+				// ensure the leading bit is 1 (to meet the strength requirement)
+				b[0] |= (byte)(1 << (7 - xBits));
+
+				// ensure the trailing bit is 1 (i.e. must be odd)
+				b[nBytes - 1] |= 1;
+
+				_magnitude = MakeMagnitude (b, 0, b.Length);
+				_nBits = -1;
+				_mQuote = -1L;
+
+				if (certainty < 1)
+					break;
+
+				if (CheckProbablePrime (certainty, random))
+					break;
+
+				if (bitLength > 32)
+					{
+					for (int rep = 0; rep < 10000; ++rep)
+						{
+						int n = 33 + random.Next (bitLength - 2);
+						_magnitude[_magnitude.Length - (n >> 5)] ^= (1 << (n & 31));
+						_magnitude[_magnitude.Length - 1] ^= ((random.Next () + 1) << 1);
+						_mQuote = -1L;
+
+						if (CheckProbablePrime (certainty, random))
+							return;
+						}
+					}
+				}
+			}
+}
+
+BigInteger.StaticConstructor();

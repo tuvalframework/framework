@@ -1,0 +1,134 @@
+{
+    "name": "@tuval/core",
+    "version": "0.0.89",
+    "description": "",
+    "keywords": [],
+    "main": "index.js",
+    "module": "index.js",
+    "typings": "index.d.ts",
+    "files": [
+        "index.js",
+        "index.d.ts",
+        "node/index.js"
+    ],
+    "author": "tuvalframework <tuvalframework@gmail.com>",
+    "bugs": {
+        "url": "https://github.com/tuvalframework/core/issues"
+    },
+    "homepage": "http://tuvalframework.com/",
+    "readmeFilename": "README.md",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/tuvalframework/core.git"
+    },
+    "license": "MIT",
+    "engines": {
+        "node": ">=6.0.0"
+    },
+    "scripts": {
+        "patch": "node publish.js",
+        "bundle": "dts-bundle-generator --no-check --export-referenced-types=false  -o ./dist/index.d.ts ./dist_types/types/index.d.ts",
+        "buildall": "node shell_all.js",
+        "buildwp": "node shell_wp.js",
+        "buildnode": "webpack --config webpack.node.config.js",
+        "buildweb": "webpack --config webpack.web.config.js",
+        "buildwebprod": "webpack --config webpack.web.prod.config.js",
+        "buildprod": "webpack --config webpack.prod.config.js",
+        "build": "node shell.js",
+        "lint": "tslint  --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
+        "prebuild": "rimraf dist",
+        "b": "tsc --module commonjs && rollup -c rollup.config.ts",
+        "_build": "webpack && tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
+        "wbuild": "webpack",
+        "wpbuild": "webpack  --config  webpack.wp.config.js",
+        "prodbuild": "webpack --config webpack.prod.config.js",
+        "rbuild": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
+        "web": "",
+        "_start": "rollup -c rollup.config.ts -w",
+        "start": "webpack-dev-server",
+        "test": "jest --coverage",
+        "test:watch": "jest --coverage --watch",
+        "test:prod": "npm run lint && npm run test -- --no-cache",
+        "deploy-docs": "ts-node tools/gh-pages-publish",
+        "report-coverage": "cat ./coverage/lcov.info | coveralls",
+        "commit": "git-cz",
+        "semantic-release": "semantic-release",
+        "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
+        "precommit": "lint-staged",
+        "travis-deploy-once": "travis-deploy-once",
+        "uglify": "terser ./dist_web/tuval-core.js --compress --mangle --comments false --keep-classnames  --keep-fnames --module -o ./dist_web/tuval-core.min.js",
+        "serve": "lite-server --baseDir=\"\"",
+        "asbuild:untouched": "asc assembly/index.ts -b assembly/dist/untouched.wasm -t assembly/dist/untouched.wat --validate --sourceMap --debug",
+        "asbuild:optimized": "asc assembly/index.ts -b assembly/dist/optimized.wasm -t assembly/dist/optimized.wat --validate --sourceMap --optimize",
+        "asbuild": "npm run asbuild:untouched && npm run asbuild:optimized"
+    },
+    "lint-staged": {
+        "{src,test}/**/*.ts": [
+            "prettier --write",
+            "git add"
+        ]
+    },
+    "config": {
+        "commitizen": {
+            "path": "node_modules/cz-conventional-changelog"
+        }
+    },
+    "jest": {
+        "transform": {
+            ".(ts|tsx)": "ts-jest"
+        },
+        "testEnvironment": "node",
+        "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+        "moduleFileExtensions": [
+            "ts",
+            "tsx",
+            "js"
+        ],
+        "coveragePathIgnorePatterns": [
+            "/node_modules/",
+            "/test/"
+        ],
+        "coverageThreshold": {
+            "global": {
+                "branches": 90,
+                "functions": 95,
+                "lines": 95,
+                "statements": 95
+            }
+        },
+        "collectCoverageFrom": [
+            "src/*.{js,ts}"
+        ]
+    },
+    "prettier": {
+        "semi": false,
+        "singleQuote": true
+    },
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-conventional"
+        ]
+    },
+    "devDependencies": {
+        "arraybuffer-loader": "^1.0.8",
+        "clean-webpack-plugin": "^4.0.0",
+        "copy-webpack-plugin": "^9.0.1",
+        "css-loader": "^6.3.0",
+        "declaration-bundler-webpack-plugin": "^1.0.3",
+        "dts-bundle": "^0.7.3",
+        "dts-bundle-generator": "^5.9.0",
+        "dts-bundle-webpack": "^1.0.2",
+        "file-loader": "^6.2.0",
+        "follow-redirects": "^1.15.1",
+        "ifdef-loader": "^2.3.0",
+        "rimraf": "^3.0.2",
+        "shelljs": "^0.8.4",
+        "to-string-loader": "^1.1.6",
+        "ts-loader": "^9.2.6",
+        "typescript": "^4.4.3",
+        "url-loader": "^4.1.1",
+        "webpack": "^5.56.1",
+        "webpack-cli": "^4.8.0",
+        "webpack-conditional-loader": "^1.0.12"
+    }
+}

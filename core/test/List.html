@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="../dist_web/tuval-core.js"></script>
+  </head>
+
+  <body></body>
+  <script>
+    with (Tuval) {
+
+     const list = new List();
+     for(let i = 0; i< 100;i++) {
+         //list.Add(i);
+     }
+     list.Add('test');
+        foreach(list, (item)=>{
+            console.log(item);
+        });
+     console.log(list.GetType());
+     console.log(type(System.Types.Collections.Generics.List));
+     console.log(is.typeof(list,System.Types.Collections.Generics.List));
+     console.log(is.typeof(list,System.Types.Collections.Generics.IList));
+     console.log(is.typeof(list,System.Types.Collections.Generics.ICollection));
+     console.log(is.typeof(list,System.Types.Collections.Generics.IEnumerable));
+     console.log(is.typeof(list,System.Types.Collections.Generics.IReadOnlyList));
+     console.log(is.typeof(list,System.Types.Collections.Generics.IReadOnlyCollection));
+
+     let a = Activator.CreateInstance(type(System.Types.Collections.Generics.List));
+     a.Add('sdfds');
+     console.log(a);
+
+
+
+
+
+
+    }
+  </script>
+</html>

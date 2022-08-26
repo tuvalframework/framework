@@ -1,0 +1,142 @@
+.p-menu-overlay {
+    position: absolute;
+}
+
+.p-menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.p-menu .p-menuitem-link {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    overflow: hidden;
+    position: relative;
+}
+
+.p-menu .p-menuitem-text {
+    line-height: 1;
+}
+
+
+/* Theme */
+
+.p-menu {
+    padding: 0.25rem 0;
+    background: #ffffff;
+    color: #495057;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    width: 12.5rem;
+    shadow: 0 8px 10px 0 rgb(34 34 34 / 10%), 0 0 1px 0 rgb(34 34 34 / 8%);
+    border: 1px solid #c6c6c6;
+}
+
+.p-menu .p-menuitem-link {
+    /* padding: 0.55rem 0.75rem; */
+    color: #495057;
+    border-radius: 0;
+    transition: box-shadow 0.2s;
+    user-select: none;
+}
+
+.p-menu .p-menuitem-link .p-menuitem-text {
+    color: #495057;
+}
+
+.p-menu .p-menuitem-link .p-menuitem-icon {
+    color: #6c757d;
+    margin-right: 0.5rem;
+}
+
+.p-menu .p-menuitem-link .p-submenu-icon {
+    color: #6c757d;
+}
+
+.p-menu .p-menuitem-link:not(.p-disabled):hover {
+    background: #e9ecef;
+}
+
+.p-menu .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text {
+    color: #495057;
+}
+
+.p-menu .p-menuitem-link:not(.p-disabled):hover .p-menuitem-icon {
+    color: #6c757d;
+}
+
+.p-menu .p-menuitem-link:not(.p-disabled):hover .p-submenu-icon {
+    color: #6c757d;
+}
+
+.p-menu .p-menuitem-link:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: inset 0 0 0 0.15rem #C7D2FE;
+}
+
+.p-menu.p-menu-overlay {
+    background: #ffffff;
+    border: 0 none;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.p-menu .p-submenu-header {
+    margin: 0;
+    padding: 0.55rem 0.75rem;
+    color: #343a40;
+    background: #ffffff;
+    font-weight: 700;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.p-menu .p-menu-separator {
+    border-top: 1px solid #dee2e6;
+    margin: 0.25rem 0;
+}
+
+.p-connected-overlay {
+    opacity: 0;
+    transform: scaleY(0.8);
+    animation: lateAppear .25s cubic-bezier(.25, .8, .25, 1) both;
+    /*  transition: transform 0.12s cubic-bezier(0, 0, 0.2, 1) 0s, opacity 0.12s cubic-bezier(0, 0, 0.2, 1) 0s, -webkit-transform 0.12s cubic-bezier(0, 0, 0.2, 1) 0s; */
+}
+
+.p-connected-overlay-visible {
+    opacity: 1;
+    transform: scaleY(1);
+}
+
+.p-connected-overlay-hidden {
+    opacity: 0;
+    transform: scaleY(1);
+    transition: opacity 0.1s linear 0s;
+}
+
+.p-connected-overlay-enter {
+    opacity: 0;
+    transform: scaleY(0.8);
+}
+
+.p-connected-overlay-enter-active {
+    opacity: 1;
+    transform: scaleY(1);
+    transition: transform 0.12s cubic-bezier(0, 0, 0.2, 1) 0s, opacity 0.12s cubic-bezier(0, 0, 0.2, 1) 0s, -webkit-transform 0.12s cubic-bezier(0, 0, 0.2, 1) 0s;
+}
+
+.p-connected-overlay-enter-done {
+    transform: none;
+}
+
+.p-connected-overlay-exit {
+    opacity: 1;
+}
+
+.p-connected-overlay-exit-active {
+    opacity: 0;
+    transition: opacity 0.1s linear 0s;
+}

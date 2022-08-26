@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="settings.js"></script>
+    <script src="../dist_web/tuval-core.js"></script>
+    <style>
+        body {
+            background-color:rgb(34, 33, 42);
+        }
+        #output {
+        width: 100%;
+        height: 200px;
+        margin: 0 auto;
+        margin-top: 10px;
+        border-left: 0px;
+        border-right: 0px;
+        padding-left: 0px;
+        padding-right: 0px;
+        display: block;
+        background-color: black;
+        color: white;
+        font-family: 'Lucida Console', Monaco, monospace;
+        outline: none;
+      }
+    </style>
+</head>
+
+<body>
+<textarea id="output" rows="8"></textarea>
+</body>
+<script>
+
+    with (Tuval) {
+
+        /* const p = new CultureInfo('tr-TR');
+        const nf = p.NumberFormat; */
+        //console.log();
+        const sdl = new TModule();
+        sdl.OnBeforeRun.add(()=>{
+            sdl._emscripten_async_wget('http://127.0.0.1:8080/test/1.jpg','tmp/1.jpg',(path)=> {
+                const a = sdl.UTF8ToString(path);
+                 Console.WriteLine('yüklendi');
+                 let accessStr =  'r';
+                    const openFile = FS.open(a, accessStr);
+            }, ()=> console.log('hata'));
+        });
+        sdl.CallMain = ()=>{
+            console.log('main çalıştı.');
+            sdl._emscripten_set_main_loop(()=> console.log('test'),60,0);
+        };
+        sdl.Run();
+
+        const sdl1 = new TModule();
+        sdl1.OnBeforeRun.add(()=>{
+            sdl1._emscripten_async_wget('http://127.0.0.1:8080/test/2.jpg','tmp/2.jpg',(path)=> {
+                const a = sdl.UTF8ToString(path);
+                 console.log('module 1 yüklendi');
+                 let accessStr =  'r';
+                    const openFile = FS.open(a, accessStr);
+            }, ()=> console.log('hata'));
+        });
+        sdl1.CallMain = ()=>{
+            console.log('module 1 main çalıştı.');
+            sdl1._emscripten_set_main_loop(()=> console.log('module 1 test'),60,0);
+        };
+        sdl1.Run();
+    }
+</script>
+
+</html>

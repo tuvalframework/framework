@@ -1,0 +1,21 @@
+.p-toolbar {
+    padding: 0px !important;
+    border: 0px !important;
+    background-color: transparent !important;
+}
+
+.p-toolbar-group-center {
+    width: 100% !important;
+}
+
+.p-toolbar-group-center span {
+    width: 100% !important;
+}
+
+.p-toolbar-group-center span input {
+    width: 100% !important;
+}
+
+.p-toolbar-group-left span {
+    min-width: 0px !important;
+}

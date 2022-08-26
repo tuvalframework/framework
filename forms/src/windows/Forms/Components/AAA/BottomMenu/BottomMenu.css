@@ -1,0 +1,49 @@
+.tuval-bottom-menu .button-item {
+    min-width: 40px;
+    width: 100%;
+    background: -webkit-linear-gradient(top, #F5FAFF, #EBF0F5) !important;
+    border-right: solid !important;
+    border-right-width: 1px !important;
+    border-right-color: #d7e1eb !important;
+}
+
+.tuval-bottom-menu .button-item:hover {
+    background-image: linear-gradient(#f5faff, #e7ecf1) !important;
+}
+
+.tuval-bottom-menu .button-item:active {
+    background-image: linear-gradient(#ebf0f5, #e1e6eb) !important;
+}
+
+.tuval-bottommenu {
+    font-family: verdana, arial, tahoma, helvetica, sans-serif;
+    color: #505A64;
+    -webkit-user-select: none;
+    cursor: default;
+    visibility: visible;
+    font-weight: 400;
+    font-size: 11px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid;
+    position: relative;
+    border-top: 1px solid;
+    overflow: hidden;
+    zoom: 1;
+    border-color: #d0d0d0;
+    border-top-color: #d0d0d0;
+    background: transparent none;
+    background-color: transparent;
+    width: 240px;
+    height: 40px;
+}
+
+.tuval-bottom-menu .button-item-disabled {
+    color: lightgray !important;
+    min-width: 40px;
+    width: 100%;
+    background: -webkit-linear-gradient(top, #F5FAFF, #EBF0F5) !important;
+    border-right: solid !important;
+    border-right-width: 1px !important;
+    border-right-color: #d7e1eb !important;
+}

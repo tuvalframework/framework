@@ -1,0 +1,40 @@
+.tuval-panelmenu {
+    overflow: auto;
+}
+
+.tuval-panelmenu .panelmenu-title {
+    font-family: sf pro display, -apple-system, BlinkMacSystemFont, Roboto, segoe ui, Helvetica, Arial, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5em;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    border: 1px solid #d1d7dc;
+    border-right: none;
+    background-color: #fff;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.tuval-panelmenu>.p-panelmenu .p-panelmenu-header-link {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.tuval-panelmenu>.p-panelmenu .p-menuitem-link {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.tuval-panelmenu>.p-panelmenu .p-menuitem-text {
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto, segoe ui, Helvetica, Arial, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
+    margin: 0;
+    padding: 0;
+    line-height: 1.43em;
+    box-sizing: border-box;
+    padding-left: 10px;
+}

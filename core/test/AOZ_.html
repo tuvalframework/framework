@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="../dist_web/tuval-core.js"></script>
+    <style>
+        <title>My AOZ Application</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta http-equiv="cache-control" content="no-cache" /><meta http-equiv="pragma" content="no-cache"><meta http-equiv="expires" content="-1"><meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes" /><meta name="apple-mobile-web-app-status-bar-style" content="black" /><link rel="apple-touch-icon" sizes="57x57" href="resources/appicon/icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="resources/appicon/icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="resources/appicon/icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="resources/appicon/icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="resources/appicon/icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="resources/appicon/icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="resources/appicon/icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="resources/appicon/icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="resources/appicon/icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="resources/appicon/icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="resources/appicon/icon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="resources/appicon/icon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="resources/appicon/icon-16x16.png"><link rel="manifest" href="resources/appicon/manifest.json"><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="resources/appicon/icon-144x144.png"><meta name="theme-color" content="#ffffff"><style type="text/css">
+        /* roboto-100 - latin-ext_greek-ext_greek_vietnamese_latin_cyrillic_cyrillic-ext */
+
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000000;
+            font-family: Roboto|IBM Plex Mono, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id='myCanvas'></canvas>
+</body>
+<script>
+    with(Tuval) {
+        let name;
+        let surname;
+
+        const TVConsole = new TextConsole();
+
+        function app() {
+
+            TVConsole.SetPalette([0x000000, 0xFF0000, 0x00FF00, 0x0000FF, 0xFFFF00, 0xFF00FF, 0xFFFFFF, 0xFF7700, 0x0077FF, 0x7700FF, 0xFF0077, 0x333333, 0x666666, 0x999999, 0xCCCCCC, 0xFFFFFF]);
+            TVConsole.Clear(0);
+            TVConsole.SetPen(6);
+            TVConsole.SetPaper(0);
+            TVConsole.DrawBar(0, 80, 80, 110);
+            TVConsole.ReadLine('Adınız :').then(str => name = str);
+            TVConsole.Center('Welcome to Tuval Framework');
+            TVConsole.Locate(1, 1);
+            TVConsole.WriteLine('test');
+            TVConsole.Locate(5, 5);
+            TVConsole.Region('Click Me!', eventType => {
+                if (eventType === 'click') {
+                    TVConsole.WriteLine('clicked...');
+                }
+            });
+
+
+            /*  TVConsole.ReadLine('Adınız :').then(str => name = str);
+             TVConsole.ReadLine('Soyadınız :').then(str => {
+                 TVConsole.WriteLine('Your name is ' + name + ' ' + str);
+                 TVConsole.ReadLine('Do you want to clean screen E/H :').then(str => {
+                     if (str.toLowerCase() === 'e') {
+                         TVConsole.Clear();
+                         app();
+                     } else {
+                         TVConsole.Write('Good');
+                         TVConsole.Write('bye');
+                     }
+                 });
+             }); */
+        }
+        app();
+
+    }
+</script>
+
+</html>

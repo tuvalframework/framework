@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="./settings.js"></script>
+    <script src="../dist_web/tuval-core.js"></script>
+    <style>
+             #output {
+        width: 100%;
+        height: 200px;
+        margin: 0 auto;
+        margin-top: 10px;
+        border-left: 0px;
+        border-right: 0px;
+        padding-left: 0px;
+        padding-right: 0px;
+        display: block;
+        background-color: black;
+        color: white;
+        font-family: 'Lucida Console', Monaco, monospace;
+        outline: none;
+      }
+    </style>
+</head>
+
+<body>
+    <textarea id="output" rows="8"></textarea>
+</body>
+<script>
+    with (Tuval) {
+        //creating a Hashtable using array-initializer syntax
+        let cities = new Hashtable([
+            ["UK", "London, Manchester, Birmingham"],
+            ["USA", "Chicago, New York, Washington"],
+            ["India", "Mumbai, New Delhi, Pune"]
+        ]);
+
+        const citiesOfUK = cities.Get("UK");
+        const citiesOfUSA = cities.Get("USA");
+
+        Console.WriteLine(citiesOfUK);
+        Console.WriteLine(citiesOfUSA);
+
+        cities.Set("UK", "Liverpool, Bristol"); // update value of UK key
+        cities.Set("USA", "Los Angeles, Boston"); // update value of USA key
+
+        if (!cities.ContainsKey("France")) {
+            cities.Set("France", "Paris");
+        }
+
+        const dict = new Dictionary();
+        dict.Add(1, "one");
+        dict.Add(2, "two");
+        dict.Add(3, "three");
+
+        const ht = new Hashtable(dict);
+        foreach(ht, (de)=>{
+            Console.WriteLine('Key: {0}, Value: {1}', de.Key, de.Value);
+        });
+
+
+        cities = new Hashtable([
+	["UK", "London, Manchester, Birmingham"],
+	["USA", "Chicago, New York, Washington"],
+	["India", "Mumbai, New Delhi, Pune"]
+]);
+
+cities.Remove("UK"); // removes UK
+//cities.Remove("France"); //throws run-time exception: KeyNotFoundException
+
+if(cities.ContainsKey("France")){ // check key before removing it
+    cities.Remove("France");
+}
+Console.WriteLine('Element Count Before Clear: {0}', cities.Count);
+cities.Clear(); //removes all elements
+
+Console.WriteLine('Element Count: {0}', cities.Count);
+    }
+</script>
+
+</html>

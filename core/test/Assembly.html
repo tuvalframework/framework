@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="../dist_web/tuval-core.js"></script>
+  </head>
+
+  <body></body>
+  <script>
+    with (Tuval) {
+     console.log(Assembly);
+    Assembly.Resources = [{
+        culture: 'tr-TR',
+        resources: [{
+          name: 'DateStrings',
+          resources: [
+            {
+              key:'Hello',
+              value:'test'
+            }
+          ]
+        }]
+    }];
+console.log(Assembly.Resources);
+const res = new ResourceManager('DateStrings');
+console.log(res.GetString('Hello'));
+
+    }
+  </script>
+</html>

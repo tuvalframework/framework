@@ -1,0 +1,28 @@
+.tuval-mediaplayer {
+    background-repeat: no-repeat;
+    /* background-attachment: fixed; */
+    background-position: center;
+}
+
+.tuval-mediaplayer>.logo {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeSpeed;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Ubuntu", "Helvetica Neue", sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    font-style: normal;
+    font-weight: 400;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    touch-action: manipulation;
+    display: block;
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    z-index: 3;
+    height: 32px;
+}

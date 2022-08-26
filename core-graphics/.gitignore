@@ -1,0 +1,6 @@
+node_modules
+.vscode
+dist
+dist_web
+dist_wp
+dist_types

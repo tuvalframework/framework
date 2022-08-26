@@ -1,0 +1,42 @@
+.tuval-panel::-webkit-scrollbar {
+    width: 12px;
+}
+
+
+/* Track */
+
+.tuval-panel::-webkit-scrollbar-track {
+    /*  background-color: rgba(181, 198, 229, 0.1);
+    border-radius: 100px; */
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+
+/* Handle */
+
+.tuval-panel::-webkit-scrollbar-thumb {
+    /*   border-radius: 100px; */
+    /* background-image: linear-gradient(180deg, #B5C6E5 0%, #B5C6E5 99%); */
+    /* background-color: rgba(181, 198, 229, 0.3);
+    opacity: 0.5;
+    box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5); */
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(125, 125, 125, 0.8);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+.tuval-panel::-webkit-scrollbar-thumb:hover {
+    /* background-color: rgba(181, 198, 229, 0.8); */
+}
+
+.tuval-panel::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(255, 0, 0, 0.4);
+}
+
+.tuval-panel {
+    overflow: auto;
+    width: 100%;
+}

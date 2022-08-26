@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="./settings.js"></script>
+    <script src="../dist_web/tuval-core.js"></script>
+    <style>
+        #output {
+            width: 100%;
+            height: 200px;
+            margin: 0 auto;
+            margin-top: 10px;
+            border-left: 0px;
+            border-right: 0px;
+            padding-left: 0px;
+            padding-right: 0px;
+            display: block;
+            background-color: black;
+            color: white;
+            font-family: 'Lucida Console', Monaco, monospace;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <textarea id="output" rows="8"></textarea>
+</body>
+<script>
+    with(Tuval) {
+        const months = new LinkedList();
+        months.AddLast("March");
+        months.AddFirst("January");
+
+        var march = months.Find("March");
+
+        months.AddBefore(march, "February");
+        months.AddAfter(march, "April");
+
+        foreach(months, (month) => {
+            Console.WriteLine(month);
+        });
+    }
+    with(Tuval) {
+        const my_list = new LinkedList();
+
+        // Adding elements in the LinkedList
+        // Using AddLast() method
+        my_list.AddLast("Zoya");
+        my_list.AddLast("Shilpa");
+        my_list.AddLast("Rohit");
+        my_list.AddLast("Rohan");
+        my_list.AddLast("Juhi");
+        my_list.AddLast("Zoya");
+
+        // Inital number of elements
+        Console.WriteLine('Best students of XYZ ' + 'university initially:');
+
+        // Accessing the elements of
+        // Linkedlist Using foreach loop
+        foreach(my_list, (str) => {
+            Console.WriteLine(str);
+        });
+
+
+        // After using Remove(LinkedListNode)
+        // method
+        Console.WriteLine('Best students of XYZ' + ' university in 2000:');
+
+        my_list.Remove(my_list.First);
+
+        foreach(my_list, (str) => {
+            Console.WriteLine(str);
+        });
+
+        // After using Remove(T) method
+        Console.WriteLine('Best students of XYZ' + ' university in 2001:');
+
+        my_list.Remove("Rohit");
+
+        foreach(my_list, (str) => {
+            Console.WriteLine(str);
+        });
+
+        // After using RemoveFirst() method
+        Console.WriteLine('Best students of XYZ' + ' university in 2002:');
+
+        my_list.RemoveFirst();
+
+        foreach(my_list, (str) => {
+            Console.WriteLine(str);
+        });
+
+        // After using RemoveLast() method
+        Console.WriteLine('Best students of XYZ' + ' university in 2003:');
+
+        my_list.RemoveLast();
+
+        foreach(my_list, (str) => {
+            Console.WriteLine(str);
+        });
+
+        // After using Clear() method
+        my_list.Clear();
+        Console.WriteLine("Number of students: {0}", my_list.Count);
+    }
+</script>
+
+</html>

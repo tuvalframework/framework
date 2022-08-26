@@ -1,0 +1,41 @@
+import React, { createElement, Fragment } from "../../../../../preact/compat";
+import { Teact } from '../../Teact';
+import { classNames } from '@tuval/core';
+
+
+export class AppView extends React.Component {
+    public render(): any {
+        const className = classNames({
+            'tuval-appview-hide': !this.props.show,
+            'tuval-appview': this.props.show
+        } as any);
+        return (
+            <div id="sds-appview" class={className} tabindex="-1" style="width: 1920px; height: 930px;">
+                <div class='tuval-appview-background'></div>
+                <div class="tuval-appview-container" tabindex="0" role="menu" aria-label="Uygulamalar">
+                    <div class="mcontentwrapper">
+                        <div class="contentwrapper">
+                            <div class="tuval-app-panel" >
+                                <div class="app-panel-title">Uygulamalar</div>
+                                <ul class="sds-app-items-panel">
+                                    <div class="x-box-inner">
+                                        <div role="menuitem" tabindex="-1" aria-label="Denetim Masası"
+                                            class=" sds-appview-app-item x-box-item">
+                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBNjQyQ0ZFQjM5NDUxMUUzODk4OEYyREI0MTg5NjY5NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBNjQyQ0ZFQzM5NDUxMUUzODk4OEYyREI0MTg5NjY5NyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkE2NDJDRkU5Mzk0NTExRTM4OTg4RjJEQjQxODk2Njk3IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkE2NDJDRkVBMzk0NTExRTM4OTg4RjJEQjQxODk2Njk3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+cmN1egAADstJREFUeNrsXNtv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" />
+                                            <div class="sds-appview-app-item-title">Denetim Masası</div>
+                                            <div class="sds-appview-app-item-background">
+                                                <div class="sds-application-notify-badge-num" style="opacity: 0;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+}

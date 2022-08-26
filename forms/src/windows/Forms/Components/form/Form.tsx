@@ -1,0 +1,671 @@
+import React, { createElement, Fragment } from '../../../../preact/compat';
+import { DomHandler } from '../DomHandler';
+import { Ripple } from '../ripple/Ripple';
+import { Teact } from '../Teact';
+import { classNames, TString, int } from '@tuval/core';
+import { ObjectUtils } from '../ObjectUtils';
+import { CSSTransition } from '../csstransition/CSSTransition';
+import { UniqueComponentId } from '../../../../UniqueComponentId';
+import { ResizeSensor } from '../../../../ResizeSensor';
+import { Portal } from '../portal/Portal';
+import { ZIndexUtils } from '../utils/ZIndexUtils';
+import { TApplication } from '../AAA/TApplication';
+
+
+const css = require('./Form1.css');
+DomHandler.addCssToDocument(css);
+
+export class Form extends React.Component {
+
+    static defaultProps = {
+        id: null,
+        header: null,
+        footer: null,
+        visible: false,
+        position: 'center',
+        draggable: true,
+        resizable: true,
+        modal: true,
+        onHide: null,
+        onShow: null,
+        contentStyle: null,
+        contentClassName: null,
+        closeOnEscape: false,
+        dismissableMask: false,
+        rtl: false,
+        closable: true,
+        style: null,
+        className: null,
+        maskClassName: null,
+        showHeader: true,
+        appendTo: null,
+        baseZIndex: 0,
+        maximizable: false,
+        blockScroll: false,
+        icons: null,
+        ariaCloseIconLabel: 'Close',
+        focusOnShow: true,
+        minX: 0,
+        minY: 0,
+        keepInViewport: true,
+        maximized: false,
+        breakpoints: null,
+        transitionOptions: null,
+        onMaximize: null,
+        onDragStart: null,
+        onDrag: null,
+        onDragEnd: null,
+        onResizeStart: null,
+        onResize: null,
+        onResizeEnd: null,
+        onClick: null,
+        onMaskClick: null
+    }
+    attributeSelector: string;
+    dialogRef: any;
+    closeElement: any;
+    mask: any;
+    dragging: boolean;
+    lastPageX: any;
+    lastPageY: any;
+    resizing: boolean;
+    documentDragListener: (event: any) => void;
+    documentDragEndListener: (event: any) => void;
+    documentResizeListener: (event: any) => void;
+    documentResizeEndListener: (event: any) => void;
+    documentKeyDownListener: (event: any) => void;
+    styleElement: any;
+    headerEl: any;
+    contentEl: any;
+    footerElement: any;
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: props.id,
+            maskVisible: props.visible,
+            visible: false
+        };
+
+        if (!this.props.onMaximize) {
+            this.state.maximized = props.maximized;
+        }
+
+        this.onClose = this.onClose.bind(this);
+        this.toggleMaximize = this.toggleMaximize.bind(this);
+        this.onDragStart = this.onDragStart.bind(this);
+        this.onResizeStart = this.onResizeStart.bind(this);
+        this.onMaskClick = this.onMaskClick.bind(this);
+        this.onEnter = this.onEnter.bind(this);
+        this.onEntered = this.onEntered.bind(this);
+        this.onExited = this.onExited.bind(this);
+
+        this.attributeSelector = UniqueComponentId();
+        this.dialogRef = React.createRef();
+    }
+
+    onClose(event) {
+        this.props.onHide();
+        event.preventDefault();
+    }
+
+    focus() {
+        let activeElement = document.activeElement;
+        let isActiveElementInDialog = activeElement && this.dialogRef && this.dialogRef.current.contains(activeElement);
+        if (!isActiveElementInDialog && this.props.closable && this.props.showHeader) {
+            this.closeElement.focus();
+        }
+    }
+
+    onMaskClick(event) {
+        if (this.props.dismissableMask && this.props.modal && this.mask === event.target) {
+            this.onClose(event);
+        }
+
+        this.props.onMaskClick && this.props.onMaskClick(event);
+    }
+
+    toggleMaximize(event) {
+        let maximized = !this.maximized;
+
+        if (this.props.onMaximize) {
+            this.props.onMaximize({
+                originalEvent: event,
+                maximized
+            });
+        }
+        else {
+            this.setState({
+                maximized
+            }, this.changeScrollOnMaximizable);
+        }
+
+        event.preventDefault();
+    }
+
+    onDragStart(event) {
+        if (DomHandler.hasClass(event.target, 'p-form-header-icon') || DomHandler.hasClass(event.target.parentElement, 'p-form-header-icon')) {
+            return;
+        }
+
+        if (this.props.draggable) {
+            this.dragging = true;
+            this.lastPageX = event.pageX;
+            this.lastPageY = event.pageY;
+
+            this.dialogEl.style.margin = '0';
+            DomHandler.addClass(document.body, 'p-unselectable-text');
+
+            if (this.props.onDragStart) {
+                this.props.onDragStart(event);
+            }
+        }
+    }
+
+    onDrag(event) {
+        if (this.dragging) {
+            let width = DomHandler.getOuterWidth(this.dialogEl);
+            let height = DomHandler.getOuterHeight(this.dialogEl);
+            let deltaX = event.pageX - this.lastPageX;
+            let deltaY = event.pageY - this.lastPageY;
+            let offset = this.dialogEl.getBoundingClientRect();
+            let leftPos = offset.left + deltaX;
+            let topPos = offset.top + deltaY;
+            let viewport = DomHandler.getViewport();
+
+            this.dialogEl.style.position = 'fixed';
+
+            if (this.props.keepInViewport) {
+                if (leftPos >= this.props.minX && (leftPos + width) < viewport.width) {
+                    this.lastPageX = event.pageX;
+                    this.dialogEl.style.left = leftPos + 'px';
+                }
+
+                if (topPos >= this.props.minY && (topPos + height) < viewport.height) {
+                    this.lastPageY = event.pageY;
+                    this.dialogEl.style.top = topPos + 'px';
+                }
+            }
+            else {
+                this.lastPageX = event.pageX;
+                this.dialogEl.style.left = leftPos + 'px';
+                this.lastPageY = event.pageY;
+                this.dialogEl.style.top = topPos + 'px';
+            }
+
+            if (this.props.onDrag) {
+                this.props.onDrag(event);
+            }
+        }
+    }
+
+    onDragEnd(event) {
+        if (this.dragging) {
+            this.dragging = false;
+            DomHandler.removeClass(document.body, 'p-unselectable-text');
+
+            if (this.props.onDragEnd) {
+                this.props.onDragEnd(event);
+            }
+        }
+    }
+
+    onResizeStart(event) {
+        if (this.props.resizable) {
+            this.resizing = true;
+            this.lastPageX = event.pageX;
+            this.lastPageY = event.pageY;
+            DomHandler.addClass(document.body, 'p-unselectable-text');
+
+            if (this.props.onResizeStart) {
+                this.props.onResizeStart(event);
+            }
+        }
+    }
+
+    convertToPx(value, property, viewport) {
+        !viewport && (viewport = DomHandler.getViewport());
+
+        const val = parseInt(value);
+        if (/^(\d+|(\.\d+))(\.\d+)?%$/.test(value)) {
+            return val * (viewport[property] / 100);
+        }
+
+        return val;
+    }
+
+    onResize(event) {
+        if (this.resizing) {
+            let deltaX = event.pageX - this.lastPageX;
+            let deltaY = event.pageY - this.lastPageY;
+            let width = DomHandler.getOuterWidth(this.dialogEl);
+            let height = DomHandler.getOuterHeight(this.dialogEl);
+            let offset = this.dialogEl.getBoundingClientRect();
+            let viewport = DomHandler.getViewport();
+
+            let newWidth = width + deltaX;
+            let newHeight = height + deltaY;
+            let minWidth = this.convertToPx(this.dialogEl.style.minWidth, 'width', viewport);
+            let minHeight = this.convertToPx(this.dialogEl.style.minHeight, 'height', viewport);
+            let hasBeenDragged = !parseInt(this.dialogEl.style.top) || !parseInt(this.dialogEl.style.left);
+
+            if (hasBeenDragged) {
+                newWidth += deltaX;
+                newHeight += deltaY;
+            }
+
+            if ((!minWidth || newWidth > minWidth) && (offset.left + newWidth) < viewport.width) {
+                this.dialogEl.style.width = newWidth + 'px';
+            }
+
+            if ((!minHeight || newHeight > minHeight) && (offset.top + newHeight) < viewport.height) {
+                this.dialogEl.style.height = newHeight + 'px';
+            }
+
+            this.lastPageX = event.pageX;
+            this.lastPageY = event.pageY;
+
+            if (this.props.onResize) {
+                this.props.onResize(event);
+            }
+
+        }
+    }
+
+    onResizeEnd(event) {
+        if (this.resizing) {
+            this.resizing = false;
+            DomHandler.removeClass(document.body, 'p-unselectable-text');
+
+            if (this.props.onResizeEnd) {
+                this.props.onResizeEnd(event);
+            }
+        }
+    }
+
+    resetPosition() {
+        this.dialogEl.style.position = '';
+        this.dialogEl.style.left = '';
+        this.dialogEl.style.top = '';
+        this.dialogEl.style.margin = '';
+    }
+
+    getPositionClass() {
+        const positions = ['center', 'left', 'right', 'top', 'top-left', 'top-right', 'bottom', 'bottom-left', 'bottom-right'];
+        const pos = positions.find(item => item === this.props.position || item.replace('-', '') === this.props.position);
+
+        return pos ? `p-form-${pos}` : '';
+    }
+
+    get maximized() {
+        return this.props.onMaximize ? this.props.maximized : this.state.maximized;
+    }
+
+    get dialogEl() {
+        return this.dialogRef.current;
+    }
+
+    onEnter() {
+        this.dialogEl.setAttribute(this.attributeSelector, '');
+    }
+
+    onEntered() {
+        if (this.props.onShow) {
+            this.props.onShow();
+        }
+
+        if (this.props.focusOnShow) {
+            this.focus();
+        }
+
+        this.enableDocumentSettings();
+    }
+
+    onExited() {
+        this.dragging = false;
+        ZIndexUtils.clear(this.mask);
+        this.setState({ maskVisible: false });
+        this.disableDocumentSettings();
+    }
+
+    enableDocumentSettings() {
+        this.bindGlobalListeners();
+
+        if (this.props.blockScroll || (this.props.maximizable && this.maximized)) {
+            DomHandler.addClass(document.body, 'p-overflow-hidden');
+        }
+    }
+
+    disableDocumentSettings() {
+        this.unbindGlobalListeners();
+
+        if (this.props.modal) {
+            let hasBlockScroll = (document as any).tuvalDialogParams && (document as any).tuvalDialogParams.some(param => param.hasBlockScroll);
+            if (!hasBlockScroll) {
+                DomHandler.removeClass(document.body, 'p-overflow-hidden');
+            }
+        }
+        else if (this.props.blockScroll || (this.props.maximizable && this.maximized)) {
+            DomHandler.removeClass(document.body, 'p-overflow-hidden');
+        }
+    }
+
+    bindGlobalListeners() {
+        debugger;
+        if (this.props.draggable) {
+            this.bindDocumentDragListener();
+        }
+
+        if (this.props.resizable) {
+            this.bindDocumentResizeListeners();
+        }
+
+        if (this.props.closeOnEscape && this.props.closable) {
+            this.bindDocumentKeyDownListener();
+        }
+    }
+
+    unbindGlobalListeners() {
+        this.unbindDocumentDragListener();
+        this.unbindDocumentResizeListeners();
+        this.unbindDocumentKeyDownListener();
+    }
+
+    bindDocumentDragListener() {
+        this.documentDragListener = this.onDrag.bind(this);
+        this.documentDragEndListener = this.onDragEnd.bind(this);
+        window.document.addEventListener('mousemove', this.documentDragListener);
+        window.document.addEventListener('mouseup', this.documentDragEndListener);
+    }
+
+    unbindDocumentDragListener() {
+        if (this.documentDragListener && this.documentDragEndListener) {
+            window.document.removeEventListener('mousemove', this.documentDragListener);
+            window.document.removeEventListener('mouseup', this.documentDragEndListener);
+            this.documentDragListener = null;
+            this.documentDragEndListener = null;
+        }
+    }
+
+    bindDocumentResizeListeners() {
+        this.documentResizeListener = this.onResize.bind(this);
+        this.documentResizeEndListener = this.onResizeEnd.bind(this);
+        window.document.addEventListener('mousemove', this.documentResizeListener);
+        window.document.addEventListener('mouseup', this.documentResizeEndListener);
+    }
+
+    unbindDocumentResizeListeners() {
+        if (this.documentResizeListener && this.documentResizeEndListener) {
+            window.document.removeEventListener('mousemove', this.documentResizeListener);
+            window.document.removeEventListener('mouseup', this.documentResizeEndListener);
+            this.documentResizeListener = null;
+            this.documentResizeEndListener = null;
+        }
+    }
+
+    bindDocumentKeyDownListener() {
+        this.documentKeyDownListener = (event) => {
+            let currentTarget = event.currentTarget;
+
+            if (currentTarget && currentTarget.tuvalDialogParams) {
+                let params = currentTarget.tuvalDialogParams;
+                let paramLength = params.length;
+                let dialogId = params[paramLength - 1] ? params[paramLength - 1].id : undefined;
+
+                if (dialogId === this.state.id) {
+                    let dialog = document.getElementById(dialogId);
+
+                    if (event.which === 27) {
+                        this.onClose(event);
+                        event.stopImmediatePropagation();
+
+                        params.splice(paramLength - 1, 1);
+                    }
+                    else if (event.which === 9) {
+                        event.preventDefault();
+                        let focusableElements = DomHandler.getFocusableElements(dialog);
+                        if (focusableElements && focusableElements.length > 0) {
+                            if (!document.activeElement) {
+                                focusableElements[0].focus();
+                            }
+                            else {
+                                let focusedIndex = focusableElements.indexOf(document.activeElement);
+                                if (event.shiftKey) {
+                                    if (focusedIndex === -1 || focusedIndex === 0)
+                                        focusableElements[focusableElements.length - 1].focus();
+                                    else
+                                        focusableElements[focusedIndex - 1].focus();
+                                }
+                                else {
+                                    if (focusedIndex === -1 || focusedIndex === (focusableElements.length - 1))
+                                        focusableElements[0].focus();
+                                    else
+                                        focusableElements[focusedIndex + 1].focus();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        let newParam = { id: this.state.id, hasBlockScroll: this.props.blockScroll };
+        (document as any).tuvalDialogParams = (document as any).tuvalDialogParams ? [...(document as any).tuvalDialogParams, newParam] : [newParam];
+
+        document.addEventListener('keydown', this.documentKeyDownListener);
+    }
+
+    unbindDocumentKeyDownListener() {
+        if (this.documentKeyDownListener) {
+            document.removeEventListener('keydown', this.documentKeyDownListener);
+            (document as any).tuvalDialogParams = (document as any).tuvalDialogParams && (document as any).tuvalDialogParams.filter(param => param.id !== this.state.id);
+            this.documentKeyDownListener = null;
+        }
+    }
+
+    createStyle() {
+        if (!this.styleElement) {
+            this.styleElement = document.createElement('style');
+            document.head.appendChild(this.styleElement);
+
+            let innerHTML = '';
+            for (let breakpoint in this.props.breakpoints) {
+                innerHTML += `
+                    @media screen and (max-width: ${breakpoint}) {
+                        .p-form[${this.attributeSelector}] {
+                            width: ${this.props.breakpoints[breakpoint]} !important;
+                        }
+                    }
+                `
+            }
+
+            this.styleElement.innerHTML = innerHTML;
+        }
+    }
+
+    componentDidMount() {
+        if (!this.state.id) {
+            this.setState({ id: UniqueComponentId() });
+        }
+
+        if (this.props.visible) {
+            this.setState({ visible: true }, () => {
+                ZIndexUtils.set('modal', this.mask, true, this.props.baseZIndex);
+            });
+        }
+
+        if (this.props.breakpoints) {
+            this.createStyle();
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.visible && !this.state.maskVisible) {
+            this.setState({ maskVisible: true }, () => {
+                ZIndexUtils.set('modal', this.mask, true, this.props.baseZIndex);
+            });
+        }
+
+        if (this.props.visible !== this.state.visible && this.state.maskVisible) {
+            this.setState({
+                visible: this.props.visible
+            });
+        }
+
+        if (prevProps.maximized !== this.props.maximized && this.props.onMaximize) {
+            this.changeScrollOnMaximizable();
+        }
+    }
+
+    changeScrollOnMaximizable() {
+        if (!this.props.blockScroll) {
+            let funcName = this.maximized ? 'addClass' : 'removeClass';
+            DomHandler[funcName](document.body, 'p-overflow-hidden');
+        }
+    }
+
+    componentWillUnmount() {
+        this.disableDocumentSettings();
+
+        if (this.styleElement) {
+            document.head.removeChild(this.styleElement);
+            this.styleElement = null;
+        }
+
+        ZIndexUtils.clear(this.mask);
+    }
+
+    renderCloseIcon() {
+        if (this.props.closable) {
+            return (
+                <button ref={(el) => this.closeElement = el} type="button" className="p-form-header-icon p-form-header-close p-link" aria-label={this.props.ariaCloseIconLabel} onClick={this.onClose}>
+                    <span className="p-form-header-close-icon pi pi-times"></span>
+                    <Ripple />
+                </button>
+            );
+        }
+
+        return null;
+    }
+
+    renderMaximizeIcon() {
+        const iconClassName = classNames('p-form-header-maximize-icon pi', { 'pi-window-maximize': !this.maximized, 'pi-window-minimize': this.maximized } as any);
+
+        if (this.props.maximizable) {
+            return (
+                <button type="button" className="p-form-header-icon p-form-header-maximize p-link" onClick={this.toggleMaximize}>
+                    <span className={iconClassName}></span>
+                    <Ripple />
+                </button>
+            );
+        }
+
+        return null;
+    }
+
+    renderHeader() {
+        if (this.props.showHeader) {
+            const closeIcon = this.renderCloseIcon();
+            const maximizeIcon = this.renderMaximizeIcon();
+            const icons = ObjectUtils.getJSXElement(this.props.icons, this.props);
+            const header = ObjectUtils.getJSXElement(this.props.header, this.props);
+
+            return (
+                <div ref={el => this.headerEl = el} className="p-form-header" onMouseDown={this.onDragStart}>
+                    <div id={this.state.id + '_header'} className="p-form-title">{header}</div>
+                    <div className="p-form-header-icons">
+                        {icons}
+                        {maximizeIcon}
+                        {closeIcon}
+                    </div>
+                </div>
+            );
+        }
+
+        return null;
+    }
+
+    renderContent() {
+        let contentClassName = classNames('p-form-content', this.props.contentClassName)
+
+        return (
+            <div id={this.state.id + '_content'} ref={el => this.contentEl = el} className={contentClassName} style={this.props.contentStyle}>
+                {this.props.children}
+            </div>
+        );
+    }
+
+    renderFooter() {
+        if (this.props.showFooter) {
+            const footer = ObjectUtils.getJSXElement(this.props.footer, this.props);
+
+            return footer && <div ref={el => this.footerElement = el} className="p-form-footer">{footer}</div>
+        }
+        return null
+    }
+
+    renderResizer() {
+        if (this.props.resizable) {
+            return <div className="p-resizable-handle" style={{ zIndex: 90 }} onMouseDown={this.onResizeStart}></div>
+        }
+
+        return null;
+    }
+
+    renderElement() {
+        let className = null;
+        if (TApplication.IsDesktop) {
+            className = classNames('p-form p-component', this.props.className, {
+                'p-form-rtl': this.props.rtl,
+                'p-form-maximized': this.maximized
+            } as any);
+        } else if (TApplication.IsPortal) {
+            className = classNames('p-form-portal p-component', this.props.className, {
+                'p-form-rtl': this.props.rtl,
+                'p-form-maximized': this.maximized
+            } as any);
+        }
+
+        const maskClassName = classNames('p-form-mask', {
+            'p-component-overlay': this.props.modal,
+            'p-form-visible': this.state.maskVisible,
+            'p-form-draggable': this.props.draggable,
+            'p-form-resizable': this.props.resizable,
+        } as any, this.props.maskClassName, this.getPositionClass());
+
+        const header = this.renderHeader();
+        const content = this.renderContent();
+        const footer = this.renderFooter();
+        const resizer = this.renderResizer();
+
+        let transitionTimeout = {
+            enter: this.props.position === 'center' ? 150 : 300,
+            exit: this.props.position === 'center' ? 150 : 300
+        };
+
+        return (
+            <div ref={(el) => this.mask = el} className={maskClassName} onClick={this.onMaskClick}>
+                <CSSTransition nodeRef={this.dialogRef} classNames="p-form" timeout={transitionTimeout} in={this.state.visible} options={this.props.transitionOptions}
+                    unmountOnExit onEnter={this.onEnter} onEntered={this.onEntered} onExited={this.onExited}>
+                    <div ref={this.dialogRef} id={this.state.id} className={className} style={this.props.style} onClick={this.props.onClick}
+                        role="dialog" aria-labelledby={this.state.id + '_header'} aria-describedby={this.state.id + '_content'} aria-modal={this.props.modal}>
+                        {header}
+                        {content}
+                        {footer}
+                        {resizer}
+                    </div>
+                </CSSTransition>
+            </div>
+        );
+    }
+
+    render() {
+        if (this.state.maskVisible) {
+            const element = this.renderElement();
+
+            return <Portal element={element} appendTo={this.props.appendTo} visible />;
+        }
+
+        return null;
+    }
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="./settings.js"></script>
+    <script src="../dist_web/tuval-core.js"></script>
+    <style>
+        #output {
+            width: 100%;
+            height: 200px;
+            margin: 0 auto;
+            margin-top: 10px;
+            border-left: 0px;
+            border-right: 0px;
+            padding-left: 0px;
+            padding-right: 0px;
+            display: block;
+            background-color: black;
+            color: white;
+            font-family: 'Lucida Console', Monaco, monospace;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <textarea id="output" rows="8"></textarea>
+</body>
+<script>
+    with(Tuval) {
+        const callerIds = new Queue();
+        callerIds.Enqueue(1);
+        callerIds.Enqueue(2);
+        callerIds.Enqueue(3);
+        callerIds.Enqueue(4);
+
+        foreach(callerIds, (id) => {
+            Console.Write(id); //prints 1234
+        });
+    }
+
+    with(Tuval) {
+        const strQ = new Queue();
+        strQ.Enqueue("H");
+        strQ.Enqueue("e");
+        strQ.Enqueue("l");
+        strQ.Enqueue("l");
+        strQ.Enqueue("o");
+
+        Console.WriteLine("Total elements: {0}", strQ.Count); //prints 5
+
+        while (strQ.Count > 0) {
+            Console.WriteLine(strQ.Dequeue()); //prints Hello
+        }
+
+        Console.WriteLine("Total elements: {0}", strQ.Count); //prints 0
+    }
+</script>
+
+</html>

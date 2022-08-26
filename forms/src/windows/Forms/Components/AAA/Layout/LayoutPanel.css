@@ -1,0 +1,13 @@
+.tuval-layout-panel {}
+
+.tuval-layout-panel .p-grid {
+    margin: 0px !important;
+}
+
+.tuval-layout-panel .p-grid .p-col-fixed {
+    padding: 0px !important;
+}
+
+.tuval-layout-panel .p-grid .p-col {
+    padding: 0px !important;
+}

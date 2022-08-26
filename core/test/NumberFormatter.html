@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="../dist_web/tuval-core.js"></script>
+    <style>
+        body {
+            background-color:rgb(34, 33, 42);
+        }
+    </style>
+</head>
+
+<body></body>
+<script>
+
+    with (Tuval) {
+
+        /* const p = new CultureInfo('tr-TR');
+        const nf = p.NumberFormat; */
+        //console.log();
+        const wm = new WasmModule('main.wasm');
+        wm.CallMain = ()=>{
+            console.log(wm.asm.add(10,20));
+        };
+        wm.Run();
+
+        console.log(WasmModule);
+        const ubytes = Encoding.UTF8.GetBytes(JSON.stringify(TimeZones));
+        const bytes = TCompress.CompressBytes(ubytes);
+        const base64 = Convert.ToBase64String(bytes);
+
+        const bb = Convert.FromBase64String(base64);
+        const debytes = TCompress.DeCompressBytes(bb);
+        const timeZoneString = Encoding.UTF8.GetString(debytes);
+        const timeZones = JSON.parse(timeZoneString);
+        console.log(timeZones);
+        Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.UICurrentCulture = new CultureInfo('tr-TR');
+       // debugger;
+        console.log(TNumber.ToString('N0', 12000000));
+        //console.log(TNumber.ToString('N1',  123456789));
+    }
+</script>
+
+</html>

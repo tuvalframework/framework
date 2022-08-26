@@ -1,0 +1,8 @@
+.tuval-drop-area {
+    border: 2px dashed #f1f1f1;
+    border-radius: 15px;
+    width: 100%;
+    margin: 5px;
+    padding: 5px;
+    text-align: center;
+}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="../dist_web/tuval-core.js"></script>
+  </head>
+
+  <body></body>
+  <script>
+   with(Tuval) {
+       console.log(inspectHeap());
+       const a = malloc(256);
+       console.log(inspectHeap());
+       const b = malloc(256);
+       console.log(inspectHeap());
+       free(a);
+       console.log(inspectHeap());
+   }
+  </script>
+</html>

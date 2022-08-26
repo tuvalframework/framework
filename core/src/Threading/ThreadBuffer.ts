@@ -1,0 +1,1 @@
+export const ThreadArrayBuffer = ArrayBuffer;// typeof SharedArrayBuffer === 'undefined' ? ArrayBuffer : SharedArrayBuffer;

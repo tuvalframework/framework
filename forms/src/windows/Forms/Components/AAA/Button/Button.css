@@ -1,0 +1,127 @@
+.tuval-button {
+    -webkit-user-select: none;
+    visibility: visible;
+    cursor: pointer;
+    height: 26px;
+    line-height: 26px;
+    border-radius: 3px;
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+    background-size: 100%;
+    white-space: nowrap;
+    font-weight: normal;
+    font-size: 12px;
+    margin: 8px 10px 8px 0px;
+    width: 100%;
+    margin-left: 0px;
+}
+
+.tuval-button .unselectable {
+    font-style: normal;
+    position: relative;
+    cursor: pointer;
+}
+
+.tuval-button .unselectable .text {
+    font-family: verdana, arial, tahoma, helvetica, sans-serif;
+    font-size: 12px !important;
+    cursor: pointer;
+    border-radius: 0px;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    margin: 0;
+    overflow: visible;
+    outline: 0;
+    padding-left: 14px;
+    padding-right: 14px;
+    background-repeat: no-repeat;
+    vertical-align: top;
+    height: 26px;
+}
+
+.button-blue {
+    border: solid 1px #1687D9;
+    background-image: linear-gradient(#32AAFF, #1994EB);
+    background-color: #1994EB;
+}
+
+.button-blue .text {
+    color: #FFFFFF !important;
+}
+
+.button-blue:hover {
+    border: solid 1px #07c;
+    background-image: linear-gradient(#25A4FF, #028AEB);
+    background-color: #028AEB;
+}
+
+.button-blue:active {
+    border: solid 1px #07c;
+    background-image: linear-gradient(#1897F2, #0182DF);
+    background-color: #0182DF;
+}
+
+.button-grey {
+    color: #505A64;
+    border: solid 1px #C8D2DC;
+    background-image: linear-gradient(#f5faff, #ebf0f5);
+    background-color: #EBF0F5;
+}
+
+.button-grey:hover {
+    color: #505A64;
+    border: solid 1px #B4BEC8;
+    background-image: linear-gradient(#f5faff, #e7ecf1);
+    background-color: #E7ECF1;
+}
+
+.button-grey:active {
+    color: #505A64;
+    border: solid 1px #B4BEC8;
+    background-image: linear-gradient(#ebf0f5, #e1e6eb);
+    background-color: #E1E6EB;
+}
+
+.button-red {
+    color: #FFFFFF;
+    border: solid 1px #D14949;
+    background-image: linear-gradient(#FA7070, #EB5F5F);
+    background-color: #EB5F5F;
+}
+
+.button-red:hover {
+    color: #FFFFFF;
+    border: solid 1px #C43B38;
+    background-image: linear-gradient(#F96868, #DF4848);
+    background-color: #DF4848;
+}
+
+.button-red:active {
+    color: #FFFFFF;
+    border: solid 1px #C43B38;
+    background-image: linear-gradient(#E85656, #D94646);
+    background-color: #D94646;
+}
+
+.button-green {
+    color: #FFFFFF;
+    border: solid 1px #7db012;
+    background-image: linear-gradient(#9acf29, #88bf14);
+    background-color: #88bf14;
+}
+
+.button-green:hover {
+    color: #FFFFFF;
+    border: solid 1px #63a100;
+    background-image: linear-gradient(#88c527, #78b714);
+    background-color: #78b714;
+}
+
+.button-green:active {
+    color: #FFFFFF;
+    border: solid 1px #63a100;
+    background-image: linear-gradient(#76bb25, #67ad13);
+    background-color: #67ad13;
+}

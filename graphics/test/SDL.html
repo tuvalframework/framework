@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="../dist_web/tuval-graphics.js"></script>
+    <style>
+        body {
+            background-color:rgb(34, 33, 42);
+        }
+    </style>
+</head>
+
+<body></body>
+<script>
+
+    with (Tuval) {
+
+        /* const p = new CultureInfo('tr-TR');
+        const nf = p.NumberFormat; */
+        //console.log();
+        const sdl = new SDLModule(320,200);
+        sdl.CallMain = ()=>{
+            sdl._SDL_Init(0x00000020);
+            const screen =  sdl._SDL_SetVideoMode(600, 450, 32, 0);
+            sdl._TTF_Init();
+            const font = sdl._TTF_OpenFont('sans-serif', 40);
+
+            const color = CGColor.FromRgba(0xff, 0x99, 0x00, 0xff);
+            const text = sdl._TTF_RenderText_Solid(font, 'hello orange world',color );
+
+            const color2 = CGColor.FromRgba( 0xbb, 0, 0xff, 0xff);
+            const text2 = sdl._TTF_RenderText_Solid(font, "a second line, purple", color2);
+              // render
+            const dest = new CGRectangle( 0, 50, 0, 0 );
+            sdl.BlitSurface (text, null, screen, null);
+            dest.Y = 100;
+            sdl.BlitSurface (text2, null, screen, dest);
+
+            // fill stuff
+            const rect = new CGRectangle(0,0, 200, 200 );
+            sdl._SDL_FillRect(screen, rect, sdl._SDL_MapRGBA(screen.format, 0xFF, 0xFF, 0xff, 0xff));
+
+            sdl._SDL_Flip(screen);
+
+            sdl._SDL_LockSurface(screen);
+
+
+            let width, height;
+            const size = sdl._emscripten_get_canvas_element_size();
+            width = size.Width;
+            height = size.height;
+
+            if (width != 600 && height != 450)
+            {
+                printf("error: wrong width/height\n");
+                abort();
+            }
+
+            let sum = 0;
+            for (let i = 0; i < screen.h; i++) {
+                //sum += sdl.HEAP8[( sdl.HEAP16[screen.pixels >> 1] + i * screen.w * 4 + i * 4 + 0 )];
+            }
+           console.log(sum);
+
+            console.log("you should see two lines of text in different colors and a blue rectangle\n");
+
+            sdl._SDL_UnlockSurface(screen);
+
+            sdl._SDL_Quit();
+        };
+        sdl.Run();
+    }
+</script>
+
+</html>

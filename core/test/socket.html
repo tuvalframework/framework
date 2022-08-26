@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="../dist_web/tuval-core.js"></script>
+</head>
+
+<body></body>
+<script>
+    with(Tuval) {
+
+        const serverSocket = new ServerSocket('localhost', 123);
+        serverSocket.Listen();
+        serverSocket.Accept().then((c) => {
+            console.log(c);
+        });
+        serverSocket.Read().then((data) => {
+            console.log(data);
+        });
+
+        const clientSocket = new ClientSocket('localhost', 123);
+        clientSocket.Connect().then(() => {
+            console.log('conneted');
+            clientSocket.Write(New.ByteArray([1, 1, 1]));
+            clientSocket.Write(New.ByteArray([1, 14, 1]));
+            clientSocket.Write(New.ByteArray([1, 13, 51]));
+            clientSocket.Write(New.ByteArray([21, 21, 14]));
+        });
+
+
+
+
+    }
+</script>
+
+</html>

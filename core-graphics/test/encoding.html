@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Drawing A Point</title>
+  <script src="../dist/tuval-core.js"></script>
+</head>
+
+<body></body>
+<script>
+
+  var str = "C:\\MyDir\\MySubDir\\myfile.ext";
+  const _str = '\\';
+  var n = Tuval.Console.WriteLine(Tuval.Path.GetPathRoot(str));
+
+  console.log(Tuval)
+  const a = Tuval.Encoding.UTF8.GetBytes(
+    '😃 😄 😁 😆 😅 😂 🤣 ☺️ 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗 😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🤩 🥳 😏 😒 😞 😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨 😰 😥 😓 🤗 🤔 🤭 🤫 🤥 😶 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴 🤤 😪 😵 🤐 🥴 🤢 🤮 🤧 😷 🤒 🤕 🤑 🤠 😈 👿 👹 👺 🤡 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾'
+  )
+  console.log(a)
+  console.log(Tuval.Encoding.UTF8.GetString(a))
+  console.log(Tuval.Encoding.ASCII.GetBytes('hans'))
+
+  const stringToRead = new Tuval.StringBuilder()
+  stringToRead.AppendLine('Characters in 1st line to read')
+  stringToRead.AppendLine('and 2nd line')
+  stringToRead.AppendLine('and the end')
+
+  const reader = new Tuval.StringReader(stringToRead.ToString())
+  // const readText = reader.Read();
+  console.log(reader.Read())
+  console.log(reader.Read())
+  console.log(reader.Read())
+
+  const textReaderText =
+    'TextReader is the abstract base ' +
+    'class of StreamReader and StringReader, which read ' +
+    'characters from streams and strings, respectively.\n\n' +
+    'Create an instance of TextReader to open a text file ' +
+    'for reading a specified range of characters, or to ' +
+    'create a reader based on an existing stream.\n\n' +
+    'You can also use an instance of TextReader to read ' +
+    'text from a custom backing store using the same ' +
+    'APIs you would use for a string or a stream.\n\n'
+
+  Tuval.Console.WriteLine('Original text:\n\n{0}', textReaderText)
+
+  let aLine,
+    aParagraph = Tuval.TString.Empty
+  let strReader = new Tuval.StringReader(textReaderText)
+  while (true) {
+    aLine = strReader.ReadLine()
+    if (aLine != null) {
+      aParagraph = aParagraph + aLine + ' '
+    } else {
+      aParagraph = aParagraph + '\n'
+      break
+    }
+  }
+  Tuval.Console.WriteLine('Modified text:\n\n{0}', aParagraph)
+
+  // Re-create textReaderText from aParagraph.
+  let intCharacter
+  let convertedCharacter
+  const strWriter = new Tuval.StringWriter()
+  strReader = new Tuval.StringReader(aParagraph)
+  while (true) {
+    intCharacter = strReader.Read()
+
+    // Check for the end of the string
+    // before converting to a character.
+    if (intCharacter === -1) break
+
+    convertedCharacter = Tuval.Convert.ToChar(intCharacter)
+    if (convertedCharacter == '.'.charCodeAt(0)) {
+      strWriter.WriteString('.\n\n')
+
+      // Bypass the spaces between sentences.
+      strReader.Read()
+      strReader.Read()
+    } else {
+      strWriter.WriteChar(convertedCharacter)
+    }
+  }
+  Tuval.Console.WriteLine('\nOriginal text:\n\n{0}', strWriter.ToString())
+
+  with (Tuval) {
+    Console.WriteLine(MemoryStream)
+    let byteArray
+    let charArray
+    const uniEncoding = Encoding.Unicode
+
+
+    // Create the data to write to the stream.
+    const firstString = uniEncoding.GetBytes('Invalid file path characters are: ')
+    const secondString = uniEncoding.GetBytes(Path.GetInvalidPathChars())
+    const memStream = new MemoryStream(100)
+    memStream.Write(firstString, 0, firstString.length);
+    // Write the second string to the stream, byte by byte.
+    let count = 0;
+    while (count < secondString.length) {
+      memStream.WriteByte(secondString[count++])
+    }
+
+    // Write the stream properties to the console.
+    Console.WriteLine(
+      'Capacity = {0}, Length = {1}, Position = {2}\n',
+      memStream.Capacity.toString(),
+      memStream.Length.toString(),
+      memStream.Position.toString()
+    )
+
+    // Set the position to the beginning of the stream.
+    memStream.Seek(0, 0);
+
+    // Read the first 20 bytes from the stream.
+    byteArray = New.ByteArray(memStream.Length);
+    count = memStream.Read(byteArray, 0, 20);
+
+    // Read the remaining bytes, byte by byte.
+    while (count < memStream.Length) {
+      byteArray[count++] = Convert.ToByte(memStream.ReadByte())
+    }
+
+    // Decode the byte array into a char array
+    // and write it to the console.
+    charArray = New.CharArray(uniEncoding.GetCharCount(byteArray, 0, count));
+    uniEncoding.GetDecoder().GetChars(byteArray, 0, count, charArray, 0)
+    Console.WriteLine(TString.FromCharArray(charArray));
+  }
+
+  with (Tuval) {
+    const memStream = new MemoryStream(100);
+    const sw = new StreamWriter(memStream);
+    sw.WriteLineString('Test me ilk.');
+    sw.Flush();
+    memStream.Position = 0;
+    const sr = new StreamReader(memStream);
+    Console.WriteLine(sr.ReadLine());
+
+    FS.mkdir('/working');
+    FS.mkdir('/working/test');
+    FS.mount(IDBFS, { root: '.' }, '/working/test');
+    const file = FS.createFile('/working/test', 'hans.txt');
+    const openFile = FS.open(file, 'w');
+    const array = Encoding.UTF8.GetBytes('😃 😄 😁 😆 😅 😂 🤣 ☺️ 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗 😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🤩 🥳 😏 😒 😞 😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨 😰 😥 😓 🤗 🤔 🤭 🤫 🤥 😶 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴 🤤 😪 😵 🤐 🥴 🤢 🤮 🤧 😷 🤒 🤕 🤑 🤠 😈 👿 👹 👺 🤡 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾');
+    FS.write(openFile, array, 0, array.length);
+    FS.syncfs();
+    FS.close(openFile);
+    FS.lookupPath('/working/test/hans.txt');
+
+    const rfile = FS.open('/working/test/hans.txt', 'r');
+    const stat = FS.stat('/working/test/hans.txt');
+    console.log(stat);
+    const buffer = New.ByteArray(stat.size);
+    FS.read(rfile, buffer, 0, stat.size);
+    console.log(Encoding.UTF8.GetString(buffer));
+  }
+
+  with (Tuval) {
+
+    const path1 = "c:\\temp\\MyTest.txt";
+    const path2 = "c:\\temp\\MyTest";
+    const path3 = "temp";
+
+    if (Path.HasExtension(path1)) {
+      Console.WriteLine("{0} has an extension.", path1);
+    }
+
+    if (!Path.HasExtension(path2)) {
+      Console.WriteLine("{0} has no extension.", path2);
+    }
+
+    if (!Path.IsPathRooted(path3)) {
+      Console.WriteLine("The string {0} contains no root information.", path3);
+    }
+
+    Console.WriteLine("The extension path of {0} is {1}.", path1, Path.GetExtension(path1));
+    /*  Console.WriteLine("{0} is the location for temporary files.", Path.GetTempPath());
+     Console.WriteLine("{0} is a file available for use.", Path.GetTempFileName()); */
+    let filePath = "C:\\MyDir\\MySubDir\\myfile.ext";
+    let directoryName;
+    let i = 0;
+
+    const dicArray = [];
+    while (filePath != null) {
+      directoryName = Path.GetDirectoryName(filePath);
+      if (directoryName == null) {
+        break;
+      }
+      Console.WriteLine("GetDirectoryName('{0}') returns '{1}'", filePath, directoryName);
+      const fileName = Path.GetFileName(directoryName);
+      if (fileName != '') {
+        dicArray.push(fileName);
+      } else {
+        dicArray.push(directoryName);
+      }
+
+      filePath = directoryName;
+      /*  if (i == 1) {
+         filePath = directoryName + "\\";  // this will preserve the previous path
+       } */
+      i++;
+    }
+    debugger;
+     /*  Console.Write(dicArray.reverse());
+    const fs = new FileStream('C:\\test\\myfile.ext', FileMode.Create,FileAccess.Write);
+    const array1 = Encoding.UTF8.GetBytes('😃 😄 😁 😆 😅 😂 🤣 ☺️ 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗 😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🤩 🥳 😏 😒 😞 😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨 😰 😥 😓 🤗 🤔 🤭 🤫 🤥 😶 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴 🤤 😪 😵 🤐 🥴 🤢 🤮 🤧 😷 🤒 🤕 🤑 🤠 😈 👿 👹 👺 🤡 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾');
+    fs.Write(array1, 0, array1.length);
+    fs.Flush();
+    fs.Close(); */
+
+    const fsRead = new FileStream('C:\\test\\myfile.ext', FileMode.Open,FileAccess.Read);
+    const stat = FS.stat('C/test/myfile.ext');
+    const bufferRead = New.ByteArray(stat.size);
+    fsRead.Read(bufferRead, 0, stat.size);
+    console.log(Encoding.UTF8.GetString(bufferRead));
+    fsRead.Close();
+  }
+</script>
+
+</html>

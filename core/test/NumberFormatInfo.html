@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="../dist_web/tuval-core.js"></script>
+  </head>
+
+  <body></body>
+  <script>
+    with (Tuval) {
+     // Creates and initializes a CultureInfo.
+     Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo('tr-TR');
+     const myCI = new CultureInfo("en-US", false);
+     myCI.ToString();
+     const myCIclone =  myCI.Clone();
+      myCIclone.DateTimeFormat.AMDesignator = "a.m.";
+      myCIclone.DateTimeFormat.DateSeparator = "-";
+      myCIclone.NumberFormat.CurrencySymbol = "USD";
+      myCIclone.NumberFormat.NumberDecimalDigits = 4;
+
+     Console.WriteLine( "DTFI/NFI PROPERTY\tORIGINAL\tMODIFIED CLONE" );
+      Console.WriteLine( "DTFI.AMDesignator\t\t{0}\t\t{1}", myCI.DateTimeFormat.AMDesignator, myCIclone.DateTimeFormat.AMDesignator );
+      Console.WriteLine( "DTFI.DateSeparator\t\t{0}\t\t{1}", myCI.DateTimeFormat.DateSeparator, myCIclone.DateTimeFormat.DateSeparator );
+      Console.WriteLine( "NFI.CurrencySymbol\t\t{0}\t\t{1}", myCI.NumberFormat.CurrencySymbol, myCIclone.NumberFormat.CurrencySymbol );
+      Console.WriteLine( "NFI.NumberDecimalDigits\t\t{0}\t\t{1}", myCI.NumberFormat.NumberDecimalDigits, myCIclone.NumberFormat.NumberDecimalDigits );
+
+      const dt = new DateTime(2017,06,19);
+
+            const format =  new CultureInfo("tr-TR").DateTimeFormat.ShortDatePattern;
+
+            const ci1 = new CultureInfo("en-US");
+            const ci2 = new CultureInfo("tr-TR");
+
+            Console.WriteLine(dt.ToString(format));
+            Console.WriteLine(dt.ToString("d",ci1));
+            Console.WriteLine(dt.ToString("d",ci2));
+    }
+  </script>
+</html>

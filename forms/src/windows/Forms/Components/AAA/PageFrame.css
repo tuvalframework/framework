@@ -1,0 +1,12 @@
+.tuval-pageframe iframe {
+    border: none;
+    width: 100%;
+}
+
+.tuval-pageframe .centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -100px;
+}

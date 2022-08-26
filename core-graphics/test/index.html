@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Drawing A Point</title>
+    <script src="../dist_web/tuval-core-graphics.js"></script>
+</head>
+
+<body>
+    <iframe id='myFrame'></iframe>
+    <button onclick="setFrame()">Test</button>
+
+    <script>
+        with (Tuval) {
+            const c = new CGCommandContext2D(null);
+            c.Begin();
+            c.scaleCTM(10, 10);
+            c.translateCTM(43, 25);
+            c.scaleCTM(23, 60);
+            c.translateCTM(93, 125);
+            c.rotateCTM(93);
+            c.saveState();
+            c.restoreState();
+            //c.concatCTM();
+            c.End();
+            const pilot = new CommandContextPilot(c);
+            pilot.Drive();
+
+            /*  console.log(Marshal.SizeOf(StartCommand));
+             const size = Marshal.SizeOf(StartCommand);
+             const str = Marshal.PtrToStructure(new IntPtr(c.GetStartPointer()), type(CoreGraphicTypes.StartCommand)); */
+        }
+
+        console.log('test');
+    </script>
+</body>
+
+</html>

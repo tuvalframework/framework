@@ -1,0 +1,46 @@
+import { IRenderable } from './../../../../UIKit/IView';
+import { AppearanceObject } from "./AppearanceObject";
+import { Event, int } from '@tuval/core';
+import { Padding } from "../../Padding";
+import { Border } from "../../Border";
+import { Margin } from "../../Margin";
+import { Message } from "./Message";
+import { KeyFrameCollection } from '../../../../UIKit/KeyFrameCollection';
+
+export interface IControl extends IRenderable {
+    Text: string;
+    TabIndex:int;
+    Appearance: AppearanceObject;
+    HoverAppearance: AppearanceObject;
+    ActiveAppearance: AppearanceObject;
+    DisabledAppearance:AppearanceObject;
+    FocusAppearance: AppearanceObject;
+    BeforeAppearance:AppearanceObject;
+    PropertyChanged: Event<any>;
+    UpdateRequied: Event<any>;
+    OnLoaded(): void;
+    OnUnLoaded(): void;
+    Width?: int;
+    Height?: int;
+    BackgroundColor: string;
+    Padding: Padding;
+    Border: Border;
+    Margin: Margin;
+    Left?: string;
+    Top?: string;
+    Bottom?: string;
+    Right?: string;
+    _Width?: string;
+    _Height?: string;
+    Id: string;
+    WndProc(msg:Message);
+    PaddingAll?: string;
+    PaddingLeft?: string;
+    PaddingRight?: string;
+    PaddingTop?: string;
+    PaddingBottom?: string;
+    BackColor?: any;
+    Visible: boolean;
+    Tooltip: string;
+    KeyFrameCollection:KeyFrameCollection[];
+}

@@ -1,0 +1,66 @@
+.tuval-listview {
+    overflow: auto;
+    border: 1px solid #ced4da;
+    box-sizing: border-box;
+}
+
+.tvl-listview {
+    -webkit-text-size-adjust: 100%;
+    font-family: Verdana, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #000!important;
+    box-sizing: inherit;
+    display: flex;
+    text-align: center;
+    flex-wrap: wrap;
+    padding: 0.5rem 0.5rem;
+}
+
+.tvl-listview-item {
+    -webkit-text-size-adjust: 100%;
+    font-family: Verdana, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #000!important;
+    text-align: center;
+    box-sizing: inherit;
+    width: 100px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.tvl-listview-icon {
+    -webkit-text-size-adjust: 100%;
+    width: 64px;
+    height: 64px;
+}
+
+.tvl-listview-icon-selected {
+    -webkit-mask-image: linear-gradient(red, transparent);
+    mask-image: linear-gradient(red, transparent);
+}
+
+.tvl-listview-icon-text {
+    font-family: verdana, arial, tahoma, helvetica, sans-serif;
+    -webkit-user-select: none;
+    list-style: none;
+    list-style-type: none;
+    cursor: pointer;
+    visibility: visible;
+    padding: 0;
+    width: 100%;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    margin: 0 auto;
+    overflow: visible;
+    text-overflow: ellipsis;
+    /* text-shadow: rgb(0, 0, 0) 0.1em 0.1em 0.1em; */
+    color: rgb(22, 22, 22);
+}
+
+.tvl-listview-icon-text-selected {
+    background-color: navy;
+    color: rgb(255, 255, 255);
+}

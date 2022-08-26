@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="../dist_web/tuval-core.js"></script>
+  </head>
+
+  <body></body>
+  <script>
+    with (Tuval) {
+      const _a = Int64.fromNumber(100);
+      /*   Console.Write(defer);
+        interval((data)=>{
+            Console.Write('test');
+        }, 1000,10, {a:45}); */
+
+        Parallel
+		.startNew('there', x => 'hello: ' + x)
+		.then(
+			result => Console.WriteLine(result),
+			() => console.error('')
+        );
+
+        function test (start)
+        {
+            console.log('test');
+            const max = 3000000;
+            for(let i = start, stop = start + max; i<stop; i++)
+            {
+                start += i;
+            }
+            return start;
+        }
+        let synchronousResult = 0;
+        const data = [];
+        const result = Stopwatch.measure(
+		() => {
+			for(let i = 0; i<20; i++)
+			{
+				data.push(i);
+				synchronousResult += test(i);
+			}
+        });
+        console.log(result.total.milliseconds);
+        const maxCon = 5;
+       /*  const sw = Stopwatch.startNew();
+        Parallel
+			.maxConcurrency(maxCon)
+			.map(data, test)
+			.thenThis(
+				() => console.log('ok'),
+				() => assert.ok(false, 'mapping failed!'))
+			.reduce((p, c) => p + c, 0)
+			.then(
+				result => console.log(result, ' : ',synchronousResult),
+				error => assert.ok(false, error)
+			)
+			 .finallyThis(
+			 	()=>console.log(`\n(${maxCon}) Parallel map time (ms):`, sw.elapsedMilliseconds))
+            ; */
+
+            const sw1 = Stopwatch.startNew();
+            const a = Parallel
+			.maxConcurrency(maxCon)
+            .pipe(data, test)
+			.reduce((p, c) => {
+                console.log('reduce');
+                return p + c;
+            }, 0)
+			 .then(
+				result => console.log(result, ' : ',synchronousResult),
+				error => assert.ok(false, error)
+			)
+			 .finallyThis(
+			 	()=>console.log(`\n(${maxCon}) Parallel pipe time (ms):`, sw1.elapsedMilliseconds))
+            ;
+
+    }
+  </script>
+</html>

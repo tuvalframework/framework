@@ -1,0 +1,12 @@
+.tuval-treeview {
+    overflow: auto;
+    border: 1px solid #ced4da;
+}
+
+.tuval-treeview>.p-tree {
+    padding: 0px;
+}
+
+.tuval-treeview .p-tree {
+    border: 0px;
+}

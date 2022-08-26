@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="./settings.js"></script>
+    <script src="../dist_web/tuval-core.js"></script>
+    <style>
+        #output {
+            width: 100%;
+            height: 200px;
+            margin: 0 auto;
+            margin-top: 10px;
+            border-left: 0px;
+            border-right: 0px;
+            padding-left: 0px;
+            padding-right: 0px;
+            display: block;
+            background-color: black;
+            color: white;
+            font-family: 'Lucida Console', Monaco, monospace;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <textarea id="output" rows="8"></textarea>
+</body>
+<script>
+    with(Tuval) {
+        const myStack = new Stack();
+        myStack.Push(1);
+        myStack.Push(2);
+        myStack.Push(3);
+        myStack.Push(4);
+
+        foreach(myStack, (item) => {
+            Console.Write(item + ","); //prints 4,3,2,1,
+        });
+
+        const arr = New.IntArray([1, 2, 3, 4]);
+        const myStack1 = new Stack(arr);
+
+        foreach(myStack1, (item) => {
+            Console.Write(item + ","); //prints 4,3,2,1,
+        });
+
+        const myStack2 = new Stack();
+        myStack2.Push(1);
+        myStack2.Push(2);
+        myStack2.Push(3);
+        myStack2.Push(4);
+
+        Console.Write("Number of elements in Stack: {0}", myStack2.Count);
+
+        while (myStack2.Count > 0)
+            Console.Write(myStack2.Pop() + ",");
+
+        Console.Write("Number of elements in Stack: {0}", myStack2.Count);
+
+
+    }
+</script>
+
+</html>

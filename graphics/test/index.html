@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Drawing A Point</title>
+    <script src="../dist_web/tuval-graphics.js"></script>
+</head>
+
+<body>
+    <script>
+        with (Tuval) {
+            const g = new Graphics(1500, 1500);
+            const commandGraphics = new CommandGraphics();
+            const pilot = new CommandContextPilot(commandGraphics.renderer);
+            /* g.fillRectangle(Brushes.Gray, new CGRectangle(40, 40, 100, 100));
+            g.drawRectangle(Pens.Green, new CGRectangle(40, 40, 100, 100)); */
+           /*  const x = 0,
+            y = 0; */
+            let x = 0;
+            let y = 0;
+             const eventBus = Context.Current.get('eventBus');
+            eventBus.on('mouse.move', (e) => {
+                x = e.x;
+                y = e.y;
+                //console.log(e);
+                //thread.fire(WM_MOUSEMOVE, { x: tgi.mouseX, y: tgi.mouseY });
+            });
+
+
+
+
+            let i = 0;
+            g.RequestAnimationFrame(() => {
+                i;
+                if (i < 900) {
+                    //console.log(i);
+                   // debugger;
+                   commandGraphics.fillRectangle(Pens.White, new CGRectangle(0, 0, 1500, 1500));
+                   commandGraphics.translateTransform(x,y );
+
+                    commandGraphics.fillRectangle(Brushes.Gray, new CGRectangle(40, 40, 100, 100));
+                    commandGraphics.drawRectangle(Pens.Green, new CGRectangle(40, 40, 100, 100));
+                    commandGraphics.drawLine(Pens.Black, 10, 10, 200, 200);
+                    const startAngle = 45;
+                    const sweepAngle = 90;
+                    let redPen = new Pen(CGColor.Red, 3);
+                    let rect = new CGRectangle(0, 0, 100, 100);
+                    commandGraphics.drawArc(redPen, rect, startAngle, sweepAngle);
+
+                    redPen = new Pen(CGColor.Red, 6);
+                    var bluePen = new Pen(CGColor.Blue, 4);
+                    var greenPen = new Pen(CGColor.Green, 2);
+                    rect = new CGRectangle(80, 80, 50, 50);
+                    commandGraphics.drawEllipse(greenPen, 100, 100, 10, 10);
+                    commandGraphics.drawEllipse(redPen, rect);
+                    commandGraphics.drawEllipse(bluePen, 60, 60, 90, 90);
+                    commandGraphics.drawEllipse(greenPen, 40, 40, 130, 130);
+                    commandGraphics.translateTransform(-x,-y );
+                    //console.time('test');
+                    pilot.Drive(g.getContext());
+                    pilot.Reset(g.getContext());
+                    console.log(x);
+
+                    //console.timeEnd('test');
+
+                } else {
+                    console.log('bitti ->i' + i);
+                }
+            });
+
+            /*  const c = new CGCommandContext2D();
+             c.setFillColor(new CGColor(128, 128, 128));
+             c.setFillColor(new CGColor(34, 45, 26));
+             const ppilot = new CommandContextPilot(c);
+             ppilot.Drive(g.getContext()); */
+
+        }
+
+        console.log('test');
+    </script>
+</body>
+
+</html>

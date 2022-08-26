@@ -1,0 +1,50 @@
+.p-steps .p-steps-item .p-menuitem-link {
+    background: transparent;
+    transition: box-shadow 0.2s;
+    border-radius: 3px;
+    background: #ffffff;
+}
+
+.p-steps .p-steps-item .p-menuitem-link .p-steps-number {
+    color: #495057;
+    border: 1px solid #e9ecef;
+    background: #ffffff;
+    min-width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+    font-size: 1.143rem;
+    z-index: 1;
+    border-radius: 50%;
+}
+
+.p-steps .p-steps-item .p-menuitem-link .p-steps-title {
+    margin-top: 0.5rem;
+    color: #6c757d;
+}
+
+.p-steps .p-steps-item .p-menuitem-link:not(.p-disabled):focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0 0 0 0.2rem #a6d5fa;
+}
+
+.p-steps .p-steps-item.p-highlight .p-steps-number {
+    background: #E3F2FD;
+    color: #495057;
+}
+
+.p-steps .p-steps-item.p-highlight .p-steps-title {
+    font-weight: 600;
+    color: #495057;
+}
+
+.p-steps .p-steps-item:before {
+    content: ' ';
+    border-top: 1px solid #dee2e6;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    display: block;
+    position: absolute;
+    margin-top: -1rem;
+}

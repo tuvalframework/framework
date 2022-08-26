@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="https://unpkg.com/@tuval/core/settings.js"></script>
+    <!-- <script src="../../dist_web/tuval-core.js"></script> -->
+    <script src="https://unpkg.com/@tuval/core/tuval-core.js"></script>
+    <style>
+             #output {
+        width: 100%;
+        height: 200px;
+        margin: 0 auto;
+        margin-top: 10px;
+        border-left: 0px;
+        border-right: 0px;
+        padding-left: 0px;
+        padding-right: 0px;
+        display: block;
+        background-color: black;
+        color: white;
+        font-family: 'Lucida Console', Monaco, monospace;
+        outline: none;
+      }
+    </style>
+</head>
+
+<body>
+    <textarea id="output" rows="8"></textarea>
+</body>
+<script>
+    with (Tuval) {
+        CultureInfo.CurrentCulture = new CultureInfo('tr-TR');
+        const primeNumbers = new List();
+primeNumbers.Add(1); // adding elements using add() method
+primeNumbers.Add(3);
+primeNumbers.Add(5);
+primeNumbers.Add(7);
+Console.WriteLine(primeNumbers.ToString());
+
+const cities = new List();
+cities.Add("New York");
+cities.Add("London");
+cities.Add("Istanbul");
+cities.Add("Chicago");
+cities.Add(null);// nulls are allowed for reference type list
+Console.WriteLine(cities.ToString());
+
+//adding elements using collection-initializer syntax
+const bigCities = new List(["New York","London","Istanbul","Chicago"   ]);
+Console.WriteLine(bigCities.ToString());
+
+const _cities = ["Mumbai", "London", "New York"];
+
+var popularCities = new List();
+
+// adding an array in a List
+popularCities.AddRange(_cities);
+
+var favouriteCities = new List();
+
+        // adding a List
+        favouriteCities.AddRange(popularCities);
+        Console.WriteLine(favouriteCities.ToString());
+
+        const numbers = new List([1, 2, 5, 7, 8, 10]);
+        Console.WriteLine('First Item is {0}',numbers.Get(0)); // prints 1
+        Console.WriteLine(numbers.Get(1)); // prints 2
+        Console.WriteLine(numbers.Get(2)); // prints 5
+        Console.WriteLine(numbers.Get(3)); // prints 7
+
+        numbers.ForEach(num => Console.WriteLine(num + ", "));//prints 1, 2, 5, 7, 8, 10,
+
+        for(let i = 0; i < numbers.Count; i++){
+            Console.WriteLine(numbers.Get(i));
+        }
+
+            numbers.Insert(1, 11);// inserts 11 at 1st index: after 10.
+            numbers.ForEach(num => Console.WriteLine(num + ", "));//prints 1, 11, 2, 5, 7, 8, 10,
+
+            Console.WriteLine('-----------------');
+            numbers.Remove(10); // removes the first 10 from a list
+            numbers.RemoveAt(1);
+            numbers.ForEach(num => Console.WriteLine(num + ", "));//prints 1, 11, 2, 5, 7, 8, 10,
+
+          const  numbers1 = new List([ 10, 20, 30, 40 ]);
+           Console.WriteLine(numbers1.Contains(10)); // returns true
+            Console.WriteLine(numbers1.Contains(11)); // returns false
+            Console.WriteLine(numbers1.Contains(20)); // returns true
+
+            const numberNames = new SortedList();
+      numberNames.Add(3, "Three");
+      numberNames.Add(1, "One");
+      numberNames.Add(2, "Two");
+      numberNames.Add(4, null);
+      numberNames.Add(10, "Ten");
+      numberNames.Add(5, "Five");
+      Console.WriteLine(numberNames);
+
+      const __cities = new SortedList([
+                ["London", "UK"],
+                ["New York", "USA"],
+                ["İstanbul", "Turkey"],
+                ["Johannesburg", "South Africa"]
+            ]);
+            Console.WriteLine(TString.ReplaceAll(__cities.ToString(),',','\n'));
+
+
+    const numberNames1 = new SortedList([
+                                        [3, "Three"],
+                                        [5, "Five"],
+                                        [1, "One"]
+                                    ]);
+
+Console.WriteLine("---Initial key-values--");
+
+foreach( numberNames1, ( kvp)=>{
+    Console.WriteLine("key: {0}, value: {1}", kvp.Key , kvp.Value );
+});
+
+
+numberNames1.Add(6, "Six");
+numberNames1.Add(2, "Two");
+numberNames1.Add(4, "Four");
+
+Console.WriteLine("---After adding new key-values--");
+
+foreach(numberNames1, (kvp)=>{
+Console.WriteLine("key: {0}, value: {1}", kvp.Key , kvp.Value );
+});
+    }
+</script>
+
+</html>

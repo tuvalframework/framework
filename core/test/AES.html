@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Drawing A Point</title>
+    <script src="./settings.js"></script>
+    <script src="../dist_web/tuval-core.js"></script>
+    <title>AES</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="-1">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0,viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="apple-touch-icon" sizes="57x57" href="resources/appicon/icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="resources/appicon/icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="resources/appicon/icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="resources/appicon/icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="resources/appicon/icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="resources/appicon/icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="resources/appicon/icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="resources/appicon/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="resources/appicon/icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="resources/appicon/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="resources/appicon/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="resources/appicon/icon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="resources/appicon/icon-16x16.png">
+    <link rel="manifest" href="resources/appicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="resources/appicon/icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <style type="text/css">
+        #output {
+            width: 100%;
+            height: 200px;
+            margin: 0 auto;
+            margin-top: 10px;
+            border-left: 0px;
+            border-right: 0px;
+            padding-left: 0px;
+            padding-right: 0px;
+            display: block;
+            background-color: black;
+            color: white;
+            font-family: 'Lucida Console', Monaco, monospace;
+            outline: none;
+        }
+        
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000000;
+            font-family: Roboto, IBM Plex Mono, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+
+</body>
+<script>
+    with(Tuval) {
+        var blob = new Blob(["Hello, world!"], {
+            type: 'text/plain'
+        });
+        var blobUrl = URL.createObjectURL(blob);
+
+        const TVConsole = new TextConsole();
+
+        function test(d) {
+            let array;
+            if (Object(d).buffer instanceof ArrayBuffer) {
+                array = new Uint8Array(d.buffer);
+            } else if (typeof d === 'string') {
+                array = Encoding.UTF8.GetBytes(d); // new(TextEncoder('utf-8')).encode(d);
+            } else {
+                array = new Uint8ClampedArray(d);
+            }
+            for (let i = 0; i < array.length; i++) {
+                if (i % 16 === 0) {
+                    printLineNumber(i.toString(16).padStart(6, 0) + '  ');
+                } else {
+                    printLineNumber(' ');
+
+
+                }
+
+                printValue(array[i].toString(16).padStart(2, 0));
+                /*  if ((i === array.length - 1 || i % 16 === 15)) {
+                     printSpace(' '.repeat((15 - i % 16) * 3));
+                 } */
+
+                if ((((i % 16) + 1) === 16) || (((array.length - i) < 16) && ((i % 16) + 1 === ((array.length % 16))))) {
+                    printValue(' '.repeat((16 - (i % 16)) * 3));
+                    const tempArray = Array.from(array).splice(i - i % 16, 16);
+                    let tempValue = '';
+                    for (let k = 0; k < tempArray.length; k++) {
+                        tempValue += (tempArray[k] > 31 && tempArray[k] < 127 || tempArray[k] > 159 ? String.fromCharCode(tempArray[k]) : '.');
+                    }
+                    tempValue += '  ';
+
+                    printText(tempValue);
+                }
+
+            }
+        }
+
+        function printLineNumber(text) {
+            TVConsole.Write(text);
+        }
+
+        function printValue(text) {
+            TVConsole.Write(text.toUpperCase());
+        }
+
+        function printSpace(text) {
+            console.log(text);
+        }
+
+        function printText(text) {
+            //TVConsole.SetPen(5);
+            TVConsole.WriteLine(text);
+            //TVConsole.SetPen(1);
+        }
+
+        test('Birgün küçük kedi yolda d. Sonra ne mi olmuş. Kedi ıslanmış..');
+        TVConsole.WriteLine('');
+        TVConsole.WriteLine('---------------------------------------------------------------');
+
+        const a = aesjs.utils.utf8.toBytes('test')
+        TVConsole.WriteLine(a);
+
+        const str = aesjs.utils.utf8.fromBytes(a);
+        TVConsole.WriteLine(str);
+
+        const str1 = aesjs.utils.hex.fromBytes(a);
+        TVConsole.WriteLine(str1);
+        // aesjs.util.convertStringToBytes(aString, 'hex')
+        // Becomes:
+        const b = aesjs.utils.hex.toBytes('hey')
+        TVConsole.WriteLine(b);
+
+        // aesjs.util.convertBytesToString(aString, 'hex')
+        // Becomes:
+
+        // 128-bit, 192-bit and 256-bit keys
+        var key_128 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+        var key_192 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+            16, 17, 18, 19, 20, 21, 22, 23
+        ];
+        var key_256 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+            16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
+            29, 30, 31
+        ];
+
+        // or, you may use Uint8Array:
+        var key_128_array = new Uint8Array(key_128);
+        var key_192_array = new Uint8Array(key_192);
+        var key_256_array = new Uint8Array(key_256);
+
+        // An example 128-bit key (16 bytes * 8 bits/byte = 128 bits)
+        var key = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+
+        // Convert text to bytes
+        var text = 'Text may be any length you wish, no padding is required.';
+        var textBytes = aesjs.utils.utf8.toBytes(text);
+
+        // The counter is optional, and if omitted will begin at 1
+        var aesCtr = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5));
+        var encryptedBytes = aesCtr.encrypt(textBytes);
+
+        var encryptedHex = aesjs.utils.hex.fromBytes(encryptedBytes);
+        TVConsole.WriteLine(encryptedHex);
+        TVConsole.WriteLine(Generate_key());
+        const bb = aesjs.utils.hex.toBytes(Generate_key())
+        TVConsole.WriteLine(bb);
+
+        TVConsole.WriteLine('----------------------------------------');
+
+        const aes = Aes.Create();
+        aes.Key = New.ByteArray([0x5f, 0xb2, 0x62, 0xff, 0x0f, 0xb4, 0x96, 0xa9, 0xa1, 0x93, 0x49, 0x76, 0x4c, 0x2d, 0x7a, 0xd3, 0xc3, 0x0b, 0x44, 0xa0, 0xb4, 0xdf, 0xaf, 0xc0, 0x40, 0x7e, 0xdb, 0xef, 0xbc, 0x98, 0xae, 0x15]);
+        aes.IV = New.ByteArray([0xb5, 0xd2, 0xab, 0xa1, 0xc4, 0x5e, 0x40, 0x9d, 0x0b, 0x47, 0x3f, 0x74, 0xa8, 0x31, 0xd4, 0x7d]);
+        const encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+        TVConsole.WriteLine('Key:');
+        TVConsole.WriteHex(aes.Key);
+        TVConsole.WriteLine('-------------------------------------');
+        TVConsole.WriteLine('IV:');
+        debugger;
+        TVConsole.WriteHex(aes.IV);
+        TVConsole.WriteLine('-------------------------------------');
+
+        let encrypted;
+
+        TVConsole.ReadLine('Bir text girin : ', ((input) => {
+            using(new MemoryStream(), (ms) => {
+                using(new CryptoStream(ms, encryptor, CryptoStreamMode.Write), (cs) => {
+                    using(new StreamWriter(cs), (sw) => {
+                        sw.Write(input);
+                        sw.Flush();
+                        encrypted = ms.ToArray();
+                        TVConsole.WriteHex(encrypted);
+                    });
+                });
+            });
+        }));
+
+
+
+
+        //Console.WriteLine(Encoding.UTF8.GetString(encrypted));
+
+        function EncryptStringToBytes(plainText, Key, IV) {
+            // Check arguments.
+            if (plainText == null || plainText.length <= 0)
+                throw new ArgumentNullException("plainText");
+            if (Key == null || Key.length <= 0)
+                throw new ArgumentNullException("Key");
+            if (IV == null || IV.length <= 0)
+                throw new ArgumentNullException("IV");
+            let encrypted;
+            // Create an RijndaelManaged object
+            // with the specified key and IV.
+            using(MyAes.Create(), (rijAlg) => {
+                rijAlg.Key = Key;
+                rijAlg.IV = IV;
+
+                // Create an encryptor to perform the stream transform.
+                let encryptor = rijAlg.CreateEncryptor(rijAlg.Key, rijAlg.IV);
+
+                // Create the streams used for encryption.
+                using(new MemoryStream(), (msEncrypt) => {
+                    using(new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write), (csEncrypt) => {
+                        using(new StreamWriter(csEncrypt), (swEncrypt) => {
+                            //Write all data to the stream.
+                            swEncrypt.Write(plainText);
+                            swEncrypt.Flush();
+                        });
+                        // csEncrypt.FlushFinalBlock();
+                    });
+                    encrypted = msEncrypt.ToArray();
+                    Console.WriteHex(encrypted);
+                });
+
+            });
+            // Return the encrypted bytes from the memory stream.
+            return encrypted;
+        }
+
+        console.log('-hey-');
+
+
+
+        function DecryptStringFromBytes(cipherText, Key, IV) {
+            // Check arguments.
+            if (cipherText == null || cipherText.length <= 0)
+                throw new ArgumentNullException("cipherText");
+            if (Key == null || Key.length <= 0)
+                throw new ArgumentNullException("Key");
+            if (IV == null || IV.length <= 0)
+                throw new ArgumentNullException("IV");
+
+            // Declare the string used to hold
+            // the decrypted text.
+            let plaintext = null;
+
+            // Create an RijndaelManaged object
+            // with the specified key and IV.
+            using(MyAes.Create(), (rijAlg) => {
+                rijAlg.Key = Key;
+                rijAlg.IV = IV;
+
+                // Create a decryptor to perform the stream transform.
+                let decryptor = rijAlg.CreateDecryptor(rijAlg.Key, rijAlg.IV);
+
+                // Create the streams used for decryption.
+                using(new MemoryStream(cipherText), (msDecrypt) => {
+                    using(new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read), (csDecrypt) => {
+                        using(new StreamReader(csDecrypt), (srDecrypt) => {
+                            // Read the decrypted bytes from the decrypting stream
+                            // and place them in a string.
+                            plaintext = srDecrypt.ReadToEnd();
+                        });
+                    });
+                });
+            });
+            return plaintext;
+        }
+
+        function sifrele() {
+            TVConsole.ReadLine('Text girin : ', ((input) => {
+                let aa = EncryptStringToBytes(input, aes.Key, aes.IV);
+                // TVConsole.SetPen(4);
+                TVConsole.Center('-------------Şifrelenmiş Text-----------------');
+
+                TVConsole.WriteLine('');
+                TVConsole.WriteHex(aa);
+                let bbb = DecryptStringFromBytes(aa, aes.Key, aes.IV);
+                // TVConsole.SetPen(5);
+                TVConsole.Center('---------------Çözülmüş Text------------------');
+                TVConsole.WriteLine('');
+                TVConsole.WriteHex(bbb);
+                console.log(bbb);
+                // TVConsole.SetPen(1);
+                sifrele();
+            }));
+        }
+        sifrele();
+
+
+
+        //const myAes = MyAes.Create();
+
+        Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo('tr-TR');
+
+
+        using(new SHA1.Create(), (sha1) => {
+            var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes('Tuval Framework'));
+            var sb = new StringBuilder(hash.length * 2);
+
+            foreach(hash, (b) => {
+                sb.Append(b.ToString("X2"));
+            });
+
+            TVConsole.WriteLine(sb.ToString());
+        });
+
+    }
+</script>
+
+</html>

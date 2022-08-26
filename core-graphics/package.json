@@ -1,0 +1,43 @@
+{
+    "name": "@tuval/cg",
+    "version": "0.0.16",
+    "description": "",
+    "main": "index.js",
+    "module": "index.js",
+    "typings": "index.d.ts",
+    "files": [
+        "index.js",
+        "index.d.ts"
+    ],
+    "scripts": {
+        "patch": "node publish.js",
+        "build": "node shell.js",
+        "bundle": "dts-bundle-generator --no-check --export-referenced-types=false --silent  -o ./dist/index.d.ts ./dist_types/types/index.d.ts",
+        "buildprod": "webpack --config webpack.prod.config.js",
+        "wbuild": "webpack",
+        "webbuild": "node shell_web.js",
+        "buildweb": "webpack --config webwebpack.config.js",
+        "wpbuild": "webpack --config wpwebpack.config.js",
+        "buildwp": "node shell_wp.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "arraybuffer-loader": "^1.0.8",
+        "css-loader": "^6.3.0",
+        "declaration-bundler-webpack-plugin": "^1.0.3",
+        "dts-bundle": "^0.7.3",
+        "dts-bundle-generator": "^5.9.0",
+        "file-loader": "^6.2.0",
+        "ifdef-loader": "^2.3.0",
+        "shelljs": "^0.8.4",
+        "to-string-loader": "^1.1.6",
+        "ts-loader": "^9.2.6",
+        "typescript": "^4.4.3",
+        "url-loader": "^4.1.1",
+        "webpack": "^5.56.1",
+        "webpack-cli": "^4.8.0",
+        "webpack-conditional-loader": "^1.0.12"
+    }
+}
