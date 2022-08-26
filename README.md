@@ -138,6 +138,7 @@ create your view.
         )
     )
 ```
+![View is ](https://github.com/tuvalframework/framework/raw/main/screen1.png "TF Playground")
 
 For starter app, you can [visit](https://github.com/tuvalframework/developer) developer repo.
 
