@@ -3,7 +3,3 @@
 [![npm next package](https://img.shields.io/npm/v/@tuval/core/next.svg)](https://www.npmjs.com/package/@tuval/core)
 [![npm downloads](https://img.shields.io/npm/dm/@tuval/core.svg)](https://www.npmjs.com/package/@tuval/core)
 [![Follow on Twitter](https://img.shields.io/twitter/follow/tuvalframework.svg?label=follow+tuvalframework)](https://twitter.com/tuvalframework)
-[![Renovate status](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://github.com/mui/material-ui/issues/27062)
-[![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/mui/material-ui.svg)](https://isitmaintained.com/project/mui/material-ui 'Average time to resolve an issue')
-[![Crowdin](https://badges.crowdin.net/material-ui-docs/localized.svg)](https://translate.mui.com/project/material-ui-docs)
-[![Open Collective backers and sponsors](https://img.shields.io/opencollective/all/mui)](https://opencollective.com/mui)
