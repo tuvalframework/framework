@@ -7,7 +7,7 @@
 
 **Tuval Framework** contains four main library for creating robust applications which are running on the browser.
 
-- [[_Core_]](https://github.com/tuvalframework/framework/tree/main/core/) is a library that contains the base classes that all programs will need.
+- [_Core_](https://github.com/tuvalframework/framework/tree/main/core/) is a library that contains the base classes that all programs will need.
 
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/tuvalframework/framework/blob/main/LICENSE)
