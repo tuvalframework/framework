@@ -27,6 +27,7 @@
 ### Tuval Framework
 
 Tuval Framework is available as an npx package and you can create a development envoriment one command.
+Make sure docker is running before you start the installation.
 
 **npm:**
 
