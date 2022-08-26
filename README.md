@@ -1,5 +1,5 @@
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/tuvalframework/framework/blob/main/LICENSE)
-[![npm latest package](https://img.shields.io/npm/v/@mui/material/latest.svg)](https://www.npmjs.com/package/@tuval/core)
+[![npm latest package](https://img.shields.io/npm/v/@tuval/core/latest.svg)](https://www.npmjs.com/package/@tuval/core)
 [![npm next package](https://img.shields.io/npm/v/@mui/material/next.svg)](https://www.npmjs.com/package/@mui/material)
 [![npm downloads](https://img.shields.io/npm/dm/@mui/material.svg)](https://www.npmjs.com/package/@mui/material)
 [![CircleCI](https://circleci.com/gh/mui/material-ui/tree/master.svg?style=shield)](https://app.circleci.com/pipelines/github/mui/material-ui?branch=master)
