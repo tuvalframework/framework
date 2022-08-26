@@ -18,5 +18,5 @@
 [![Follow on Youtube](https://img.shields.io/youtube/channel/views/UCIvOMAYBuLllvPIJp0o-opQ?style=social)](https://www.youtube.com/channel/UCIvOMAYBuLllvPIJp0o-opQ)
 
 - **Visit:** The [Home Page](http://tuvalframework.com/) and follow on [Twitter](https://twitter.com/tuvalframework)
-- **Discover:** [Tutorials](http://tuvalframework.com/docs/intro), [API Documentation](http://tuvalframework.com/docs/category/core-library)
+- **Discover:** [Tutorials](http://tuvalframework.com), [API Documentation](http://tuvalframework.com)
 - **Help:** [StackOverflow](http://stackoverflow.com/questions/tagged/tuvalframework)
