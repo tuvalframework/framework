@@ -146,5 +146,5 @@ For starter app, you can [visit](https://github.com/tuvalframework/developer) de
 ## Questions
 
 For how-to questions that don't involve making changes to the code base, please use [Stack Overflow](https://stackoverflow.com/questions/tagged/tuvalframework) instead of GitHub issues.
-Use the "tuvalframework" tag on Stack Overflow to make it easier for the community to find your question.
+Use the "tuvalframework" tag on Stack Overflow to make it easier for the community to find your question. You can send a mail to info@tuvalframework.com.
 
