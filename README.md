@@ -45,3 +45,34 @@ TF Core is available as an [npm package](https://www.npmjs.com/package/@tuval/co
 ```sh
 npm install @tuval/core
 ```
+
+### TF CG
+
+TF Core Graphics is available as an [npm package](https://www.npmjs.com/package/@tuval/cg).
+
+**npm:**
+
+```sh
+npm install @tuval/cg
+```
+
+### TF Graphics
+
+TF Graphics is available as an [npm package](https://www.npmjs.com/package/@tuval/graphics).
+
+**npm:**
+
+```sh
+npm install @tuval/graphics
+```
+
+
+### TF Forms
+
+TF Forms is available as an [npm package](https://www.npmjs.com/package/@tuval/forms).
+
+**npm:**
+
+```sh
+npm install @tuval/forms
+```
