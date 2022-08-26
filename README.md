@@ -77,9 +77,10 @@ TF Forms is available as an [npm package](https://www.npmjs.com/package/@tuval/f
 npm install @tuval/forms
 ```
 
-## Getting started with Material UI
+## Getting started with Tuval Framework
 
-Here is an example of a basic app in Tuval Framework
+Here is an example of a basic view in Tuval Framework. You can use playground for
+create your view.
 
 ```ts
 // MARK : Main Frame of Form
@@ -138,11 +139,8 @@ Here is an example of a basic app in Tuval Framework
     )
 ```
 
-In the interactive demo below, try changing the code and see how it affects the output.
-(Hint: change `variant` to `"outlined"` and `color` to `"secondary"`.
-For more options, see the [`Button` component page](https://mui.com/material-ui/react-button/) in our docs.)
+For starter app, you can [visit](https://github.com/tuvalframework/developer)
 
-[![Edit Button](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/material-ui-u9sy1h)
 
 ## Questions
 
