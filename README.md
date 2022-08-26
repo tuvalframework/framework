@@ -7,13 +7,8 @@
 
 **Tuval Framework** contains four main library for creating robust applications which are running on the browser.
 
-- [_Material UI_](https://mui.com/material-ui/getting-started/overview/) is a comprehensive library of components that features our implementation of Google's [Material Design](https://material.io/design/introduction/) system.
+- [_Core](https://github.com/tuvalframework/framework/tree/main/core/) is a library that contains the base classes that all programs will need.
 
-- [_Joy UI_](https://mui.com/joy-ui/getting-started/overview/) is a beautifully designed library of React UI components.
-
-- [_MUI Base_](https://mui.com/base/getting-started/overview/) is our library of "unstyled" components and low-level hooks. With Base, you gain complete control over your app's CSS and accessibility features.
-
-- [_MUI System_](https://mui.com/system/getting-started/overview/) is a collection of CSS utilities to help you rapidly lay out custom designs.
 
 <div align="center">
 
