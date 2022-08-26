@@ -76,3 +76,86 @@ TF Forms is available as an [npm package](https://www.npmjs.com/package/@tuval/f
 ```sh
 npm install @tuval/forms
 ```
+
+## Getting started with Material UI
+
+Here is an example of a basic app in Tuval Framework
+
+```ts
+// MARK : Main Frame of Form
+    VStack({ alignment: cTop })(
+
+        // MARK: Top Bar
+        HStack({alignment:cLeading})(
+            UIImage(logo).width(50).height(50),
+            Text('Procetra').foregroundColor(Color.white).fontSize(20)
+            .fontWeight('bold')
+        ).background('rgb(208, 63, 64)').height(70),
+
+        // MARK: Filter bar
+        HStack().background('#212932').height(60),
+
+        // MARK: Content
+        HStack({ alignment: cLeading })(
+
+            // Main Menu
+            VStack({ alignment: cTop })(
+                ...ForEach(menuModel)((item, index) =>
+                    // MARK: Menu item
+                    item.title == 'sep' ?
+                        VStack().height(1).background(Color.white)
+                        :
+                        VStack({ spacing: 10 })(
+                            Icon(item.icon).size(30),
+                            Text(item.title)
+                        ).height(70).foregroundColor({ default: Color.white, hover: Color.black })
+                            .marginTop('10px')
+                            .onClick(() => setSelectedIndex(index))
+                            .background({ default: selectedIndex == index ?
+                            Color.green : '', hover: '#eee' }).cursor('pointer')
+                )
+
+            ).background('#212932').width(80),
+
+            // MARK: Sub menu
+            VStack({ alignment: cTop })(
+                ...ForEach(menuModel[selectedIndex].subMenu)((item, index) =>
+                    // MARK: Menu item
+                        VStack({ spacing: 10 })(
+                            Icon(item.icon).size(30),
+                            Text(item.title)
+                        ).height(70).foregroundColor({ default: Color.white, hover: Color.black })
+                            .marginTop('10px')
+                            .onClick(() => setSelectedIndex(index))
+                            .background({  hover: '#eee' }).cursor('pointer')
+                )
+            ).background('#52565b').width()
+                .initial({ width: 0 }).animate({ width: 80 })
+                .shadow('inset 24px 0 20px -20px #373b40')
+                .visible(Array.isArray(menuModel[selectedIndex].subMenu)),
+
+        )
+    )
+```
+
+In the interactive demo below, try changing the code and see how it affects the output.
+(Hint: change `variant` to `"outlined"` and `color` to `"secondary"`.
+For more options, see the [`Button` component page](https://mui.com/material-ui/react-button/) in our docs.)
+
+[![Edit Button](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/material-ui-u9sy1h)
+
+## Questions
+
+For how-to questions that don't involve making changes to the code base, please use [Stack Overflow](https://stackoverflow.com/questions/tagged/mui) instead of GitHub issues.
+Use the "mui" tag on Stack Overflow to make it easier for the community to find your question.
+
+## Examples
+
+Our documentation features [a collection of example projects using Material UI](https://mui.com/material-ui/getting-started/example-projects/).
+
+## Documentation
+
+- [Material UI](https://mui.com/material-ui/getting-started/overview/)
+- [Joy UI](https://mui.com/joy-ui/getting-started/overview/)
+- [MUI Base](https://mui.com/base/getting-started/overview/)
+- [MUI System](https://mui.com/system/getting-started/overview/)
