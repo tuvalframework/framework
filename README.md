@@ -79,7 +79,7 @@ npm install @tuval/forms
 
 ## Getting started with Tuval Framework
 
-Here is an example of a basic view in Tuval Framework. You can use playground for
+Here is an example slice of a basic view in Tuval Framework. You can use playground for
 create your view.
 
 ```ts
@@ -139,21 +139,11 @@ create your view.
     )
 ```
 
-For starter app, you can [visit](https://github.com/tuvalframework/developer)
+For starter app, you can [visit](https://github.com/tuvalframework/developer) developer repo.
 
 
 ## Questions
 
-For how-to questions that don't involve making changes to the code base, please use [Stack Overflow](https://stackoverflow.com/questions/tagged/mui) instead of GitHub issues.
-Use the "mui" tag on Stack Overflow to make it easier for the community to find your question.
+For how-to questions that don't involve making changes to the code base, please use [Stack Overflow](https://stackoverflow.com/questions/tagged/tuvalframework) instead of GitHub issues.
+Use the "tuvalframework" tag on Stack Overflow to make it easier for the community to find your question.
 
-## Examples
-
-Our documentation features [a collection of example projects using Material UI](https://mui.com/material-ui/getting-started/example-projects/).
-
-## Documentation
-
-- [Material UI](https://mui.com/material-ui/getting-started/overview/)
-- [Joy UI](https://mui.com/joy-ui/getting-started/overview/)
-- [MUI Base](https://mui.com/base/getting-started/overview/)
-- [MUI System](https://mui.com/system/getting-started/overview/)
