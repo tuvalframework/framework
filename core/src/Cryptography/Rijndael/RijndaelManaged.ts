@@ -21,14 +21,6 @@ export class RijndaelManaged extends Rijndael {
         super();
     }
 
-    // #CoreCLRRijndaelModes
-    //
-    // On CoreCLR we limit the supported cipher modes and padding modes for the AES algorithm to a
-    // single hard coded value.  This allows us to remove a lot of code by removing support for the
-    // uncommon cases and forcing everyone to use the same common padding and ciper modes:
-    //
-    //  - CipherMode: CipherMode.CBC
-    //  - PaddingMode: PaddingMode.PKCS7
 
     public CreateEncryptor(): ICryptoTransform;
     public /* override */ CreateEncryptor(rgbKey: ByteArray, rgbIV: ByteArray): ICryptoTransform;
