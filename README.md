@@ -31,5 +31,5 @@ Tuval Framework is available as an npx package and you can create a development 
 **npm:**
 
 ```sh
-npx tuval-create
+npx create-tuval
 ```
