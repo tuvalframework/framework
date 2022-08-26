@@ -7,7 +7,7 @@ import { int, foreach, StringBuilder, is } from "@tuval/core";
 import { ControlHtmlRenderer } from "../windows/Forms/Components/AAA/HtmlRenderer/ControlHtmlRenderer";
 import { currentController, UIController } from "./UIController";
 import { getView, viewFunc } from "./getView";
-import { Link, Route, Routes, useParams, Params, useNavigate, NavigateFunction, Outlet, HashRouter, useLocation, Navigate } from "../react-router-dom";
+import { Link, Route, Routes, useParams, Params, useNavigate, NavigateFunction, Outlet, HashRouter, useLocation, Navigate } from "../router-dom";
 import { Teact } from "../windows/Forms/Components/Teact";
 import { IRenderable } from "./IView";
 import { useEffect, useState } from "../hooks";

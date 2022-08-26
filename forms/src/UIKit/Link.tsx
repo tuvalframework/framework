@@ -8,7 +8,7 @@ import * as MarkdownIt from "markdown-it";
 import { ControlHtmlRenderer } from "../windows/Forms/Components/AAA/HtmlRenderer/ControlHtmlRenderer";
 import { UIController } from "./UIController";
 import { viewFunc } from "./getView";
-import { Link } from "../react-router-dom";
+import { Link } from "../router-dom";
 import { Teact } from "../windows/Forms/Components/Teact";
 
 class LinkRenderer extends ControlHtmlRenderer<UILinkCLass> {

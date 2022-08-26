@@ -21,7 +21,7 @@ import { Property, State } from "../Reflection/PropertyDecorator";
 import { ControlCollection } from "../ControlCollection";
 import { Dialog } from "../Dialog";
 import { ApplicationModes, TApplication } from "../TApplication";
-import { BrowserRouter } from "../../../../../react-router-dom";
+import { BrowserRouter } from "../../../../../router-dom";
 
 declare var __Tuval_Config__;
 

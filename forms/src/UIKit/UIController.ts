@@ -9,7 +9,7 @@ import { ControlCollection } from '../windows/Forms/Components';
 import { contextMap } from './contextMap';
 import { getView } from './getView';
 import { BindingClass } from './Binding';
-import { useInRouterContext, useLocation, useParams, useNavigate, NavigateFunction } from '../react-router-dom';
+import { useInRouterContext, useLocation, useParams, useNavigate, NavigateFunction } from '../router-dom';
 import { lastEnteredPropertyName } from '../windows/Forms/Components/AAA/Control';
 import { createTheme } from '../tuval-system/createTheme';
 

@@ -29,7 +29,7 @@ export * from './tuval-system';
 export * from './hooks';
 export * from './RealmHttpClient';
 
-export { BrowserRouter, Routes, Route } from './react-router-dom';
+export { BrowserRouter, Routes, Route } from './router-dom';
 
 /* export default './preact/compat'; */
 

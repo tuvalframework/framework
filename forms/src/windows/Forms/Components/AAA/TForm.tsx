@@ -17,7 +17,7 @@ import { ReplaySubject } from 'rxjs';
 import { ControlTypes } from "../ControlTypes";
 import { Property } from "./Reflection/PropertyDecorator";
 import { ApplicationModes } from "..";
-import { useInRouterContext, useNavigate } from "../../../../react-router-dom";
+import { useInRouterContext, useNavigate } from "../../../../router-dom";
 
 export class TopMaximizeChangeHandler extends Delegate<(topMaximized: boolean) => void> { }
 @ClassInfo({

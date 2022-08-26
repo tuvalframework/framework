@@ -1,6 +1,6 @@
 /**
  * NOTE: If you refactor this to split up the modules into separate files,
- * you'll need to update the rollup config for react-router-dom-v5-compat.
+ * you'll need to update the rollup config for router-dom-v5-compat.
  */
  import type { BrowserHistory, HashHistory, History } from "../history";
  import { createBrowserHistory, createHashHistory } from "../history";
@@ -30,8 +30,8 @@
    useResolvedPath,
    useRoutes,
    useOutletContext,
- } from "../react-router";
- import type { To } from "../react-router";
+ } from "../router";
+ import type { To } from "../router";
 import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "../hooks";
 import { Teact } from "../windows/Forms/Components/Teact";
 import { forwardRef } from "../preact/compat";
@@ -87,7 +87,7 @@ import { forwardRef } from "../preact/compat";
    useOutletContext,
  };
 
- export { NavigationType } from "../react-router";
+ export { NavigationType } from "../router";
  export type {
    Hash,
    Location,
@@ -111,7 +111,7 @@ import { forwardRef } from "../preact/compat";
    Pathname,
    Search,
    RoutesProps,
- } from "../react-router";
+ } from "../router";
 
  ///////////////////////////////////////////////////////////////////////////////
  // DANGER! PLEASE READ ME!
@@ -131,7 +131,7 @@ import { forwardRef } from "../preact/compat";
    UNSAFE_NavigationContext,
    UNSAFE_LocationContext,
    UNSAFE_RouteContext,
- } from "../react-router";
+ } from "../router";
 
  ////////////////////////////////////////////////////////////////////////////////
  // COMPONENTS

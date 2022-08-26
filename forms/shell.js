@@ -17,23 +17,23 @@ if (shell.exec('npm run wbuild').code !== 0) {
 //shell.cp('-Rf', './dist/*', '../gui/node_modules/@tuval/core');
 //shell.cp('-Rf', './dist/*', '../gui/node_modules/@tuval/core');
 
-shell.cp('-Rf', './dist/*', '../../DemoApp/node_modules/@tuval/forms');
-shell.cp('-Rf', './dist/*', '../../Realms/realmocean/node_modules/@tuval/forms');
-shell.cp('-Rf', './dist/*', '../../Platforms/BPMGenesisSite/node_modules/@tuval/forms');
-shell.cp('-Rf', './dist/*', '../../Applications/BPMGenesis/Aristo/node_modules/@tuval/forms');
-shell.cp('-Rf', './dist/*', '../../Applications/BPMGenesis/ProcessMining/node_modules/@tuval/forms');
-shell.cp('-Rf', './dist/*', '../../Applications/BPMGenesis/IconLibrary/node_modules/@tuval/forms');
-shell.cp('-Rf', './dist/*', '../../Applications/BPMGenesis/TenantManager/node_modules/@tuval/forms');
-shell.cp('-Rf', './dist/*', '../../Applications/BPMGenesis/RealmManager/node_modules/@tuval/forms');
+shell.cp('-Rf', './dist/*', '../../../DemoApp/node_modules/@tuval/forms');
+shell.cp('-Rf', './dist/*', '../../../Realms/realmocean/node_modules/@tuval/forms');
+shell.cp('-Rf', './dist/*', '../../../Platforms/BPMGenesisSite/node_modules/@tuval/forms');
+shell.cp('-Rf', './dist/*', '../../../Applications/BPMGenesis/Aristo/node_modules/@tuval/forms');
+shell.cp('-Rf', './dist/*', '../../../Applications/BPMGenesis/ProcessMining/node_modules/@tuval/forms');
+shell.cp('-Rf', './dist/*', '../../../Applications/BPMGenesis/IconLibrary/node_modules/@tuval/forms');
+shell.cp('-Rf', './dist/*', '../../../Applications/BPMGenesis/TenantManager/node_modules/@tuval/forms');
+shell.cp('-Rf', './dist/*', '../../../Applications/BPMGenesis/RealmManager/node_modules/@tuval/forms');
 
-shell.cp('-Rf', './dist/*', '../components/buttons/node_modules/@tuval/forms');
-shell.cp('-Rf', './dist/*', '../components/popups/node_modules/@tuval/forms');
-shell.cp('-Rf', './dist/*', '../components/navigations/node_modules/@tuval/forms');
-shell.cp('-Rf', './dist/*', '../components/charts/node_modules/@tuval/forms');
-shell.cp('-Rf', './dist/*', '../components/diagram/node_modules/@tuval/forms');
-shell.cp('-Rf', './dist/*', '../components/layouts/node_modules/@tuval/forms');
-shell.cp('-Rf', './dist/*', '../components/file-manager/node_modules/@tuval/forms');
-shell.cp('-Rf', './dist/*', '../components/grids/node_modules/@tuval/forms');
+shell.cp('-Rf', './dist/*', '../../components/buttons/node_modules/@tuval/forms');
+shell.cp('-Rf', './dist/*', '../../components/popups/node_modules/@tuval/forms');
+shell.cp('-Rf', './dist/*', '../../components/navigations/node_modules/@tuval/forms');
+shell.cp('-Rf', './dist/*', '../../components/charts/node_modules/@tuval/forms');
+shell.cp('-Rf', './dist/*', '../../components/diagram/node_modules/@tuval/forms');
+shell.cp('-Rf', './dist/*', '../../components/layouts/node_modules/@tuval/forms');
+shell.cp('-Rf', './dist/*', '../../components/file-manager/node_modules/@tuval/forms');
+shell.cp('-Rf', './dist/*', '../../components/grids/node_modules/@tuval/forms');
 
 
 
