@@ -3,3 +3,4 @@
 [![npm next package](https://img.shields.io/npm/v/@tuval/core/next.svg)](https://www.npmjs.com/package/@tuval/core)
 [![npm downloads](https://img.shields.io/npm/dm/@tuval/core.svg)](https://www.npmjs.com/package/@tuval/core)
 [![Follow on Twitter](https://img.shields.io/twitter/follow/tuvalframework.svg?label=follow+tuvalframework)](https://twitter.com/tuvalframework)
+[![Follow on Youtube](https://img.shields.io/youtube/channel/views/UCIvOMAYBuLllvPIJp0o-opQ?style=social)](https://www.youtube.com/channel/UCIvOMAYBuLllvPIJp0o-opQ)
