@@ -20,3 +20,16 @@
 - **Visit:** The [Home Page](http://tuvalframework.com/) and follow on [Twitter](https://twitter.com/tuvalframework)
 - **Discover:** [Tutorials](http://tuvalframework.com), [API Documentation](http://tuvalframework.com)
 - **Help:** [StackOverflow](http://stackoverflow.com/questions/tagged/tuvalframework)
+
+
+## Installation
+
+### Tuval Framework
+
+Tuval Framework is available as an npx package and you can create a development envoriment one command.
+
+**npm:**
+
+```sh
+npx tuval-create
+```
