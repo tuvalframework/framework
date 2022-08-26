@@ -3,9 +3,9 @@
   <a href="http://tuvalframework.com/" rel="noopener" target="_blank"><img width="150" src="https://github.com/tuvalframework/framework/raw/main/logo-194x194.png" alt="Tuval logo"></a>
 </p>
 
-<h1 align="center">MUI Core</h1>
+<h1 align="center">Tuval Framework</h1>
 
-**MUI Core** contains foundational React UI component libraries for shipping new features faster.
+**Tuval Framework** contains four main library for creating robust applications which are running on the browser.
 
 - [_Material UI_](https://mui.com/material-ui/getting-started/overview/) is a comprehensive library of components that features our implementation of Google's [Material Design](https://material.io/design/introduction/) system.
 
