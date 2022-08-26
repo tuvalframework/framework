@@ -1,3 +1,8 @@
+<!-- markdownlint-disable-next-line -->
+<p align="center">
+  <a href="http://tuvalframework.com/" rel="noopener" target="_blank"><img width="150" src="https://github.com/tuvalframework/framework/raw/main/logo-194x194.png" alt="Tuval logo"></a>
+</p>
+
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/tuvalframework/framework/blob/main/LICENSE)
 [![npm latest package](https://img.shields.io/npm/v/@tuval/core/latest.svg)](https://www.npmjs.com/package/@tuval/core)
 [![npm next package](https://img.shields.io/npm/v/@tuval/core/next.svg)](https://www.npmjs.com/package/@tuval/core)
