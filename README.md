@@ -10,8 +10,6 @@
 - [[_Core_]](https://github.com/tuvalframework/framework/tree/main/core/) is a library that contains the base classes that all programs will need.
 
 
-<div align="center">
-
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/tuvalframework/framework/blob/main/LICENSE)
 [![npm latest package](https://img.shields.io/npm/v/@tuval/core/latest.svg)](https://www.npmjs.com/package/@tuval/core)
 [![npm next package](https://img.shields.io/npm/v/@tuval/core/next.svg)](https://www.npmjs.com/package/@tuval/core)
