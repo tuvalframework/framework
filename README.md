@@ -1,4 +1,4 @@
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/tuvalframework/framework/LICENSE)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/tuvalframework/framework/blob/main/LICENSE)
 [![npm latest package](https://img.shields.io/npm/v/@mui/material/latest.svg)](https://www.npmjs.com/package/@mui/material)
 [![npm next package](https://img.shields.io/npm/v/@mui/material/next.svg)](https://www.npmjs.com/package/@mui/material)
 [![npm downloads](https://img.shields.io/npm/dm/@mui/material.svg)](https://www.npmjs.com/package/@mui/material)
