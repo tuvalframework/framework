@@ -1640,14 +1640,92 @@ export class UIView implements IVirtualContainer, IControl, IRenderable {
         throw `ArgumentOutOfRange Exception in UIView::width method. Argument count: ${args.length}`;
     }
 
-    public minWidth(value: string) {
-        this.Appearance.MinWidth = value;
-        return this;
+    public minWidth(): this;
+    public minWidth(value: int): this;
+    public minWidth(value: string): this;
+    public minWidth(value: StyleAttribute): this;
+    public minWidth(...args: any[]): this {
+        if (args.length === 0) {
+            this.Appearance.MinWidth = '';
+            return this;
+        } else if (args.length === 1 && is.number(args[0])) {
+            const value = args[0];
+            this.Appearance.MinWidth = `${value}px`;
+            return this;
+        } else if (args.length === 1 && is.string(args[0])) {
+            const value: string = args[0];
+            this.Appearance.MinWidth = value;
+            return this;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.MinWidth = styleAttribute.default as any;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.MinWidth = styleAttribute.hover as any;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.MinWidth = styleAttribute.active as any;
+            }
+            if (styleAttribute.disabled != null) {
+                this.DisabledAppearance.MinWidth = styleAttribute.disabled as any;
+            }
+
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.MinWidth = styleAttribute.focus as any;
+            }
+
+            if (styleAttribute.before != null) {
+                this.BeforeAppearance.MinWidth = styleAttribute.before as any;
+            }
+            return this;
+        }
+
+        throw `ArgumentOutOfRange Exception in UIView::height method. Argument count: ${args.length}`;
     }
 
-    public maxWidth(value: string) {
-        this.Appearance.MaxWidth = value;
-        return this;
+    public maxWidth(): this;
+    public maxWidth(value: int): this;
+    public maxWidth(value: string): this;
+    public maxWidth(value: StyleAttribute): this;
+    public maxWidth(...args: any[]): this {
+        if (args.length === 0) {
+            this.Appearance.MaxWidth = '';
+            return this;
+        } else if (args.length === 1 && is.number(args[0])) {
+            const value = args[0];
+            this.Appearance.MaxWidth = `${value}px`;
+            return this;
+        } else if (args.length === 1 && is.string(args[0])) {
+            const value: string = args[0];
+            this.Appearance.MaxWidth = value;
+            return this;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.MaxWidth = styleAttribute.default as any;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.MaxWidth = styleAttribute.hover as any;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.MaxWidth = styleAttribute.active as any;
+            }
+            if (styleAttribute.disabled != null) {
+                this.DisabledAppearance.MaxWidth = styleAttribute.disabled as any;
+            }
+
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.MaxWidth = styleAttribute.focus as any;
+            }
+
+            if (styleAttribute.before != null) {
+                this.BeforeAppearance.MaxWidth = styleAttribute.before as any;
+            }
+            return this;
+        }
+
+        throw `ArgumentOutOfRange Exception in UIView::height method. Argument count: ${args.length}`;
     }
 
     public allWidth(): this;
