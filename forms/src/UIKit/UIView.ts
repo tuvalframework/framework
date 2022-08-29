@@ -1812,14 +1812,92 @@ export class UIView implements IVirtualContainer, IControl, IRenderable {
         throw `ArgumentOutOfRange Exception in UIView::height method. Argument count: ${args.length}`;
     }
 
-    public minHeight(value: string) {
-        this.Appearance.MinHeight = value;
-        return this;
+    public minHeight(): this;
+    public minHeight(value: int): this;
+    public minHeight(value: string): this;
+    public minHeight(value: StyleAttribute): this;
+    public minHeight(...args: any[]): this {
+        if (args.length === 0) {
+            this.Appearance.MinHeight = '';
+            return this;
+        } else if (args.length === 1 && is.number(args[0])) {
+            const value = args[0];
+            this.Appearance.MinHeight = `${value}px`;
+            return this;
+        } else if (args.length === 1 && is.string(args[0])) {
+            const value: string = args[0];
+            this.Appearance.MinHeight = value;
+            return this;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.MinHeight = styleAttribute.default as any;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.MinHeight = styleAttribute.hover as any;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.MinHeight = styleAttribute.active as any;
+            }
+            if (styleAttribute.disabled != null) {
+                this.DisabledAppearance.MinHeight = styleAttribute.disabled as any;
+            }
+
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.MinHeight = styleAttribute.focus as any;
+            }
+
+            if (styleAttribute.before != null) {
+                this.BeforeAppearance.MinHeight = styleAttribute.before as any;
+            }
+            return this;
+        }
+
+        throw `ArgumentOutOfRange Exception in UIView::minheight method. Argument count: ${args.length}`;
     }
 
-    public maxHeight(value: string) {
-        this.Appearance.MaxHeight = value;
-        return this;
+    public maxHeight(): this;
+    public maxHeight(value: int): this;
+    public maxHeight(value: string): this;
+    public maxHeight(value: StyleAttribute): this;
+    public maxHeight(...args: any[]): this {
+        if (args.length === 0) {
+            this.Appearance.MaxHeight = '';
+            return this;
+        } else if (args.length === 1 && is.number(args[0])) {
+            const value = args[0];
+            this.Appearance.MaxHeight = `${value}px`;
+            return this;
+        } else if (args.length === 1 && is.string(args[0])) {
+            const value: string = args[0];
+            this.Appearance.MaxHeight = value;
+            return this;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.MaxHeight = styleAttribute.default as any;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.MaxHeight = styleAttribute.hover as any;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.MaxHeight = styleAttribute.active as any;
+            }
+            if (styleAttribute.disabled != null) {
+                this.DisabledAppearance.MaxHeight = styleAttribute.disabled as any;
+            }
+
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.MaxHeight = styleAttribute.focus as any;
+            }
+
+            if (styleAttribute.before != null) {
+                this.BeforeAppearance.MaxHeight = styleAttribute.before as any;
+            }
+            return this;
+        }
+
+        throw `ArgumentOutOfRange Exception in UIView::maxHeight method. Argument count: ${args.length}`;
     }
 
     public foregroundColor(value: ColorClass): this;
