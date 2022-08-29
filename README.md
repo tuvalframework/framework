@@ -11,9 +11,9 @@
 
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/tuvalframework/framework/blob/main/LICENSE)
-[![npm latest package](https://img.shields.io/npm/v/@tuval/core/latest.svg)](https://www.npmjs.com/package/@tuval/core)
-[![npm next package](https://img.shields.io/npm/v/@tuval/core/next.svg)](https://www.npmjs.com/package/@tuval/core)
-[![npm downloads](https://img.shields.io/npm/dm/@tuval/core.svg)](https://www.npmjs.com/package/@tuval/core)
+[![npm latest package](https://img.shields.io/npm/v/@tuval/forms/latest.svg)](https://www.npmjs.com/package/@tuval/core)
+[![npm next package](https://img.shields.io/npm/v/@tuval/forms/next.svg)](https://www.npmjs.com/package/@tuval/core)
+[![npm downloads](https://img.shields.io/npm/dm/@tuval/forms.svg)](https://www.npmjs.com/package/@tuval/core)
 [![Follow on Twitter](https://img.shields.io/twitter/follow/tuvalframework.svg?label=follow+tuvalframework)](https://twitter.com/tuvalframework)
 [![Follow on Youtube](https://img.shields.io/youtube/channel/views/UCIvOMAYBuLllvPIJp0o-opQ?style=social)](https://www.youtube.com/channel/UCIvOMAYBuLllvPIJp0o-opQ)
 
