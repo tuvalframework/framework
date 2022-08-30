@@ -15,7 +15,7 @@ export * from './GridView';
 export * from './Page';
 export * from './TSplitter';
 export * from './TCanvas';
-export * from './Button/Button';
+// export * from './Button/Button';
 export * from './MainMenu';
 export * from './Toolbar';
 export * from './DropArea';

@@ -102,7 +102,7 @@
 
 .p-disabled,
 .p-disabled * {
-    cursor: default !important;
+    cursor: not-allowed !important;
     pointer-events: none;
 }
 

@@ -31,6 +31,6 @@ export * from './RealmHttpClient';
 
 export { BrowserRouter, Routes, Route } from './router-dom';
 
-/* export default './preact/compat'; */
+ export default './preact/compat';
 
 import './exports';

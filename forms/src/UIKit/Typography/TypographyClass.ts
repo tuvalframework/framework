@@ -12,8 +12,6 @@ export class TypographyClass extends UIView implements ILabel {
         return this;
     }
 
-
-
     public setController(controller: UIController): this {
         super.setController(controller);
 

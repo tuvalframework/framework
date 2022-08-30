@@ -42,5 +42,6 @@ export * from './MediaPlayer/UIMediaPlayer';
 export * from './Chart';
 export * from './Typography';
 export * from './ProgressBar';
+export * from './Button';
 
 export { getView, viewFunc } from './getView';
