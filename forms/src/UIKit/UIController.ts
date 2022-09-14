@@ -28,9 +28,9 @@ export function Context() {
 }
 
 class UIControllerRenderer extends ControlHtmlRenderer<UIController> {
-    public get UseShadowDom(): boolean {
-        return true;
-    }
+    /*   public get UseShadowDom(): boolean {
+          return true;
+      } */
 
     public GenerateElement(obj: UIController): boolean {
         this.WriteStartFragment();
@@ -105,9 +105,9 @@ export class UIController<T = any> extends Control implements IRenderable, IVirt
         if (p instanceof BindingClass) {
             return p;
         } else {
-            p = new BindingClass(this,p);
+            p = new BindingClass(this, p);
             this.BeginUpdate();
-            this.SetProperty(lastEnteredPropertyName,p);
+            this.SetProperty(lastEnteredPropertyName, p);
             this.EndUpdate();
             return p;
         }

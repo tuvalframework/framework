@@ -10,6 +10,7 @@ import { KeyFrameCollection } from '../../../../UIKit/KeyFrameCollection';
 export interface IControl extends IRenderable {
     Text: string;
     TabIndex:int;
+    jssStyle: any;
     Appearance: AppearanceObject;
     HoverAppearance: AppearanceObject;
     ActiveAppearance: AppearanceObject;

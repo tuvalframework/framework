@@ -6,7 +6,7 @@ export const jss = create(jssPreset());
 
 const createGenerateId = () => {
     let counter = 0
-    return (rule) => `${rule.key}`
+    return (rule, sheet) => `pizza--${rule.key}-${counter++}`
 }
 jss.setup({
     createGenerateId: createGenerateId

@@ -14,6 +14,12 @@ import { ShadowRoot } from "../../ShadowRoot/ShadowRoot";
 import { IControl } from "../IControl";
 import { KeyFrameCollection } from "../../../../../UIKit/KeyFrameCollection";
 import { motion } from '../../../../../motion/render/dom/motion';
+import { jss } from "../../../../../jss/jss";
+import { cssClassNameGenerator } from "./classNameGenerator";
+import { Wrapper } from "./Wrapper";
+import { useMemo } from "../../../../../hooks";
+
+let cssCounter = 1;
 
 export abstract class HtmlRenderer<T extends IControl> extends XmlTransformer<T> {
     protected Ref;
@@ -301,6 +307,8 @@ export abstract class HtmlRenderer<T extends IControl> extends XmlTransformer<T>
 
     //Lifecycle methods
     private componentWillMount(): void {
+
+
         this.OnComponentWillMount(this.Ref, this.Control);
     }
     private componentDidMount(): void {
@@ -320,6 +328,11 @@ export abstract class HtmlRenderer<T extends IControl> extends XmlTransformer<T>
         this.OnComponentDidUpdate(this.Control);
     }
     private componentWillUnmount(): void {
+        if (this.Control.Appearance['jssStyle']) {
+            this.Control.Appearance['jssStyle'].detach();
+            jss.removeStyleSheet(this.Control.Appearance['jssStyle']);
+        }
+
         this.OnComponentWillUnmount(this.Control);
         this.Control.OnUnLoaded();
     }
@@ -497,6 +510,8 @@ export abstract class HtmlRenderer<T extends IControl> extends XmlTransformer<T>
 
     }
 
+
+
     public OnCustomAttributesCreating(obj: T, attributeObject: any): void {
 
     }
@@ -509,7 +524,7 @@ export abstract class HtmlRenderer<T extends IControl> extends XmlTransformer<T>
         //debugger;
         const result = [];
         this.Render(result, this.Control);
-        if (this.UseShadowDom) {
+        if (this.UseShadowDom /* || !this.Control.HoverAppearance.IsEmpty */) {
             const sr = (
                 <ShadowRoot componentDidMount={(shadowRoot) => this.OnShadowDomDidMount(shadowRoot, this.Control)} componentWillMount={(shadowRoot) => this.OnShadowDomWillMount(shadowRoot, this.Control)} componentWillUnmount={(shadowRoot) => this.OnShadowDomWillUnmount(shadowRoot, this.Control)}>
                     {<style>{this.createStyles()}</style>}
@@ -612,7 +627,119 @@ export abstract class HtmlRenderer<T extends IControl> extends XmlTransformer<T>
             }
 
         } else {
-            return result;
+            const style = {};/* this.Control.Appearance.GetStyleObject(); */
+
+            if (this.Control.Left != null && this.Control.Top != null) {
+                style['position'] = 'absolute';
+                style['left'] = this.Control.Left;
+                style['top'] = this.Control.Top;
+                style['bottom'] = this.Control.Bottom;
+                style['right'] = this.Control.Right;
+            } else {
+                style['position'] = 'relative';
+            }
+            if (this.Control._Width != null) {
+                style['width'] = this.Control._Width;
+            }
+            if (this.Control._Height != null) {
+                style['height'] = this.Control._Height;
+            }
+
+            const elementProperties = {};
+            if (this.renderId) {
+                elementProperties['id'] = 'id-' + this.Control.Id;
+            }
+
+            if (this.Control.TabIndex != null) {
+                elementProperties['tabindex'] = this.Control.TabIndex;
+            }
+
+            elementProperties['onContextMenu'] = (e) => {
+
+                if (this.contextMenu != null) {
+                    this.contextMenu.show(e);
+                }
+            };
+
+            if ((this.Control as any).renderAsAnimated) {
+                elementProperties['animated'] = true;
+
+                if ((this.Control as any)._initial != null) {
+                    elementProperties['initial'] = (this.Control as any)._initial;
+                }
+                if ((this.Control as any)._animate != null) {
+                    elementProperties['animate'] = (this.Control as any)._animate;
+                }
+                if ((this.Control as any)._transition != null) {
+                    elementProperties['transition'] = (this.Control as any)._transition;
+                }
+
+                if ((this.Control as any)._whileHover != null) {
+                    elementProperties['whileHover'] = (this.Control as any)._whileHover;
+                }
+                if ((this.Control as any)._whileTap != null) {
+                    elementProperties['whileTap'] = (this.Control as any)._whileTap;
+                }
+                if ((this.Control as any)._whileDrag != null) {
+                    elementProperties['whileDrag'] = (this.Control as any)._whileDrag;
+                }
+                if ((this.Control as any)._whileFocus != null) {
+                    elementProperties['whileFocus'] = (this.Control as any)._whileFocus;
+                }
+                if ((this.Control as any)._whileInView != null) {
+                    elementProperties['whileInView'] = (this.Control as any)._whileInView;
+                }
+                if ((this.Control as any)._exit != null) {
+                    elementProperties['exit'] = (this.Control as any)._exit;
+                }
+            }
+
+            /*   elementProperties['data-cooltipz-dir'] = `left`;
+              elementProperties['aria-label'] = `Hello there!`; */
+
+            //elementProperties['class'] = `tvl-control-${this.Control.constructor.name}`;
+
+            elementProperties['style'] = style;
+            elementProperties['ref'] = (e) => this.Ref = e;
+            elementProperties['onclick'] = (e) => { this.Control.WndProc(Message.Create(Msg.WM_CLICK, e, e)) };
+            elementProperties['ondblclick'] = (e) => this.Control.WndProc(Message.Create(Msg.WM_DBCLICK, e, e));
+            elementProperties['onmouseDown'] = (e) => this.Control.WndProc(Message.Create(Msg.WM_MOUSEDOWN, e, e));
+            elementProperties['onkeydown'] = (e) => this.Control.WndProc(Message.Create(Msg.WM_KEYDOWN, e, e));
+            elementProperties['onkeydown'] = (e) => this.Control.WndProc(Message.Create(Msg.WM_KEYDOWN, e, e));
+            elementProperties['onfocus'] = (e) => this.Control.WndProc(Message.Create(Msg.WM_SETFOCUS, e, e));
+            elementProperties['onfocusout'] = (e) => this.Control.WndProc(Message.Create(Msg.WM_KILLFOCUS, e, e));
+
+
+            this.OnCustomAttributesCreating(this.Control, elementProperties);
+
+            const alias = (this.Control as any).vp_Alias;
+            if (alias != null) {
+                elementProperties['alias'] = alias;
+            }
+
+            /*  if ((this.Control as any).__createStyle) {
+                 elementProperties['className'] = (this.Control as any).__createStyle();
+             } */
+
+
+            /*  elementProperties['style'] = {
+                 ...this.Control.Appearance.GetStyleObject()
+             }; */
+
+            if ((this.Control as any).renderAsAnimated) {
+                return Teact.createElement(motion[`tuval-control-${this.Control.constructor.name}`], elementProperties, result);
+            } else {
+                return (
+                    <Wrapper control={this.Control} elementProps={elementProperties} OnComponentWillMount={this.componentWillMount.bind(this)} OnComponentDidMount={this.componentDidMount.bind(this)} OnComponentWillUnmount={this.componentWillUnmount.bind(this)} >
+                        {result}
+                        {/*  <tuval-view {...elementProperties}>
+                            {result}
+                        </tuval-view> */}
+                        {/* Teact.createElement(`tuval-control-${this.Control.constructor.name}`, elementProperties, result) */}
+                    </Wrapper>
+                )
+                //return Teact.createElement(`tuval-control-${this.Control.constructor.name}`, elementProperties, result);
+            }
         }
     }
 

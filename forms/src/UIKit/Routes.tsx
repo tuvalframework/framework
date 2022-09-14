@@ -47,9 +47,9 @@ function createProxy<T>(thisarg) {
 
 
 class RoutesRenderer extends ControlHtmlRenderer<UIRoutesCLass> {
-    public get UseShadowDom(): boolean {
+   /*  public get UseShadowDom(): boolean {
         return true;
-    }
+    } */
 
     public GenerateElement(obj: UIRoutesCLass): boolean {
         this.WriteStartFragment();
@@ -170,10 +170,10 @@ export function UIRoutes(...routes: UIRouteClass[]): UIRoutesCLass {
 }
 
 class RouteRenderer extends ControlHtmlRenderer<UIRouteClass> {
-    public get UseShadowDom(): boolean {
+   /*  public get UseShadowDom(): boolean {
         return true;
     }
-
+ */
     public GenerateElement(obj: UIRouteClass): boolean {
         this.WriteStartFragment();
         return true;
@@ -263,9 +263,9 @@ export function UIRoute(...args: any[]): UIRouteClass | UIRouteFunction {
 //---------------------------------
 
 class LinkRenderer extends ControlHtmlRenderer<UIRouteLinkCLass> {
-    public get UseShadowDom(): boolean {
+   /*  public get UseShadowDom(): boolean {
         return true;
-    }
+    } */
 
     public OnStyleCreating(obj: UIRouteLinkCLass, sb: StringBuilder): void {
         sb.AppendLine(`
@@ -362,9 +362,9 @@ export function UIRouteLink(path: string, state?: any): FunctionUIRouteLink {
 
 
 class OutletRenderer extends ControlHtmlRenderer<UIRouteOutletClass> {
-    public get UseShadowDom(): boolean {
+  /*   public get UseShadowDom(): boolean {
         return true;
-    }
+    } */
 
     public OnStyleCreating(obj: UIRouteOutletClass, sb: StringBuilder): void {
 
@@ -416,9 +416,9 @@ export function UIRouteOutlet(): UIRouteOutletClass {
 
 
 class UINavigateRenderer extends ControlHtmlRenderer<UINavigateClass> {
-    public get UseShadowDom(): boolean {
+   /*  public get UseShadowDom(): boolean {
         return true;
-    }
+    } */
 
     public OnStyleCreating(obj: UINavigateClass, sb: StringBuilder): void {
 

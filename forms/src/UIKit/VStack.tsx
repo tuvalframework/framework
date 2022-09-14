@@ -30,9 +30,9 @@ export class VStackDividerTypes {
 
 class VStackRenderer extends ControlHtmlRenderer<VStackClass> {
     public ChildrenCreating: Event<any> = new Event();
-    public get UseShadowDom(): boolean {
+   /*  public get UseShadowDom(): boolean {
         return true;
-    }
+    } */
 
     public OnCustomAttributesCreating(obj: VStackClass, attributeObject: any): void {
 
@@ -166,7 +166,7 @@ export class VStackClass extends UIView {
 
         this.Appearance.AlignItems = 'center';
         this.Appearance.JustifyItems = 'center';
-        this.Appearance.Transition = '200ms cubic-bezier(0, 0, 0.2, 1) 0ms';
+       // this.Appearance.Transition = '200ms cubic-bezier(0, 0, 0.2, 1) 0ms';
     }
 
     Controls: ControlCollection<any, any>;

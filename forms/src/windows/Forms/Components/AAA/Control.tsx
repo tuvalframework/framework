@@ -534,7 +534,8 @@ export abstract class TComponent extends React.Component /* implements ICollecti
     }
 }
 export abstract class Control<T extends Control = any, TController = any> extends TComponent implements IControl, IRenderable {
-
+    @State()
+    public  jssStyle: any;
     @State()
     public KeyFrameCollection: KeyFrameCollection[];
 

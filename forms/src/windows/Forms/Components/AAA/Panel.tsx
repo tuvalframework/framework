@@ -112,9 +112,9 @@ export class TVirtualContainer extends Control<Panel> implements IVirtualContain
 
 export class TContainerControlRenderer extends ControlHtmlRenderer<IVirtualContainer> {
     public ChildrenCreating: Event<any> = new Event();
-    public get UseShadowDom(): boolean {
+  /*   public get UseShadowDom(): boolean {
         return true;
-    }
+    } */
     public OnStyleCreating(obj: IVirtualContainer, sb: StringBuilder): void {
         sb.AppendLine(`
         /* total width */
@@ -345,7 +345,7 @@ export class TContainerControlRenderer extends ControlHtmlRenderer<IVirtualConta
         }
 
         this.WriteComponent(this.CreateControls(obj));
-        this.WriteComponent(<Ripple />);
+       // this.WriteComponent(<Ripple />);
 
         if (obj.Tooltip != null) {
             this.WriteComponent(

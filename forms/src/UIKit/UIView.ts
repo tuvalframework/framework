@@ -1,7 +1,7 @@
 import type { ZStackClass } from './ZStack';
 import { ControlTypes } from '../windows/Forms/Components/ControlTypes';
 import { Control } from "../windows/Forms/Components/AAA/Control";
-import { Event, foreach, int, List, is, throwIfEndless, StringBuilder, TMath } from '@tuval/core';
+import { Event, foreach, int, List, is, throwIfEndless, StringBuilder, TMath, Guid, Dictionary } from '@tuval/core';
 import { UIController } from './UIController';
 import { IControl } from '../windows/Forms/Components/AAA/IControl';
 import { Border } from "../windows/Forms/Border";
@@ -17,11 +17,13 @@ import { IVirtualContainer, TContainerControlRenderer } from "../windows/Forms/C
 import { ControlCollection } from "../windows/Forms/Components/AAA/ControlCollection";
 import { KeyFrameCollection } from './KeyFrameCollection';
 import { UniqueComponentId } from '../UniqueComponentId';
-import { useRef } from '../hooks';
+import { bindState, useRef, useState } from '../hooks';
 import { AlignmentType, cBottom, cBottomLeading, cBottomTrailing, cCenter, cLeading, cTop, cTopLeading, cTopTrailing, cTrailing, cVertical, cLeft, cRight, cHorizontal } from './Constants';
 import { ColorConverter } from '../windows/Forms/Components/AAA/FontIcon/ColorConverter';
 import { ColorClass } from '../tuval-system/ColorClass';
+import { jss } from '../jss/jss';
 
+const charts: Dictionary<string, any> = new Dictionary();
 
 
 export function Color(value: string): ColorClass {
@@ -867,8 +869,13 @@ export class UIView implements IVirtualContainer, IControl, IRenderable {
     @ViewProperty()
     public Tooltip: string;
 
+
+
+
     @ViewProperty()
-    public Appearance: AppearanceObject
+    public Appearance: AppearanceObject;
+
+
     //public AppearanceChanged:Event<any>;
     @ViewProperty()
     public HoverAppearance: AppearanceObject;
@@ -2866,6 +2873,39 @@ export class UIView implements IVirtualContainer, IControl, IRenderable {
     public variant(value: string): this {
         this.vp_variant = value;
         return this;
+    }
+
+    @ViewProperty() jssStyle: any;
+
+    public __createStyle() {
+        const className = `tuval-view`;
+        const [Id, setId] = bindState(Guid.NewGuid().ToString());
+
+        let jssStyle = null;
+        if (charts.ContainsKey(Id)) {
+            jssStyle = charts.Get(Id);
+        } else {
+            const styles = {
+                [className]: control => ({
+                    ...control.Appearance.GetStyleObject()
+                }),
+                '&:hover': control => ({
+                    ...control.HoverAppearance.GetStyleObject()
+                }),
+                '&:active': control => ({
+                    ...control.ActiveAppearance.GetStyleObject()
+                }),
+                '&:focus': control => ({
+                    ...control.FocusAppearance.GetStyleObject()
+                })
+            }
+            jssStyle = jss.createStyleSheet(styles, { link: true }).attach();
+            charts.Set(Id, jssStyle);
+        }
+
+        jssStyle.update(this);
+        return jssStyle.classes[className];
+
     }
 
 }

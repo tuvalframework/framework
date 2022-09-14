@@ -16,7 +16,7 @@ export * from './windows/Forms/Components/fonts/loadFont';
 
 import _React from './preact/compat';
 
-export const React = _React;
+export const React: any = _React;
 
 import './windows/Forms/Components/fonts/loadFont';
 
@@ -28,9 +28,10 @@ export * from './tuval-system';
 
 export * from './hooks';
 export * from './RealmHttpClient';
+export * from './query-selector-shadow-dom/querySelectorDeep';
 
 export { BrowserRouter, Routes, Route } from './router-dom';
 
- export default './preact/compat';
+export { Component, PureComponent } from './preact/compat';
 
 import './exports';
