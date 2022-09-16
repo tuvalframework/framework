@@ -24,21 +24,21 @@ export class Wrapper extends Component {
         const styles = {
             [className]: control => ({
                 ...control.Appearance.GetStyleObject(),
-                '&:hover': control => ({
+                '&:hover': {
                     ...control.HoverAppearance.GetStyleObject()
-                }),
-                '&:active': control => ({
+                },
+                '&:active': {
                     ...control.ActiveAppearance.GetStyleObject()
-                }),
-                '&:focus': control => ({
+                },
+                '&:focus': {
                     ...control.FocusAppearance.GetStyleObject()
-                })
+                }
             }),
 
         }
 
-        const jssStyle = jss.createStyleSheet(styles, { link: true } ).attach();
-      //  this.props.elementProps['className'] = jssStyle.classes[className];
+        const jssStyle = jss.createStyleSheet(styles, { link: true }).attach();
+        //  this.props.elementProps['className'] = jssStyle.classes[className];
         this.jssStyle = jssStyle;
         this.props.OnComponentWillMount();
     }

@@ -16,9 +16,9 @@ import { AppearanceClass } from "../UIAppearance";
 
 class TableRenderer extends ControlHtmlRenderer<TableClass> {
     public ChildrenCreating: Event<any> = new Event();
-    public get UseShadowDom(): boolean {
+    /* public get UseShadowDom(): boolean {
         return true;
-    }
+    } */
 
     public OnCustomAttributesCreating(obj: TableClass, attributeObject: any): void {
 

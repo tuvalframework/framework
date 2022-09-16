@@ -18,9 +18,9 @@ import { getView, viewFunc } from './getView';
 
 class ButtonRenderer extends ControlHtmlRenderer<UIButtonClass> {
     public ChildrenCreating: Event<any> = new Event();
-    public get UseShadowDom(): boolean {
+  /*   public get UseShadowDom(): boolean {
         return true;
-    }
+    } */
 
     public OnCustomAttributesCreating(obj: UIButtonClass, attributeObject: any): void {
 

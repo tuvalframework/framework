@@ -131,6 +131,10 @@ export class UIController<T = any> extends Control implements IRenderable, IVirt
 
     }
 
+    protected UseRouter() {
+        return true;
+    }
+
     @State()
     public _location: any;
 
@@ -142,7 +146,7 @@ export class UIController<T = any> extends Control implements IRenderable, IVirt
 
     protected OnComponentDidMount() {
 
-        if (this._location && this._params) {
+        if (this._location && this._params && this.UseRouter()) {
             const location = this._location//useLocation()
             //if (lastSubBindedLink1 !== location.pathname) {
             const params: any = this._params//useParams();
