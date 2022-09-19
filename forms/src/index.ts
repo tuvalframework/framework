@@ -30,6 +30,9 @@ export * from './hooks';
 export * from './RealmHttpClient';
 export * from './query-selector-shadow-dom/querySelectorDeep';
 
+
+export * from "./jss/jss";
+
 export { BrowserRouter, Routes, Route } from './router-dom';
 
 export { Component, PureComponent } from './preact/compat';
