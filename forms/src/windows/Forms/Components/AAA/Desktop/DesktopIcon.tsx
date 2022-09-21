@@ -138,7 +138,16 @@ export class DesktopIcon extends TComponent {
                         setTimeout(() =>
                             TaskManager.Start(appType.application).then(app => {
                                 this.Loading = false;
-                                this.ApplicationType = appType.application;
+
+                                //doing cache
+                                const caching = false;
+                                if (caching) {
+                                    this.ApplicationType = appType.application;
+                                } else {
+                                    delete (ModuleLoader as any).librariesHeaders[this.AppInfo.name];
+                                    delete (ModuleLoader as any).librariesUrls[this.AppInfo.name];
+                                }
+
                                 gaEvent('Application', 'Start', this.AppInfo.text);
                                 (window as any).ga('send', 'pageview', this.AppInfo.text);
                             }), 10);
@@ -147,7 +156,16 @@ export class DesktopIcon extends TComponent {
                         setTimeout(() =>
                             TaskManager.Start(appType).then(app => {
                                 this.Loading = false;
-                                this.ApplicationType = appType;
+
+                                //doing cache
+                                const caching = false;
+                                if (caching) {
+                                    this.ApplicationType = appType;
+                                } else {
+                                    delete (ModuleLoader as any).librariesHeaders[this.AppInfo.name];
+                                    delete (ModuleLoader as any).librariesUrls[this.AppInfo.name];
+                                }
+
                                 gaEvent('Application', 'Start', this.AppInfo.text);
                                 (window as any).ga('send', 'pageview', this.AppInfo.text);
                             }), 10);

@@ -1,10 +1,8 @@
-git add .
-git commit -m "."
-git push
+echo "Starting"
 npm run buildnode
 npm run build
 npm version patch -m "Upgrade to new version"
-git commit -m "version updated"
+
 cp package.json dist
 cd dist
 mkdir node

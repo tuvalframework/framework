@@ -494,7 +494,6 @@ export class ModuleLoader {
               deps: deps,
               priority: priority + 1
             });
-
           }
 
           (new Promise((resolve, reject) => {

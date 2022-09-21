@@ -9,7 +9,7 @@ const fs = require('fs');
 /* process.argv.forEach(function(val, index, array) {
     console.log(index + ': ' + val);
 }); */
-export function appPackager(appJsFile: string, targetAppName: string) {
+export function appPackager(appJsFile: string, targetAppName: string, libName: string = '') {
     function getHeader(scriptStr, name?) {
         const libNames = [
             'buttons',
@@ -39,8 +39,8 @@ export function appPackager(appJsFile: string, targetAppName: string) {
         const header = {};
 
         libNames.forEach(lib => {
-            if (scriptStr.indexOf('tuval$components$' + lib) > -1 && name !== lib) {
-                header['tuval$components$' + lib] = true;
+            if (scriptStr.indexOf('realmocean$' + lib) > -1 && name !== lib) {
+                header['realmocean$' + lib] = true;
             }
         });
 
@@ -52,7 +52,7 @@ export function appPackager(appJsFile: string, targetAppName: string) {
     const a = fs.readFileSync(filename);
     const compressedBytes = TCompress.CompressBytes(a);
     const scriptStr = Encoding.UTF8.GetString(a);
-    const headerObj = getHeader(scriptStr);
+    const headerObj = getHeader(scriptStr, libName);
     const headerJSON = JSON.stringify(headerObj);
     const headerJSONBytes = Encoding.UTF8.GetBytes(headerJSON);
     const buffer = new TBuffer();

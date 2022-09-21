@@ -11,7 +11,7 @@ import { ArgumentOutOfRangeException } from '../Exceptions/ArgumentOutOfRangeExc
 const cache: any = {};
 export class TLoader {
     public static LoadBinary(url: string): Promise<ArrayBuffer> {
-        if (cache[url]) {
+        if (false/* cache[url] */) {
             return new Promise((resolve, reject) => {
                 resolve(cache[url]);
             });
