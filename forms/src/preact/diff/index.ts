@@ -283,6 +283,7 @@ export function diff(
 export function commitRoot(commitQueue, root) {
 	if (options._commit) options._commit(root, commitQueue);
 
+	//try {
 	commitQueue.some(c => {
 		try {
 			// @ts-ignore Reuse the commitQueue variable here so the type changes
@@ -296,6 +297,12 @@ export function commitRoot(commitQueue, root) {
 			options._catchError(e, c._vnode);
 		}
 	});
+	//}
+	/* catch(e) {
+		console.group('ERROR IN EXCECUTION');
+		console.log(e);
+		console.groupEnd();
+	} */
 }
 
 /**

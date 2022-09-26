@@ -5,7 +5,7 @@ import { IRenderable } from './IView';
 import { ControlHtmlRenderer } from '../windows/Forms/Components/AAA/HtmlRenderer/ControlHtmlRenderer';
 import { IVirtualContainer, TContainerControlRenderer } from '../windows/Forms/Components/AAA/Panel';
 import { State } from '../windows/Forms/Components/AAA/Reflection/PropertyDecorator';
-import { ControlCollection } from '../windows/Forms/Components';
+import { ControlCollection, TApplication, useApplication } from '../windows/Forms/Components';
 import { contextMap } from './contextMap';
 import { getView } from './getView';
 import { BindingClass } from './Binding';
@@ -142,6 +142,9 @@ export class UIController<T = any> extends Control implements IRenderable, IVirt
     public _params: any;
 
     @State()
+    public Application: TApplication;
+
+    @State()
     public navigotor: NavigateFunction;
 
     protected OnComponentDidMount() {
@@ -154,7 +157,6 @@ export class UIController<T = any> extends Control implements IRenderable, IVirt
 
             this.BindRouterParams({ ...params, ...state });
         }
-
     }
 
     /* protected GetRenderer() {
@@ -168,6 +170,7 @@ export class UIController<T = any> extends Control implements IRenderable, IVirt
             this._params = useParams();
             this.navigotor = useNavigate();
         }
+        this.Application = useApplication();
         return this._Renderer.render();
     }
 

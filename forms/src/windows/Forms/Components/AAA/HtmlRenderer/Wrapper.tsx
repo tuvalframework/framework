@@ -1,6 +1,7 @@
 import { jss } from "../../../../../jss/jss";
 import { Component, Fragment } from "../../../../../preact/compat";
 import { Teact } from "../../Teact";
+import { motion } from '../../../../../motion/render/dom/motion';
 
 export class Wrapper extends Component {
 
@@ -32,7 +33,8 @@ export class Wrapper extends Component {
                 },
                 '&:focus': {
                     ...control.FocusAppearance.GetStyleObject()
-                }
+                },
+                ...this.props.customJss
             }),
 
         }
@@ -46,6 +48,11 @@ export class Wrapper extends Component {
         this.props.OnComponentDidMount();
     }
 
+    componentDidUpdate() {
+        this.props.OnComponentDidUpdate();
+    }
+
+
     componentWillUnmount() {
         this.jssStyle.detach();
         jss.removeStyleSheet(this.jssStyle);
@@ -57,10 +64,18 @@ export class Wrapper extends Component {
     render() {
         const className = `tuval-view`;
         this.jssStyle.update(this.props.control);
-        return (
-            <div view={this.props.control.constructor.name} className={this.jssStyle.classes[className]} {...this.props.elementProps}>
-                {this.props.children}
-            </div>
-        );
+        if (this.props.renderAsAnimated) {
+            return (
+                <motion.div view={this.props.control.constructor.name} className={this.jssStyle.classes[className]} {...this.props.elementProps}>
+                    {this.props.children}
+                </motion.div>
+            );
+        } else {
+            return (
+                <div view={this.props.control.constructor.name} className={this.jssStyle.classes[className]} {...this.props.elementProps}>
+                    {this.props.children}
+                </div>
+            );
+        }
     }
 }

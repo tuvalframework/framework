@@ -717,6 +717,7 @@ export interface StyleAttribute {
 }
 export type FontWeightModifierTypes = 'normal' | 'bold' | 'lighter' | 'bolder' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | 'inherit' | 'initial' | 'revert' | 'unset';
 export type TextAligns = 'left' | 'right' | 'center' | 'justify' | 'initial' | 'inherit';
+export type VerticalAligns = 'bottom' | 'middle' | 'top';
 export type TextTransforms = 'capitalize' | 'uppercase' | 'lowercase' | 'none' | 'full-width' | 'full-size-kana';
 export enum ShadowTypes {
     Small = '0 1px 2px 0 rgb(0 0 0 / 0.05)',
@@ -852,7 +853,7 @@ export class UIView implements IVirtualContainer, IControl, IRenderable {
 
     @ViewProperty() renderAsAnimated: boolean;
 
-    @ViewProperty()
+    //@ViewProperty()
     protected SubViews: List<IRenderable>;
 
     public controller: UIController;
@@ -1525,6 +1526,12 @@ export class UIView implements IVirtualContainer, IControl, IRenderable {
         return this;
     }
 
+
+
+    public verticalAlign(value: VerticalAligns): this {
+        this.Appearance.VerticalAlign = value;
+        return this;
+    }
 
     public textAlign(value: TextAligns): this {
         this.Appearance.TextAlign = value;
@@ -2907,5 +2914,6 @@ export class UIView implements IVirtualContainer, IControl, IRenderable {
         return jssStyle.classes[className];
 
     }
+
 
 }
