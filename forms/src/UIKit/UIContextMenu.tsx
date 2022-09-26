@@ -15,9 +15,9 @@ import { DividerClass } from "./Divider";
 export class UIContextMenuRenderer extends ControlHtmlRenderer<UIContextMenuClass> {
    shadowDom: any;
    protected menu: any;
-   public get UseShadowDom(): boolean {
+  /*  public get UseShadowDom(): boolean {
       return true;
-   }
+   } */
 
    public OnStyleCreating(obj: UIContextMenuClass, sb: StringBuilder): void {
 
@@ -303,7 +303,9 @@ export class UIContextMenuRenderer extends ControlHtmlRenderer<UIContextMenuClas
       const style = {};
       style['width'] = obj.Appearance.Width;
       style['height'] = obj.Appearance.Height;
+      style['padding'] = obj.Appearance.Padding;
 
+      obj.Appearance.Padding = '';
       this.WriteComponent(
          <Fragment>
             <div style={style} onclick={(e) => { this.menu.toggle(e); /* e.stopPropagation(); e.preventDefault(); */ }}>

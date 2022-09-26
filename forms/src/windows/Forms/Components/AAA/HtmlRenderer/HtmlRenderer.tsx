@@ -516,6 +516,9 @@ export abstract class HtmlRenderer<T extends IControl> extends XmlTransformer<T>
 
     }
 
+    public GetCustomJss(): Object {
+        return {};
+    }
 
     public render(param?: any) {
         if (!this.Control.Visible) {
@@ -636,7 +639,9 @@ export abstract class HtmlRenderer<T extends IControl> extends XmlTransformer<T>
                 style['bottom'] = this.Control.Bottom;
                 style['right'] = this.Control.Right;
             } else {
-                style['position'] = 'relative';
+                if (this.Control.Appearance.Position !== 'absolute') {
+                    style['position'] = 'relative';
+                }
             }
             if (this.Control._Width != null) {
                 style['width'] = this.Control._Width;
@@ -726,20 +731,25 @@ export abstract class HtmlRenderer<T extends IControl> extends XmlTransformer<T>
                  ...this.Control.Appearance.GetStyleObject()
              }; */
 
-            if ((this.Control as any).renderAsAnimated) {
-                return Teact.createElement(motion[`tuval-control-${this.Control.constructor.name}`], elementProperties, result);
-            } else {
-                return (
-                    <Wrapper control={this.Control} elementProps={elementProperties} OnComponentWillMount={this.componentWillMount.bind(this)} OnComponentDidMount={this.componentDidMount.bind(this)} OnComponentWillUnmount={this.componentWillUnmount.bind(this)} >
-                        {result}
-                        {/*  <tuval-view {...elementProperties}>
+            return (
+                <Wrapper
+                    renderAsAnimated={(this.Control as any).renderAsAnimated}
+                    control={this.Control}
+                    customJss={this.GetCustomJss()}
+                    elementProps={elementProperties}
+                    OnComponentWillMount={this.componentWillMount.bind(this)}
+                    OnComponentDidMount={this.componentDidMount.bind(this)}
+                    OnComponentWillUnmount={this.componentWillUnmount.bind(this)}
+                    OnComponentDidUpdate={this.componentDidUpdate.bind(this)}
+                >
+                    {result}
+                    {/*  <tuval-view {...elementProperties}>
                             {result}
                         </tuval-view> */}
-                        {/* Teact.createElement(`tuval-control-${this.Control.constructor.name}`, elementProperties, result) */}
-                    </Wrapper>
-                )
-                //return Teact.createElement(`tuval-control-${this.Control.constructor.name}`, elementProperties, result);
-            }
+                    {/* Teact.createElement(`tuval-control-${this.Control.constructor.name}`, elementProperties, result) */}
+                </Wrapper>
+            )
+            //return Teact.createElement(`tuval-control-${this.Control.constructor.name}`, elementProperties, result);
         }
     }
 

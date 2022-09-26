@@ -34,6 +34,8 @@ export * from './DropDown/DropDown';
 export * from './AutoComplete/AutoComplete';
 export * from './DataTable';
 export * from './OverlayPanel/OverlayPanel';
+export * from './Avatarview/AvatarView';
+export * from './SlideMenuView/SlideMenuView';
 export * from './Table';
 export * from './UIAppearance';
 export * from './Binding';

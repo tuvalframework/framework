@@ -5,6 +5,13 @@ import { List, EventBus, foreach, Umay } from '@tuval/core';
 import { Control } from './Control';
 import { TaskManager } from './TaskManager';
 import { UIController } from '../../../../UIKit/UIController';
+import { useContext } from '../../../../hooks';
+
+export const ApplicationContext = createContext(null!);
+
+export function useApplication(): TApplication {
+   return useContext(ApplicationContext);
+  }
 
 /* export class TApplication {
     public MainForm: TForm = null as any;
@@ -26,7 +33,7 @@ export enum ApplicationModes {
     Mobile = 3
 }
 export class TApplication extends Control<TApplication> {
-    public static ApplicationMode : ApplicationModes = ApplicationModes.Desktop;
+    public static ApplicationMode: ApplicationModes = ApplicationModes.Desktop;
     public static get IsDesktop(): boolean {
         return TApplication.ApplicationMode === ApplicationModes.Desktop;
     }
@@ -160,14 +167,16 @@ export class TApplication extends Control<TApplication> {
         return null;
     }
     public CreateElements(): any {
-        const themeContext = createContext(this.GetTheme());
+        //const themeContext = createContext(this.GetTheme());
 
         if (!this.Disposed) {
             return (
-                <div id={this.Name}>
-                    {this.GetMainForm()}
-                    {this.GetForms()}
-                </div>
+                <ApplicationContext.Provider value={this}>
+                    <div id={this.Name}>
+                        {this.GetMainForm()}
+                        {this.GetForms()}
+                    </div>
+                </ApplicationContext.Provider>
             );
         } else {
             /* this.m_PropertyBag = undefined as any;

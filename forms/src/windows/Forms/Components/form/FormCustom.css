@@ -16,6 +16,8 @@
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
     background-blend-mode: overlay;
+
+    filter: drop-shadow(0 25px 45px rgba(0,0,0, .40)) drop-shadow(0 0 2px rgba(0,0,0, .50));
 }
 
 .p-dialog-border {
@@ -31,8 +33,13 @@
     padding: 0px;
     /* 5px */
     /*  border: 1px solid rgba(255, 255, 255, 50%) !important; */
-    outline: rgba(120, 120, 120, 10%) solid 1px;
+
+
+    /* commented after drop shadow 
+     outline: rgba(120, 120, 120, 10%) solid 1px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+ */
+
     /*  box-shadow:
     2.8px 3.7px 5.5px -4px rgba(0, 0, 0, 0.2),
     6.7px 8.8px 12.5px -4px rgba(0, 0, 0, 0.152),

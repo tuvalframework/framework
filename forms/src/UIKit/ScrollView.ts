@@ -42,6 +42,7 @@ export function ScrollView(...args: any[]): FunctionScrollView | VStackClass {
                         ...views
                     ).position('absolute')
                 )
+                    .width('100%')
                     .overflowX((axes === cHorizontal || axes == null) ? 'auto' : 'hidden')
                     .overflowY((axes === cVertical || axes == null) ? 'auto' : 'hidden')
             )
@@ -52,7 +53,7 @@ export function ScrollView(...args: any[]): FunctionScrollView | VStackClass {
                 VStack({ alignment: cTopLeading })(
                     ...args
                 ).position('absolute')
-            ).overflowX('auto').overflowY('auto')
+            ).overflowX('auto').overflowY('auto').width('100%')
         )
     }
 

@@ -35,6 +35,8 @@
     backdrop-filter: blur(33px);
     -webkit-backdrop-filter: blur(33px);
     background-blend-mode: overlay;
+
+    filter: drop-shadow(0 25px 45px rgba(0,0,0, .40)) drop-shadow(0 0 2px rgba(0,0,0, .50));
 }
 
 .p-dialog-content {
