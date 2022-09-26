@@ -2,7 +2,6 @@ import React, { createElement, Fragment } from "../../../../../preact/compat";
 import { Teact } from '../../Teact';
 import { int, List } from '@tuval/core';
 import { ICellFormatter, IDataGridColumn } from './IGridDataColumn';
-import { NumberFormatOptions, DateFormatOptions } from '@tuval/components/core';
 
 export enum ColumnClipModes {
     /** Truncates the cell content when it overflows its area. */
@@ -50,7 +49,7 @@ export class GridColumn implements IDataGridColumn {
     filterTemplate: string;
     foreignKeyField: string;
     foreignKeyValue: string;
-    format: string | NumberFormatOptions | DateFormatOptions;
+    format: string ;
     formatter: Object | ICellFormatter | Function;
     headerTemplate: string;
     headerText: string;

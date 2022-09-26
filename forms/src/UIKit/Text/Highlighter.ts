@@ -60,7 +60,7 @@ export default function Highlighter({
                         highlightClassName = memoizedLowercaseProps(highlightClassName) as any
                         highlightClass = highlightClassName[text.toLowerCase()]
                     } else {
-                        highlightClass = highlightClassName[text]
+                        highlightClass = (highlightClassName as any)[text]
                     }
                 } else {
                     highlightClass = highlightClassName

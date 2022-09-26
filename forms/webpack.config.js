@@ -1,11 +1,6 @@
 const path = require('path');
-const DeclarationBundlerPlugin = require('./declaration-bundler-webpack-plugin.fix');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
-const DtsBundleWebpack = require('dts-bundle-webpack');
+ const DeclarationBundlerPlugin = require('./declaration-bundler-webpack-plugin.fix');
+const DtsBundleWebpack = require('dts-bundle-webpack'); 
 const fs = require('fs');
 
 var libraryName = '@tuval/forms';

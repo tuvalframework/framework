@@ -1,6 +1,5 @@
 import { int, List } from "@tuval/core";
 import { ColumnClipModes } from "./Column";
-import { NumberFormatOptions, DateFormatOptions } from '@tuval/components/core';
 
 export interface ICellFormatter {
     getValue(column: IDataGridColumn, data: Object): Object;
@@ -33,7 +32,7 @@ export interface IDataGridColumn {
     filterTemplate: string;
     foreignKeyField: string;
     foreignKeyValue: string;
-    format: string | NumberFormatOptions | DateFormatOptions;
+    format: string;
     formatter: Object | ICellFormatter | Function;
     headerTemplate: string;
     headerText: string;
