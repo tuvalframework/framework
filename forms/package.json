@@ -1,10 +1,6 @@
 {
     "name": "@tuval/forms",
-<<<<<<< HEAD
     "version": "0.0.47",
-=======
-    "version": "0.0.45",
->>>>>>> 53a95b36e64dae5e5be6d6819437e239956f699e
     "description": "",
     "keywords": [],
     "main": "index.js",
