@@ -29,6 +29,7 @@ export function ScrollView(...args: any[]): FunctionScrollView | VStackClass {
                         ...views
                     ).position('absolute')
                 )
+                    .width('100%')
                     .overflowX(value === cHorizontal ? 'auto' : 'hidden')
                     .overflowY(value === cVertical ? 'auto' : 'hidden')
             )
@@ -60,36 +61,3 @@ export function ScrollView(...args: any[]): FunctionScrollView | VStackClass {
     throw 'Error with parameter.'
 
 }
-
-/*
-type FunctionScrollView = (...views: UIView[]) => VStackClass;
-
-export function ScrollView(...views: (UIView | IControl | UIController)[]): VStackClass;
-export function ScrollView(value: ScrollViewParams): FunctionScrollView;
-export function ScrollView(...args: any[]): FunctionScrollView | VStackClass {
-    if (args.length === 0) {
-        return new VStackClass();
-    } else if (args.length === 1 && typeof args[0] === 'object' && args[0].constructor === Object && !(args[0] instanceof UIView || args[0] instanceof UIController || args[0] instanceof Control)) {
-        const params: ScrollViewParams = args[0];
-        return (...views: UIView[]) => {
-            return (
-                VStack(
-                    VStack(
-                        ...views
-                    )
-                        .position('absolute')
-                )
-                    .overflowX(params.axes === cHorizontal ? 'auto' : 'hidden')
-                    .overflowY(params.axes === cVertical ? 'auto' : 'hidden')
-            )
-        }
-    } else {
-        return (
-            VStack(
-                VStack(
-                    ...args
-                ).position('absolute')
-            ).overflowX('hidden').overflowY('auto')
-        )
-    }
-} */
