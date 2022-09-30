@@ -16,9 +16,6 @@ DomHandler.addCssToDocument(require('../Components/dropdown/Thema.css'));
 export class DropDownRenderer extends ControlHtmlRenderer<DropDownClass> {
     shadowDom: any;
     protected menu: any;
-    public get UseShadowDom(): boolean {
-        return true;
-    }
 
     public OnStyleCreating(obj: DropDownClass, sb: StringBuilder): void {
         sb.AppendLine(require('../Components/common.css'));
