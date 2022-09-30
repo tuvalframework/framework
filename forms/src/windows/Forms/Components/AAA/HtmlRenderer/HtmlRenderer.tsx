@@ -734,8 +734,8 @@ export abstract class HtmlRenderer<T extends IControl> extends XmlTransformer<T>
             return (
                 <Wrapper
                     renderAsAnimated={(this.Control as any).renderAsAnimated}
+                    renderer={this}
                     control={this.Control}
-                    customJss={this.GetCustomJss()}
                     elementProps={elementProperties}
                     OnComponentWillMount={this.componentWillMount.bind(this)}
                     OnComponentDidMount={this.componentDidMount.bind(this)}

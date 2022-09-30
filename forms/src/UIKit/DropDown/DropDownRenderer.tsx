@@ -65,6 +65,33 @@ export class DropDownRenderer extends ControlHtmlRenderer<DropDownClass> {
 
     }
 
+    public override GetCustomJss(): Object {
+        return {
+            '& .p-dropdown::before': {
+                borderBottom: '1px solid rgba(0, 0, 0, 0.42)',
+                left: 0,
+                bottom: 0,
+                content: " ",
+                position: 'absolute',
+                right: 0,
+                transition: 'border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+                pointerEvents: 'none'
+            },
+            '& .p-dropdown::after': {
+                borderBottom: '2px solid rgb(115, 82, 199)',
+                left: 0,
+                bottom: 0,
+                content: "",
+                position: 'absolute',
+                right: 0,
+                transform: 'scaleX(0)',
+                transition: 'transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms',
+                pointerEvents: 'none'
+            },
+
+        }
+    }
+
     public GenerateElement(obj: DropDownClass): boolean {
         this.WriteStartFragment();
         return true;
@@ -96,18 +123,27 @@ export class DropDownRenderer extends ControlHtmlRenderer<DropDownClass> {
          } */
 
         const selectedTemplate = (option, props) => {
+            console.group('Drop Down Context')
+            console.log(option)
+
+
             if (option) {
                 const view = getView(obj.controller, obj.vp_selectedItemTemplate(option));
                 if (view != null) {
+                    console.log(view);
+                    console.groupEnd();
+
                     return view.Render();
                 }
             }
+            console.groupEnd()
 
             return (
                 <span>
                     {props.placeholder}
                 </span>
             );
+
         }
 
         const style = {};
