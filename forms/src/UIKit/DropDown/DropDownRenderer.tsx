@@ -67,7 +67,7 @@ export class DropDownRenderer extends ControlHtmlRenderer<DropDownClass> {
 
     public override GetCustomJss(): Object {
         return {
-            '& .p-dropdown::before': {
+            '&.p-dropdown::before': {
                 borderBottom: '1px solid rgba(0, 0, 0, 0.42)',
                 left: 0,
                 bottom: 0,
@@ -77,7 +77,7 @@ export class DropDownRenderer extends ControlHtmlRenderer<DropDownClass> {
                 transition: 'border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
                 pointerEvents: 'none'
             },
-            '& .p-dropdown::after': {
+            '&.p-dropdown::after': {
                 borderBottom: '2px solid rgb(115, 82, 199)',
                 left: 0,
                 bottom: 0,
