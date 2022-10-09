@@ -4,12 +4,13 @@ import { IControl } from '../windows/Forms/Components/AAA/IControl';
 import { UIController } from './UIController';
 import { Text } from './Text/Text';
 import { Control } from '../windows/Forms/Components/AAA/Control';
-import { cHorizontal, cTopLeading, cVertical } from './Constants';
+import { AlignmentType, cHorizontal, cTopLeading, cVertical } from './Constants';
 
 
 
 interface ScrollViewParams {
     axes?: 'cHorizontal' | 'cVertical';
+    alignment?:AlignmentType;
     showsIndicators?: boolean;
     content?: any;
 }
@@ -35,11 +36,12 @@ export function ScrollView(...args: any[]): FunctionScrollView | VStackClass {
             )
         }
     } else if (args.length === 1 && typeof args[0] === 'object' && args[0].constructor === Object && !(args[0] instanceof UIView || args[0] instanceof UIController || args[0] instanceof Control)) {
-        const { axes, showsIndicators, content }: ScrollViewParams = args[0];
+        const { axes, showsIndicators, content, alignment = cTopLeading }: ScrollViewParams = args[0];
+        
         return (...views: UIView[]) => {
             return (
-                VStack({ alignment: cTopLeading })(
-                    VStack({ alignment: cTopLeading })(
+                VStack({ alignment: alignment })(
+                    VStack({ alignment: alignment })(
                         ...views
                     ).position('absolute')
                 )

@@ -239,15 +239,6 @@ export interface IStateService {
 export class RealmHttpClient {
     public static Post<D = any, T = any, R = HttpClientResponse<T>>(url: string, data?: D, config?: HttpClientRequestConfig<D>): Promise<R> {
 
-        try {
-            throw new Error('')
-        } catch (e) {
-
-            debugger;
-            const arrayOfLines = ErrorStackParser.parse(e);
-            const tuvalApp = ModuleLoader.LoadedModules[arrayOfLines[0].fileName];
-        }
-
         const stateService: IStateService = container.resolve<IStateService>('IStateService') as any;
         if (stateService == null) {
             throw 'State service not fount'
