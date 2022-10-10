@@ -18,6 +18,7 @@ import { jss } from "../../../../../jss/jss";
 import { cssClassNameGenerator } from "./classNameGenerator";
 import { Wrapper } from "./Wrapper";
 import { useMemo } from "../../../../../hooks";
+import type { UIView } from "../../../../../UIKit/UIView";
 
 let cssCounter = 1;
 
@@ -516,7 +517,7 @@ export abstract class HtmlRenderer<T extends IControl> extends XmlTransformer<T>
 
     }
 
-    public GetCustomJss(): Object {
+    public GetCustomJss(obj:T): Object {
         return {};
     }
 

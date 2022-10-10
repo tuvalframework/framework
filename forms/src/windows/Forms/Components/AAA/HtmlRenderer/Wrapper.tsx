@@ -34,7 +34,7 @@ export class Wrapper extends Component {
                 '&:focus': {
                     ...control.FocusAppearance.GetStyleObject()
                 },
-                ...this.props.renderer.GetCustomJss()
+                ...this.props.renderer.GetCustomJss(control)
             }),
 
         }

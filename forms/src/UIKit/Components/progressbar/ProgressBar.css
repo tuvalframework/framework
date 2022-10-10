@@ -108,3 +108,21 @@
         right: -8%;
     }
 }
+
+
+
+.p-progressbar {
+    border: 0 none;
+    height: 1.5rem;
+    background: #dee2e6;
+    border-radius: 6px;
+  }
+  .p-progressbar .p-progressbar-value {
+    border: 0 none;
+    margin: 0;
+    background: #3B82F6;
+  }
+  .p-progressbar .p-progressbar-label {
+    color: #ffffff;
+    line-height: 1.5rem;
+  }

@@ -71,9 +71,7 @@ export class UIFileUploadRenderer extends ControlHtmlRenderer<UIFileUploadClass>
     shadowDom: any;
     protected menu: any;
     fileUploadRef: any;
-    public get UseShadowDom(): boolean {
-        return true;
-    }
+   
 
     public OnStyleCreating(obj: UIFileUploadClass, sb: StringBuilder): void {
         sb.AppendLine(require('../Components/fileupload/FileUpload.css'));

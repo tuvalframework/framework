@@ -20,7 +20,7 @@ export class SlideMenuViewRenderer extends ControlHtmlRenderer<SlideMenuViewClas
       return true;
    }
 
-   public override GetCustomJss(): Object {
+   public override GetCustomJss<SlideMenuViewClass>(obj:SlideMenuViewClass): Object {
       return {
           '& .p-slidemenu': {
               border:'solid 0px'
