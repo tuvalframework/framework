@@ -11,9 +11,9 @@ import { UIView } from "./UIView";
 
 
 export class ZStackRenderer extends ControlHtmlRenderer<ZStackClass> {
-    public get UseShadowDom(): boolean {
+  /*   public get UseShadowDom(): boolean {
         return true;
-    }
+    } */
 
     public GenerateElement(obj: ZStackClass): boolean {
         this.WriteStartFragment();
