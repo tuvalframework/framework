@@ -11,6 +11,7 @@ import { DomHandler as OldDomHandler} from "../../../windows/Forms/Components/Do
 
 const css = require('./Menu.css');
 OldDomHandler.addCssToDocument(css);
+OldDomHandler.addCssToDocument(require('./Theme.css'));
 
 
 export const Menu = React.memo(React.forwardRef((props, ref) => {

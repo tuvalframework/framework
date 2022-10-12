@@ -15,142 +15,11 @@ import { DividerClass } from "./Divider";
 export class UIContextMenuRenderer extends ControlHtmlRenderer<UIContextMenuClass> {
    shadowDom: any;
    protected menu: any;
-  /*  public get UseShadowDom(): boolean {
-      return true;
-   } */
+   /*  public get UseShadowDom(): boolean {
+       return true;
+    } */
 
    public OnStyleCreating(obj: UIContextMenuClass, sb: StringBuilder): void {
-
-      /*  sb.AppendLine(`
-         .p-contextmenu {
-             position: absolute;
-         }
-
-         .p-contextmenu ul {
-             margin: 0;
-             padding: 0;
-             list-style: none;
-         }
-
-         .p-contextmenu .p-submenu-list {
-             position: absolute;
-             min-width: 100%;
-             z-index: 1;
-         }
-
-         .p-contextmenu .p-menuitem-link {
-             cursor: pointer;
-             display: flex;
-             align-items: center;
-             text-decoration: none;
-             overflow: hidden;
-             position: relative;
-         }
-
-         .p-contextmenu .p-menuitem-text {
-             line-height: 1;
-         }
-
-         .p-contextmenu .p-menuitem {
-             position: relative;
-         }
-
-         .p-contextmenu .p-menuitem-link .p-submenu-icon {
-             margin-left: auto;
-         }
-
-         .p-contextmenu-enter {
-             opacity: 0;
-         }
-
-         .p-contextmenu-enter-active {
-             opacity: 1;
-             transition: opacity 250ms;
-         }
-
-
- .p-contextmenu {
-    padding: 0.25rem 0;
-    background: #ffffff;
-    color: #495057;
-    border: 0 none;
-    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
-    width: 12.5rem;
- }
-
- .p-contextmenu .p-menuitem-link {
-    padding: 0.75rem 1rem;
-    color: #495057;
-    border-radius: 0;
-    transition: box-shadow 0.2s;
-    user-select: none;
- }
-
- .p-contextmenu .p-menuitem-link .p-menuitem-text {
-    color: #495057;
- }
-
- .p-contextmenu .p-menuitem-link .p-menuitem-icon {
-    color: #6c757d;
-    margin-right: 0.5rem;
- }
-
- .p-contextmenu .p-menuitem-link .p-submenu-icon {
-    color: #6c757d;
- }
-
- .p-contextmenu .p-menuitem-link:not(.p-disabled):hover {
-    background: #e9ecef;
- }
-
- .p-contextmenu .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text {
-    color: #495057;
- }
-
- .p-contextmenu .p-menuitem-link:not(.p-disabled):hover .p-menuitem-icon {
-    color: #6c757d;
- }
-
- .p-contextmenu .p-menuitem-link:not(.p-disabled):hover .p-submenu-icon {
-    color: #6c757d;
- }
-
- .p-contextmenu .p-menuitem-link:focus {
-    outline: 0 none;
-    outline-offset: 0;
-    box-shadow: inset 0 0 0 0.15rem #a6d5fa;
- }
-
- .p-contextmenu .p-submenu-list {
-    padding: 0.25rem 0;
-    background: #ffffff;
-    border: 0 none;
-    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
- }
-
- .p-contextmenu .p-menuitem.p-menuitem-active>.p-menuitem-link {
-    background: #e9ecef;
- }
-
- .p-contextmenu .p-menuitem.p-menuitem-active>.p-menuitem-link .p-menuitem-text {
-    color: #495057;
- }
-
- .p-contextmenu .p-menuitem.p-menuitem-active>.p-menuitem-link .p-menuitem-icon,
- .p-contextmenu .p-menuitem.p-menuitem-active>.p-menuitem-link .p-submenu-icon {
-    color: #6c757d;
- }
-
- .p-contextmenu .p-menu-separator {
-    border-top: 1px solid #dee2e6;
-    margin: 0.25rem 0;
- }
-
- .p-contextmenu .p-submenu-icon {
-    font-size: 0.875rem;
- }
-
-         `); */
 
       sb.AppendLine(`
       .p-menu-overlay {
@@ -288,9 +157,10 @@ export class UIContextMenuRenderer extends ControlHtmlRenderer<UIContextMenuClas
             items.push({ separator: true });
          } else {
             items.push({
+              // command: (event) => console.log('clicked'),
                template: (item, options) => {
                   return (
-                     <div className={options.className} target={item.target}  >
+                     <div className={options.className} target={item.target}  onClick={options.onClick}>
                         {view.Render()}
                      </div>
                   );
@@ -306,6 +176,34 @@ export class UIContextMenuRenderer extends ControlHtmlRenderer<UIContextMenuClas
       style['padding'] = obj.Appearance.Padding;
 
       obj.Appearance.Padding = '';
+
+
+      const _items = [
+
+         {
+            label: 'React Website',
+            icon: 'pi pi-external-link',
+            url: 'https://reactjs.org/'
+         },
+         {
+            label: 'Router',
+            icon: 'pi pi-upload',
+            template: (item, options) => {
+               return (
+                  <div className={options.className} target={item.target} onClick={options.onClick} >
+                    Test
+                  </div>
+               );
+            },
+            command: (e) => {
+               alert('')
+            }
+         }
+
+
+      ];
+
+
       this.WriteComponent(
          <Fragment>
             <div style={style} onclick={(e) => { this.menu.toggle(e); /* e.stopPropagation(); e.preventDefault(); */ }}>
