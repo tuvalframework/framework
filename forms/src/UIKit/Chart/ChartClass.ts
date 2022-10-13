@@ -1,10 +1,39 @@
+import { int } from "@tuval/core";
 import { UIController } from "../UIController";
 import { UIView, ViewProperty } from "../UIView";
 import { ChartClassRenderer } from "./ChartRenderer";
 import { TuvalAxisChartSeries, TuvalNonAxisChartSeries, UIChartOptions } from "./Types";
 
+export type ChartType =  'line'
+| 'area'
+| 'bar'
+| 'histogram'
+| 'pie'
+| 'donut'
+| 'radialBar'
+| 'scatter'
+| 'bubble'
+| 'heatmap'
+| 'candlestick'
+| 'boxPlot'
+| 'radar'
+| 'polarArea'
+| 'rangeBar'
+| 'treemap'
 
 export class ChartClass extends UIView {
+
+  @ViewProperty() vp_ChartHeight: int;
+  public chartHeight(value: int): this {
+    this.vp_ChartHeight = value;
+    return this;
+  }
+
+  @ViewProperty() vp_ChartType: ChartType;
+  public chartType(value: ChartType): this {
+    this.vp_ChartType = value;
+    return this;
+  }
 
   @ViewProperty() vp_Series: TuvalAxisChartSeries | TuvalNonAxisChartSeries;
   public series(value: TuvalAxisChartSeries | TuvalNonAxisChartSeries): this {

@@ -26,7 +26,7 @@ export class ChartClassRenderer extends ControlHtmlRenderer<ChartClass> {
     public GenerateBody(obj: ChartClass): void {
 
         this.WriteComponent(
-            <Chart options={obj.vp_Options} series={obj.vp_Series} type="area" height={300} />
+            <Chart options={obj.vp_Options} series={obj.vp_Series} type={obj.vp_ChartType ?? 'area'} height={obj.vp_ChartHeight ?? 300} />
         )
     }
 }
