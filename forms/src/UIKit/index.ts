@@ -45,5 +45,6 @@ export * from './Chart';
 export * from './Typography';
 export * from './ProgressBar';
 export * from './Button';
+export * from './UIChips/UIChips';
 
 export { getView, viewFunc } from './getView';

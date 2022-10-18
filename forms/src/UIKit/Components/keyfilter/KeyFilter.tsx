@@ -63,7 +63,7 @@ export const KeyFilter = {
         return KeyFilter.DEFAULT_MASKS[keyfilter] ? KeyFilter.DEFAULT_MASKS[keyfilter] : keyfilter;
     },
 
-    onKeyPress(e, keyfilter, validateOnly) {
+    onKeyPress(e, keyfilter, validateOnly?) {
         if (validateOnly) {
             return;
         }
@@ -92,7 +92,7 @@ export const KeyFilter = {
         }
     },
 
-    onPaste(e, keyfilter, validateOnly) {
+    onPaste(e, keyfilter, validateOnly?) {
         if (validateOnly) {
             return;
         }
