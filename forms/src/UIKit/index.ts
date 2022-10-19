@@ -46,5 +46,7 @@ export * from './Typography';
 export * from './ProgressBar';
 export * from './Button';
 export * from './UIChips/UIChips';
+export * from './UISidebar/UISidebar';
+export * from './UIDesktop/UIDesktop';
 
 export { getView, viewFunc } from './getView';
