@@ -7,6 +7,7 @@ export class DropDownClass extends UIView {
 
     @ViewProperty() vp_model: any[];
     @ViewProperty() vp_itemTemplate: (option: any) => UIView | Function;
+    @ViewProperty() vp_emptyTemplate: () => UIView | Function;
     @ViewProperty() vp_selectedItemTemplate: (option: any) => UIView | Function;
     @ViewProperty() vp_onSelected: Function;
     @ViewProperty() vp_value: any;
@@ -33,6 +34,10 @@ export class DropDownClass extends UIView {
 
     public itemTemplate(value: (option: any) => UIView | Function): this {
         this.vp_itemTemplate = value;
+        return this;
+    }
+    public emptyTemplate(value: () => UIView | Function): this {
+        this.vp_emptyTemplate = value;
         return this;
     }
     public selectedItemTemplate(value: (option: any) => UIView | Function): this {

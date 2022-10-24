@@ -706,7 +706,7 @@ export default class DomHandler {
         }
     }
 
-    static calculateScrollbarWidth(el) {
+    static calculateScrollbarWidth(el?) {
         if (el) {
             let style = getComputedStyle(el);
 
@@ -794,7 +794,7 @@ export default class DomHandler {
         return visibleFocusableElements;
     }
 
-    static getFirstFocusableElement(element, selector) {
+    static getFirstFocusableElement(element, selector?) {
         const focusableElements = DomHandler.getFocusableElements(element, selector);
 
         return focusableElements.length > 0 ? focusableElements[0] : null;

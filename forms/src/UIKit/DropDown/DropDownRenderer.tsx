@@ -1,4 +1,4 @@
-import { foreach, StringBuilder } from '@tuval/core';
+import { foreach, is, StringBuilder } from '@tuval/core';
 
 import { ControlHtmlRenderer } from '../../windows/Forms/Components/AAA/HtmlRenderer/ControlHtmlRenderer';
 import { Teact } from '../../windows/Forms/Components/Teact';
@@ -99,6 +99,15 @@ export class DropDownRenderer extends ControlHtmlRenderer<DropDownClass> {
 
     public GenerateBody(obj: DropDownClass): void {
 
+        const emptyTemplate = () => {
+            if (is.function(obj.vp_emptyTemplate)) {
+                const view = getView(obj.controller, obj.vp_emptyTemplate());
+                if (view != null) {
+                    return view.Render();
+                }
+            }
+        }
+
         const template = (option) => {
             if (option) {
                 const view = getView(obj.controller, obj.vp_itemTemplate(option));
@@ -156,11 +165,14 @@ export class DropDownRenderer extends ControlHtmlRenderer<DropDownClass> {
         this.WriteComponent(
 
             <Dropdown
+                onFocus={(e) => is.function(obj.vp_SetFocus) ? obj.vp_SetFocus(e) : void 0}
+                onBlur={(e) => is.function(obj.vp_KillFocus) ? obj.vp_KillFocus(e) : void 0}
                 style={style}
                 optionLabel={obj.vp_optionLabel}
                 optionValue={obj.vp_optionValue}
                 valueTemplate={selectedTemplate}
                 itemTemplate={template}
+                emptyMessage={emptyTemplate()}
                 value={obj.vp_value}
                 options={obj.vp_model}
                 onChange={(e) => { obj.vp_onSelected(e.value) }}
