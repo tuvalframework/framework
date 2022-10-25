@@ -7,7 +7,7 @@ import { ButtonViewRenderer } from "./ButtonViewRenderer";
 
 
 export type VariantType = 'contained' | 'text';
-export type ColorType = 'primary' | 'secondary' | 'danger';
+export type ColorType = 'primary' | 'secondary' | 'danger' | 'success';
 
 export interface IButtonProps {
     variant?: VariantType;

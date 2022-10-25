@@ -79,6 +79,7 @@ export class ButtonViewRenderer extends ControlHtmlRenderer<ButtonView> {
 
         const className = classNames({
             'p-button-secondary': obj.vp_Color === 'secondary',
+            'p-button-success': obj.vp_Color === 'success',
             'p-button-danger': obj.vp_Color === 'danger',
         })
         this.WriteComponent(
