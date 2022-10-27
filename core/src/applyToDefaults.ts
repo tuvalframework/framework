@@ -13,7 +13,7 @@ export function applyToDefaults<T, K extends object | boolean>(defaults_: T, opt
         return <any>null;
     }
 
-    const copy = clone(defaults);
+    const copy = clone(defaults as any);
 
     if (options === true) {
         return copy;

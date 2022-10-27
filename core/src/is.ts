@@ -469,7 +469,7 @@ export class is {
     * @param type
     * @returns {T|null}
     */
-    public static instanceof<T>(target: Object, type: { new(...params: any[]): T }): target is T {
+    public static instanceof<T>(target: Object, type: { new(...params: any[]): T })/* : target is T */ {
         return target instanceof type;
     }
 

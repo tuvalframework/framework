@@ -5,9 +5,9 @@ const fs = require('fs');
 
 var libraryName = '@tuval/core';
 
-function DtsBundlePlugin() {}
-DtsBundlePlugin.prototype.apply = function(compiler) {
-    compiler.plugin('done', function() {
+function DtsBundlePlugin() { }
+DtsBundlePlugin.prototype.apply = function (compiler) {
+    compiler.plugin('done', function () {
         var dts = require('dts-bundle');
         if (!dts) {
             throw 'Dts not found.';
@@ -27,7 +27,7 @@ DtsBundlePlugin.prototype.apply = function(compiler) {
 const opts = {
     WEB: true,
     NODE: false,
-    WP:false,
+    WP: false,
     version: 3,
     "ifdef-verbose": true, // add this for verbose output
     //"ifdef-triple-slash": false // add this to use double slash comment instead of default triple slash
@@ -90,11 +90,13 @@ const umdConfig = {
             ws: false,
             os: false,
             path: false,
-            zlib:false,
-            url:false,
-            http:false,
-            https:false,
-            'follow-redirects':false
+            zlib: false,
+            url: false,
+            http: false,
+            https: false,
+            assert: false,
+            'follow-redirects': false,
+            "stream": false
         }
     },
     output: {
@@ -103,9 +105,9 @@ const umdConfig = {
         path: path.resolve(__dirname, 'dist'),
     },
     plugins: [{
-            apply: (compiler) => {
-                compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
-                    fs.appendFile('./dist/index.js', `
+        apply: (compiler) => {
+            compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
+                fs.appendFile('./dist/index.js', `
 tuval$core.KeyboardDriver.Start();
 tuval$core.MouseDriver.Start();
 tuval$core.EventBus.Default.on('error', (event) => {
@@ -114,12 +116,12 @@ tuval$core.EventBus.Default.on('error', (event) => {
 });
 tuval$core.EventBus.Default.fire('module.loaded.core', {});
 `, (err) => {
-                        if (err) throw err;
-                        console.log('The lyrics were updated!');
-                    });
+                    if (err) throw err;
+                    console.log('The lyrics were updated!');
                 });
-            }
+            });
         }
+    }
         /* new DtsBundleWebpack({
             name:libraryName,
             main: 'dist_types/types/index.d.ts',
@@ -154,4 +156,4 @@ tuval$core.EventBus.Default.fire('module.loaded.core', {});
     ]
 };
 
-module.exports = [umdConfig /* webClientConfig */ /* umdConfig */ /* , umdWebProcess */ ];
+module.exports = [umdConfig /* webClientConfig */ /* umdConfig */ /* , umdWebProcess */];

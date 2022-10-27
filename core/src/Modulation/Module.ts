@@ -1087,7 +1087,7 @@ export abstract class TModule {
             ret = this._malloc(slab.length);
         }
 
-        if ((slab as any).subarray || slab.slice) {
+        if ((slab as any).subarray || (slab as any).slice) {
             this.HEAPU8.set(/** @type {!Uint8Array} */(slab), ret);
         } else {
             this.HEAPU8.set(new Uint8Array(slab), ret);

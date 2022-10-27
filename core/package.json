@@ -1,6 +1,6 @@
 {
     "name": "@tuval/core",
-    "version": "0.0.93",
+    "version": "0.0.96",
     "description": "",
     "keywords": [],
     "main": "index.js",
@@ -110,6 +110,7 @@
         ]
     },
     "devDependencies": {
+        "@types/node": "^18.11.7",
         "arraybuffer-loader": "^1.0.8",
         "clean-webpack-plugin": "^4.0.0",
         "copy-webpack-plugin": "^9.0.1",

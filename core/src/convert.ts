@@ -377,7 +377,7 @@ export class Convert {
     public static ToBlobUrl(buffer: ArrayBuffer, type: string): string {
         try {
         const blob = new Blob([buffer] , { type: type } );
-        return URL.createObjectURL(blob);
+        return URL.createObjectURL(blob as any);
         }
         catch {
             return 'URL can not created.'

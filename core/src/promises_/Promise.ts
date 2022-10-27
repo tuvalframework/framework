@@ -156,7 +156,11 @@ export class PromiseState<T> extends DisposableBase {
 
 export abstract class PromiseBase<T> extends PromiseState<T> implements PromiseLike<T>, Promise<T>
 {
-    readonly [Symbol.toStringTag]: "Promise";
+
+    get [Symbol.toStringTag]() {
+        return 'Promise';
+      }
+      
     constructor() {
         super(TSDNPromise.State.Pending);
         this._disposableObjectName = PROMISE;

@@ -33,9 +33,9 @@ export enum TextAlignment {
 }
 
 class TextRenderer extends ControlHtmlRenderer<UITextClass> {
-    public get UseShadowDom(): boolean {
+   /*  public get UseShadowDom(): boolean {
         return true;
-    }
+    } */
 
     public OnStyleCreating(obj: UITextClass, sb: StringBuilder): void {
 

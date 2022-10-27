@@ -34,7 +34,8 @@ export function appPackager(appJsFile: string, targetAppName: string, libName: s
             'svgbase',
             'codeeditor',
             'query-builder',
-            'spreadsheet'
+            'spreadsheet',
+            'kanban'
         ]
         const header = {};
 
