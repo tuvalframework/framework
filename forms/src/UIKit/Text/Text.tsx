@@ -15,6 +15,7 @@ import Highlighter from "./Highlighter";
 import { Fragment } from "../../preact";
 import { Skeleton } from "../Components/skeleton/Skeleton";
 import { Tooltip } from "../Components/tooltip/Tooltip";
+import { DomHandler } from "../../tuval-forms";
 const md = new MarkdownIt({
     html: true,
     linkify: true,
@@ -32,6 +33,7 @@ export enum TextAlignment {
     trailing = 2
 }
 
+DomHandler.addCssToDocument(require('./markdown.css'));
 class TextRenderer extends ControlHtmlRenderer<UITextClass> {
    /*  public get UseShadowDom(): boolean {
         return true;
@@ -81,7 +83,7 @@ class TextRenderer extends ControlHtmlRenderer<UITextClass> {
         }
     }
 
-    protected OnShadowDomDidMount(ref: HTMLElement, obj: UITextClass): void {
+    protected OnComponentDidMount(ref: any, obj: UITextClass): void {
         //alert(md.render(obj.Text));
         if (obj.RenderingType === RenderingTypes.Markdown) {
             const parent = document.createElement('div');
