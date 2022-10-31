@@ -48,5 +48,6 @@ export * from './Button';
 export * from './UIChips/UIChips';
 export * from './UISidebar/UISidebar';
 export * from './UIDesktop/UIDesktop';
+export * from './UIRadioGroup/UIRadioGroup';
 
 export { getView, viewFunc } from './getView';

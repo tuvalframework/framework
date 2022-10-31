@@ -252,3 +252,17 @@ button {
     width: 1px;
     word-wrap: normal !important;
 }
+
+
+.field-checkbox,
+.field-radiobutton {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center
+}
+
+.field-checkbox>label,
+.field-radiobutton>label {
+    margin-left: .5rem;
+    line-height: 1
+}
