@@ -9,15 +9,17 @@ import { UIController } from './UIController';
 import { viewFunc } from './getView';
 import { motion } from '../motion';
 import { InputSwitch } from './Components/inputswitch/InputSwitch';
+import { DomHandler } from '../windows/Forms/Components/DomHandler';
 
-
+DomHandler.addCssToDocument(require('./Components/inputswitch/InputSwitch.css'));
+DomHandler.addCssToDocument(require('./Components/inputswitch/Theme.css'));
 
 export class ToggleRenderer extends ControlHtmlRenderer<ToggleClass> {
     private inputRef: HTMLElement;
 
-    public get UseShadowDom(): boolean {
+   /*  public get UseShadowDom(): boolean {
         return true;
-    }
+    } */
 
     public OnStyleCreating(obj: ToggleClass, sb: StringBuilder): void {
         sb.AppendLine(require('./Components/inputswitch/InputSwitch.css'));
