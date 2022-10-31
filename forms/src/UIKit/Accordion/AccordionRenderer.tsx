@@ -13,16 +13,17 @@ import { AccordionClass } from './AccordionClass';
 import { Accordion, AccordionTab } from '../Components/accordion/Accordion';
 
 //console.log('AA_BB');
-/* DomHandler.addCssToDocument(require('../Components/autocomplete/AutoComplete.css'));
-DomHandler.addCssToDocument(require('../Components/autocomplete/Theme.css')); */
+DomHandler.addCssToDocument(require('../Components/common.css'));
+ DomHandler.addCssToDocument(require('../Components/accordion/Accordion.css'));
+DomHandler.addCssToDocument(require('../Components/accordion/Theme.css')); 
 
 export class AccordionRenderer extends ControlHtmlRenderer<AccordionClass> {
     private accordionRef;
     shadowDom: any;
     protected menu: any;
-    public get UseShadowDom(): boolean {
+   /*  public get UseShadowDom(): boolean {
         return true;
-    }
+    } */
 
     public OnStyleCreating(obj: AccordionClass, sb: StringBuilder): void {
         sb.AppendLine(require('../Components/common.css'));

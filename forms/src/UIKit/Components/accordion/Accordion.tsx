@@ -75,7 +75,7 @@ export const Accordion = React.forwardRef((props, ref) => {
         return (
             <div className={className} style={style}>
                 <a href={'#' + ariaControls} id={headerId} className="p-accordion-header-link" aria-controls={ariaControls} role="tab" aria-expanded={selected} onClick={(e) => onTabHeaderClick(e, tab, index)} tabIndex={tabIndex}>
-                    {icon}
+                   {/*  {icon} */}
                     {header}
                 </a>
             </div>
