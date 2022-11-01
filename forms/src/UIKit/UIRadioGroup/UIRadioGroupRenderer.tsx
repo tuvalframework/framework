@@ -1,5 +1,5 @@
 import { foreach, Guid, is } from "@tuval/core";
-import { useEffect, useRef } from "../../hooks";
+import { useEffect, useRef, useState } from "../../hooks";
 import { Fragment } from "../../preact/compat";
 import { ControlHtmlRenderer } from "../../windows/Forms/Components/AAA/HtmlRenderer/ControlHtmlRenderer";
 import { Teact } from "../../windows/Forms/Components/Teact";
@@ -35,6 +35,7 @@ export class RadioGroupRenderer extends ControlHtmlRenderer<RadioGroupClass> {
 
     public GenerateBody(obj: RadioGroupClass): void {
         const groupGuid = Guid.NewGuid().ToString();
+        const [selectedValue, setSelectedValue] = useState('')
         this.WriteComponent(
             <Fragment>
                 {obj.vp_RadioButtons.map(radioButtonInfo => {
@@ -42,7 +43,12 @@ export class RadioGroupRenderer extends ControlHtmlRenderer<RadioGroupClass> {
 
                     return (
                         <div className="field-radiobutton">
-                            <RadioButton inputId={guid} name={groupGuid} value={radioButtonInfo.value} onChange={(e) => this.setState({ radioButtonValue: e.value })} checked={this.state.radioButtonValue === radioButtonInfo.value} />
+                            <RadioButton inputId={guid} name={groupGuid} value={radioButtonInfo.value} onChange={(e) => {
+                                setSelectedValue(e.value);
+                                if (is.function(obj.vp_OnChange)){
+                                    obj.vp_OnChange(e.value);
+                                }
+                            }} checked={selectedValue === radioButtonInfo.value} />
                             <label htmlFor={guid}>{radioButtonInfo.label}</label>
                         </div>
                     )

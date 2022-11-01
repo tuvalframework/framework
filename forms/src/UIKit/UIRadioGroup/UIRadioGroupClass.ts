@@ -14,6 +14,12 @@ export class RadioGroupClass extends UIView {
         return this;
     }
 
+    @ViewProperty() vp_OnChange: Function;
+    public onChange(value:Function): this {
+        this.vp_OnChange = value;
+        return this;
+    }
+
    
 
     public setController(controller: UIController): this {

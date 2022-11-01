@@ -12,6 +12,7 @@ import { BindingClass } from './Binding';
 import { useInRouterContext, useLocation, useParams, useNavigate, NavigateFunction } from '../router-dom';
 import { lastEnteredPropertyName } from '../windows/Forms/Components/AAA/Control';
 import { createTheme } from '../tuval-system/createTheme';
+import { Teact } from '../tuval-forms';
 
 
 export let currentController = null;
@@ -56,6 +57,12 @@ export class UIController<T = any> extends Control implements IRenderable, IVirt
 
     @State()
     public Theme: any;
+
+    @State()
+    public Error: string;
+
+    @State()
+    public Warning: string;
 
     public setTheme(theme: any) {
         this.Theme = theme;
@@ -171,7 +178,13 @@ export class UIController<T = any> extends Control implements IRenderable, IVirt
             this.navigotor = useNavigate();
         }
         this.Application = useApplication();
-        return this._Renderer.render();
+        
+        if (this.Error == null) {
+            return this._Renderer.render();
+        } else {
+            return (<div>{this.Error}</div>)
+        }
+        
     }
 
     //For as added subviews
