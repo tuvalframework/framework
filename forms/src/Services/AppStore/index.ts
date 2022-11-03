@@ -7,4 +7,4 @@ import { ControlTypes } from '../../windows/Forms/Components/ControlTypes';
 import { BrokerAppStoreService } from './BrokerAppStoreService';
 import { LocalAppStoreService } from './LocalAppStoreService';
 
-container.register(ControlTypes.IAppStoreService, { useValue: new LocalAppStoreService() });
+// container.register(ControlTypes.IAppStoreService, { useValue: new LocalAppStoreService() });

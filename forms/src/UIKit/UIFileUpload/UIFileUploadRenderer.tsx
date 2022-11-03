@@ -167,8 +167,8 @@ export class UIFileUploadRenderer extends ControlHtmlRenderer<UIFileUploadClass>
         contentStyle['height'] = '100%';
 
         const style = {};
-        style['width'] = obj.Appearance.Width;
-        style['height'] = obj.Appearance.Height;
+        style['width'] = '100%';//obj.Appearance.Width;
+        style['height'] = '100%';//obj.Appearance.Height;
 
         const chooseOptions = {};
         chooseOptions['style'] = { display: 'none' }
