@@ -35,9 +35,9 @@ export enum TextAlignment {
 
 DomHandler.addCssToDocument(require('./markdown.css'));
 class TextRenderer extends ControlHtmlRenderer<UITextClass> {
-   /*  public get UseShadowDom(): boolean {
-        return true;
-    } */
+    /*  public get UseShadowDom(): boolean {
+         return true;
+     } */
 
     public OnStyleCreating(obj: UITextClass, sb: StringBuilder): void {
 
@@ -84,15 +84,15 @@ class TextRenderer extends ControlHtmlRenderer<UITextClass> {
     }
 
     protected OnComponentDidMount(ref: any, obj: UITextClass): void {
-        //alert(md.render(obj.Text));
-        if (obj.RenderingType === RenderingTypes.Markdown) {
-            const parent = document.createElement('div');
-            parent.className = 'markdown-body';
-            if (!is.nullOrEmpty(obj.vp_Text)) {
-                parent.innerHTML = md.render(obj.vp_Text);
-            }
-            ref.appendChild(parent);
-        }
+
+        /*  if (obj.RenderingType === RenderingTypes.Markdown) {
+             const parent = document.createElement('div');
+             parent.className = 'markdown-body';
+             if (!is.nullOrEmpty(obj.vp_Text)) {
+                 parent.innerHTML = md.render(obj.vp_Text);
+             }
+             ref.appendChild(parent);
+         } */
 
     }
 
@@ -182,6 +182,12 @@ class TextRenderer extends ControlHtmlRenderer<UITextClass> {
                      /> */
                 );
             }
+
+        } else {
+
+            this.WriteComponent(
+                <div className='markdown-body' dangerouslySetInnerHTML={{ __html: !is.nullOrEmpty(obj.vp_Text) ? md.render(obj.vp_Text) : '' }}></div>
+            );
 
         }
 
