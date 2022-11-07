@@ -45,6 +45,8 @@ class ImageRenderer extends ControlHtmlRenderer<IImage> {
             this.WriteAttrVal('src', obj.Src);
             this.WriteStyleAttrVal('width', obj.vp_ImageWidth ?? obj.Appearance.Width);
             this.WriteStyleAttrVal('height', obj.vp_ImageHeight ?? obj.Appearance.Height);
+            this.WriteStyleAttrVal('max-width',  obj.Appearance.MaxWidth);
+            this.WriteStyleAttrVal('max-height', obj.Appearance.MaxHeight);
             this.WriteStyleAttrVal('border-radius', obj.Appearance.BorderRadius);
             this.WriteEndElement();
         }
