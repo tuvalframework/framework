@@ -236,9 +236,11 @@ export class DesktopIcon extends TComponent {
 
                 <li className='launch-icon' style={style} onContextMenu={(e) => Desktop.DesktopContextMenu.show(e)}>
                     {spinner}
-                    <img class='image' onClick={() => this.OnClick()} src={this.Icon}>
-                        {/*   <TuButtonElement label={this.Text} style={style} ondblclick={() => this.OnClick()}></TuButtonElement> */}
-                    </img>
+                  
+                        <img class='image' onClick={() => this.OnClick()} src={this.Icon}>
+                            {/*   <TuButtonElement label={this.Text} style={style} ondblclick={() => this.OnClick()}></TuButtonElement> */}
+                        </img>
+               
                     <div class="text">
                         {desktopIcon.CreateMainElement()}
                     </div>
