@@ -95,8 +95,8 @@
     cursor: default;
     zoom: 1;
     top: 39px;
-    height: 930px;
-    width: 1920px;
+    height: 100%;
+    width: 100%;
     overflow: hidden;
 }
 
