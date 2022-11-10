@@ -49,5 +49,6 @@ export * from './UIChips/UIChips';
 export * from './UISidebar/UISidebar';
 export * from './UIDesktop/UIDesktop';
 export * from './UIRadioGroup/UIRadioGroup';
+export * from './DynamicView/DynamicView';
 
 export { getView, viewFunc } from './getView';

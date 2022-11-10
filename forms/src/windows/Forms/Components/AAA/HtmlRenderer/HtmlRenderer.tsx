@@ -517,7 +517,7 @@ export abstract class HtmlRenderer<T extends IControl> extends XmlTransformer<T>
 
     }
 
-    public GetCustomJss(obj:T): Object {
+    public GetCustomJss(obj: T): Object {
         return {};
     }
 
@@ -640,9 +640,19 @@ export abstract class HtmlRenderer<T extends IControl> extends XmlTransformer<T>
                 style['bottom'] = this.Control.Bottom;
                 style['right'] = this.Control.Right;
             } else {
-                if (this.Control.Appearance.Position !== 'absolute') {
-                    style['position'] = 'relative';
+                switch (this.Control.Appearance.Position) {
+                    case 'absolute':
+                        break;
+                    case 'fixed':
+                        break;
+                    default:
+                        style['position'] = 'relative';
+                        break;
+
                 }
+                /* if (this.Control.Appearance.Position !== 'absolute') {
+                    style['position'] = 'relative';
+                } */
             }
             if (this.Control._Width != null) {
                 style['width'] = this.Control._Width;

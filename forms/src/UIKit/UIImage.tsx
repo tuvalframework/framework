@@ -35,6 +35,7 @@ class ImageRenderer extends ControlHtmlRenderer<IImage> {
         if (ref != null && obj.Img != null && obj.vp_Skeleton !== true) {
             obj.Img.style.height = obj.vp_ImageWidth ?? obj.Appearance.Width;
             obj.Img.style.width = obj.vp_ImageHeight ?? obj.Appearance.Height;
+            obj.Img.style.border = obj.vp_ImageBorder ?? '';
             ref.appendChild(obj.Img);
         }
     }
@@ -45,7 +46,7 @@ class ImageRenderer extends ControlHtmlRenderer<IImage> {
             this.WriteAttrVal('src', obj.Src);
             this.WriteStyleAttrVal('width', obj.vp_ImageWidth ?? obj.Appearance.Width);
             this.WriteStyleAttrVal('height', obj.vp_ImageHeight ?? obj.Appearance.Height);
-            this.WriteStyleAttrVal('max-width',  obj.Appearance.MaxWidth);
+            this.WriteStyleAttrVal('max-width', obj.Appearance.MaxWidth);
             this.WriteStyleAttrVal('max-height', obj.Appearance.MaxHeight);
             this.WriteStyleAttrVal('border-radius', obj.Appearance.BorderRadius);
             this.WriteEndElement();
@@ -67,6 +68,7 @@ export class UIImageClass extends UIView implements IImage {
     @ViewProperty() Img: HTMLImageElement;
     @ViewProperty() vp_ImageWidth: string;
     @ViewProperty() vp_ImageHeight: string;
+    @ViewProperty() vp_ImageBorder: string;
 
     public setController(controller: UIController): this {
         super.setController(controller);
@@ -113,6 +115,11 @@ export class UIImageClass extends UIView implements IImage {
             this.vp_ImageHeight = `${value}px`;
         }
 
+        return this;
+    }
+
+    public imageBorder(value: string): this {
+        this.vp_ImageBorder = value;
         return this;
     }
 

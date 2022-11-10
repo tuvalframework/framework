@@ -66,7 +66,7 @@ export class UISidebarRenderer extends ControlHtmlRenderer<UISidebarClass> {
 
     public GenerateBody(obj: UISidebarClass): void {
         this.WriteComponent(
-            <Sidebar position={obj.vp_SiodebarPosition} visible={obj.vp_Visible} onHide={() => is.function(obj.vp_OnHide) ? obj.vp_OnHide() : void 0}>
+            <Sidebar position={obj.vp_SiodebarPosition} modal={false} visible={obj.vp_Visible} onHide={() => is.function(obj.vp_OnHide) ? obj.vp_OnHide() : void 0}>
                 {this.CreateControls(obj)}
             </Sidebar>
         );

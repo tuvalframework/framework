@@ -77,6 +77,7 @@ export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
 
         style['border'] = 'solid 0px';
         style['border-radius'] = obj.Appearance.BorderRadius;
+        style['background'] = obj.Appearance.Background;
         style['background-color'] = obj.Appearance.BackgroundColor;
         style['color'] = obj.Appearance.Color;
         style['font-family'] = obj.Appearance.FontFamily;
