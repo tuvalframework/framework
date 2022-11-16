@@ -51,4 +51,6 @@ export * from './UIDesktop/UIDesktop';
 export * from './UIRadioGroup/UIRadioGroup';
 export * from './DynamicView/DynamicView';
 
+export * from './Theme';
+
 export { getView, viewFunc } from './getView';
