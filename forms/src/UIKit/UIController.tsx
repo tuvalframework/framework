@@ -154,6 +154,9 @@ export class UIController<T = any> extends Control implements IRenderable, IVirt
     @State()
     public navigotor: NavigateFunction;
 
+    protected OnWired() {
+
+    }
     protected OnComponentDidMount() {
 
         if (this._location && this._params && this.UseRouter()) {
@@ -164,6 +167,16 @@ export class UIController<T = any> extends Control implements IRenderable, IVirt
 
             this.BindRouterParams({ ...params, ...state });
         }
+
+        this.OnWired();
+    }
+
+    protected OnUnWired() {
+        
+    }
+    protected OnComponentWillUnmount(){
+        this.OnUnWired();
+        return true;
     }
 
     /* protected GetRenderer() {

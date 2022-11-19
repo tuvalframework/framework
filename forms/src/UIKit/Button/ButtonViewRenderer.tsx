@@ -81,6 +81,7 @@ export class ButtonViewRenderer extends ControlHtmlRenderer<ButtonView> {
             'p-button-secondary': obj.vp_Color === 'secondary',
             'p-button-success': obj.vp_Color === 'success',
             'p-button-danger': obj.vp_Color === 'danger',
+            'p-button-outlined': obj.vp_Variant === 'outlined',
         })
         this.WriteComponent(
             <Button className={className} disabled={obj.vp_Disabled} loading={obj.vp_Loading} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>

@@ -6,7 +6,7 @@ import { ButtonViewRenderer } from "./ButtonViewRenderer";
 
 
 
-export type VariantType = 'contained' | 'text';
+export type VariantType = 'contained' | 'text' | 'outlined';
 export type ColorType = 'primary' | 'secondary' | 'danger' | 'success';
 
 export interface IButtonProps {
@@ -49,8 +49,6 @@ export class ButtonView extends UIView implements ILabel {
     }
     public constructor() {
         super();
-
-        this.Appearance.Width = '100%';
     }
 
 }
