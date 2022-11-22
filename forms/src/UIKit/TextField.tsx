@@ -2,13 +2,15 @@ import { AppearanceObject } from '../windows/Forms/Components/AAA/AppearanceObje
 import { UIView, ViewProperty } from "./UIView";
 import { ITextBox } from '../windows/Forms/Components/AAA/TextBox/ITextBox';
 import { ControlHtmlRenderer } from "../windows/Forms/Components/AAA/HtmlRenderer/ControlHtmlRenderer";
-import { StringBuilder, int, is } from "@tuval/core";
+import { StringBuilder, int, is, classNames } from "@tuval/core";
 import { InputText } from './TextField/InputText';
 import { Teact } from "../windows/Forms/Components/Teact";
 import { UIController } from './UIController';
 import { viewFunc } from './getView';
 import { motion } from '../motion';
 import { InputTextarea } from './Components/inputtextarea/InputTextarea';
+import { Form_Control, Form_Controller, useFormContext } from '../hook-form';
+import { Fragment } from '../preact';
 
 
 
@@ -108,6 +110,7 @@ export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
             attributes['onfocusout'] = (e) => (obj.vp_myLostFocus(e));
         }
 
+
         if (obj.vp_Multiline) {
             this.WriteComponent(
                 <InputTextarea style={style}
@@ -120,16 +123,50 @@ export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
                 </InputTextarea>
             );
         } else {
+
+            const MyInputText = (params) => {
+                if (useFormContext() == null) {
+                    return (<InputText {...params}> </InputText>)
+
+                } else {
+
+                    const context = useFormContext(); // retrieve all hook methods
+                    console.log(context.getFieldState('name'))
+
+                    console.log(context)
+
+                    return (
+                        <span className="p-float-label">
+                            <Form_Controller name="name" control={context.control} rules={{ required: 'Name is required.' }} render={({ field, fieldState }) => (
+                                <InputText id={field.name} {...field} {...params} autoFocus className={classNames({ 'p-invalid': fieldState.invalid } as any)} />
+                            )} />
+                            <label htmlFor="name" className={classNames({ 'p-error': context.formState.errors.name } as any)}>Name*</label>
+                        </span>
+
+
+
+
+                    )
+
+
+                }
+            }
+            debugger
+
             this.WriteComponent(
-                <InputText style={style}
+                <MyInputText
+                    style={style}
                     tabIndex={tabIndex}
                     {...attributes}
                     value={obj.Value}
                     placeholder={obj.Placeholder}
                     onComponentDidMount={(ref) => this.OnInputDidMount(obj, ref)}
                     onInput={(e) => obj.OnTextChange(e.target.value)}>
-                </InputText>
+                </MyInputText>
+
+
             );
+
         }
         /*  this.WriteAttrVal('id', 'test');
          this.WriteAttrVal('value', obj.Value);
@@ -161,6 +198,16 @@ export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
 
 
 export class TextFieldClass extends UIView {
+
+    @ViewProperty()
+    public vp_FormControl: Form_Control;
+
+    public formControl(value: Form_Control): this {
+        this.vp_FormControl = value;
+        return this;
+    }
+
+
     @ViewProperty()
     public Value: string;
 

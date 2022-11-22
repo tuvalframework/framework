@@ -50,6 +50,7 @@ export * from './UISidebar/UISidebar';
 export * from './UIDesktop/UIDesktop';
 export * from './UIRadioGroup/UIRadioGroup';
 export * from './DynamicView/DynamicView';
+export * from './UIForm';
 
 export * from './Theme';
 
