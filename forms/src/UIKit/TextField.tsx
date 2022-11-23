@@ -5,7 +5,7 @@ import { ControlHtmlRenderer } from "../windows/Forms/Components/AAA/HtmlRendere
 import { StringBuilder, int, is, classNames } from "@tuval/core";
 import { InputText } from './TextField/InputText';
 import { Teact } from "../windows/Forms/Components/Teact";
-import { UIController } from './UIController';
+import { bindFormController, UIController, UIFormController, ValidateRule } from './UIController';
 import { viewFunc } from './getView';
 import { motion } from '../motion';
 import { InputTextarea } from './Components/inputtextarea/InputTextarea';
@@ -17,9 +17,9 @@ import { Fragment } from '../preact';
 export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
     private inputRef: HTMLElement;
 
-    public get UseShadowDom(): boolean {
+ /*    public get UseShadowDom(): boolean {
         return true;
-    }
+    } */
 
     public OnStyleCreating(obj: TextFieldClass, sb: StringBuilder): void {
         sb.AppendLine(`
@@ -74,17 +74,19 @@ export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
         if (obj.vp_Multiline) {
             style['height'] = obj.Appearance.Height;
         } else {
-            style['height'] = '100%';
+           // style['height'] = '100%';
         }
 
-        style['border'] = 'solid 0px';
-        style['border-radius'] = obj.Appearance.BorderRadius;
-        style['background'] = obj.Appearance.Background;
-        style['background-color'] = obj.Appearance.BackgroundColor;
-        style['color'] = obj.Appearance.Color;
-        style['font-family'] = obj.Appearance.FontFamily;
-        style['font-size'] = obj.Appearance.FontSize;
-        style['font-weight'] = obj.Appearance.FontWeight;
+       // style['border'] = 'solid 0px';
+       // style['border-radius'] = obj.Appearance.BorderRadius;
+       // style['background'] = obj.Appearance.Background;
+       // style['background-color'] = obj.Appearance.BackgroundColor;
+       // style['color'] = obj.Appearance.Color;
+       // style['font-family'] = obj.Appearance.FontFamily;
+       // style['font-size'] = obj.Appearance.FontSize;
+       // style['font-weight'] = obj.Appearance.FontWeight;
+
+
         /*      style['padding'] = obj.InputAppearance.Padding;
              style['padding-left'] = obj.InputAppearance.PaddingLeft;
              style['padding-right'] = obj.InputAppearance.PaddingRight;
@@ -125,33 +127,43 @@ export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
         } else {
 
             const MyInputText = (params) => {
-                if (useFormContext() == null) {
+
+                const controller: UIFormController = bindFormController();
+                console.log(controller);
+
+
+                if (obj.vp_FormField == null || controller == null) {
                     return (<InputText {...params}> </InputText>)
 
                 } else {
 
-                    const context = useFormContext(); // retrieve all hook methods
-                    console.log(context.getFieldState('name'))
+                    controller.register(obj.vp_FormField.name, obj.vp_FormField.rules);
 
-                    console.log(context)
+                   // const context = useFormContext(); // retrieve all hook methods
+                   // console.log(context.getFieldState('name'))
 
+                   // console.log(context)
+
+                    params['value'] = controller.GetValue(obj.vp_FormField.name);
+
+                    params['onInput'] = (e) => controller.SetValue(obj.vp_FormField.name, e.target.value)
+
+                    const fieldState = controller.GetFieldState(obj.vp_FormField.name);
+                    if (fieldState.errors.length > 0){
+                       delete params['height']; // we do not want 100% height
+                    }
                     return (
-                        <span className="p-float-label">
-                            <Form_Controller name="name" control={context.control} rules={{ required: 'Name is required.' }} render={({ field, fieldState }) => (
-                                <InputText id={field.name} {...field} {...params} autoFocus className={classNames({ 'p-invalid': fieldState.invalid } as any)} />
-                            )} />
-                            <label htmlFor="name" className={classNames({ 'p-error': context.formState.errors.name } as any)}>Name*</label>
-                        </span>
-
-
-
-
+                        <div style={{width:'100%',height:'100%'}}>
+                            <InputText  {...params} />
+                            {fieldState.errors.map(error => (
+                                  <small className="p-error">{error}</small>
+                            ))}
+                         
+                        </div>
                     )
-
-
                 }
             }
-            debugger
+          
 
             this.WriteComponent(
                 <MyInputText
@@ -198,6 +210,9 @@ export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
 
 
 export class TextFieldClass extends UIView {
+
+    @ViewProperty()
+    public vp_FormField: { name: string, rules: ValidateRule[] };
 
     @ViewProperty()
     public vp_FormControl: Form_Control;
@@ -294,6 +309,14 @@ export class TextFieldClass extends UIView {
 
     public override onLostFocus(func: Function): this {
         this.vp_myLostFocus = func;
+        return this;
+    }
+
+    public formField(name: string, rules: ValidateRule[]): this {
+        this.vp_FormField = {
+            name: name,
+            rules: rules
+        };
         return this;
     }
 }

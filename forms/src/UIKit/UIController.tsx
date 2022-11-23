@@ -1,5 +1,5 @@
 import { UIView } from './UIView';
-import React, { createElement, Fragment } from "../preact/compat";
+import React, { createContext, createElement, Fragment } from "../preact/compat";
 import { Control } from '../windows/Forms/Components/AAA/Control';
 import { IRenderable } from './IView';
 import { ControlHtmlRenderer } from '../windows/Forms/Components/AAA/HtmlRenderer/ControlHtmlRenderer';
@@ -13,7 +13,12 @@ import { useInRouterContext, useLocation, useParams, useNavigate, NavigateFuncti
 import { lastEnteredPropertyName } from '../windows/Forms/Components/AAA/Control';
 import { createTheme } from '../tuval-system/createTheme';
 import { Teact } from '../tuval-forms';
+import { clone, Convert, int, is, TArray } from '@tuval/core';
 
+export const UIFormContext = createContext(null!);
+
+export const bindFormController = (): UIFormController =>
+    React.useContext(UIFormContext);
 
 export let currentController = null;
 
@@ -48,6 +53,8 @@ class UIControllerRenderer extends ControlHtmlRenderer<UIController> {
     }
 }
 export class UIController<T = any> extends Control implements IRenderable, IVirtualContainer {
+
+
 
     @State()
     private m_ContextBag = {};
@@ -91,6 +98,7 @@ export class UIController<T = any> extends Control implements IRenderable, IVirt
         this.Appearance.Display = 'flex';
         this.Appearance.Width = '100%';
         this.Appearance.Height = '100%';
+
         this.InitController();
 
         this._Renderer = new TContainerControlRenderer({
@@ -172,9 +180,9 @@ export class UIController<T = any> extends Control implements IRenderable, IVirt
     }
 
     protected OnUnWired() {
-        
+
     }
-    protected OnComponentWillUnmount(){
+    protected OnComponentWillUnmount() {
         this.OnUnWired();
         return true;
     }
@@ -191,18 +199,222 @@ export class UIController<T = any> extends Control implements IRenderable, IVirt
             this.navigotor = useNavigate();
         }
         this.Application = useApplication();
-        
+
         if (this.Error == null) {
-            return this._Renderer.render();
+            return (
+
+                this._Renderer.render()
+            )
         } else {
             return (<div>{this.Error}</div>)
         }
-        
+
     }
 
     //For as added subviews
     public Render() {
-        return this.CreateMainElement();
+        return (
+            this.CreateMainElement()
+        )
     }
 }
 
+
+export abstract class ValidateRule {
+    public Field: IField;
+    public ErrorMessage: string;
+
+    public constructor(errorMessage: string) {
+
+        this.ErrorMessage = errorMessage;
+    }
+
+    public setField(field: IField) {
+        this.Field = field;
+    }
+
+    abstract validate(): boolean;
+}
+
+export class RequiredRule extends ValidateRule {
+    public validate(): boolean {
+        if (is.nullOrEmpty(this.Field.value)) {
+            return false;
+        }
+
+        return true;
+    }
+}
+
+export class MaxLengthRule extends ValidateRule {
+
+    private maxLength: int;
+
+    public constructor(maxLength: int, errorMessage: string) {
+        super(errorMessage);
+        this.maxLength = maxLength;
+    }
+    public validate(): boolean {
+        if (is.nullOrEmpty(this.Field.value)) {
+            return true;
+        } else {
+            if (Convert.ToString(this.Field.value).length > this.maxLength) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+export interface IFieldState {
+    errors: string[];
+    invalid: boolean;
+    isDirty: boolean;
+    isTouched: boolean;
+}
+export interface IFieldOptions {
+    rules: ValidateRule/* { new(): ValidateRule } */[];
+}
+
+export interface IField {
+    value: any;
+    state: IFieldState;
+    options: IFieldOptions;
+}
+
+const defaultField: IField = {
+    value: null,
+    options: {
+        rules: []
+    },
+    state: {
+        errors: [],
+        invalid: false,
+        isDirty: false,
+        isTouched: false
+    }
+}
+
+export class UIFormController extends UIController {
+    @State()
+    private formData: { [key: string]: IField };
+
+    @State()
+    private isValid: boolean;
+
+    private validateForm() {
+
+        //this.BeginUpdate();
+        // let errors = [];
+        let errorCount = 0;
+
+        for (let key in this.formData) {
+            const field: IField = this.formData[key];
+            const errors = field.state.errors = [];
+            for (let i = 0; i < field.options.rules.length; i++) {
+                const rule = field.options.rules[i];
+                rule.setField(field);
+                const validate = rule.validate();
+                if (!validate) {
+                    errorCount++;
+                    errors.push(rule.ErrorMessage);
+                }
+            }
+        }
+
+        if (errorCount === 0) {
+            this.formData = { ...this.formData }
+
+            const data = {};
+            for (let key in this.formData) {
+                data[key] = this.formData[key].value;
+            }
+
+            this.OnSubmit(data);
+        } else {
+            for (let key in this.formData) {
+                const field = this.formData[key];
+                field.state.invalid = true;
+            }
+
+            this.isValid = false;
+        }
+
+        //this.EndUpdate();
+    }
+    protected OnSubmit(data) { }
+
+    public Submit() {
+
+        this.validateForm();
+    }
+
+    public ResetForm() { }
+
+    public ClearErrors() { }
+
+    public SetValue(name: string, value: any) {
+        if (name != null) {
+            const fieldName = name;
+
+            if (this.formData[fieldName] == null) {
+                this.formData[fieldName] = clone(defaultField);
+            }
+            const fieldInfo = this.formData[fieldName];
+            fieldInfo.value = value;
+        }
+    }
+
+    public GetValue(name: string) {
+        if (name != null) {
+            const fieldName = name;
+
+            if (this.formData[fieldName] == null) {
+                this.formData[fieldName] = clone(defaultField);
+            }
+            const fieldInfo = this.formData[fieldName];
+            return fieldInfo.value;
+        }
+    }
+
+    public GetFieldState(name: string): IFieldState {
+        if (name != null) {
+            const fieldName = name;
+
+            if (this.formData[fieldName] == null) {
+                return null;
+            }
+            const fieldInfo = this.formData[fieldName];
+
+            return fieldInfo.state;
+        }
+    }
+
+    public register(name: string, rules: ValidateRule[]) {
+        if (name != null) {
+            const fieldName = name;
+
+            if (this.formData[fieldName] == null) {
+                this.formData[fieldName] = clone(defaultField);
+            }
+            const fieldInfo = this.formData[fieldName];
+            fieldInfo.options.rules = rules;
+
+        }
+    }
+
+    protected SetupControlDefaults() {
+        super.SetupControlDefaults();
+        this.formData = {};
+
+    }
+
+    protected CreateElements(param: any) {
+
+        return (
+            <UIFormContext.Provider value={this}>
+                {super.CreateElements(null)}
+            </UIFormContext.Provider>
+        )
+    }
+}
