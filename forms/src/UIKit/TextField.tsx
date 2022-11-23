@@ -214,6 +214,14 @@ export class TextFieldClass extends UIView {
     @ViewProperty()
     public vp_FormField: { name: string, rules: ValidateRule[] };
 
+    public formField(name: string, rules: ValidateRule[]): this {
+        this.vp_FormField = {
+            name: name,
+            rules: rules
+        };
+        return this;
+    }
+    
     @ViewProperty()
     public vp_FormControl: Form_Control;
 
@@ -312,13 +320,7 @@ export class TextFieldClass extends UIView {
         return this;
     }
 
-    public formField(name: string, rules: ValidateRule[]): this {
-        this.vp_FormField = {
-            name: name,
-            rules: rules
-        };
-        return this;
-    }
+  
 }
 
 
