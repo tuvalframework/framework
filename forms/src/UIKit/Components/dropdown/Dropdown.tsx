@@ -673,7 +673,7 @@ export const Dropdown = React.memo(React.forwardRef((props, ref) => {
                 {hiddenSelect}
                 {labelElement}
                 {clearIcon}
-                {/* {dropdownIcon} */}
+                {dropdownIcon}
                 <DropdownPanel ref={overlayRef} visibleOptions={visibleOptions} {...props} appendTo={appendTo} onClick={onPanelClick} onOptionClick={onOptionClick}
                     filterValue={filterState} hasFilter={hasFilter} onFilterClearIconClick={onFilterClearIconClick} onFilterInputKeyDown={onFilterInputKeyDown} onFilterInputChange={onFilterInputChange}
                     getOptionLabel={getOptionLabel} getOptionRenderKey={getOptionRenderKey} isOptionDisabled={isOptionDisabled}

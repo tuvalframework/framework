@@ -15,37 +15,8 @@ import { Password } from './Components/password/Password';
 export class SecureFieldRenderer extends ControlHtmlRenderer<SecureFieldClass> {
     private inputRef: HTMLElement;
 
-    public get UseShadowDom(): boolean {
-        return true;
-    }
-    public OnStyleCreating(obj: SecureFieldClass, sb: StringBuilder): void {
-        sb.AppendLine(require('./Components/password/Password.css'));
-        sb.AppendLine(`
-         input {
-            width: 100%;
-            border: none;
-            font-size:${obj.Appearance.FontSize}
-        }
-
-        input:focus {
-            outline: none;
-        }
-
-        ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-        color: #C0C0C0;
-        opacity: 1; /* Firefox */
-        }
-
-        :-ms-input-placeholder { /* Internet Explorer 10-11 */
-        color: #C0C0C0;
-        }
-
-        ::-ms-input-placeholder { /* Microsoft Edge */
-        color: #C0C0C0;
-        }
-        `);
-    }
-
+    
+   
     public GenerateElement(obj: SecureFieldClass): boolean {
         this.WriteStartFragment();
         return true;
@@ -66,12 +37,13 @@ export class SecureFieldRenderer extends ControlHtmlRenderer<SecureFieldClass> {
         const style = {};
         style['width'] = '100%';
         style['height'] = '100%';
-        style['border'] = 'solid 0px';
+        /* style['border'] = 'solid 0px';
         style['border-radius'] = obj.Appearance.BorderRadius;
         style['background-color'] = obj.Appearance.BackgroundColor;
         style['font-family'] = obj.Appearance.FontFamily;
         style['font-size'] = obj.Appearance.FontSize;
-        style['font-weight'] = obj.Appearance.FontWeight;
+        style['font-weight'] = obj.Appearance.FontWeight; */
+
      /*    style['padding'] = obj.InputAppearance.Padding;
         style['padding-left'] = obj.InputAppearance.PaddingLeft; */
 
@@ -86,7 +58,11 @@ export class SecureFieldRenderer extends ControlHtmlRenderer<SecureFieldClass> {
         obj.TabIndex = null;
 
         this.WriteComponent(
-            <Password style={style} tabIndex={tabIndex}
+            <Password 
+            style={style} 
+            inputStyle={style} 
+            
+            tabIndex={tabIndex}
                 value={obj.Value}
                 placeholder={obj.Placeholder}
                 onComponentDidMount={(ref) => this.OnInputDidMount(obj, ref)}

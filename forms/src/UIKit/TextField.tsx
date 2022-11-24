@@ -270,7 +270,7 @@ export class TextFieldClass extends UIView {
         this.Appearance.Width = '100%';
         this.Appearance.Height = 'fit-content';
         //this.Appearance.Border = 'solid 1px gray';
-        this.Appearance.Overflow = 'hidden';
+        //this.Appearance.Overflow = 'hidden';
 
         this.InputAppearance = new AppearanceObject(this);
 
