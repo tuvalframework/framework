@@ -16,9 +16,13 @@ import { Teact } from '../tuval-forms';
 import { clone, Convert, int, is, TArray } from '@tuval/core';
 
 export const UIFormContext = createContext(null!);
+export const UIControllerContext = createContext(null!);
 
 export const bindFormController = (): UIFormController =>
     React.useContext(UIFormContext);
+
+export const bindController = (): UIController =>
+    React.useContext(UIControllerContext);
 
 export let currentController = null;
 
@@ -200,14 +204,14 @@ export class UIController<T = any> extends Control implements IRenderable, IVirt
         }
         this.Application = useApplication();
 
-        if (this.Error == null) {
-            return (
 
-                this._Renderer.render()
-            )
-        } else {
-            return (<div>{this.Error}</div>)
-        }
+        return (
+            <UIControllerContext.Provider value={this}>
+                {this._Renderer.render()}
+            </UIControllerContext.Provider>
+        )
+
+
 
     }
 

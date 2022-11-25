@@ -10,8 +10,17 @@ import { useContext } from '../../../../hooks';
 export const ApplicationContext = createContext(null!);
 
 export function useApplication(): TApplication {
-   return useContext(ApplicationContext);
-  }
+    return useContext(ApplicationContext);
+}
+
+export interface ILogService {
+    log(text: string): void;
+}
+
+export function useLogService(): ILogService {
+    const app: TApplication = useContext(ApplicationContext);
+    return app.LogService;
+}
 
 /* export class TApplication {
     public MainForm: TForm = null as any;
@@ -92,6 +101,14 @@ export class TApplication extends Control<TApplication> {
         this.SetProperty('MainForm', value);
     }
 
+
+    public get LogService(): ILogService {
+        return this.GetProperty('LogService');
+    }
+    public set LogService(value: ILogService) {
+        this.SetProperty('LogService', value);
+    }
+
     protected SetupControlDefaults(): void {
         super.SetupControlDefaults();
         this.Disabled = false;
@@ -100,6 +117,10 @@ export class TApplication extends Control<TApplication> {
         this.OnFormClosed = this.OnFormClosed.bind(this);
         EventBus.Default.on('tuval.desktop.formCreated', this.OnFormCreate);
         EventBus.Default.on('tuval.desktop.formClosed', this.OnFormClosed);
+
+        this.LogService = {
+            log: (text) => console.log(text)
+        }
     }
     protected SetupComponentDefaults() {
         super.SetupComponentDefaults();

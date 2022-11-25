@@ -9,6 +9,8 @@ import { ControlHtmlRenderer } from "../../windows/Forms/Components/AAA/HtmlRend
 import { UIController } from "../UIController";
 import { viewFunc } from "../getView";
 import { Teact } from "../../windows/Forms/Components/Teact";
+import { useState } from "../../hooks";
+import { Fragment } from "../../preact";
 
 
 class SpinnerRenderer extends ControlHtmlRenderer<UISpinner> {
@@ -91,25 +93,48 @@ class SpinnerRenderer extends ControlHtmlRenderer<UISpinner> {
         return true;
     }
     public GenerateBody(obj: UISpinner): void {
-        this.WriteStartElement('span');
-        this.WriteStartElement('div');
-        this.WriteAttrVal('className', 'indicator-small');
 
+        const SpinnerComponent = () => {
+            const [showSpinner, setShowSpinner] = useState(false)
 
-        this.WriteStartElement('div');
-        this.WriteAttrVal('className', 'mk-spinner-wrap');
+            setTimeout(()=> setShowSpinner(true), 1000)
 
-        this.WriteStartElement('div');
-        this.WriteAttrVal('className', 'mk-spinner-pie');
+            return (
+                showSpinner ?
+                    (<span>
+                        <div className={'indicator-small'}>
+                            <div className={'mk-spinner-wrap'}>
+                                <div className={'mk-spinner-pie'}>
 
-        this.WriteEndElement();
+                                </div>
+                            </div>
+                        </div>
+                    </span >)
+                    :
+                    <Fragment></Fragment>
+            )
+        }
 
-        this.WriteEndElement();
-
-        this.WriteEndElement();
-
-        this.WriteEndElement();
-        this.WriteEndElement();
+        this.WriteComponent(<SpinnerComponent></SpinnerComponent>)
+        /*  this.WriteStartElement('span');
+         this.WriteStartElement('div');
+         this.WriteAttrVal('className', 'indicator-small');
+ 
+ 
+         this.WriteStartElement('div');
+         this.WriteAttrVal('className', 'mk-spinner-wrap');
+ 
+         this.WriteStartElement('div');
+         this.WriteAttrVal('className', 'mk-spinner-pie');
+ 
+         this.WriteEndElement();
+ 
+         this.WriteEndElement();
+ 
+         this.WriteEndElement();
+ 
+         this.WriteEndElement();
+         this.WriteEndElement(); */
 
     }
 }
