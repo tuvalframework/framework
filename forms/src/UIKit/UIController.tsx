@@ -366,6 +366,8 @@ export class UIFormController extends UIController {
             }
             const fieldInfo = this.formData[fieldName];
             fieldInfo.value = value;
+
+            this.formData = { ...this.formData };
         }
     }
 

@@ -487,3 +487,7 @@ export function getRouterParams<
 export function bindNavigate(): NavigateFunction {
     return useNavigate();
 }
+
+export function binLocation() {
+    return useLocation();
+}
