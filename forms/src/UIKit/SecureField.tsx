@@ -16,7 +16,8 @@ export class SecureFieldRenderer extends ControlHtmlRenderer<SecureFieldClass> {
     private inputRef: HTMLElement;
 
     
-   
+
+
     public GenerateElement(obj: SecureFieldClass): boolean {
         this.WriteStartFragment();
         return true;
@@ -44,8 +45,8 @@ export class SecureFieldRenderer extends ControlHtmlRenderer<SecureFieldClass> {
         style['font-size'] = obj.Appearance.FontSize;
         style['font-weight'] = obj.Appearance.FontWeight; */
 
-     /*    style['padding'] = obj.InputAppearance.Padding;
-        style['padding-left'] = obj.InputAppearance.PaddingLeft; */
+        /*    style['padding'] = obj.InputAppearance.Padding;
+           style['padding-left'] = obj.InputAppearance.PaddingLeft; */
 
         const button = {
             rest: { scale: 1 },
@@ -58,11 +59,12 @@ export class SecureFieldRenderer extends ControlHtmlRenderer<SecureFieldClass> {
         obj.TabIndex = null;
 
         this.WriteComponent(
-            <Password 
-            style={style} 
-            inputStyle={style} 
-            
-            tabIndex={tabIndex}
+            <Password
+                style={style}
+                inputStyle={style}
+                feedback={false}
+
+                tabIndex={tabIndex}
                 value={obj.Value}
                 placeholder={obj.Placeholder}
                 onComponentDidMount={(ref) => this.OnInputDidMount(obj, ref)}

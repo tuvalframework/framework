@@ -388,11 +388,27 @@ export class UIFormController extends UIController {
             const fieldName = name;
 
             if (this.formData[fieldName] == null) {
+                this.formData[fieldName] = clone(defaultField);
+            }
+
+            const fieldInfo = this.formData[fieldName];
+
+            return fieldInfo.state;
+        }
+    }
+
+    public SetFieldTouch(name: string, isTouched: boolean): IFieldState {
+        if (name != null) {
+            const fieldName = name;
+
+            if (this.formData[fieldName] == null) {
                 return null;
             }
             const fieldInfo = this.formData[fieldName];
 
-            return fieldInfo.state;
+             fieldInfo.state.isTouched = isTouched;
+
+             this.formData = { ...this.formData };
         }
     }
 

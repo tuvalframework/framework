@@ -1616,37 +1616,40 @@ export class UIView implements IVirtualContainer, IControl, IRenderable {
     public width(value: StyleAttribute): this;
     public width(...args: any[]): this {
         if (args.length === 0) {
-            this.Appearance.Width = '';
+            this.Appearance.Width = 'fit-content';
+            this.Appearance.MaxWidth = 'fit-content';
+            this.Appearance.MinWidth = 'fit-content';
             return this;
         } else if (args.length === 1 && is.number(args[0])) {
             const value = args[0];
-            this.Appearance.Width = `${value}px`;
+            this.Appearance.MinWidth = this.Appearance.MaxWidth = this.Appearance.Width = `${value}px`;
+            
             return this;
         } else if (args.length === 1 && is.string(args[0])) {
             const value: string = args[0];
-            this.Appearance.Width = value;
+            this.Appearance.MinWidth = this.Appearance.MaxWidth = this.Appearance.Width = value;
             return this;
         } else if (args.length === 1 && typeof args[0] === 'object') {
             const styleAttribute: StyleAttribute = args[0];
             if (styleAttribute.default != null) {
-                this.Appearance.Width = styleAttribute.default as any;
+                this.Appearance.MinWidth = this.Appearance.MaxWidth =  this.Appearance.Width = styleAttribute.default as any;
             }
             if (styleAttribute.hover != null) {
-                this.HoverAppearance.Width = styleAttribute.hover as any;
+                this.HoverAppearance.MinWidth = this.HoverAppearance.MaxWidth = this.HoverAppearance.Width = styleAttribute.hover as any;
             }
             if (styleAttribute.active != null) {
-                this.ActiveAppearance.Width = styleAttribute.active as any;
+                this.ActiveAppearance.MinWidth = this.ActiveAppearance.MaxWidth =  this.ActiveAppearance.Width = styleAttribute.active as any;
             }
             if (styleAttribute.disabled != null) {
-                this.DisabledAppearance.Width = styleAttribute.disabled as any;
+                this.DisabledAppearance.MinWidth = this.DisabledAppearance.MaxWidth =  this.DisabledAppearance.Width = styleAttribute.disabled as any;
             }
 
             if (styleAttribute.focus != null) {
-                this.FocusAppearance.Width = styleAttribute.focus as any;
+                this.FocusAppearance.MinWidth = this.FocusAppearance.MaxWidth =  this.FocusAppearance.Width = styleAttribute.focus as any;
             }
 
             if (styleAttribute.before != null) {
-                this.BeforeAppearance.Width = styleAttribute.before as any;
+                this.BeforeAppearance.MinWidth = this.BeforeAppearance.MaxWidth =  this.BeforeAppearance.Width = styleAttribute.before as any;
             }
             return this;
         }
@@ -1768,37 +1771,37 @@ export class UIView implements IVirtualContainer, IControl, IRenderable {
     public height(value: StyleAttribute): this;
     public height(...args: any[]): this {
         if (args.length === 0) {
-            this.Appearance.Height = '';
+            this.Appearance.MinHeight = this.Appearance.MaxHeight =  this.Appearance.Height = 'fit-content';
             return this;
         } else if (args.length === 1 && is.number(args[0])) {
             const value = args[0];
-            this.Appearance.Height = `${value}px`;
+            this.Appearance.MinHeight = this.Appearance.MaxHeight = this.Appearance.Height = `${value}px`;
             return this;
         } else if (args.length === 1 && is.string(args[0])) {
             const value: string = args[0];
-            this.Appearance.Height = value;
+            this.Appearance.MinHeight = this.Appearance.MaxHeight = this.Appearance.Height = value;
             return this;
         } else if (args.length === 1 && typeof args[0] === 'object') {
             const styleAttribute: StyleAttribute = args[0];
             if (styleAttribute.default != null) {
-                this.Appearance.Height = styleAttribute.default as any;
+                this.Appearance.MinHeight = this.Appearance.MaxHeight = this.Appearance.Height = styleAttribute.default as any;
             }
             if (styleAttribute.hover != null) {
-                this.HoverAppearance.Height = styleAttribute.hover as any;
+                this.HoverAppearance.MinHeight = this.HoverAppearance.MaxHeight =  this.HoverAppearance.Height = styleAttribute.hover as any;
             }
             if (styleAttribute.active != null) {
-                this.ActiveAppearance.Height = styleAttribute.active as any;
+                this.ActiveAppearance.MinHeight = this.ActiveAppearance.MaxHeight =  this.ActiveAppearance.Height = styleAttribute.active as any;
             }
             if (styleAttribute.disabled != null) {
-                this.DisabledAppearance.Height = styleAttribute.disabled as any;
+                this.DisabledAppearance.MinHeight = this.DisabledAppearance.MaxHeight =this.DisabledAppearance.Height = styleAttribute.disabled as any;
             }
 
             if (styleAttribute.focus != null) {
-                this.FocusAppearance.Height = styleAttribute.focus as any;
+                this.FocusAppearance.MinHeight = this.FocusAppearance.MaxHeight = this.FocusAppearance.Height = styleAttribute.focus as any;
             }
 
             if (styleAttribute.before != null) {
-                this.BeforeAppearance.Height = styleAttribute.before as any;
+                this.BeforeAppearance.MinHeight = this.BeforeAppearance.MaxHeight =  this.BeforeAppearance.Height = styleAttribute.before as any;
             }
             return this;
         }

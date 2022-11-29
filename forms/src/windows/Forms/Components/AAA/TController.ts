@@ -26,11 +26,11 @@ export function View<T extends { new(...args: any[]): {} }>(Base: T) {
                     func.call(this, ...args);
                 }
             }
-          /*   if (subMethods) {
-                subMethods.forEach((requestName: string, method: string) => {
-                    console.log(requestName);
-                });
-            } */
+            /*   if (subMethods) {
+                  subMethods.forEach((requestName: string, method: string) => {
+                      console.log(requestName);
+                  });
+              } */
         }
     };
 }

@@ -8,14 +8,105 @@ import { IRenderable } from '../IView';
 import { UIController } from '../UIController';
 import { ButtonView } from './ButtonView';
 import { classNames } from '../Components/utils/ClassNames';
+import { jss } from '../../jss/jss';
+import React, { createElement, Fragment } from "../../preact/compat";
+import { Message } from '../../windows/Forms/Components/AAA/Message';
+import { Msg } from '../../windows/Forms/Components/AAA/Msg';
 
 
-export class ButtonViewRenderer extends ControlHtmlRenderer<ButtonView> {
-    public get UseShadowDom(): boolean {
-        return true;
+class MyComponent extends React.Component {
+
+    get jssStyle(): any {
+        return this.state.jssStyle;
     }
 
-    public OnStyleCreating(obj: ButtonView, sb: StringBuilder): void {
+    set jssStyle(value: any) {
+        this.setState({
+            'jssStyle': value
+        });
+    }
+
+    protected componentWillMount() {
+        const className = `button-view`;
+
+        /*   Appearance: AppearanceObject;
+          HoverAppearance: AppearanceObject;
+          ActiveAppearance: AppearanceObject;
+          DisabledAppearance:AppearanceObject;
+          FocusAppearance: AppearanceObject;
+          BeforeAppearance:AppearanceObject; */
+
+        const Appearance = this.props.control.Appearance.GetStyleObject();
+        for (const [key, value] of Object.entries(Appearance)) {
+            Appearance[key] = `${value} !important`
+        }
+
+        const HoverAppearance = this.props.control.HoverAppearance.GetStyleObject();
+        for (const [key, value] of Object.entries(HoverAppearance)) {
+            HoverAppearance[key] = `${value} !important`
+        }
+
+
+        const styles = {
+            [className]: control => ({
+                ...Appearance,
+                '&:hover': { ...HoverAppearance },
+                '& .e-ddl.e-input-group input.e-input::placeholder': {
+                    color: '#C0C0C0',
+                    fontSize: '1rem'
+                },
+                '.e-dropdownbase .e-list-item, .e-dropdownbase .e-list-item': {
+                    //padding: '5px'
+                },
+                '&:focus': {
+                    ...this.props.control.FocusAppearance.GetStyleObject()
+                }
+            }),
+
+        }
+
+        const jssStyle = jss.createStyleSheet(styles, { link: true }).attach();
+        //  this.props.elementProps['className'] = jssStyle.classes[className];
+        this.jssStyle = jssStyle;
+    }
+
+    protected componentWillUnmount(obj: ButtonView) {
+        this.jssStyle.detach();
+        jss.removeStyleSheet(this.jssStyle);
+    }
+
+    public render() {
+        const _className = `button-view`;
+        this.jssStyle?.update(this.props.control);
+
+        const children = this.props.children;
+
+        let className = this.props.className;
+
+        if (this.jssStyle) {
+            className = this.jssStyle.classes[_className] + ' ' + this.props.className;
+        }
+
+        delete this.props['className'];
+        delete this.props['control'];
+        delete this.props['children'];
+
+        return (
+            <Button {...this.props} className={className}>
+                {children}
+            </Button>
+        )
+    }
+}
+
+export class ButtonViewRenderer extends ControlHtmlRenderer<ButtonView> {
+    public get UseFrameStyles(): boolean {
+        return false;
+    }
+
+
+
+    /* public OnStyleCreating(obj: ButtonView, sb: StringBuilder): void {
         sb.AppendLine(require('../Components/common.css'));
         sb.AppendLine(require('../Components/button/Button.css'));
         sb.AppendLine(require('./Theme.css'));
@@ -69,7 +160,7 @@ export class ButtonViewRenderer extends ControlHtmlRenderer<ButtonView> {
         }
 
 `)
-    }
+    } */
 
     public GenerateElement(obj: ButtonView): boolean {
         this.WriteStartFragment();
@@ -77,19 +168,30 @@ export class ButtonViewRenderer extends ControlHtmlRenderer<ButtonView> {
     }
     public GenerateBody(obj: ButtonView): void {
 
+
+
         const className = classNames({
             'p-button-secondary': obj.vp_Color === 'secondary',
             'p-button-success': obj.vp_Color === 'success',
             'p-button-danger': obj.vp_Color === 'danger',
             'p-button-outlined': obj.vp_Variant === 'outlined',
         })
+
         this.WriteComponent(
-            <Button className={className} disabled={obj.vp_Disabled} loading={obj.vp_Loading} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <MyComponent
+                label=""
+                control={obj}
+                className={className}
+                disabled={obj.vp_Disabled}
+                loading={obj.vp_Loading}
+                onClick={(e) => obj.WndProc(Message.Create(Msg.WM_CLICK, e, e))}
+                style={{ display: 'flex', justifyContent: 'center' }}>
+
                 <div style={{ marginLeft: '5px' }} >
                     {this.CreateControls(obj)}
                 </div>
 
-            </Button >
+            </MyComponent >
         );
     }
     protected CreateControls(obj: ButtonView): any[] {

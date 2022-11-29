@@ -15,6 +15,10 @@ export interface IButtonProps {
 }
 
 export class ButtonView extends UIView implements ILabel {
+
+    /** @internal */
+    @ViewProperty() vp_jssStyle: any;
+
     /** @internal */
     @ViewProperty() vp_Loading: boolean;
     public loading(value: boolean): this {
@@ -45,6 +49,8 @@ export class ButtonView extends UIView implements ILabel {
             renderId: false
         });
 
+        this.width('fit-content');
+    
         return this;
     }
     public constructor() {

@@ -2,6 +2,8 @@ import { jss } from "../../../../../jss/jss";
 import { Component, Fragment } from "../../../../../preact/compat";
 import { Teact } from "../../Teact";
 import { motion } from '../../../../../motion/render/dom/motion';
+import { HtmlRenderer } from "../..";
+import { createMotionProxy } from "../../../../../motion/render/dom/motion-proxy";
 
 export class Wrapper extends Component {
 
@@ -21,27 +23,34 @@ export class Wrapper extends Component {
         };
     }
     componentWillMount() {
-        const className = `tuval-view`;
-        const styles = {
-            [className]: control => ({
-                ...control.Appearance.GetStyleObject(),
-                '&:hover': {
-                    ...control.HoverAppearance.GetStyleObject()
-                },
-                '&:active': {
-                    ...control.ActiveAppearance.GetStyleObject()
-                },
-                '&:focus': {
-                    ...control.FocusAppearance.GetStyleObject()
-                },
-                ...this.props.renderer.GetCustomJss(control)
-            }),
+        const renderer: HtmlRenderer<any> = this.props.renderer;
 
+        if (renderer.UseFrameStyles) {
+            const className = `tuval-view`;
+            const styles = {
+                [className]: control => (
+                    {
+                        ...control.Appearance.GetStyleObject(),
+                        '&:hover': {
+                            ...control.HoverAppearance.GetStyleObject()
+                        },
+                        '&:active': {
+                            ...control.ActiveAppearance.GetStyleObject()
+                        },
+                        '&:focus': {
+                            ...control.FocusAppearance.GetStyleObject()
+                        },
+                        ...this.props.renderer.GetCustomJss(control)
+                    }
+
+                ),
+
+            }
+
+            const jssStyle = jss.createStyleSheet(styles, { link: true }).attach();
+            //  this.props.elementProps['className'] = jssStyle.classes[className];
+            this.jssStyle = jssStyle;
         }
-
-        const jssStyle = jss.createStyleSheet(styles, { link: true }).attach();
-        //  this.props.elementProps['className'] = jssStyle.classes[className];
-        this.jssStyle = jssStyle;
         this.props.OnComponentWillMount();
     }
     componentDidMount() {
@@ -54,27 +63,51 @@ export class Wrapper extends Component {
 
 
     componentWillUnmount() {
-        this.jssStyle.detach();
-        jss.removeStyleSheet(this.jssStyle);
-        this.props.OnComponentWillUnmount();
+
+
+        const renderer: HtmlRenderer<any> = this.props.renderer;
+
+        if (renderer.UseFrameStyles) {
+            this.jssStyle.detach();
+            jss.removeStyleSheet(this.jssStyle);
+            this.props.OnComponentWillUnmount();
+        }
     }
 
 
 
     render() {
-        const className = `tuval-view`;
-        this.jssStyle.update(this.props.control);
-        if (this.props.renderAsAnimated) {
-            return (
-                <motion.div view={this.props.control.constructor.name} className={this.jssStyle.classes[className]} {...this.props.elementProps}>
-                    {this.props.children}
-                </motion.div>
-            );
+
+
+        let className = ``;
+        const renderer: HtmlRenderer<any> = this.props.renderer;
+
+        if (renderer.UseFrameStyles) {
+            className = `tuval-view`;
+            this.jssStyle.update(this.props.control);
+            className = this.jssStyle.classes[className];
+        }
+
+        if (renderer.UseFrameStyles) {
+
+            if (this.props.renderAsAnimated) {
+                return (
+                    <motion.div view={this.props.control.constructor.name} className={className} {...this.props.elementProps}>
+                        {this.props.children}
+                    </motion.div>
+                );
+            } else {
+                return (
+                    <div view={this.props.control.constructor.name} className={className} {...this.props.elementProps}>
+                        {this.props.children}
+                    </div>
+                );
+            }
         } else {
             return (
-                <div view={this.props.control.constructor.name} className={this.jssStyle.classes[className]} {...this.props.elementProps}>
+                <Fragment>
                     {this.props.children}
-                </div>
+                </Fragment>
             );
         }
     }

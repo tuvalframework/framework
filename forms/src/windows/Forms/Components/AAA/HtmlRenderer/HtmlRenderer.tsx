@@ -329,9 +329,12 @@ export abstract class HtmlRenderer<T extends IControl> extends XmlTransformer<T>
         this.OnComponentDidUpdate(this.Control);
     }
     private componentWillUnmount(): void {
-        if (this.Control.Appearance['jssStyle']) {
-            this.Control.Appearance['jssStyle'].detach();
-            jss.removeStyleSheet(this.Control.Appearance['jssStyle']);
+
+        if (this.UseFrameStyles) {
+            if (this.Control.Appearance['jssStyle']) {
+                this.Control.Appearance['jssStyle'].detach();
+                jss.removeStyleSheet(this.Control.Appearance['jssStyle']);
+            }
         }
 
         this.OnComponentWillUnmount(this.Control);
@@ -413,6 +416,10 @@ export abstract class HtmlRenderer<T extends IControl> extends XmlTransformer<T>
 
     public get UseShadowDom(): boolean {
         return false;
+    }
+
+    public get UseFrameStyles(): boolean {
+        return true;
     }
 
     private createStyles() {
