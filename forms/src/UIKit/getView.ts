@@ -31,7 +31,7 @@ export function getView(controller: UIController, view: any): UIView | UIControl
             currentController = currentController.ParentController;
         }
 
-        try {
+      
             const theme = controller?.Theme;
             const root = view({ ...clone, controller, theme });
             if (isViewable(root)) {
@@ -41,9 +41,7 @@ export function getView(controller: UIController, view: any): UIView | UIControl
             } else {
                 throw new Error('olmaz.')
             }
-        } catch {
-            debugger;
-        }
+       
     }
 }
 
@@ -73,8 +71,10 @@ export function viewFunc(sourceClass: any, viewCreator: Function) {
 
     wrapFunc(sourceClass, func);
 
-    if (sourceClass.prototype['constructor'] != null) {
-        sourceClass.prototype['constructor'].call(func);
+    if (sourceClass.prototype) {
+        if (sourceClass.prototype['constructor'] != null) {
+            sourceClass.prototype['constructor'].call(func);
+        }
     }
 
     return func as any;

@@ -12,8 +12,11 @@ import { BindingClass } from './Binding';
 import { useInRouterContext, useLocation, useParams, useNavigate, NavigateFunction } from '../router-dom';
 import { lastEnteredPropertyName } from '../windows/Forms/Components/AAA/Control';
 import { createTheme } from '../tuval-system/createTheme';
-import { Teact } from '../tuval-forms';
+import { jsonServerDataProvider, Teact } from '../tuval-forms';
 import { clone, Convert, int, is, TArray } from '@tuval/core';
+import { QueryClient } from '../query/core/queryClient';
+import { QueryClientProvider } from '../query/tuval/QueryClientProvider';
+import { DataProviderContext } from '../query/dataProvider/DataProviderContext';
 
 export const UIFormContext = createContext(null!);
 export const UIControllerContext = createContext(null!);
@@ -166,6 +169,9 @@ export class UIController<T = any> extends Control implements IRenderable, IVirt
     @State()
     public navigotor: NavigateFunction;
 
+    @State()
+    public dataProvider: any;
+
     protected OnWired() {
 
     }
@@ -194,6 +200,10 @@ export class UIController<T = any> extends Control implements IRenderable, IVirt
     /* protected GetRenderer() {
         return UIControllerRenderer;
     } */
+
+    protected GetDataProvider() {
+        return null;
+    }
 
     protected CreateElements(param: any) {
         if (useInRouterContext()) {
@@ -299,6 +309,7 @@ const defaultField: IField = {
     }
 }
 
+const queryClient = new QueryClient();
 export class UIFormController extends UIController {
     @State()
     private formData: { [key: string]: IField };
@@ -406,9 +417,9 @@ export class UIFormController extends UIController {
             }
             const fieldInfo = this.formData[fieldName];
 
-             fieldInfo.state.isTouched = isTouched;
+            fieldInfo.state.isTouched = isTouched;
 
-             this.formData = { ...this.formData };
+            this.formData = { ...this.formData };
         }
     }
 

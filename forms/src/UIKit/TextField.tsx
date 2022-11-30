@@ -11,6 +11,7 @@ import { motion } from '../motion';
 import { InputTextarea } from './Components/inputtextarea/InputTextarea';
 import { Form_Control, Form_Controller, useFormContext } from '../hook-form';
 import { Fragment } from '../preact';
+import { useQueryClient } from '../query/tuval/QueryClientProvider';
 
 
 
@@ -129,8 +130,8 @@ export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
             const MyInputText = (params) => {
 
                 const controller: UIFormController = bindFormController();
-                console.log(controller);
-
+               // console.log(controller);
+                
 
                 if (obj.vp_FormField == null || controller == null) {
                     return (<InputText {...params}> </InputText>)

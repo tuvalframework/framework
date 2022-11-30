@@ -34,6 +34,8 @@ export * from './hook-form'
 
 export * from "./jss/jss";
 
+export * from './query';
+
 export { BrowserRouter, Routes, Route } from './router-dom';
 
 export { Component, PureComponent } from './preact/compat';
