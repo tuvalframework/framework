@@ -12,7 +12,7 @@ import { BindingClass } from './Binding';
 import { useInRouterContext, useLocation, useParams, useNavigate, NavigateFunction } from '../router-dom';
 import { lastEnteredPropertyName } from '../windows/Forms/Components/AAA/Control';
 import { createTheme } from '../tuval-system/createTheme';
-import { jsonServerDataProvider, Teact } from '../tuval-forms';
+import { WebApiDataProvider, Teact } from '../tuval-forms';
 import { clone, Convert, int, is, TArray } from '@tuval/core';
 import { QueryClient } from '../query/core/queryClient';
 import { QueryClientProvider } from '../query/tuval/QueryClientProvider';

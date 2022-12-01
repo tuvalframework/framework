@@ -18,7 +18,7 @@ import { DataContextClass } from "./DataContextClass";
 const query = new QueryClient();
 
 const DataProxy = ({ renderer, obj }) => {
-    console.log(_useDataProvider())
+    // console.log(_useDataProvider())
     return (
         <Fragment>
             {renderer.CreateControls(obj)}
@@ -56,7 +56,7 @@ export class DataContextRenderer extends ControlHtmlRenderer<DataContextClass> {
         this.WriteComponent(
             <DataProviderContext.Provider value={finalDataProvider}>
                 <QueryClientProvider client={query}>
-                    <DataProxy renderer={this} obj={obj}></DataProxy>
+                      <DataProxy renderer={this} obj={obj}></DataProxy> 
                 </QueryClientProvider>
             </DataProviderContext.Provider>
 

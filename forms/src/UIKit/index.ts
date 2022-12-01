@@ -55,5 +55,6 @@ export * from './UIForm';
 export * from './Theme';
 
 export * from './DataContext';
+export * from './RecordContext';
 
 export { getView, viewFunc } from './getView';

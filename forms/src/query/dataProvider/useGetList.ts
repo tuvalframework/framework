@@ -96,6 +96,8 @@ export const useGetList = (
         }
     );
 
+    
+
     return React.useMemo(
         () =>
             result.data

@@ -33,7 +33,7 @@ import * as fetchUtils from './fetch';
  *
  * export default App;
  */
-export const jsonServerDataProvider = (apiUrl, httpClient = fetchUtils.fetchJson): any => ({
+export const WebApiDataProvider = (apiUrl, httpClient = fetchUtils.fetchJson): any => ({
     getList: (resource, params) => {
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
@@ -46,7 +46,7 @@ export const jsonServerDataProvider = (apiUrl, httpClient = fetchUtils.fetchJson
         };
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
 
-        alert('BNM')
+     
         return httpClient(url).then(({ headers, json }) => {
             if (!headers.has('x-total-count')) {
                 throw new Error(
