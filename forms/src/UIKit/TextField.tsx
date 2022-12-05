@@ -10,82 +10,156 @@ import { viewFunc } from './getView';
 import { motion } from '../motion';
 import { InputTextarea } from './Components/inputtextarea/InputTextarea';
 import { Form_Control, Form_Controller, useFormContext } from '../hook-form';
-import { Fragment } from '../preact';
+
 import { useQueryClient } from '../query/tuval/QueryClientProvider';
+import React, { createElement, Fragment } from "../preact/compat";
+import { jss } from '../jss/jss';
+
+class TextFieldProxy extends React.Component {
+
+    get jssStyle(): any {
+        return this.state.jssStyle;
+    }
+
+    set jssStyle(value: any) {
+        this.setState({
+            'jssStyle': value
+        });
+    }
+
+    protected componentWillMount() {
+        const className = `textfield-view`;
+
+        /*   Appearance: AppearanceObject;
+          HoverAppearance: AppearanceObject;
+          ActiveAppearance: AppearanceObject;
+          DisabledAppearance:AppearanceObject;
+          FocusAppearance: AppearanceObject;
+          BeforeAppearance:AppearanceObject; */
+
+        const Appearance = this.props.control.Appearance.GetStyleObject();
+        for (const [key, value] of Object.entries(Appearance)) {
+            Appearance[key] = `${value} !important`
+        }
+
+        const HoverAppearance = this.props.control.HoverAppearance.GetStyleObject();
+        for (const [key, value] of Object.entries(HoverAppearance)) {
+            HoverAppearance[key] = `${value} !important`
+        }
+
+        const FocusAppearance = this.props.control.FocusAppearance.GetStyleObject();
+        for (const [key, value] of Object.entries(FocusAppearance)) {
+            FocusAppearance[key] = `${value} !important`
+        }
+
+        const styles = {
+            [className]: control => ({
+                ...Appearance,
+                '&:hover': { ...HoverAppearance },
+                '&:focus': { ...FocusAppearance }
+            }),
+
+        }
+
+        const jssStyle = jss.createStyleSheet(styles, { link: true }).attach();
+        //  this.props.elementProps['className'] = jssStyle.classes[className];
+        this.jssStyle = jssStyle;
+    }
+
+    protected componentWillUnmount(obj: TextFieldClass) {
+        this.jssStyle.detach();
+        jss.removeStyleSheet(this.jssStyle);
+    }
+
+    public render() {
+        const _className = `textfield-view`;
+        this.jssStyle?.update(this.props.control);
+
+        const children = this.props.children;
+
+        let className = this.props.className;
+
+        if (this.jssStyle) {
+            className = this.jssStyle.classes[_className] + ' ' + this.props.className;
+        }
+
+        delete this.props['className'];
+        delete this.props['control'];
+        delete this.props['children'];
+
+        return (
+            <InputText {...this.props} className={className}></InputText>
+        )
+    }
+}
+
+const MyInputText = (params) => {
+
+    const controller: UIFormController = bindFormController();
+    // console.log(controller);
 
 
+    if (params.obj.vp_FormField == null || controller == null) {
+        return (<TextFieldProxy  control={params.obj} {...params}> </TextFieldProxy>)
 
+    } else {
+
+        controller.register(params.obj.vp_FormField.name, params.obj.vp_FormField.rules);
+
+        // const context = useFormContext(); // retrieve all hook methods
+        // console.log(context.getFieldState('name'))
+
+        // console.log(context)
+
+        params['value'] = controller.GetValue(params.obj.vp_FormField.name);
+
+        params['onInput'] = (e) => controller.SetValue(params.obj.vp_FormField.name, e.target.value)
+
+        const fieldState = controller.GetFieldState(params.obj.vp_FormField.name);
+        if (fieldState.errors.length > 0) {
+            delete params['height']; // we do not want 100% height
+        }
+        return (
+            <div style={{ width: '100%', height: '100%' }}>
+                <TextFieldProxy  control={params.obj} {...params} />
+                {fieldState.errors.map(error => (
+                    <small className="p-error">{error}</small>
+                ))}
+
+            </div>
+        )
+    }
+}
 export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
     private inputRef: HTMLElement;
 
- /*    public get UseShadowDom(): boolean {
-        return true;
-    } */
-
-    public OnStyleCreating(obj: TextFieldClass, sb: StringBuilder): void {
-        sb.AppendLine(`
-        input:focus {
-            outline: none;
-          }
-
-         textarea:focus {
-            outline: none;
-          }
-
-          ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-            color: #C0C0C0;
-            opacity: 1; /* Firefox */
-            }
-
-            :-ms-input-placeholder { /* Internet Explorer 10-11 */
-            color: #C0C0C0;
-            }
-
-            ::-ms-input-placeholder { /* Microsoft Edge */
-            color: #C0C0C0;
-            }
-        `);
-
-        /*      obj.Appearance.Padding = '';
-             obj.Appearance.PaddingLeft = '';
-             obj.Appearance.PaddingRight = '';
-             obj.Appearance.PaddingTop = '';
-             obj.Appearance.PaddingBottom = ''; */
+     public get UseFrameStyles(): boolean {
+        return false;
     }
 
     public GenerateElement(obj: TextFieldClass): boolean {
         this.WriteStartFragment();
         return true;
     }
-    protected OnInputDidMount(obj: TextFieldClass, ref: HTMLElement): void {
-        /*    if (obj.Autofocus) {
-               this.Ref.elementRef.current.focus();
-           } */
-
-        //   ref.focus();
-    }
-
-    protected OnShadowDomDidMount(ref: any, obj: TextFieldClass): void {
-
-    }
+   
 
     public GenerateBody(obj: TextFieldClass): void {
-        const style = {};
+      /*   const style = {};
         style['width'] = '100%';
         if (obj.vp_Multiline) {
             style['height'] = obj.Appearance.Height;
         } else {
-           // style['height'] = '100%';
-        }
+           
+        } */
 
-       // style['border'] = 'solid 0px';
-       // style['border-radius'] = obj.Appearance.BorderRadius;
-       // style['background'] = obj.Appearance.Background;
-       // style['background-color'] = obj.Appearance.BackgroundColor;
-       // style['color'] = obj.Appearance.Color;
-       // style['font-family'] = obj.Appearance.FontFamily;
-       // style['font-size'] = obj.Appearance.FontSize;
-       // style['font-weight'] = obj.Appearance.FontWeight;
+        // style['border'] = 'solid 0px';
+        // style['border-radius'] = obj.Appearance.BorderRadius;
+        // style['background'] = obj.Appearance.Background;
+        // style['background-color'] = obj.Appearance.BackgroundColor;
+        // style['color'] = obj.Appearance.Color;
+        // style['font-family'] = obj.Appearance.FontFamily;
+        // style['font-size'] = obj.Appearance.FontSize;
+        // style['font-weight'] = obj.Appearance.FontWeight;
 
 
         /*      style['padding'] = obj.InputAppearance.Padding;
@@ -100,7 +174,7 @@ export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
             pressed: { scale: 0.95 }
         };
 
-        const tabIndex = obj.TabIndex;
+        const tabIndex = 0; //obj.TabIndex;
         // we dont want to put container element
         obj.TabIndex = null;
 
@@ -116,64 +190,23 @@ export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
 
         if (obj.vp_Multiline) {
             this.WriteComponent(
-                <InputTextarea style={style}
+                <InputTextarea 
                     tabIndex={tabIndex}
                     {...attributes}
                     value={obj.Value}
                     placeholder={obj.Placeholder}
-                    onComponentDidMount={(ref) => this.OnInputDidMount(obj, ref)}
                     onInput={(e) => obj.OnTextChange(e.target.value)}>
                 </InputTextarea>
             );
         } else {
 
-            const MyInputText = (params) => {
-
-                const controller: UIFormController = bindFormController();
-               // console.log(controller);
-                
-
-                if (obj.vp_FormField == null || controller == null) {
-                    return (<InputText {...params}> </InputText>)
-
-                } else {
-
-                    controller.register(obj.vp_FormField.name, obj.vp_FormField.rules);
-
-                   // const context = useFormContext(); // retrieve all hook methods
-                   // console.log(context.getFieldState('name'))
-
-                   // console.log(context)
-
-                    params['value'] = controller.GetValue(obj.vp_FormField.name);
-
-                    params['onInput'] = (e) => controller.SetValue(obj.vp_FormField.name, e.target.value)
-
-                    const fieldState = controller.GetFieldState(obj.vp_FormField.name);
-                    if (fieldState.errors.length > 0){
-                       delete params['height']; // we do not want 100% height
-                    }
-                    return (
-                        <div style={{width:'100%',height:'100%'}}>
-                            <InputText  {...params} />
-                            {fieldState.errors.map(error => (
-                                  <small className="p-error">{error}</small>
-                            ))}
-                         
-                        </div>
-                    )
-                }
-            }
-          
-
             this.WriteComponent(
                 <MyInputText
-                    style={style}
+                    obj={obj}
                     tabIndex={tabIndex}
                     {...attributes}
                     value={obj.Value}
                     placeholder={obj.Placeholder}
-                    onComponentDidMount={(ref) => this.OnInputDidMount(obj, ref)}
                     onInput={(e) => obj.OnTextChange(e.target.value)}>
                 </MyInputText>
 
@@ -222,7 +255,7 @@ export class TextFieldClass extends UIView {
         };
         return this;
     }
-    
+
     @ViewProperty()
     public vp_FormControl: Form_Control;
 
@@ -321,7 +354,7 @@ export class TextFieldClass extends UIView {
         return this;
     }
 
-  
+
 }
 
 

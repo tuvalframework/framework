@@ -443,7 +443,7 @@ export function Cache(useCache: boolean, builder: () => UIView): UIView {
     let child = null;
     if (useCache) {
         child = useMemo(() => {
-            return builder().useCache(true);
+            return builder();
         }, [])
     } else {
         child = builder();

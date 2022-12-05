@@ -11,10 +11,9 @@ export function _RecordContext(...content: UIView[]): RecordContextClass {
 
 }
 
- export function RecordContext(content: (data?: any) => UIView | Function): RecordContextClass {
+ export function UIRecordContext(content: (data?: any) => UIView | Function): RecordContextClass {
     return viewFunc(RecordContextClass, (controller, propertyBag) => {
         return new RecordContextClass().setController(controller).PropertyBag(propertyBag).setChilds(content as any)._content(content);
     });
 
 }
- 

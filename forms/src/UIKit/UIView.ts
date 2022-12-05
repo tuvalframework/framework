@@ -996,7 +996,7 @@ export class UIView implements IVirtualContainer, IControl, IRenderable {
         this.Appearance.Cursor = 'inherit';
         this.Appearance.BoxSizing = 'border-box';
 
-        this.Appearance.Border = '0 solid #e5e7eb';
+       // this.Appearance.Border = '0 solid #e5e7eb';
 
         /*   this.Appearance.WordBreak = 'break-all';
           this.Appearance.WordWrap = 'break-word'; */

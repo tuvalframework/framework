@@ -54,7 +54,7 @@ export class SecureFieldRenderer extends ControlHtmlRenderer<SecureFieldClass> {
             pressed: { scale: 0.95 }
         };
 
-        const tabIndex = obj.TabIndex;
+        const tabIndex = 0;//obj.TabIndex;
         // we dont want to put container element
         obj.TabIndex = null;
 
