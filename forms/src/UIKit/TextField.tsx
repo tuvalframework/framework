@@ -6,7 +6,7 @@ import { StringBuilder, int, is, classNames } from "@tuval/core";
 import { InputText } from './TextField/InputText';
 import { Teact } from "../windows/Forms/Components/Teact";
 import { bindFormController, UIController, UIFormController, ValidateRule } from './UIController';
-import { viewFunc } from './getView';
+import { getView, viewFunc } from './getView';
 import { motion } from '../motion';
 import { InputTextarea } from './Components/inputtextarea/InputTextarea';
 import { Form_Control, Form_Controller, useFormContext } from '../hook-form';
@@ -83,24 +83,50 @@ class TextFieldProxy extends React.Component {
             className = this.jssStyle.classes[_className] + ' ' + this.props.className;
         }
 
+        const isMultiline = this.props.control.vp_Multiline;
+
         delete this.props['className'];
         delete this.props['control'];
         delete this.props['children'];
 
-        return (
-            <InputText {...this.props} className={className}></InputText>
-        )
+        if (isMultiline) {
+            return (
+                <InputTextarea {...this.props} className={className}></InputTextarea>
+            )
+        } else {
+            return (
+                <InputText {...this.props} className={className}></InputText>
+            )
+        }
     }
 }
 
 const MyInputText = (params) => {
+
+    const getLabel = () => {
+        if (is.function(params.obj.vp_LabelTemplate)) {
+            const view: any = getView(params.obj instanceof UIController ? params.obj : (params.obj as any).controller, params.obj.vp_LabelTemplate(params.obj.vp_Label));
+            if (view != null) {
+                return view.Render()
+            }
+        } else {
+            return (
+                <label className="block">{params.obj.vp_Label}</label>
+            )
+        }
+    }
 
     const controller: UIFormController = bindFormController();
     // console.log(controller);
 
 
     if (params.obj.vp_FormField == null || controller == null) {
-        return (<TextFieldProxy  control={params.obj} {...params}> </TextFieldProxy>)
+        return (
+            <Fragment>
+                {getLabel()}
+                <TextFieldProxy control={params.obj} {...params}> </TextFieldProxy>
+            </Fragment>
+        )
 
     } else {
 
@@ -120,8 +146,9 @@ const MyInputText = (params) => {
             delete params['height']; // we do not want 100% height
         }
         return (
-            <div style={{ width: '100%', height: '100%' }}>
-                <TextFieldProxy  control={params.obj} {...params} />
+            <div style={{ width: '100%' }}>
+                {getLabel()}
+                <TextFieldProxy control={params.obj} {...params} />
                 {fieldState.errors.map(error => (
                     <small className="p-error">{error}</small>
                 ))}
@@ -133,7 +160,7 @@ const MyInputText = (params) => {
 export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
     private inputRef: HTMLElement;
 
-     public get UseFrameStyles(): boolean {
+    public get UseFrameStyles(): boolean {
         return false;
     }
 
@@ -141,16 +168,16 @@ export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
         this.WriteStartFragment();
         return true;
     }
-   
+
 
     public GenerateBody(obj: TextFieldClass): void {
-      /*   const style = {};
-        style['width'] = '100%';
-        if (obj.vp_Multiline) {
-            style['height'] = obj.Appearance.Height;
-        } else {
-           
-        } */
+        /*   const style = {};
+          style['width'] = '100%';
+          if (obj.vp_Multiline) {
+              style['height'] = obj.Appearance.Height;
+          } else {
+             
+          } */
 
         // style['border'] = 'solid 0px';
         // style['border-radius'] = obj.Appearance.BorderRadius;
@@ -188,9 +215,9 @@ export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
         }
 
 
-        if (obj.vp_Multiline) {
+        /* if (obj.vp_Multiline) {
             this.WriteComponent(
-                <InputTextarea 
+                <InputTextarea
                     tabIndex={tabIndex}
                     {...attributes}
                     value={obj.Value}
@@ -198,22 +225,22 @@ export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
                     onInput={(e) => obj.OnTextChange(e.target.value)}>
                 </InputTextarea>
             );
-        } else {
+        } else { */
 
-            this.WriteComponent(
-                <MyInputText
-                    obj={obj}
-                    tabIndex={tabIndex}
-                    {...attributes}
-                    value={obj.Value}
-                    placeholder={obj.Placeholder}
-                    onInput={(e) => obj.OnTextChange(e.target.value)}>
-                </MyInputText>
+        this.WriteComponent(
+            <MyInputText
+                obj={obj}
+                tabIndex={tabIndex}
+                {...attributes}
+                value={obj.Value}
+                placeholder={obj.Placeholder}
+                onInput={(e) => obj.OnTextChange(e.target.value)}>
+            </MyInputText>
 
 
-            );
+        );
 
-        }
+        //}
         /*  this.WriteAttrVal('id', 'test');
          this.WriteAttrVal('value', obj.Value);
          this.WriteAttrVal('placeholder', obj.Placeholder);
@@ -287,6 +314,20 @@ export class TextFieldClass extends UIView {
 
     @ViewProperty() vp_myLostFocus: Function;
 
+    @ViewProperty()
+    public vp_Label: string;
+    public label(value: string): this {
+        this.vp_Label = value;
+        return this;
+    }
+
+    @ViewProperty()
+    public vp_LabelTemplate: (label: string) => UIView;
+    public labelTemplate(value: (label: string) => UIView): this {
+        this.vp_LabelTemplate = value;
+        return this;
+    }
+
     public setController(controller: UIController): this {
         super.setController(controller);
         // Default renderer
@@ -353,8 +394,6 @@ export class TextFieldClass extends UIView {
         this.vp_myLostFocus = func;
         return this;
     }
-
-
 }
 
 
