@@ -37,27 +37,32 @@ class TextFieldProxy extends React.Component {
           FocusAppearance: AppearanceObject;
           BeforeAppearance:AppearanceObject; */
 
-        const Appearance = this.props.control.Appearance.GetStyleObject();
-        for (const [key, value] of Object.entries(Appearance)) {
-            Appearance[key] = `${value} !important`
-        }
 
-        const HoverAppearance = this.props.control.HoverAppearance.GetStyleObject();
-        for (const [key, value] of Object.entries(HoverAppearance)) {
-            HoverAppearance[key] = `${value} !important`
-        }
-
-        const FocusAppearance = this.props.control.FocusAppearance.GetStyleObject();
-        for (const [key, value] of Object.entries(FocusAppearance)) {
-            FocusAppearance[key] = `${value} !important`
-        }
 
         const styles = {
-            [className]: control => ({
-                ...Appearance,
-                '&:hover': { ...HoverAppearance },
-                '&:focus': { ...FocusAppearance }
-            }),
+            [className]: control => {
+
+                const Appearance = this.props.control.Appearance.GetStyleObject();
+                for (const [key, value] of Object.entries(Appearance)) {
+                    Appearance[key] = `${value} !important`
+                }
+        
+                const HoverAppearance = this.props.control.HoverAppearance.GetStyleObject();
+                for (const [key, value] of Object.entries(HoverAppearance)) {
+                    HoverAppearance[key] = `${value} !important`
+                }
+        
+                const FocusAppearance = this.props.control.FocusAppearance.GetStyleObject();
+                for (const [key, value] of Object.entries(FocusAppearance)) {
+                    FocusAppearance[key] = `${value} !important`
+                }
+                
+                return {
+                    ...Appearance,
+                    '&:hover': { ...HoverAppearance },
+                    '&:focus': { ...FocusAppearance }
+                }
+            },
 
         }
 
@@ -354,18 +359,18 @@ export class TextFieldClass extends UIView {
         this.OnTextChange = () => { };
     }
 
-    public OnAppearanceChanged(name: string): void {
-        if (name === 'Padding') {
-            this.InputAppearance.Padding = this.Appearance.Padding;
-            this.Appearance.Padding = '';
-        }
-        if (name === 'PaddingLeft') {
-            this.InputAppearance.PaddingLeft = this.Appearance.PaddingLeft;
-        }
-        if (name === 'PaddingRight') {
-            this.InputAppearance.PaddingRight = this.Appearance.PaddingRight;
-        }
-    }
+    /*     public OnAppearanceChanged(name: string): void {
+            if (name === 'Padding') {
+                this.InputAppearance.Padding = this.Appearance.Padding;
+                this.Appearance.Padding = '';
+            }
+            if (name === 'PaddingLeft') {
+                this.InputAppearance.PaddingLeft = this.Appearance.PaddingLeft;
+            }
+            if (name === 'PaddingRight') {
+                this.InputAppearance.PaddingRight = this.Appearance.PaddingRight;
+            }
+        } */
 
     public onTextChange(value: (text: string) => void): this {
         this.OnTextChange = value;
