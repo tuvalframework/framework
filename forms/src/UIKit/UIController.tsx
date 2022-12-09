@@ -317,7 +317,7 @@ export class UIFormController extends UIController {
     @State()
     private isValid: boolean;
 
-    private validateForm() {
+    public validateForm(): any {
 
         //this.BeginUpdate();
         // let errors = [];
@@ -345,7 +345,8 @@ export class UIFormController extends UIController {
                 data[key] = this.formData[key].value;
             }
 
-            this.OnSubmit(data);
+            return [true, data];
+            //this.OnSubmit(data);
         } else {
             for (let key in this.formData) {
                 const field = this.formData[key];
@@ -355,13 +356,16 @@ export class UIFormController extends UIController {
             this.isValid = false;
         }
 
+        return [false, null]
         //this.EndUpdate();
     }
     protected OnSubmit(data) { }
 
     public Submit() {
-
-        this.validateForm();
+        const [isValid, data] = this.validateForm();
+        if (isValid) {
+            this.OnSubmit(data);
+        }
     }
 
     public ResetForm() { }

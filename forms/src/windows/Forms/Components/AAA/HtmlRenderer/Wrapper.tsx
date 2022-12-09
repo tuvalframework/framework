@@ -4,6 +4,7 @@ import { Teact } from "../../Teact";
 import { motion } from '../../../../../motion/render/dom/motion';
 import { HtmlRenderer } from "../..";
 import { createMotionProxy } from "../../../../../motion/render/dom/motion-proxy";
+import { css } from '@emotion/css'
 
 export class Wrapper extends Component {
 
@@ -47,9 +48,9 @@ export class Wrapper extends Component {
 
             }
 
-            const jssStyle = jss.createStyleSheet(styles, { link: true }).attach();
-            //  this.props.elementProps['className'] = jssStyle.classes[className];
-            this.jssStyle = jssStyle;
+            //const jssStyle = jss.createStyleSheet(styles, { link: true }).attach();
+
+            //this.jssStyle = jssStyle;
         }
         this.props.OnComponentWillMount();
     }
@@ -68,8 +69,8 @@ export class Wrapper extends Component {
         const renderer: HtmlRenderer<any> = this.props.renderer;
 
         if (renderer.UseFrameStyles) {
-            this.jssStyle.detach();
-            jss.removeStyleSheet(this.jssStyle);
+            //this.jssStyle.detach();
+            //jss.removeStyleSheet(this.jssStyle);
             this.props.OnComponentWillUnmount();
         }
     }
@@ -84,21 +85,28 @@ export class Wrapper extends Component {
 
         if (renderer.UseFrameStyles) {
             className = `tuval-view`;
-            this.jssStyle.update(this.props.control);
-            className = this.jssStyle.classes[className];
+            //this.jssStyle.update(this.props.control);
+            //className = this.jssStyle.classes[className];
         }
+
+        const _className = css`
+                            ${this.props.control.Appearance.ToString()}
+                            ${this.props.control.HoverAppearance.IsEmpty ? '' :  '&:hover { ' +  this.props.control.HoverAppearance.ToString() + ' }'}
+                            ${this.props.control.ActiveAppearance.IsEmpty ? '' :  '&:active { ' +  this.props.control.ActiveAppearance.ToString() + ' }'}
+                            ${this.props.control.FocusAppearance.IsEmpty ? '' :  '&:focus { ' +  this.props.control.FocusAppearance.ToString() + ' }'}
+                        `;
 
         if (renderer.UseFrameStyles) {
 
             if (this.props.renderAsAnimated) {
                 return (
-                    <motion.div view={this.props.control.constructor.name} className={className} {...this.props.elementProps}>
+                    <motion.div view={this.props.control.constructor.name} className={_className} {...this.props.elementProps}>
                         {this.props.children}
                     </motion.div>
                 );
             } else {
                 return (
-                    <div view={this.props.control.constructor.name} className={className} {...this.props.elementProps}>
+                    <div view={this.props.control.constructor.name} className={_className} {...this.props.elementProps}>
                         {this.props.children}
                     </div>
                 );

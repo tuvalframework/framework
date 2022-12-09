@@ -1,6 +1,6 @@
 {
     "name": "@tuval/forms",
-    "version": "0.0.416",
+    "version": "0.0.430",
     "description": "",
     "keywords": [],
     "main": "index.js",
@@ -104,6 +104,7 @@
         ]
     },
     "devDependencies": {
+        "@emotion/css": "^11.10.5",
         "@tuval/cg": "^0.0.16",
         "@tuval/core": "^0.0.92",
         "@tuval/graphics": "^0.0.10",

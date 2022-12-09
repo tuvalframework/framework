@@ -56,5 +56,6 @@ export * from './Theme';
 
 export * from './DataContext';
 export * from './RecordContext';
+export * from './CreateContext';
 
 export { getView, viewFunc } from './getView';
