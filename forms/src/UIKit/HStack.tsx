@@ -207,8 +207,8 @@ export class HStackClass extends UIView {
         this.Appearance.FlexDirection = 'row';
 
         this.Appearance.Display = 'flex';
-        this.Appearance.Width = '100%';
-        this.Appearance.Height = '100%';
+        this.Appearance.MinWidth = this.Appearance.MaxWidth = this.Appearance.Width = '100%';
+        this.Appearance.MinHeight = this.Appearance.MaxHeight =  this.Appearance.Height = '100%';
         this.Appearance.AlignContent = 'center';
         this.Appearance.JustifyContent = 'center';
 

@@ -1,4 +1,4 @@
-import { UIController } from "../UIController";
+import { UIController, ValidateRule } from "../UIController";
 import { UIView, ViewProperty } from "../UIView";
 import { DropDownRenderer } from './DropDownRenderer';
 
@@ -6,13 +6,14 @@ export class DropDownClass extends UIView {
 
 
     @ViewProperty() vp_model: any[];
+    @ViewProperty() vp_fields: {text: string, value: string};
     @ViewProperty() vp_itemTemplate: (option: any) => UIView | Function;
     @ViewProperty() vp_emptyTemplate: () => UIView | Function;
     @ViewProperty() vp_selectedItemTemplate: (option: any) => UIView | Function;
     @ViewProperty() vp_onSelected: Function;
     @ViewProperty() vp_value: any;
-    @ViewProperty() vp_optionValue: string;
-    @ViewProperty() vp_optionLabel: string;
+    //@ViewProperty() vp_optionValue: string;
+    //@ViewProperty() vp_optionLabel: string;
     @ViewProperty() vp_PlaceHolder: string;
 
     public setController(controller: UIController): this {
@@ -57,19 +58,37 @@ export class DropDownClass extends UIView {
         this.vp_value = value;
         return this;
     }
-    public optionValue(value: string): this {
-        if (this.vp_optionLabel == null) {
-            this.vp_optionLabel = value;
-        }
-        this.vp_optionValue = value;
+    public fields(value: {text: string, value: string}): this {
+        this.vp_fields = value;
         return this;
     }
-    public optionLabel(value: string): this {
-        this.vp_optionLabel = value;
-        return this;
-    }
+   
     public placeholder(value: string): this {
         this.vp_PlaceHolder = value;
+        return this;
+    }
+
+    @ViewProperty()
+    public vp_FormField: { name: string, rules: ValidateRule[] };
+    public formField(name: string, rules: ValidateRule[]): this {
+        this.vp_FormField = {
+            name: name,
+            rules: rules
+        };
+        return this;
+    }
+
+    @ViewProperty()
+    public vp_Label: string;
+    public label(value: string): this {
+        this.vp_Label = value;
+        return this;
+    }
+
+    @ViewProperty()
+    public vp_LabelTemplate: (label: string) => UIView;
+    public labelTemplate(value: (label: string) => UIView): this {
+        this.vp_LabelTemplate = value;
         return this;
     }
 }

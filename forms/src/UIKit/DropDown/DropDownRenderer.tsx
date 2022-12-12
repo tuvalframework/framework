@@ -7,43 +7,74 @@ import { Dropdown } from '../Components/dropdown/Dropdown';
 import { DomHandler } from '../../windows/Forms/Components/DomHandler';
 import { IRenderable } from '../IView';
 import { getView } from '../getView';
-import { UIController } from '../UIController';
+import { bindFormController, UIController, UIFormController } from '../UIController';
 import { jss } from '../../jss/jss';
+import React, { createElement, Fragment } from "../../preact/compat";
 
 
-DomHandler.addCssToDocument(require('../Components/dropdown/DropDown.css'));
-DomHandler.addCssToDocument(require('../Components/dropdown/Thema.css'));
+
+const MyDropDown = (params) => {
+
+    const getLabel = () => {
+        if (is.function(params.obj.vp_LabelTemplate)) {
+            const view: any = getView(params.obj instanceof UIController ? params.obj : (params.obj as any).controller, params.obj.vp_LabelTemplate(params.obj.vp_Label));
+            if (view != null) {
+                return view.Render()
+            }
+        } else {
+            return (
+                <label className="block">{params.obj.vp_Label}</label>
+            )
+        }
+    }
+
+    const controller: UIFormController = bindFormController();
+    // console.log(controller);
+
+
+    if (params.obj.vp_FormField == null || controller == null) {
+        return (
+            <Fragment>
+                {getLabel()}
+                <Dropdown {...params}> </Dropdown>
+            </Fragment>
+        )
+
+    } else {
+
+        controller.register(params.obj.vp_FormField.name, params.obj.vp_FormField.rules);
+
+        // const context = useFormContext(); // retrieve all hook methods
+        // console.log(context.getFieldState('name'))
+
+        // console.log(context)
+
+        params['value'] = controller.GetValue(params.obj.vp_FormField.name);
+
+        params['onChange'] = (e) => controller.SetValue(params.obj.vp_FormField.name, e.target.value)
+
+        const fieldState = controller.GetFieldState(params.obj.vp_FormField.name);
+        if (fieldState.errors.length > 0) {
+            delete params['height']; // we do not want 100% height
+        }
+        return (
+            <div style={{ width: '100%' }}>
+                {getLabel()}
+                <Dropdown  {...params} />
+                {fieldState.errors.map(error => (
+                    <small className="p-error">{error}</small>
+                ))}
+
+            </div>
+        )
+    }
+}
 
 export class DropDownRenderer extends ControlHtmlRenderer<DropDownClass> {
     shadowDom: any;
     protected menu: any;
 
-    public override GetCustomJss(): Object {
-        return {
-            '&.p-dropdown::before': {
-                borderBottom: '1px solid rgba(0, 0, 0, 0.42)',
-                left: 0,
-                bottom: 0,
-                content: " ",
-                position: 'absolute',
-                right: 0,
-                transition: 'border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-                pointerEvents: 'none'
-            },
-            '&.p-dropdown::after': {
-                borderBottom: '2px solid rgb(115, 82, 199)',
-                left: 0,
-                bottom: 0,
-                content: "",
-                position: 'absolute',
-                right: 0,
-                transform: 'scaleX(0)',
-                transition: 'transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms',
-                pointerEvents: 'none'
-            },
 
-        }
-    }
 
     public GenerateElement(obj: DropDownClass): boolean {
         this.WriteStartFragment();
@@ -117,12 +148,13 @@ export class DropDownRenderer extends ControlHtmlRenderer<DropDownClass> {
 
         this.WriteComponent(
 
-            <Dropdown
+            <MyDropDown
+                obj={obj}
                 onFocus={(e) => is.function(obj.vp_SetFocus) ? obj.vp_SetFocus(e) : void 0}
                 onBlur={(e) => is.function(obj.vp_KillFocus) ? obj.vp_KillFocus(e) : void 0}
                 style={style}
-                optionLabel={obj.vp_optionLabel}
-                optionValue={obj.vp_optionValue}
+                optionLabel={obj.vp_fields.text}
+                optionValue={obj.vp_fields.value}
                 valueTemplate={selectedTemplate}
                 itemTemplate={template}
                 emptyMessage={emptyTemplate()}
