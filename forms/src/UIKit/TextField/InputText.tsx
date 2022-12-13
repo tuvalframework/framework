@@ -91,6 +91,8 @@ export const InputText:(props: any/* InputTextProps */) => any = React.memo(Reac
         'p-filled': isFilled
     } as any, props.className);
 
+    console.log(otherProps);
+    
     return (
         <Fragment>
             <input ref={elementRef} {...otherProps} className={className} onInput={onInput} onKeyPress={onKeyPress} onPaste={onPaste} />

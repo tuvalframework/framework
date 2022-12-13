@@ -141,7 +141,7 @@ export class DropDownRenderer extends ControlHtmlRenderer<DropDownClass> {
 
         const style = {};
         style['width'] = '100%';
-        style['height'] = '100%';
+       // style['height'] = '100%';
         style['backgroundColor'] = obj.Appearance.BackgroundColor;
         style['background'] = obj.Appearance.Background;
         style['color'] = obj.Appearance.Color;

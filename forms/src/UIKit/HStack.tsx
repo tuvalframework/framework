@@ -18,9 +18,9 @@ import { Tooltip } from './Components/tooltip/Tooltip';
 
 export class HStackRenderer extends ControlHtmlRenderer<HStackClass> {
     public ChildrenCreating: Event<any> = new Event();
-   /*  public get UseShadowDom(): boolean {
-        return true;
-    } */
+    /*  public get UseShadowDom(): boolean {
+         return true;
+     } */
     public OnStyleCreating(obj: HStackClass, sb: StringBuilder): void {
         sb.AppendLine(`
         /* total width */
@@ -207,14 +207,14 @@ export class HStackClass extends UIView {
         this.Appearance.FlexDirection = 'row';
 
         this.Appearance.Display = 'flex';
-        this.Appearance.MinWidth = this.Appearance.MaxWidth = this.Appearance.Width = '100%';
-        this.Appearance.MinHeight = this.Appearance.MaxHeight =  this.Appearance.Height = '100%';
+        this.Appearance.Width = '100%';
+        this.Appearance.Height = '100%';
         this.Appearance.AlignContent = 'center';
         this.Appearance.JustifyContent = 'center';
 
         this.Appearance.AlignItems = 'center';
         this.Appearance.JustifyItems = 'center';
-      //  this.Appearance.Transition = '200ms cubic-bezier(0, 0, 0.2, 1) 0ms';
+        //  this.Appearance.Transition = '200ms cubic-bezier(0, 0, 0.2, 1) 0ms';
     }
 
     Controls: ControlCollection<any, any>;

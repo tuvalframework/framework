@@ -46,17 +46,17 @@ class TextFieldProxy extends React.Component {
                 for (const [key, value] of Object.entries(Appearance)) {
                     Appearance[key] = `${value} !important`
                 }
-        
+
                 const HoverAppearance = this.props.control.HoverAppearance.GetStyleObject();
                 for (const [key, value] of Object.entries(HoverAppearance)) {
                     HoverAppearance[key] = `${value} !important`
                 }
-        
+
                 const FocusAppearance = this.props.control.FocusAppearance.GetStyleObject();
                 for (const [key, value] of Object.entries(FocusAppearance)) {
                     FocusAppearance[key] = `${value} !important`
                 }
-                
+
                 return {
                     ...Appearance,
                     '&:hover': { ...HoverAppearance },
@@ -164,6 +164,28 @@ const MyInputText = (params) => {
 }
 export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
     private inputRef: HTMLElement;
+    refs: any;
+    timeoutsDates: any;
+    timeouts: any;
+
+    constructor(props) {
+
+        super(props);
+
+
+
+        const date = Date.now();
+
+        this.timeoutsDates = {
+            onChange: date,
+            onKeyUp: date,
+            onKeyDown: date,
+            onKeyPress: date
+        };
+
+        this.timeouts = {};
+    }
+
 
     public get UseFrameStyles(): boolean {
         return false;
@@ -173,32 +195,28 @@ export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
         this.WriteStartFragment();
         return true;
     }
+    public delayedEvent(e, func, type) {
+        e.persist();
+
+        const self = this;
+        const now = Date.now();
+        const timeout =  200;
+
+        if (now - this.timeoutsDates[type] < timeout) {
+            clearTimeout(this.timeouts[type]);
+        }
+
+        this.timeoutsDates[type] = now;
+
+        self.setState({ isEmpty: e.currentTarget.value !== '' });
+
+        this.timeouts[type] = setTimeout(function () {
+            func(e);
+        }, timeout);
+    }
 
 
     public GenerateBody(obj: TextFieldClass): void {
-        /*   const style = {};
-          style['width'] = '100%';
-          if (obj.vp_Multiline) {
-              style['height'] = obj.Appearance.Height;
-          } else {
-             
-          } */
-
-        // style['border'] = 'solid 0px';
-        // style['border-radius'] = obj.Appearance.BorderRadius;
-        // style['background'] = obj.Appearance.Background;
-        // style['background-color'] = obj.Appearance.BackgroundColor;
-        // style['color'] = obj.Appearance.Color;
-        // style['font-family'] = obj.Appearance.FontFamily;
-        // style['font-size'] = obj.Appearance.FontSize;
-        // style['font-weight'] = obj.Appearance.FontWeight;
-
-
-        /*      style['padding'] = obj.InputAppearance.Padding;
-             style['padding-left'] = obj.InputAppearance.PaddingLeft;
-             style['padding-right'] = obj.InputAppearance.PaddingRight;
-             style['padding-top'] = obj.InputAppearance.PaddingTop;
-             style['padding-bottom'] = obj.InputAppearance.PaddingBottom; */
 
         const button = {
             rest: { scale: 1 },
@@ -219,19 +237,6 @@ export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
             attributes['onfocusout'] = (e) => (obj.vp_myLostFocus(e));
         }
 
-
-        /* if (obj.vp_Multiline) {
-            this.WriteComponent(
-                <InputTextarea
-                    tabIndex={tabIndex}
-                    {...attributes}
-                    value={obj.Value}
-                    placeholder={obj.Placeholder}
-                    onInput={(e) => obj.OnTextChange(e.target.value)}>
-                </InputTextarea>
-            );
-        } else { */
-
         this.WriteComponent(
             <MyInputText
                 obj={obj}
@@ -239,7 +244,7 @@ export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
                 {...attributes}
                 value={obj.Value}
                 placeholder={obj.Placeholder}
-                onInput={(e) => obj.OnTextChange(e.target.value)}>
+                onInput={(e) => this.delayedEvent(e, (e) => obj.OnTextChange(e.target.value), 'onInput')}>
             </MyInputText>
 
 

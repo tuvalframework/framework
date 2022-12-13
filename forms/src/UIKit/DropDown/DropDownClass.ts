@@ -30,7 +30,7 @@ export class DropDownClass extends UIView {
         super();
 
         this.Appearance.Width = '100%';
-        this.Appearance.Height = '100%';
+       // this.Appearance.Height = '100%';
     }
 
     public itemTemplate(value: (option: any) => UIView | Function): this {
