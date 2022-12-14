@@ -262,6 +262,10 @@ export function diff(
 
 		if ((tmp = options.diffed)) tmp(newVNode);
 	} catch (e) {
+		console.group('Error');
+		console.log(e);
+		console.groupEnd();
+
 		newVNode._original = null;
 		// if hydrating or creating initial tree, bailout preserves DOM:
 		if (isHydrating || excessDomChildren != null) {

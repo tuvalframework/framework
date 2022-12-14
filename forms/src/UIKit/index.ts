@@ -58,5 +58,6 @@ export * from './Theme';
 export * from './DataContext';
 export * from './RecordContext';
 export * from './CreateContext';
+export * from './UpdateContext';
 
-export { getView, viewFunc } from './getView';
+export { getView, viewFunc, Template } from './getView';

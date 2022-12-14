@@ -31,17 +31,17 @@ export function getView(controller: UIController, view: any): UIView | UIControl
             currentController = currentController.ParentController;
         }
 
-      
-            const theme = controller?.Theme;
-            const root = view({ ...clone, controller, theme });
-            if (isViewable(root)) {
-                return root;
-            } else if (typeof root === 'function') {
-                return getView(controller, root);
-            } else {
-                throw new Error('olmaz.')
-            }
-       
+
+        const theme = controller?.Theme;
+        const root = view({ ...clone, controller, theme });
+        if (isViewable(root)) {
+            return root;
+        } else if (typeof root === 'function') {
+            return getView(controller, root);
+        } else {
+            throw new Error('olmaz.')
+        }
+
     }
 }
 
@@ -78,4 +78,13 @@ export function viewFunc(sourceClass: any, viewCreator: Function) {
     }
 
     return func as any;
+}
+
+export function Template(_view: UIView | Function) {
+    const vNodes: any[] = [];
+    const view = getView(null, _view);
+    if (view != null) {
+        vNodes.push(view.Render());
+    }
+    return vNodes;
 }
