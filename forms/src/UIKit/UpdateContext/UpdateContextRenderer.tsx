@@ -19,11 +19,11 @@ import { useGetOne } from "../../query/dataProvider/useGetOne";
 
 const query = new QueryClient();
 
-const CreateProxy = ({ renderer, obj, handleUpdate, isLoading, isSuccess }) => {
+const CreateProxy = ({ renderer, obj, handleUpdate, data, isLoading, isSuccess }) => {
     // console.log(_useDataProvider())
     return (
         <Fragment>
-            {renderer.CreateControls(obj, handleUpdate, isLoading, isSuccess)}
+            {renderer.CreateControls(obj, handleUpdate, data, isLoading, isSuccess)}
         </Fragment>
     )
 }
@@ -42,13 +42,30 @@ export class UpdateContextRenderer extends ControlHtmlRenderer<UpdateContextClas
 
     public GenerateBody(obj: UpdateContextClass): void {
 
+        debugger;
         const formController = bindFormController();
 
-        const { prevData, _isLoading, error } = useGetOne(obj.vp_Resource, obj.vp_Filter);
+        const getOneResult = useGetOne(obj.vp_Resource, obj.vp_Filter, {
+            onSuccess: (data) => {
+                if (!formController.IsLoaded) {
+                    for (const key in data) {
+                        formController.SetValue(key, data[key], false);
+                    }
+                    console.log('form loaded.')
+                    formController.IsLoaded = true;
+                }
+            }
+        });
 
-        if (_isLoading) {
+        if (getOneResult.isLoading) {
             this.WriteComponent(
                 <div>Loading...</div>
+            );
+        }
+
+        if (getOneResult.error) {
+            this.WriteComponent(
+                <div>Error</div>
             );
         }
 
@@ -57,7 +74,7 @@ export class UpdateContextRenderer extends ControlHtmlRenderer<UpdateContextClas
         const handleUpdate = () => {
             const [isValid, formData] = formController.validateForm();
             if (isValid) {
-                update(obj.vp_Resource, { id: prevData.id, data: formData, previousData: prevData })
+                update(obj.vp_Resource, { id: getOneResult.data.id, data: formData, previousData: getOneResult.data })
             }
         }
 
@@ -71,16 +88,16 @@ export class UpdateContextRenderer extends ControlHtmlRenderer<UpdateContextClas
 
         this.WriteComponent(
 
-            <CreateProxy renderer={this} obj={obj} handleUpdate={handleUpdate} isLoading={isLoading} isSuccess={isSuccess} ></CreateProxy>
+            <CreateProxy renderer={this} obj={obj} data={getOneResult.data} handleUpdate={handleUpdate} isLoading={isLoading} isSuccess={isSuccess} ></CreateProxy>
 
         );
     }
 
-    protected CreateControls(obj: UpdateContextClass, handleUpdate: any, isLoading: boolean, isSuccess: boolean): any[] {
+    protected CreateControls(obj: UpdateContextClass, handleUpdate: any, data: any, isLoading: boolean, isSuccess: boolean): any[] {
         const vNodes: any[] = [];
 
         if (obj.vp_Content != null) {
-            const view = getView(obj instanceof UIController ? obj : (obj as any).controller, obj.vp_Content(handleUpdate, isLoading, isSuccess));
+            const view = getView(obj instanceof UIController ? obj : (obj as any).controller, obj.vp_Content(handleUpdate, data, isLoading, isSuccess));
             if (view != null) {
                 vNodes.push(view.Render());
             }

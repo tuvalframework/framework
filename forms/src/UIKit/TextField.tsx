@@ -144,7 +144,9 @@ const MyInputText = (params) => {
 
         params['value'] = controller.GetValue(params.obj.vp_FormField.name);
 
-        params['onInput'] = (e) => controller.SetValue(params.obj.vp_FormField.name, e.target.value)
+        params['onInput'] = (e) => params.renderer.delayedEvent(e, (e) => controller.SetValue(params.obj.vp_FormField.name, e.target.value), 'onInput')
+        
+   
 
         const fieldState = controller.GetFieldState(params.obj.vp_FormField.name);
         if (fieldState.errors.length > 0) {
@@ -200,7 +202,7 @@ export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
 
         const self = this;
         const now = Date.now();
-        const timeout =  200;
+        const timeout =  400;
 
         if (now - this.timeoutsDates[type] < timeout) {
             clearTimeout(this.timeouts[type]);
@@ -240,6 +242,7 @@ export class TextFieldRenderer extends ControlHtmlRenderer<TextFieldClass> {
         this.WriteComponent(
             <MyInputText
                 obj={obj}
+                renderer = {this}
                 tabIndex={tabIndex}
                 {...attributes}
                 value={obj.Value}

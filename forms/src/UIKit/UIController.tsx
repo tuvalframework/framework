@@ -317,6 +317,9 @@ export class UIFormController extends UIController {
     @State()
     private isValid: boolean;
 
+    @State()
+    public IsLoaded: boolean;
+
     public validateForm(): any {
 
         //this.BeginUpdate();
@@ -372,7 +375,7 @@ export class UIFormController extends UIController {
 
     public ClearErrors() { }
 
-    public SetValue(name: string, value: any) {
+    public SetValue(name: string, value: any, silent: boolean = false) {
         if (name != null) {
             const fieldName = name;
 
@@ -382,7 +385,9 @@ export class UIFormController extends UIController {
             const fieldInfo = this.formData[fieldName];
             fieldInfo.value = value;
 
-            this.formData = { ...this.formData };
+            if (!silent) {
+                this.formData = { ...this.formData };
+            }
         }
     }
 
