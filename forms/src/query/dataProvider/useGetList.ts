@@ -2,6 +2,7 @@ import React, { createElement, Fragment } from "../../preact/compat";
 import { Teact } from "../../windows/Forms/Components/Teact";
 import { useQueryClient } from "../tuval/QueryClientProvider";
 import { useQuery } from "../tuval/useQuery";
+import { GetListParams } from "./types";
 
 
 
@@ -51,7 +52,7 @@ import { useDataProvider } from './useDataProvider';
  */
 export const useGetList = (
     resource: string,
-    params: Partial<any> = {},
+    params: Partial<GetListParams> = {},
     options?: any
 ): any => {
     const {

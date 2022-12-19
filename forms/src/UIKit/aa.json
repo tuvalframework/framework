@@ -1,0 +1,47 @@
+{
+    "title": "BrokerCreate",
+    "type": "object",
+    "properties": {
+        "organization_id": {
+            "title": "Organization Id",
+            "type": "string"
+        },
+        "broker_qualified_name": {
+            "title": "Broker Qualified Name",
+            "type": "string"
+        },
+        "broker_display_name": {
+            "title": "Broker Display Name",
+            "type": "string"
+        },
+        "broker_link": {
+            "title": "Broker Link",
+            "type": "string"
+        },
+        "broker_short_description": {
+            "title": "Broker Short Description",
+            "type": "string"
+        },
+        "broker_full_description": {
+            "title": "Broker Full Description",
+            "type": "string"
+        },
+        "icon_link": {
+            "title": "Icon Link",
+            "type": "string"
+        },
+        "broker_vendor": {
+            "title": "Broker Vendor",
+            "type": "string"
+        },
+        "free_or_paid": {
+            "title": "Free Or Paid",
+            "type": "string"
+        }
+    },
+    "required": [
+        "organization_id",
+        "broker_qualified_name",
+        "broker_display_name"
+    ]
+}
