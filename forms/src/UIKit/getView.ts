@@ -1,3 +1,4 @@
+import { is } from "@tuval/core";
 import { Control } from "../windows/Forms/Components/AAA/Control";
 import { contextMap } from "./contextMap";
 import { UIController } from "./UIController";
@@ -33,6 +34,10 @@ export function getView(controller: UIController, view: any): UIView | UIControl
 
 
         const theme = controller?.Theme;
+        if(!is.function(view)) { // && ile kullanimlarda view false gelebilir.
+            return null;
+        }
+        
         const root = view({ ...clone, controller, theme });
         if (isViewable(root)) {
             return root;
