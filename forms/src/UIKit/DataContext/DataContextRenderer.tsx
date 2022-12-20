@@ -15,7 +15,13 @@ import { IRenderable } from "../IView";
 import { UIController } from "../UIController";
 import { DataContextClass } from "./DataContextClass";
 
-const query = new QueryClient();
+const query = new QueryClient({
+    defaultOptions: {
+        queries: {
+            staleTime: 5 * 60 * 1000, // 5 minutes
+        },
+    },
+});
 
 const DataProxy = ({ renderer, obj }) => {
     // console.log(_useDataProvider())
@@ -56,7 +62,7 @@ export class DataContextRenderer extends ControlHtmlRenderer<DataContextClass> {
         this.WriteComponent(
             <DataProviderContext.Provider value={finalDataProvider}>
                 <QueryClientProvider client={query}>
-                      <DataProxy renderer={this} obj={obj}></DataProxy> 
+                    <DataProxy renderer={this} obj={obj}></DataProxy>
                 </QueryClientProvider>
             </DataProviderContext.Provider>
 

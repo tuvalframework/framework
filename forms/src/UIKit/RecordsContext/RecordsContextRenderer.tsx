@@ -45,11 +45,11 @@ export class RecordsContextRenderer extends ControlHtmlRenderer<RecordsContextCl
             filter: obj.vp_Filter
         });
 
-        if (isLoading) {
-            this.WriteComponent(
-                <div>Loading...</div>
-            );
-        }
+        /*  if (isLoading) {
+             this.WriteComponent(
+                 <div>Loading...</div>
+             );
+         } */
 
         this.WriteComponent(
             <RecordContextProvider value={data}>
@@ -62,7 +62,7 @@ export class RecordsContextRenderer extends ControlHtmlRenderer<RecordsContextCl
         const vNodes: any[] = [];
 
         if (obj.vp_Content != null) {
-            const view = getView(obj instanceof UIController ? obj : (obj as any).controller, obj.vp_Content(data, total, isLoading, error, refetch));
+            const view = getView(obj instanceof UIController ? obj : (obj as any).controller, obj.vp_Content({ data, isLoading, total, error, refetch }));
             if (view != null) {
                 vNodes.push(view.Render());
             }

@@ -17,19 +17,19 @@ import { RecordContextClass } from "./RecordContextClass";
 
 const query = new QueryClient();
 
-const RecordProxy = ({ renderer, obj, data }) => {
+const RecordProxy = ({ renderer, obj, data, isLoading, error }) => {
     // console.log(_useDataProvider())
     return (
         <Fragment>
-            {renderer.CreateControls(obj, data)}
+            {renderer.CreateControls(obj, data, isLoading, error)}
         </Fragment>
     )
 }
 
-export class RecordContextRenderer extends ControlHtmlRenderer<RecordContextClass> {
+export class RecordContextRenderer<T> extends ControlHtmlRenderer<RecordContextClass<T> > {
     overlay: any;
 
-    public GenerateElement(obj: RecordContextClass): boolean {
+    public GenerateElement(obj: RecordContextClass<T> ): boolean {
         this.WriteStartFragment();
         return true;
     }
@@ -38,47 +38,47 @@ export class RecordContextRenderer extends ControlHtmlRenderer<RecordContextClas
         return false;
     }
 
-    public GenerateBody(obj: RecordContextClass): void {
+    public GenerateBody(obj: RecordContextClass<T> ): void {
         const { data, isLoading, error } = useGetOne(obj.vp_Resource, obj.vp_Filter);
 
-         if (isLoading) {
+        /*  if (isLoading) {
             this.WriteComponent(
                 <div>Loading...</div>
             );
-        } 
+        }  */
 
         this.WriteComponent(
             <RecordContextProvider value={data}>
-                <RecordProxy renderer={this} obj={obj} data={data} ></RecordProxy>
+                <RecordProxy renderer={this} obj={obj} data={data} isLoading={isLoading} error={error} ></RecordProxy>
             </RecordContextProvider>
         );
     }
 
-     protected CreateControls(obj: RecordContextClass, data: any): any[] {
+    protected CreateControls(obj: RecordContextClass<T> , data: any, isLoading: boolean, error: string): any[] {
         const vNodes: any[] = [];
 
         if (obj.vp_Content != null) {
-            const view = getView(obj instanceof UIController ? obj : (obj as any).controller, obj.vp_Content(data));
+            const view = getView(obj instanceof UIController ? obj : (obj as any).controller, obj.vp_Content({ data, isLoading, error }));
             if (view != null) {
                 vNodes.push(view.Render());
             }
         }
 
         return vNodes;
-    } 
+    }
 
-      /* protected CreateControls(obj: RecordContextClass): any[] {
-         const vNodes: any[] = [];
+    /* protected CreateControls(obj: RecordContextClass): any[] {
+       const vNodes: any[] = [];
  
-         if ((obj as any).SubViews != null) {
-             foreach(obj.GetViews(), (root: IRenderable) => {
-                 const view = getView(obj instanceof UIController ? obj : (obj as any).controller, root);
-                 if (view != null) {
-                     vNodes.push(view.Render());
-                 }
-             });
-         }
+       if ((obj as any).SubViews != null) {
+           foreach(obj.GetViews(), (root: IRenderable) => {
+               const view = getView(obj instanceof UIController ? obj : (obj as any).controller, root);
+               if (view != null) {
+                   vNodes.push(view.Render());
+               }
+           });
+       }
  
-         return vNodes;
-     }  */
+       return vNodes;
+   }  */
 }

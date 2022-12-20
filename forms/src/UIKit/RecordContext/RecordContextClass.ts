@@ -1,9 +1,10 @@
 import { UIController } from "../UIController";
 import { UIView, ViewProperty } from "../UIView";
 import { RecordContextRenderer } from "./RecordContextRenderer";
+import { RecordContextContentFunction } from "./types";
 
 
-export class RecordContextClass extends UIView {
+export class RecordContextClass<T> extends UIView {
     public setController(controller: UIController): this {
         super.setController(controller);
         this.Renderer = new RecordContextRenderer({
@@ -19,8 +20,8 @@ export class RecordContextClass extends UIView {
         super();
     }
 
-    @ViewProperty() vp_Content:Function;
-    public _content(value: Function): this {
+    @ViewProperty() vp_Content:RecordContextContentFunction<T>;
+    public _content(value: RecordContextContentFunction<T>): this {
         this.vp_Content = value;
         return this;
     }

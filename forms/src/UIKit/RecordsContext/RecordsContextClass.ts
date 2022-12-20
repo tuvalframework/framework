@@ -1,6 +1,7 @@
 import { UIController } from "../UIController";
 import { UIView, ViewProperty } from "../UIView";
 import { RecordsContextRenderer } from "./RecordsContextRenderer";
+import { RecordsContextContentFunction } from "./types";
 
 
 export class RecordsContextClass extends UIView {
@@ -19,8 +20,8 @@ export class RecordsContextClass extends UIView {
         super();
     }
 
-    @ViewProperty() vp_Content:Function;
-    public _content(value: Function): this {
+    @ViewProperty() vp_Content:RecordsContextContentFunction;
+    public _content(value: RecordsContextContentFunction): this {
         this.vp_Content = value;
         return this;
     }
