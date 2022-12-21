@@ -153,8 +153,8 @@ export class DropDownRenderer extends ControlHtmlRenderer<DropDownClass> {
                 onFocus={(e) => is.function(obj.vp_SetFocus) ? obj.vp_SetFocus(e) : void 0}
                 onBlur={(e) => is.function(obj.vp_KillFocus) ? obj.vp_KillFocus(e) : void 0}
                 style={style}
-                optionLabel={obj.vp_fields.text}
-                optionValue={obj.vp_fields.value}
+                optionLabel={obj.vp_fields?.text}
+                optionValue={obj.vp_fields?.value}
                 valueTemplate={selectedTemplate}
                 itemTemplate={template}
                 emptyMessage={emptyTemplate()}
