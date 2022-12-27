@@ -237,6 +237,7 @@ export interface IStateService {
     SetSessionId(value: string): void;
 }
 export class RealmHttpClient {
+    public static version = "1.2.3.4.5.6.7.8";
     public static Post<D = any, T = any, R = HttpClientResponse<T>>(url: string, data?: D, config?: HttpClientRequestConfig<D>): Promise<R> {
 
         const stateService: IStateService = container.resolve<IStateService>('IStateService') as any;
@@ -245,7 +246,7 @@ export class RealmHttpClient {
         }
         return HttpClient.Post(url, data, Object.assign(config ?? {}, {
             headers: {
-                'ticket': stateService.GetSessionId(),
+                'token': stateService.GetSessionId(),
                 'origin': window.location.origin
             }
         }))
