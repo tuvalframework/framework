@@ -60,5 +60,6 @@ export * from './RecordContext';
 export * from './RecordsContext';
 export * from './CreateContext';
 export * from './UpdateContext';
+export * from './DeleteContext';
 
 export { getView, viewFunc, Template } from './getView';

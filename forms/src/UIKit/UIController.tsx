@@ -17,6 +17,7 @@ import { clone, Convert, int, is, TArray } from '@tuval/core';
 import { QueryClient } from '../query/core/queryClient';
 import { QueryClientProvider } from '../query/tuval/QueryClientProvider';
 import { DataProviderContext } from '../query/dataProvider/DataProviderContext';
+import { query } from './DataContext/DataContextRenderer';
 
 export const UIFormContext = createContext(null!);
 export const UIControllerContext = createContext(null!);
@@ -319,6 +320,10 @@ export class UIFormController extends UIController {
 
     @State()
     public IsLoaded: boolean;
+
+    public InvalidateQueries() {
+        query.invalidateQueries();
+    }
 
     public validateForm(): any {
 

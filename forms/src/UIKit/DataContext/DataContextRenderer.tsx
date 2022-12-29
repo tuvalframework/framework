@@ -15,7 +15,7 @@ import { IRenderable } from "../IView";
 import { UIController } from "../UIController";
 import { DataContextClass } from "./DataContextClass";
 
-const query = new QueryClient({
+export const query = new QueryClient({
     defaultOptions: {
         queries: {
             staleTime: 5 * 60 * 1000, // 5 minutes

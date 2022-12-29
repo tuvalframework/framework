@@ -1,10 +1,10 @@
 
-import { foreach, is } from "@tuval/core";
+import { foreach } from "@tuval/core";
 import { useEffect, useRef } from "../../hooks";
 import React, { Fragment } from "../../preact/compat";
 import { QueryClient } from "../../query/core/queryClient";
 import { RecordContextProvider } from "../../query/record/RecordContext";
-import { useCreate } from "../../query/dataProvider/useCreate";
+import { useUpdate } from "../../query/dataProvider/useUpdate";
 import { QueryClientProvider, useQueryClient } from "../../query/tuval/QueryClientProvider";
 import { useFormContext, _useDataProvider } from "../../tuval-forms";
 import { ControlHtmlRenderer } from "../../windows/Forms/Components/AAA/HtmlRenderer/ControlHtmlRenderer";
@@ -13,24 +13,26 @@ import { OverlayPanel } from "../Components/overlaypanel/OverlayPanel";
 import { getView } from "../getView";
 import { IRenderable } from "../IView";
 import { UIController } from "../UIController";
-import { CreateContextClass } from "./CreateContextClass";
+import { DeleteContextClass } from "./DeleteContextClass";
 import { bindFormController } from '../UIController';
+import { useGetOne } from "../../query/dataProvider/useGetOne";
+import { useDelete } from "../../query/dataProvider/useDelete";
 
 const query = new QueryClient();
 
-const CreateProxy = ({ renderer, obj, handleCreate, isLoading, isSuccess }) => {
+const CreateProxy = ({ renderer, obj, handleUpdate, data, isLoading, isSuccess }) => {
     // console.log(_useDataProvider())
     return (
         <Fragment>
-            {renderer.CreateControls(obj, handleCreate, isLoading, isSuccess)}
+            {renderer.CreateControls(obj, handleUpdate, data, isLoading, isSuccess)}
         </Fragment>
     )
 }
 
-export class CreateContextRenderer extends ControlHtmlRenderer<CreateContextClass> {
+export class DeleteContextRenderer extends ControlHtmlRenderer<DeleteContextClass> {
     overlay: any;
 
-    public GenerateElement(obj: CreateContextClass): boolean {
+    public GenerateElement(obj: DeleteContextClass): boolean {
         this.WriteStartFragment();
         return true;
     }
@@ -39,22 +41,41 @@ export class CreateContextRenderer extends ControlHtmlRenderer<CreateContextClas
         return false;
     }
 
-    public GenerateBody(obj: CreateContextClass): void {
+    public GenerateBody(obj: DeleteContextClass): void {
 
+        debugger;
         const formController = bindFormController();
-        const [create, { isLoading, isSuccess }] = useCreate();
 
-        const handleCreate = () => {
-            const [isValid, data] = formController.validateForm();
-            if (isValid) {
-                create(obj.vp_Resource, { data: data }, {
-                    onSuccess: () => {
-                        if (is.function(obj.vp_OnSuccess)) {
-                            obj.vp_OnSuccess();
-                        }
+        const getOneResult = useGetOne(obj.vp_Resource, obj.vp_Filter, {
+            onSuccess: (data) => {
+                if (!formController.IsLoaded) {
+                    for (const key in data) {
+                        formController.SetValue(key, data[key], false);
                     }
-                })
+                    console.log('form loaded.')
+                    formController.IsLoaded = true;
+                }
             }
+        });
+
+        if (getOneResult.isLoading) {
+            this.WriteComponent(
+                <div>Loading...</div>
+            );
+        }
+
+        if (getOneResult.error) {
+            this.WriteComponent(
+                <div>Error</div>
+            );
+        }
+
+        const [deleteOne, { isLoading, isSuccess }] = useDelete();
+
+        const handleDelete = () => {
+          
+            deleteOne(obj.vp_Resource, { id: getOneResult.data.id, previousData: getOneResult.data })
+            
         }
 
 
@@ -67,16 +88,16 @@ export class CreateContextRenderer extends ControlHtmlRenderer<CreateContextClas
 
         this.WriteComponent(
 
-            <CreateProxy renderer={this} obj={obj} handleCreate={handleCreate} isLoading={isLoading} isSuccess={isSuccess} ></CreateProxy>
+            <CreateProxy renderer={this} obj={obj} data={getOneResult.data} handleUpdate={handleDelete} isLoading={isLoading} isSuccess={isSuccess} ></CreateProxy>
 
         );
     }
 
-    protected CreateControls(obj: CreateContextClass, handleCreate: any, isLoading: boolean, isSuccess: boolean): any[] {
+    protected CreateControls(obj: DeleteContextClass, handleUpdate: any, data: any, isLoading: boolean, isSuccess: boolean): any[] {
         const vNodes: any[] = [];
 
         if (obj.vp_Content != null) {
-            const view = getView(obj instanceof UIController ? obj : (obj as any).controller, obj.vp_Content(handleCreate, isLoading, isSuccess));
+            const view = getView(obj instanceof UIController ? obj : (obj as any).controller, obj.vp_Content(handleUpdate, data, isLoading, isSuccess));
             if (view != null) {
                 vNodes.push(view.Render());
             }

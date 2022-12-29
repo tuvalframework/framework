@@ -1,12 +1,12 @@
 import { UIController } from "../UIController";
 import { UIView, ViewProperty } from "../UIView";
-import { CreateContextRenderer } from "./CreateContextRenderer";
+import { DeleteContextRenderer } from "./DeleteContextRenderer";
 
 
-export class CreateContextClass extends UIView {
+export class DeleteContextClass extends UIView {
     public setController(controller: UIController): this {
         super.setController(controller);
-        this.Renderer = new CreateContextRenderer({
+        this.Renderer = new DeleteContextRenderer({
             control: this,
             doNotBind: true,
             renderId: false
@@ -35,12 +35,6 @@ export class CreateContextClass extends UIView {
     @ViewProperty() vp_Filter:any;
     public filter(value: any): this {
         this.vp_Filter = value;
-        return this;
-    }
-
-    @ViewProperty() vp_OnSuccess:Function;
-    public onSuccess(value: Function): this {
-        this.vp_OnSuccess = value;
         return this;
     }
 
