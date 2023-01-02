@@ -282,10 +282,10 @@ export class MaxLengthRule extends ValidateRule {
 }
 
 export interface IFieldState {
-    errors: string[];
-    invalid: boolean;
-    isDirty: boolean;
-    isTouched: boolean;
+    errors?: string[];
+    invalid?: boolean;
+    isDirty?: boolean;
+    isTouched?: boolean;
 }
 export interface IFieldOptions {
     rules: ValidateRule/* { new(): ValidateRule } */[];
@@ -380,7 +380,7 @@ export class UIFormController extends UIController {
 
     public ClearErrors() { }
 
-    public SetValue(name: string, value: any, silent: boolean = false) {
+    public SetValue(name: string, value: any, silent: boolean = false, isDirty: boolean = false) {
         if (name != null) {
             const fieldName = name;
 
@@ -419,6 +419,20 @@ export class UIFormController extends UIController {
             const fieldInfo = this.formData[fieldName];
 
             return fieldInfo.state;
+        }
+    }
+
+    public SetFieldState(name: string, state: IFieldState): void {
+        if (name != null) {
+            const fieldName = name;
+
+            if (this.formData[fieldName] == null) {
+                this.formData[fieldName] = clone(defaultField);
+            }
+
+            const fieldInfo = this.formData[fieldName];
+
+            fieldInfo.state = Object.assign(fieldInfo.state, state);
         }
     }
 

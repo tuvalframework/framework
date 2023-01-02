@@ -1,5 +1,5 @@
 
-import { foreach } from "@tuval/core";
+import { foreach, is } from "@tuval/core";
 import { useEffect, useRef } from "../../hooks";
 import React, { Fragment } from "../../preact/compat";
 import { QueryClient } from "../../query/core/queryClient";
@@ -73,9 +73,18 @@ export class DeleteContextRenderer extends ControlHtmlRenderer<DeleteContextClas
         const [deleteOne, { isLoading, isSuccess }] = useDelete();
 
         const handleDelete = () => {
-          
-            deleteOne(obj.vp_Resource, { id: getOneResult.data.id, previousData: getOneResult.data })
-            
+
+            deleteOne(obj.vp_Resource, { id: getOneResult.data.id, previousData: getOneResult.data },
+                {
+                    onSuccess: () => {
+                        if (is.function(obj.vp_OnSuccess)) {
+                            obj.vp_OnSuccess();
+                        }
+                    }
+                })
+
+
+
         }
 
 

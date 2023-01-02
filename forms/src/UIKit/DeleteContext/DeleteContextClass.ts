@@ -38,6 +38,11 @@ export class DeleteContextClass extends UIView {
         return this;
     }
 
+    @ViewProperty() vp_OnSuccess:Function;
+    public onSuccess(value: Function): this {
+        this.vp_OnSuccess = value;
+        return this;
+    }
    /*  @ViewProperty() vp_Record:any;
     public record(value: any): this {
         this.vp_Record = value;

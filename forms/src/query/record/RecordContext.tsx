@@ -12,6 +12,9 @@ export const RecordContext = React.createContext(
     undefined
 );
 
+export const RecordsContext = React.createContext(
+    undefined
+);
 
 
 /**
@@ -47,3 +50,10 @@ export interface RecordContextProviderProps<RecordType> {
     children: any;
     value?: RecordType;
 }
+
+export const RecordsContextProvider = ({
+    children,
+    value,
+}: any) => (
+    <RecordsContext.Provider value={value}>{children}</RecordsContext.Provider>
+);

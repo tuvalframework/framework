@@ -3,7 +3,7 @@ import { foreach, int } from "@tuval/core";
 import { useEffect, useRef } from "../../hooks";
 import React, { Fragment } from "../../preact/compat";
 import { QueryClient } from "../../query/core/queryClient";
-import { RecordContextProvider } from "../../query/record/RecordContext";
+import { RecordsContextProvider } from "../../query/record/RecordContext";
 import { useGetOne } from "../../query/dataProvider/useGetOne";
 import { QueryClientProvider, useQueryClient } from "../../query/tuval/QueryClientProvider";
 import { useGetList, _useDataProvider } from "../../tuval-forms";
@@ -52,9 +52,9 @@ export class RecordsContextRenderer extends ControlHtmlRenderer<RecordsContextCl
          } */
 
         this.WriteComponent(
-            <RecordContextProvider value={data}>
+            <RecordsContextProvider value={data}>
                 <RecordProxy renderer={this} obj={obj} data={data} total={total} isLoading={isLoading} error={error} refetch={refetch}></RecordProxy>
-            </RecordContextProvider>
+            </RecordsContextProvider>
         );
     }
 

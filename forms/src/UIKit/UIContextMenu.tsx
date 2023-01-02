@@ -11,6 +11,7 @@ import { classNames } from "./Components/utils/ClassNames";
 import { UIController } from "./UIController";
 import { getView, viewFunc } from "./getView";
 import { DividerClass } from "./Divider";
+import { css } from "@emotion/css";
 
 export class UIContextMenuRenderer extends ControlHtmlRenderer<UIContextMenuClass> {
    shadowDom: any;
@@ -145,7 +146,10 @@ export class UIContextMenuRenderer extends ControlHtmlRenderer<UIContextMenuClas
    public GenerateBody(obj: UIContextMenuClass): void {
       const items = [];
 
-      debugger;
+      const className = css`
+      & .p-menuitem-link { padding: 0px !important; }
+  `;
+  
 
       // onClick={(e) => { view.FireClick(e); options.onClick(e); }
 
@@ -208,7 +212,7 @@ export class UIContextMenuRenderer extends ControlHtmlRenderer<UIContextMenuClas
          <Fragment>
             <div style={style} onclick={(e) => { this.menu.toggle(e); /* e.stopPropagation(); e.preventDefault(); */ }}>
                {this.CreateControls(obj)}
-               <Menu id='mu_context_menu' popup model={items} ref={el => this.menu = el}></Menu>
+               <Menu id='mu_context_menu' className={className} popup model={items} ref={el => this.menu = el}></Menu>
             </div>
          </Fragment>
       );
