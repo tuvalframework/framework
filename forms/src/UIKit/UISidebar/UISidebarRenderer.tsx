@@ -20,12 +20,16 @@ DomHandler.addCssToDocument(require('../Components/sidebar/Theme.css'));
 export class UISidebarRenderer extends ControlHtmlRenderer<UISidebarClass> {
     overlay: any;
 
+    public get UseFrameStyles(): boolean {
+        return false;
+    }
+
     public GenerateElement(obj: UISidebarClass): boolean {
         this.WriteStartFragment();
         return true;
     }
 
-    public override GetCustomJss<UISidebarClass>(obj: UISidebarClass): Object {
+    /* public override GetCustomJss<UISidebarClass>(obj: UISidebarClass): Object {
         return {
             '& .p-sidebar': {
                 background: '#ffffff',
@@ -62,11 +66,11 @@ export class UISidebarRenderer extends ControlHtmlRenderer<UISidebarClass> {
                 padding: '1.25rem'
             }
         }
-    }
+    } */
 
     public GenerateBody(obj: UISidebarClass): void {
         this.WriteComponent(
-            <Sidebar position={obj.vp_SiodebarPosition} modal={false} visible={obj.vp_Visible} onHide={() => is.function(obj.vp_OnHide) ? obj.vp_OnHide() : void 0}>
+            <Sidebar position={obj.vp_SiodebarPosition} style={obj.Appearance.GetStyleObject()} modal={false} visible={obj.vp_Visible} onHide={() => is.function(obj.vp_OnHide) ? obj.vp_OnHide() : void 0}>
                 {this.CreateControls(obj)}
             </Sidebar>
         );

@@ -1,3 +1,4 @@
+import { int } from "@tuval/core";
 import { UIController } from "../UIController";
 import { UIView, ViewProperty } from "../UIView";
 import { RecordsContextRenderer } from "./RecordsContextRenderer";
@@ -32,6 +33,17 @@ export class RecordsContextClass extends UIView {
         return this;
     }
 
+    @ViewProperty() vp_Pagination:{ page: int, perPage: int };
+    public pagination(value: { page: int, perPage: int }): this {
+        this.vp_Pagination = value;
+        return this;
+    }
+
+    @ViewProperty() vp_Sort:{ field: string, order: string };
+    public sort(value: { field: string, order: string }): this {
+        this.vp_Sort = value;
+        return this;
+    }
 
     @ViewProperty() vp_Filter:any;
     public filter(value: any): this {

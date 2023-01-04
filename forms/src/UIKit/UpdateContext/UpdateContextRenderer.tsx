@@ -1,5 +1,5 @@
 
-import { foreach } from "@tuval/core";
+import { foreach, is } from "@tuval/core";
 import { useEffect, useRef } from "../../hooks";
 import React, { Fragment } from "../../preact/compat";
 import { QueryClient } from "../../query/core/queryClient";
@@ -47,15 +47,21 @@ export class UpdateContextRenderer extends ControlHtmlRenderer<UpdateContextClas
 
         const getOneResult = useGetOne(obj.vp_Resource, obj.vp_Filter, {
             onSuccess: (data) => {
-                if (!formController.IsLoaded) {
-                    for (const key in data) {
-                        formController.SetValue(key, data[key], false);
-                    }
-                    console.log('form loaded.')
-                    formController.IsLoaded = true;
-                }
+
+
             }
         });
+
+        if (getOneResult.isSuccess) {
+            if (!formController.IsLoaded) {
+                for (const key in getOneResult.data) {
+                    formController.SetValue(key, getOneResult.data[key], false);
+                }
+                // console.log('form loaded.')
+                formController.IsLoaded = true;
+            }
+        }
+
 
         if (getOneResult.isLoading) {
             this.WriteComponent(
@@ -73,8 +79,22 @@ export class UpdateContextRenderer extends ControlHtmlRenderer<UpdateContextClas
 
         const handleUpdate = () => {
             const [isValid, formData] = formController.validateForm();
+
+           /*  for(let key in formData) {
+                if (is.nullOrUndefined(formData[key])) {
+                    delete formData[key];
+                }
+            } */
+
             if (isValid) {
-                update(obj.vp_Resource, { id: getOneResult.data.id, data: formData, previousData: getOneResult.data })
+                update(obj.vp_Resource, { id: getOneResult.data.id, data: formData, previousData: getOneResult.data },
+                    {
+                        onSuccess: () => {
+                            if (is.function(obj.vp_OnSuccess)) {
+                                obj.vp_OnSuccess();
+                            }
+                        }
+                    })
             }
         }
 

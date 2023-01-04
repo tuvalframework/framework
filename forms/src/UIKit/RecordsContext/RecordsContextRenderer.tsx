@@ -40,8 +40,8 @@ export class RecordsContextRenderer extends ControlHtmlRenderer<RecordsContextCl
 
     public GenerateBody(obj: RecordsContextClass): void {
         const { data, total, isLoading, error, refetch } = useGetList(obj.vp_Resource, {
-            pagination: undefined,
-            sort: undefined,
+            pagination: obj.vp_Pagination,
+            sort: obj.vp_Sort,
             filter: obj.vp_Filter
         });
 

@@ -61,5 +61,6 @@ export * from './RecordsContext';
 export * from './CreateContext';
 export * from './UpdateContext';
 export * from './DeleteContext';
+export * from './Services';
 
 export { getView, viewFunc, Template } from './getView';

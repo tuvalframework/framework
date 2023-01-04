@@ -379,6 +379,7 @@ export interface QueryObserverRefetchErrorResult<
   status: 'error'
 }
 
+//AAAAAA
 export interface QueryObserverSuccessResult<TData = unknown, TError = unknown>
   extends QueryObserverBaseResult<TData, TError> {
   data: TData
