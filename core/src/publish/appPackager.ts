@@ -35,7 +35,8 @@ export function appPackager(appJsFile: string, targetAppName: string, libName: s
             'codeeditor',
             'query-builder',
             'spreadsheet',
-            'kanban'
+            'kanban',
+            'maps'
         ]
         const header = {};
 
