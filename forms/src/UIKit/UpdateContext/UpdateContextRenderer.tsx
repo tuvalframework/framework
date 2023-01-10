@@ -89,9 +89,9 @@ export class UpdateContextRenderer extends ControlHtmlRenderer<UpdateContextClas
             if (isValid) {
                 update(obj.vp_Resource, { id: getOneResult.data.id, data: formData, previousData: getOneResult.data },
                     {
-                        onSuccess: () => {
+                        onSuccess: (data) => {
                             if (is.function(obj.vp_OnSuccess)) {
-                                obj.vp_OnSuccess();
+                                obj.vp_OnSuccess(data);
                             }
                         }
                     })

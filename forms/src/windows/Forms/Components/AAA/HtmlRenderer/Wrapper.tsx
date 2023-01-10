@@ -13,13 +13,20 @@ import ObjectUtils from "../../../../../UIKit/Components/utils/ObjectUtils";
 const TooltipWrapper: (props: any/* InputTextProps */) => any = React.memo(React.forwardRef((props: any, ref) => {
     const elementRef = React.useRef(ref);
 
+    const oldRef = props.elementProps['ref'];
     delete props.elementProps['ref'];
     return (
         <Fragment>
-            <div ref={elementRef} view={props.control.constructor.name} className={props._className} {...props.elementProps} >
+            <div ref={(e) => {
+                elementRef.current = e;
+                if (is.function(oldRef)) {
+                    oldRef(e);
+                }
+            }}
+                view={props.control.constructor.name} className={props._className} {...props.elementProps} >
                 {props.children}
             </div>
-            <Tooltip target={elementRef} content={props.control.Tooltip} position={'top'}></Tooltip> 
+            <Tooltip target={elementRef} content={props.control.Tooltip} position={'top'}></Tooltip>
         </Fragment>
     )
 }))

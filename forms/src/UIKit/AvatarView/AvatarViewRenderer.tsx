@@ -21,11 +21,14 @@ export class AvatarViewRenderer extends ControlHtmlRenderer<AvatarViewClass> {
 
 
     public GenerateBody(obj: AvatarViewClass): void {
-        this.WriteComponent(
-            <Avatar shape='circle'>
-                {this.CreateControls(obj)}
-            </Avatar>
-        );
+        if (obj.vp_Image) {
+            this.WriteComponent(
+                <Avatar image={obj.vp_Image} shape='circle' size="xlarge">
+                    {this.CreateControls(obj)}
+                </Avatar>
+            );
+        }
+
     }
 
     protected CreateControls(obj: AvatarViewClass): any[] {

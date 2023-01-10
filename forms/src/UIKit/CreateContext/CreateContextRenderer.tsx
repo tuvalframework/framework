@@ -48,9 +48,9 @@ export class CreateContextRenderer extends ControlHtmlRenderer<CreateContextClas
             const [isValid, data] = formController.validateForm();
             if (isValid) {
                 create(obj.vp_Resource, { data: data }, {
-                    onSuccess: () => {
+                    onSuccess: (data) => {
                         if (is.function(obj.vp_OnSuccess)) {
-                            obj.vp_OnSuccess();
+                            obj.vp_OnSuccess(data);
                         }
                     }
                 })
