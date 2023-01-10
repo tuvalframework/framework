@@ -22,6 +22,7 @@ import { ControlCollection } from "../ControlCollection";
 import { Dialog } from "../Dialog";
 import { ApplicationModes, TApplication } from "../TApplication";
 import { BrowserRouter } from "../../../../../router-dom";
+import { Tooltip } from "../../../../../UIKit/Components/tooltip/Tooltip";
 
 declare var __Tuval_Config__;
 
@@ -385,6 +386,7 @@ export class Desktop extends Control<Desktop> {
                                 {this.CreateApplications()}
                             </div>
                             <Toast ref={(el) => this.m_Toast = el} />
+                            
                             <ContextMenuComponent model={this.getSystemMenuItems()} ref={el => Desktop.DesktopContextMenu = el}></ContextMenuComponent>
                             {/* <ContextMenuComponent global model={this.getSystemMenuItems()}  onBeforeShow={''}  /> */}
                             <div class="tuval-text">Powered By Tuval Framework</div>

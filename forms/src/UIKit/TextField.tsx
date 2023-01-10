@@ -100,7 +100,7 @@ class TextFieldProxy extends React.Component {
             )
         } else {
             return (
-                <InputText {...this.props} className={className}></InputText>
+                <InputText tooltip={'jjqewrkjsdkf'} tooltipOptions={{position: 'left'}} {...this.props} className={className}></InputText>
             )
         }
     }

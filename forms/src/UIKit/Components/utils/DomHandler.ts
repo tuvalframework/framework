@@ -340,7 +340,7 @@ export default class DomHandler {
             const viewport = this.getViewport();
             const myArr = my.split(' ');
             const atArr = at.split(' ');
-            const getPositionValue: any = (arr, isOffset) => (isOffset ? +arr.substring(arr.search(/(\+|-)/g)) || 0 : arr.substring(0, arr.search(/(\+|-)/g)) || arr);
+            const getPositionValue = (arr, isOffset?) => (isOffset ? +arr.substring(arr.search(/(\+|-)/g)) || 0 : arr.substring(0, arr.search(/(\+|-)/g)) || arr);
             const position = {
                 my: {
                     x: getPositionValue(myArr[0]),
@@ -647,6 +647,10 @@ export default class DomHandler {
         return /(android)/i.test(navigator.userAgent);
     }
 
+    static isChrome() {
+        return /(chrome)/i.test(navigator.userAgent);
+    }
+
     static isTouchDevice() {
         return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || (navigator as any).msMaxTouchPoints > 0;
     }
@@ -730,7 +734,7 @@ export default class DomHandler {
     }
 
     static getBrowser() {
-        if (!(this as any).browser) {
+        if (! (this as any).browser) {
             let matched = this.resolveUserAgent();
 
             (this as any).browser = {};
@@ -740,14 +744,14 @@ export default class DomHandler {
                 (this as any).browser['version'] = matched.version;
             }
 
-            if ((this as any).browser['chrome']) {
+            if ( (this as any).browser['chrome']) {
                 (this as any).browser['webkit'] = true;
-            } else if ((this as any).browser['webkit']) {
+            } else if ( (this as any).browser['webkit']) {
                 (this as any).browser['safari'] = true;
             }
         }
 
-        return (this as any).browser;
+        return  (this as any).browser;
     }
 
     static resolveUserAgent() {
@@ -788,7 +792,7 @@ export default class DomHandler {
         let visibleFocusableElements = [];
 
         for (let focusableElement of focusableElements) {
-            if ((getComputedStyle as any)(focusableElement).display !== 'none' && (getComputedStyle as any)(focusableElement).visibility !== 'hidden') visibleFocusableElements.push(focusableElement);
+            if (getComputedStyle(focusableElement as any).display !== 'none' && getComputedStyle(focusableElement as any).visibility !== 'hidden') visibleFocusableElements.push(focusableElement);
         }
 
         return visibleFocusableElements;
@@ -816,6 +820,22 @@ export default class DomHandler {
         const preventScroll = scrollTo === undefined ? true : !scrollTo;
 
         el && document.activeElement !== el && el.focus({ preventScroll });
+    }
+
+    /**
+     * Focus the first focusable element if it does not already have focus.
+     *
+     * @param {HTMLElement} el a HTML element
+     * @param {boolean} scrollTo flag to control whether to scroll to the element, false by default
+     * @return {HTMLElement | undefined} the first focusable HTML element found
+     */
+    static focusFirstElement(el, scrollTo) {
+        if (!el) return;
+        const firstFocusableElement = DomHandler.getFirstFocusableElement(el);
+
+        firstFocusableElement && DomHandler.focus(firstFocusableElement, scrollTo);
+
+        return firstFocusableElement;
     }
 
     static getCursorOffset(el, prevText, nextText, currentText) {
@@ -903,7 +923,7 @@ export default class DomHandler {
             type: 'application/csv;charset=utf-8;'
         });
 
-        if ((window.navigator as any).msSaveOrOpenBlob) {
+        if ((window as any).navigator.msSaveOrOpenBlob) {
             (navigator as any).msSaveOrOpenBlob(blob, filename + '.csv');
         } else {
             const isDownloaded = DomHandler.saveAs({ name: filename + '.csv', src: URL.createObjectURL(blob) });

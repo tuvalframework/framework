@@ -155,9 +155,9 @@ export class HStackRenderer extends ControlHtmlRenderer<HStackClass> {
     protected CreateControls(obj: HStackClass): any[] {
         const vNodes: any[] = [];
 
-        if (obj.Tooltip) {
+       /*  if (obj.Tooltip) {
             vNodes.push(<span class="tooltiptext">{obj.Tooltip}</span>)
-        }
+        } */
 
         if (obj.Controls != null) {
             foreach(obj.Controls, (control) => {

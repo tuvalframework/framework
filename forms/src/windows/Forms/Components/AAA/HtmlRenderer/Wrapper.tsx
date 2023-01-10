@@ -1,11 +1,28 @@
 import { jss } from "../../../../../jss/jss";
-import { Component, Fragment } from "../../../../../preact/compat";
+import React, { Component, Fragment } from "../../../../../preact/compat";
 import { Teact } from "../../Teact";
 import { motion } from '../../../../../motion/render/dom/motion';
 import { HtmlRenderer } from "../..";
 import { createMotionProxy } from "../../../../../motion/render/dom/motion-proxy";
 import { css } from '@emotion/css'
+import { Tooltip } from "../../../../../UIKit/Components/tooltip/Tooltip";
+import { classNames, is } from "@tuval/core";
+import ObjectUtils from "../../../../../UIKit/Components/utils/ObjectUtils";
 
+
+const TooltipWrapper: (props: any/* InputTextProps */) => any = React.memo(React.forwardRef((props: any, ref) => {
+    const elementRef = React.useRef(ref);
+
+    delete props.elementProps['ref'];
+    return (
+        <Fragment>
+            <div ref={elementRef} view={props.control.constructor.name} className={props._className} {...props.elementProps} >
+                {props.children}
+            </div>
+            <Tooltip target={elementRef} content={props.control.Tooltip} position={'top'}></Tooltip> 
+        </Fragment>
+    )
+}))
 export class Wrapper extends Component {
 
     get jssStyle(): any {
@@ -91,24 +108,27 @@ export class Wrapper extends Component {
 
         const _className = css`
                             ${this.props.control.Appearance.ToString()}
-                            ${this.props.control.HoverAppearance.IsEmpty ? '' :  '&:hover { ' +  this.props.control.HoverAppearance.ToString() + ' }'}
-                            ${this.props.control.ActiveAppearance.IsEmpty ? '' :  '&:active { ' +  this.props.control.ActiveAppearance.ToString() + ' }'}
-                            ${this.props.control.FocusAppearance.IsEmpty ? '' :  '&:focus { ' +  this.props.control.FocusAppearance.ToString() + ' }'}
+                            ${this.props.control.HoverAppearance.IsEmpty ? '' : '&:hover { ' + this.props.control.HoverAppearance.ToString() + ' }'}
+                            ${this.props.control.ActiveAppearance.IsEmpty ? '' : '&:active { ' + this.props.control.ActiveAppearance.ToString() + ' }'}
+                            ${this.props.control.FocusAppearance.IsEmpty ? '' : '&:focus { ' + this.props.control.FocusAppearance.ToString() + ' }'}
                         `;
 
         if (renderer.UseFrameStyles) {
 
             if (this.props.renderAsAnimated) {
                 return (
-                    <motion.div view={this.props.control.constructor.name} className={_className} {...this.props.elementProps}>
+                    <motion.div view={this.props.control.constructor.name} className={_className} data-pr-tooltip={'sdfsdf'} {...this.props.elementProps}>
+                        <Tooltip target={'.' + _className} mouseTrack mouseTrackLeft={10} />
                         {this.props.children}
                     </motion.div>
                 );
             } else {
                 return (
-                    <div view={this.props.control.constructor.name} className={_className} {...this.props.elementProps}>
-                        {this.props.children}
-                    </div>
+                    <TooltipWrapper {...this.props} _className={_className}></TooltipWrapper>
+                    /*  <div view={this.props.control.constructor.name} className={_className} {...this.props.elementProps} >
+                         <Tooltip target={'.tooltip-target'} content={this.props.control.Tooltip} />
+                         {this.props.children}
+                     </div> */
                 );
             }
         } else {

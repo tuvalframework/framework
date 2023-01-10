@@ -9,8 +9,8 @@ export class FontIconRenderer extends ControlHtmlRenderer<IFontIcon> {
         return true;
     }
 
-    protected OnComponentDidMount(ref: any,obj: IFontIcon): void {
-        super.OnComponentDidMount(ref,obj);
+    protected OnComponentDidMount(ref: any, obj: IFontIcon): void {
+        super.OnComponentDidMount(ref, obj);
         if (!this.UseShadowDom) {
             let css: string = `.icon-${obj.Id}:before {
             content: "${obj.Appearance.Content}"
@@ -40,7 +40,7 @@ export class FontIconRenderer extends ControlHtmlRenderer<IFontIcon> {
         return true;
     }
     public GenerateAttributes(obj: IFontIcon): void {
-        if (!is.nullOrEmpty(obj.Appearance.Content)){
+        if (!is.nullOrEmpty(obj.Appearance.Content)) {
             this.WriteStyleAttrVal('font-family', obj.FontFamily);
             this.WriteStyleAttrVal('speak', 'none');
             this.WriteStyleAttrVal('font-style', 'normal');
