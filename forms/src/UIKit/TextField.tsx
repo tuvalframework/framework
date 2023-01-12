@@ -149,7 +149,7 @@ const MyInputText = (params) => {
             /*  if (controller != null) {
                  controller.SetValue(params.view.vp_FormField.name,record[params.view.vp_FormField.name], true);
              } */
-            params['value'] = record[params.view.vp_FormField.name];
+            params['value'] = record[params.obj.vp_FormField.name];
         } else {
             params['value'] = controller.GetValue(params.obj.vp_FormField.name);
         }
