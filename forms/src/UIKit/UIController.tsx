@@ -376,7 +376,11 @@ export class UIFormController extends UIController {
         }
     }
 
-    public ResetForm() { }
+    public ResetForm() { 
+        for (let key in this.formData) {
+            this.SetValue(key, null);
+        }
+    }
 
     public ClearErrors() { }
 
