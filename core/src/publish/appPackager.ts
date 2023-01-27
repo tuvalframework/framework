@@ -36,7 +36,9 @@ export function appPackager(appJsFile: string, targetAppName: string, libName: s
             'query-builder',
             'spreadsheet',
             'kanban',
-            'maps'
+            'maps',
+            'flows',
+            'bpmn'
         ]
         const header = {};
 

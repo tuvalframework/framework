@@ -2034,6 +2034,32 @@ export class UIView implements IVirtualContainer, IControl, IRenderable {
         //throw 'Argument Exception in ' + this.constructor.name + '::backgroundColor function.';
     }
 
+    public backgroundSize(value: StyleAttribute): this;
+    public backgroundSize(value: string): this;
+    public backgroundSize(...args: any[]): this {
+        if (args.length === 1 && is.string(args[0])) {
+            const image = args[0];
+            this.Appearance.BackgroundSize = image;
+            return this;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.BackgroundSize = styleAttribute.default instanceof ColorClass ? styleAttribute.default.color : styleAttribute.default;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.BackgroundSize = styleAttribute.hover instanceof ColorClass ? styleAttribute.hover.color : styleAttribute.hover;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.BackgroundSize = styleAttribute.active instanceof ColorClass ? styleAttribute.active.color : styleAttribute.active;
+            }
+            if (styleAttribute.disabled != null) {
+                this.DisabledAppearance.BackgroundSize = styleAttribute.disabled instanceof ColorClass ? styleAttribute.disabled.color : styleAttribute.disabled;
+            }
+            return this;
+        }
+        throw 'Argument Exception in ' + this.constructor.name + '::backgroundImage function.';
+    }
+
 
     public background(value: ColorClass): this;
     public background(value: StyleAttribute): this;

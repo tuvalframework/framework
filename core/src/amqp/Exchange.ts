@@ -1,0 +1,289 @@
+import { Message } from './Message';
+import { Queue } from './Queue';
+import { sortByPriority, getRoutingKeyPattern, generateId } from './shared';
+
+
+const kType = Symbol.for('type');
+const kStopped = Symbol.for('stopped');
+const kBindings = Symbol.for('bindings');
+const kDeliveryQueue = Symbol.for('deliveryQueue');
+
+export function Exchange(name, type = 'topic', options) {
+    if (!name) throw new Error('Exchange name is required');
+    if (['topic', 'direct'].indexOf(type) === -1) throw Error('Exchange type must be one of topic or direct');
+    const eventExchange = EventExchange(name + '__events');
+    return new ExchangeBase(name, type, options, eventExchange);
+}
+
+export function EventExchange(name) {
+    if (!name) name = `smq.ename-${generateId()}`;
+    return new ExchangeBase(name, 'topic', { durable: false, autoDelete: true });
+}
+
+export class ExchangeBase {
+    name: any;
+    options: any;
+    events: any;
+
+
+    public constructor(name, type, options: any, eventExchange?) {
+        this.name = name;
+        this[kType] = type;
+        this[kBindings] = [];
+        this[kStopped] = false;
+        this.options = { durable: true, autoDelete: true, ...options };
+        this.events = eventExchange;
+
+        const deliveryQueue = this[kDeliveryQueue] = new Queue('delivery-q', { autoDelete: false });
+        const onMessage = (type === 'topic' ? this._onTopicMessage : this._onDirectMessage).bind(this);
+        deliveryQueue.consume(onMessage, { exclusive: true, consumerTag: '_exchange-tag' });
+    }
+
+    public get bindingCount() {
+        return this[kBindings].length;
+    }
+
+    public get bindings() {
+        return this[kBindings].slice();
+    }
+
+    public get type() {
+        return this[kType];
+    }
+
+    public get stopped() {
+        return this[kStopped];
+    }
+
+    public get undeliveredCount() {
+        return this[kDeliveryQueue].messageCount;
+    }
+
+
+    public publish(routingKey, content, properties?) {
+        if (this[kStopped]) return;
+        if (!this.bindingCount) return this._emitReturn(routingKey, content, properties);
+
+        return this[kDeliveryQueue].queueMessage({ routingKey }, {
+            content,
+            properties,
+        });
+    }
+
+    private _onTopicMessage(routingKey, message) {
+        const publishedMsg = message.content;
+        const bindings = this[kBindings];
+
+        message.ack();
+
+        const deliverTo = bindings.filter((binding) => binding.testPattern(routingKey));
+        let delivered = 0;
+        for (const binding of deliverTo) {
+            this._publishToQueue(binding.queue, routingKey, publishedMsg.content, publishedMsg.properties);
+            ++delivered;
+        }
+
+        if (!delivered) {
+            this._emitReturn(routingKey, publishedMsg.content, publishedMsg.properties);
+        }
+
+        return delivered;
+    }
+
+    private _onDirectMessage(routingKey, message) {
+        const publishedMsg = message.content;
+        const bindings = this[kBindings];
+
+        const deliverTo = bindings.find((binding) => binding.testPattern(routingKey));
+        if (!deliverTo) {
+            message.ack();
+            this._emitReturn(routingKey, publishedMsg.content, publishedMsg.properties);
+            return 0;
+        }
+
+        if (bindings.length > 1) {
+            const idx = bindings.indexOf(deliverTo);
+            bindings.splice(idx, 1);
+            bindings.push(deliverTo);
+        }
+
+        message.ack();
+        this._publishToQueue(deliverTo.queue, routingKey, publishedMsg.content, publishedMsg.properties);
+        return 1;
+    }
+
+    private _publishToQueue(queue, routingKey, content, properties) {
+        queue.queueMessage({ routingKey, exchange: this.name }, content, properties);
+    }
+
+    private _emitReturn(routingKey, content, properties) {
+        if (!this.events || !properties) return;
+
+        if (properties.confirm) {
+            this.emit('message.undelivered', new Message({ routingKey, exchange: this.name }, content, properties));
+        }
+        if (properties.mandatory) {
+            this.emit('return', new Message({ routingKey, exchange: this.name }, content, properties));
+        }
+    }
+
+    public bindQueue(queue, pattern, bindOptions?) {
+        const bindings = this[kBindings];
+        const bound = bindings.find((bq) => bq.queue === queue && bq.pattern === pattern);
+        if (bound) return bound;
+
+        const binding = new Binding(this, queue, pattern, bindOptions);
+        bindings.push(binding);
+        bindings.sort(sortByPriority);
+
+        this.emit('bind', binding);
+
+        return binding;
+    }
+
+    public unbindQueue(queue, pattern) {
+        const bindings = this[kBindings];
+        const idx = bindings.findIndex((bq) => bq.queue === queue && bq.pattern === pattern);
+        if (idx === -1) return;
+
+        const [binding] = bindings.splice(idx, 1);
+        binding.close();
+
+        this.emit('unbind', binding);
+
+        if (!bindings.length && this.options.autoDelete) this.emit('delete', this);
+    }
+
+    public unbindQueueByName(queueName) {
+        for (const binding of this[kBindings]) {
+            if (binding.queue.name !== queueName) continue;
+            this.unbindQueue(binding.queue, binding.pattern);
+        }
+    }
+
+    public close() {
+        for (const binding of this[kBindings].slice()) {
+            binding.close();
+        }
+        const deliveryQueue = this[kDeliveryQueue];
+        deliveryQueue.cancel('_exchange-tag', true);
+        deliveryQueue.close();
+    }
+
+    public getState() {
+        let bindings;
+        for (const binding of this[kBindings]) {
+            if (!binding.queue.options.durable) continue;
+            if (!bindings) bindings = [];
+            bindings.push(binding.getState());
+        }
+
+        const deliveryQueue = this[kDeliveryQueue];
+        return {
+            name: this.name,
+            type: this.type,
+            options: { ...this.options },
+            ...(deliveryQueue.messageCount ? { deliveryQueue: deliveryQueue.getState() } : undefined),
+            ...(bindings ? { bindings } : undefined),
+        };
+    }
+
+    public stop() {
+        this[kStopped] = true;
+    }
+
+    public recover(state, getQueue) {
+        this[kStopped] = false;
+        if (!state) return this;
+
+        const deliveryQueue = this[kDeliveryQueue];
+        if (state.bindings) {
+            for (const bindingState of state.bindings) {
+                const queue = getQueue(bindingState.queueName);
+                if (!queue) return;
+                this.bindQueue(queue, bindingState.pattern, bindingState.options);
+            }
+        }
+        deliveryQueue.recover(state.deliveryQueue);
+        if (!deliveryQueue.consumerCount) {
+            const onMessage = (this[kType] === 'topic' ? this._onTopicMessage : this._onDirectMessage).bind(this);
+            deliveryQueue.consume(onMessage, { exclusive: true, consumerTag: '_exchange-tag' });
+        }
+
+        return this;
+    }
+
+    public getBinding(queueName, pattern) {
+        return this[kBindings].find((binding) => binding.queue.name === queueName && binding.pattern === pattern);
+    }
+
+    public emit(eventName, content) {
+        if (this.events) return this.events.publish(`exchange.${eventName}`, content);
+        return this.publish(eventName, content);
+    }
+
+    public on(pattern, handler, consumeOptions = {}) {
+        if (this.events) return this.events.on(`exchange.${pattern}`, handler, consumeOptions);
+
+        const eventQueue = new Queue(null, { durable: false, autoDelete: true });
+        const binding = this.bindQueue(eventQueue, pattern);
+        eventQueue.events = {
+            emit(eventName) {
+                if (eventName === 'queue.delete') binding.close();
+            },
+        };
+
+        return eventQueue.consume(handler, { ...consumeOptions, noAck: true }, this);
+    }
+
+    public off(pattern, handler) {
+        if (this.events) return this.events.off(`exchange.${pattern}`, handler);
+
+        const { consumerTag } = handler;
+
+        for (const binding of this[kBindings]) {
+            if (binding.pattern === pattern) {
+                if (consumerTag) binding.queue.cancel(consumerTag);
+                else binding.queue.dismiss(handler);
+            }
+        }
+    }
+}
+
+class Binding {
+    id: string;
+    options: any;
+    pattern: any;
+    exchange: any;
+    queue: any;
+    private _compiledPattern: any;
+    public constructor(exchange, queue, pattern, bindOptions) {
+        this.id = `${queue.name}/${pattern}`;
+        this.options = { priority: 0, ...bindOptions };
+        this.pattern = pattern;
+        this.exchange = exchange;
+        this.queue = queue;
+        this._compiledPattern = getRoutingKeyPattern(pattern);
+
+        queue.on('delete', () => {
+            this.close();
+        });
+    }
+
+    public testPattern(routingKey) {
+        return this._compiledPattern.test(routingKey);
+    }
+
+    public close() {
+        this.exchange.unbindQueue(this.queue, this.pattern);
+    }
+
+    public getState() {
+        return {
+            id: this.id,
+            options: { ...this.options },
+            queueName: this.queue.name,
+            pattern: this.pattern,
+        };
+    }
+}

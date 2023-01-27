@@ -187,6 +187,7 @@ export * from './moment/moment';
 export * from './publish';
 
 export * from './Net';
+export * from './amqp';
 
 import './exports';
 
