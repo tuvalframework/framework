@@ -44,6 +44,12 @@ export class CreateContextClass extends UIView {
         return this;
     }
 
+    @ViewProperty() vp_OnError:Function;
+    public onError(value: Function): this {
+        this.vp_OnError = value;
+        return this;
+    }
+    
    /*  @ViewProperty() vp_Record:any;
     public record(value: any): this {
         this.vp_Record = value;

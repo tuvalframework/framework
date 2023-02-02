@@ -26,7 +26,7 @@ const TooltipWrapper: (props: any/* InputTextProps */) => any = React.memo(React
                 view={props.control.constructor.name} className={props._className} {...props.elementProps} >
                 {props.children}
             </div>
-            <Tooltip target={elementRef} content={props.control.Tooltip} position={'top'}></Tooltip>
+            <Tooltip target={elementRef} content={props.control.Tooltip} position={'right'}></Tooltip>
         </Fragment>
     )
 }))

@@ -1,5 +1,5 @@
 import { TApplication } from "./TApplication";
-import { List ,EventBus} from "@tuval/core";
+import { List ,EventBus, foreach} from "@tuval/core";
 
 export class TaskManager {
     private static Applications: List<TApplication> = new List();
@@ -14,7 +14,17 @@ export class TaskManager {
         });
 
     }
+    public static QuitAll(): void {
+       
+        foreach(TaskManager.Applications, (app => {
+            EventBus.Default.fire('tuval.desktop.formClosed', { form: app.GetMainTForm() });
+        }));
+        TaskManager.Applications.Clear();
+
+        EventBus.Default.fire('tuval.desktop.render', {});
+    }
     public static Quit(app:TApplication): void {
+        EventBus.Default.fire('tuval.desktop.formClosed', { form: app.GetMainTForm() });
         TaskManager.Applications.Remove(app);
         EventBus.Default.fire('tuval.desktop.render', {});
     }

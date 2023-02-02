@@ -159,6 +159,10 @@ export class TApplication extends Control<TApplication> {
         //this.MainForm.InitComponents();
     }
 
+    public GetMainTForm(): TForm {
+        return this.MainForm ;
+    }
+
     public SetMainController(mainform: UIController) {
         this.Controller = mainform;
         // this.MainForm.Application = this;

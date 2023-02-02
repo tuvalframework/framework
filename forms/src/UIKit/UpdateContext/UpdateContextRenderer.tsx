@@ -93,6 +93,11 @@ export class UpdateContextRenderer extends ControlHtmlRenderer<UpdateContextClas
                             if (is.function(obj.vp_OnSuccess)) {
                                 obj.vp_OnSuccess(data);
                             }
+                        },
+                        onError: (e) => {
+                            if (is.function(obj.vp_OnError)) {
+                                obj.vp_OnError(e);
+                            }
                         }
                     })
             }

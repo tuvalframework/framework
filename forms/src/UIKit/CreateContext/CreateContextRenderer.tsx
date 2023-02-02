@@ -52,6 +52,11 @@ export class CreateContextRenderer extends ControlHtmlRenderer<CreateContextClas
                         if (is.function(obj.vp_OnSuccess)) {
                             obj.vp_OnSuccess(data);
                         }
+                    },  
+                    onError: (e) => {
+                        if (is.function(obj.vp_OnError)) {
+                            obj.vp_OnError(e);
+                        }
                     }
                 })
             }
