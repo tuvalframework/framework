@@ -10,6 +10,7 @@ import { Chips } from './components/Chips/Chips';
 import { ColorPicker } from './components/ColorPicker/ColorPicker';
 import { MenuButton } from './components/MenuButton/MenuButton';
 import { EditableHeader } from './components/EditableHeader/EditableHeader';
+import { Dropdown } from "./components/Dropdown/Dropdown";
 
 const list = [{
     name: 'test'
@@ -40,6 +41,24 @@ export class MyController extends UIController {
 
     @State([""])
     public colorPickerValue: string;
+
+    @State([{
+        name: 'test',
+        value: '1'
+    },
+    {
+        name: 'test1',
+        value: '2'
+    },
+    {
+        name: 'test2',
+        value: '3'
+    }
+    ])
+    private dropDownDataSource: object[];
+
+    @State('1')
+    private dropDownSelectedValue: string;
 
     public override LoadView(): UIViewClass {
 
@@ -91,23 +110,29 @@ export class MyController extends UIController {
             VStack({ alignment: cTop, spacing: 10 })(
                 TextField(),
                 Text((this.counter).toString())
-                .tooltip("Test tooltip")
+                    .tooltip("Test tooltip")
                     .background(this.color)
                     .onClick(() => {
                         const a = this.counter;
                         this.counter = a + 1;
                         this.color = "gray";
                     }),
-                    CheckBox().checked(this.checked).labelView(
-                        Text("Hans")
-                    )
+                CheckBox().checked(this.checked).labelView(
+                    Text("Hans")
+                )
                     .onChange((e) => this.checked = e),
-                    Chips().value(this.chipsValue).onChange((e)=> this.chipsValue = e),
-                    ColorPicker().value(this.colorPickerValue).onChange((e)=> this.colorPickerValue = e),
-                    MenuButton(),
-                    EditableHeader()
+                Chips().value(this.chipsValue).onChange((e) => this.chipsValue = e),
+                ColorPicker().value(this.colorPickerValue).onChange((e) => this.colorPickerValue = e),
+                MenuButton(),
+                EditableHeader(),
+                Dropdown()
+                    .width('100%')
+                    .value(this.dropDownSelectedValue)
+                    .model(this.dropDownDataSource)
+                    .fields({ text: 'name', value: 'value' })
+                    .onChange(e => this.dropDownSelectedValue = e)
 
-             )
+            )
         )
     }
 }
