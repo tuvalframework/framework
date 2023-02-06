@@ -13,7 +13,12 @@ function VStackRenderer({ control }: IControlProperties) {
     return (
         <Fragment>
             {
-                control.vp_Chidren.map((view: UIViewClass) => view.render() )
+                control.vp_Chidren.map((view: UIViewClass) => {
+                    if (control.vp_Spacing) {
+                        view.Appearance.MarginBottom = control.vp_Spacing;
+                    }
+                    return view.render();
+                })
             }
         </Fragment>
     );

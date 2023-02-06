@@ -1,5 +1,5 @@
 import { UIViewClass } from './UIView/UIViewClass';
-import LabelRenderer from './LabelRenderer';
+import TextRenderer from './components/Text/TextRenderer';
 import { Renderer } from './RendererDecorator';
 import React from "react";
 import UIViewRenderer from './UIView/UIViewRenderer';

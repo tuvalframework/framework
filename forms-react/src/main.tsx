@@ -1,14 +1,16 @@
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { Form } from './Form';
-import { Label } from './Label';
+import { Text } from './components/Text/Text';
 import { MyController } from './MyController';
 import { CssHelper } from './utils/CssHelper';
 
-import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import 'primereact/resources/themes/bootstrap4-light-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+
+import 'primeflex/primeflex.css';
 
 import 'monday-ui-react-core/dist/main.css';
 import { Convert } from '@tuval/core';

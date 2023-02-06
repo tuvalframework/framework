@@ -1,16 +1,14 @@
-import React, { Fragment, useState } from "react";
-import { UIViewClass } from "./UIView/UIViewClass";
-import { Label } from "./Label";
-import { ReactView } from "./ReactView/ReactView";
+import { cTop } from "./Constants";
+import { Text } from './components/Text/Text';
 import { State, UIController } from "./UIController";
+import { UIViewClass } from "./UIView/UIViewClass";
 import { VStack } from "./VStack/VStack";
-import { cLeading, cTop } from "./Constants";
-import { ForEach } from "./UIView/ForEach";
-import { HStack } from "./HStack/HStack";
-import { Tooltip } from "./Tooltip/Tooltip";
-import { TextField } from "./TextField/TextField";
-import { AutoComplete } from "./components/AutoComplete/AutoComplete";
 //import { TextField } from 'monday-ui-react-core';
+import { TextField } from "./components/TextField/TextField";
+import { CheckBox } from './components/Checkbox/Checkbox';
+import { Chips } from './components/Chips/Chips';
+import { ColorPicker } from './components/ColorPicker/ColorPicker';
+import { MenuButton } from './components/MenuButton/MenuButton';
 
 const list = [{
     name: 'test'
@@ -32,6 +30,15 @@ export class MyController extends UIController {
 
     @State("red")
     public text: string;
+
+    @State(true)
+    public checked: boolean;
+
+    @State(["test"])
+    public chipsValue: string[];
+
+    @State([""])
+    public colorPickerValue: string;
 
     public override LoadView(): UIViewClass {
 
@@ -61,7 +68,7 @@ export class MyController extends UIController {
              ) */
 
 
-            VStack({ alignment: cTop })(
+            /* VStack({ alignment: cTop, spacing: 10 })(
                 ...ForEach(Array(100).fill(null).map((u, i) => i))(() =>
                     HStack({ alignment: cLeading })(
                         Label((this.counter).toString())
@@ -75,10 +82,30 @@ export class MyController extends UIController {
 
                        AutoComplete().datasource(list).field('name')
                        .completeMethod((query) => list.filter( item => item.name.indexOf(query)))
-                       .onChange(e => console.log(e))
+                       .onChange(e => console.log(e)),
+                      Calendar().showIcon(true)
                     )
                 )
-            )
+            ) */
+            VStack({ alignment: cTop, spacing: 10 })(
+                TextField(),
+                Text((this.counter).toString())
+                .tooltip("Test tooltip")
+                    .background(this.color)
+                    .onClick(() => {
+                        const a = this.counter;
+                        this.counter = a + 1;
+                        this.color = "gray";
+                    }),
+                    CheckBox().checked(this.checked).labelView(
+                        Text("Hans")
+                    )
+                    .onChange((e) => this.checked = e),
+                    Chips().value(this.chipsValue).onChange((e)=> this.chipsValue = e),
+                    ColorPicker().value(this.colorPickerValue).onChange((e)=> this.colorPickerValue = e),
+                    MenuButton()
+
+             )
         )
     }
 }

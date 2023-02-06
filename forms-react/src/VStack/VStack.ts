@@ -53,9 +53,7 @@ export function VStack(...args: any[]): FunctionVStack | VStackClass {
          } */
 
         return (...views: UIViewClass[]) => {
-
                 return new VStackClass().children(...views).alignment(params.alignment).spacing(params.spacing)
-
         }
     } else {
 

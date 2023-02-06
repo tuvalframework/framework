@@ -13,6 +13,7 @@ function AutoCompleteRenderer({ control }: IControlProperties) {
 
     return (
         <AutoComplete
+            key={control.vp_Key}
             field={control.vp_Field}
             value={control.vp_Value}
             suggestions={control.vp_DataSource}

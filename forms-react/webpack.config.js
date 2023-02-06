@@ -1,13 +1,13 @@
 const path = require('path');
- const DeclarationBundlerPlugin = require('./declaration-bundler-webpack-plugin.fix');
+const DeclarationBundlerPlugin = require('./declaration-bundler-webpack-plugin.fix');
 const DtsBundleWebpack = require('dts-bundle-webpack');
 const fs = require('fs');
 
 var libraryName = '@tuval/forms';
 
-function DtsBundlePlugin() {}
-DtsBundlePlugin.prototype.apply = function(compiler) {
-    compiler.plugin('done', function() {
+function DtsBundlePlugin() { }
+DtsBundlePlugin.prototype.apply = function (compiler) {
+    compiler.plugin('done', function () {
         var dts = require('dts-bundle');
         if (!dts) {
             throw 'Dts not found.';
@@ -37,30 +37,30 @@ const umdConfig = {
     devtool: 'source-map',
     entry: './src/index.ts',
     externals: [
-      /*   '@tuval/core',
-        '@tuval/cg',
-        '@tuval/graphics',
-        '@tuval/components/buttons',
-        '@tuval/components/calendars',
-        '@tuval/components/compression',
-        '@tuval/components/core',
-        '@tuval/components/data',
-        '@tuval/components/diagram',
-        '@tuval/components/dropdowns',
-        '@tuval/components/excelexport',
-        '@tuval/components/filemanager',
-        '@tuval/components/fileutils',
-        '@tuval/components/grids',
-        '@tuval/components/inputs',
-        '@tuval/components/layouts',
-        '@tuval/components/lists',
-        '@tuval/components/navigations',
-        '@tuval/components/pdfexport',
-        '@tuval/components/popups',
-        '@tuval/components/splitbuttons',
-        '@tuval/components/charts',
-        '@tuval/components/svgbase',
-        '@tuval/brokers/client', */
+        /*   '@tuval/core',
+          '@tuval/cg',
+          '@tuval/graphics',
+          '@tuval/components/buttons',
+          '@tuval/components/calendars',
+          '@tuval/components/compression',
+          '@tuval/components/core',
+          '@tuval/components/data',
+          '@tuval/components/diagram',
+          '@tuval/components/dropdowns',
+          '@tuval/components/excelexport',
+          '@tuval/components/filemanager',
+          '@tuval/components/fileutils',
+          '@tuval/components/grids',
+          '@tuval/components/inputs',
+          '@tuval/components/layouts',
+          '@tuval/components/lists',
+          '@tuval/components/navigations',
+          '@tuval/components/pdfexport',
+          '@tuval/components/popups',
+          '@tuval/components/splitbuttons',
+          '@tuval/components/charts',
+          '@tuval/components/svgbase',
+          '@tuval/brokers/client', */
     ],
     module: {
         rules: [
@@ -184,4 +184,4 @@ const umdConfig = {
     ]
 };
 
-module.exports = [umdConfig /* webClientConfig */ /* umdConfig */ /* , umdWebProcess */ ];
+module.exports = [umdConfig /* webClientConfig */ /* umdConfig */ /* , umdWebProcess */];

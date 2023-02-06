@@ -6,7 +6,10 @@ export function ViewProperty(defaultValue?: any): any/* PropertyDecorator */ {
                     this.propertyBag = {};
                 }
                 this.propertyBag[key] = newValue;
-                this.ForceUpdate()
+                if (!this.silentMode) {
+                    this.ForceUpdate()
+                }
+
 
             },
             get: function (): any {

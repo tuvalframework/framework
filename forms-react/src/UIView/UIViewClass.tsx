@@ -1,13 +1,27 @@
-import { int, is } from "@tuval/core";
+import { Guid, int, is } from "@tuval/core";
 import { AppearanceObject } from "./AppearanceObject";
 import { ViewProperty } from "./ViewProperty";
 import { StyleAttribute } from "./StyleAttribute";
 import { ColorClass } from "./ColorClass";
+import React from "react";
+
 
 export class UIViewClass {
+    private silentMode: boolean;
     private isInRenderProcess: boolean = false;
     public static Renderer: any;
     public propertyBag = {}
+
+    public BeginUpdate() {
+        this.silentMode = true;
+    }
+
+    public EndUpdate() {
+        this.silentMode = false;
+    }
+
+    @ViewProperty()
+    public vp_Key: string;
 
     @ViewProperty()
     public vp_Background: string;
@@ -47,6 +61,13 @@ export class UIViewClass {
     public BeforeAppearance: AppearanceObject;
 
     public constructor() {
+
+        this.BeginUpdate();
+        const [key, setKey] = React.useState(Guid.NewGuid().ToString());
+        this.vp_Key = key;
+        console.log(key);
+        this.EndUpdate();
+
         this.Appearance = new AppearanceObject(this);
         this.HoverAppearance = new AppearanceObject(this);
         this.FocusAppearance = new AppearanceObject(this);

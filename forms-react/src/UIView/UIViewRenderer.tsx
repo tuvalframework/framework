@@ -10,7 +10,7 @@ export interface IControlProperties {
 }
 
 
-const UIViewRenderer = ({ control, renderer , wrap}: IControlProperties) => {
+const UIViewRenderer = ({ control, renderer, wrap }: IControlProperties) => {
     control.RenderStarted();
 
     const [value, setValue] = useState(0);
@@ -44,7 +44,7 @@ const UIViewRenderer = ({ control, renderer , wrap}: IControlProperties) => {
     let component = null;
     if (wrap) {
         component = (
-            <div className={_className}>
+            <div className={_className} >
                 {React.createElement(renderer, { control: control })}
             </div>
         )
@@ -64,7 +64,7 @@ const UIViewRenderer = ({ control, renderer , wrap}: IControlProperties) => {
             <Tooltip content={control.vp_Tooltip} position={Tooltip.positions.RIGHT} >
                 <div className="monday-storybook-tooltip_icon-wrapper">
                     {
-                       component
+                        component
                     }
                 </div>
             </Tooltip>
