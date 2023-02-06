@@ -9,6 +9,7 @@ import { CheckBox } from './components/Checkbox/Checkbox';
 import { Chips } from './components/Chips/Chips';
 import { ColorPicker } from './components/ColorPicker/ColorPicker';
 import { MenuButton } from './components/MenuButton/MenuButton';
+import { EditableHeader } from './components/EditableHeader/EditableHeader';
 
 const list = [{
     name: 'test'
@@ -103,7 +104,8 @@ export class MyController extends UIController {
                     .onChange((e) => this.checked = e),
                     Chips().value(this.chipsValue).onChange((e)=> this.chipsValue = e),
                     ColorPicker().value(this.colorPickerValue).onChange((e)=> this.colorPickerValue = e),
-                    MenuButton()
+                    MenuButton(),
+                    EditableHeader()
 
              )
         )

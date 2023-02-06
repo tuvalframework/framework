@@ -1,15 +1,19 @@
 import { css } from "@emotion/css";
-import { Icon, Menu, MenuButton, MenuItem, MenuTitle } from "monday-ui-react-core";
+import { Heading, Icon, Menu, MenuButton, MenuItem, MenuTitle } from "monday-ui-react-core";
+import  EditableHeading  from "monday-ui-react-core/dist/EditableHeading";
+
 import Bolt from "monday-ui-react-core/dist/icons/Bolt";
 
+
 import React, { Fragment } from "react";
-import { MenuButtonClass } from "./EditableHeaderClass";
+import { EditableHeaderClass } from "./EditableHeaderClass";
+
 
 export interface IControlProperties {
-    control: MenuButtonClass
+    control: EditableHeaderClass
 }
 
-function MenuButtonRenderer({ control }: IControlProperties) {
+function EditableHeaderRenderer({ control }: IControlProperties) {
     const className = css`
     ${control.Appearance.ToString()}
     ${control.HoverAppearance.IsEmpty ? '' : '&:hover { ' + control.HoverAppearance.ToString() + ' }'}
@@ -19,43 +23,10 @@ function MenuButtonRenderer({ control }: IControlProperties) {
 
     return (
         <Fragment>
-            <Icon iconType={Icon.type.SVG} icon={Bolt} iconLabel="my bolt svg icon" iconSize={16} />
-            <MenuButton closeDialogOnContentClick={true}>
-                <Menu
-                    id="menu"
-                    size="medium"
-                >
-
-                    <MenuTitle
-                        caption="Look up, you might see"
-                        captionPosition={"top" as any}
-                    />
-                    <MenuItem>
-                        <h1>hfghgfhfg</h1>
-                    </MenuItem>
-                    <MenuItem
-                        icon={Bolt}
-                        // iconType={"SVG" as any}
-                        onClick={function noRefCheck() { }}
-                        title="The sun"
-                    />
-                    <MenuItem
-                        icon={""}
-                        iconType={"SVG" as any}
-                        onClick={function noRefCheck() { }}
-                        title="The moon"
-                    />
-                    <MenuItem
-                        icon={""}
-                        iconType={"SVG" as any}
-                        onClick={function noRefCheck() { }}
-                        title="And the stars"
-                    />
-                </Menu>
-            </MenuButton>
+            <EditableHeading brandFont size={Heading.sizes.MEDIUM} value="This heading is editable" />
         </Fragment>
     );
 
 }
 
-export default MenuButtonRenderer;
+export default EditableHeaderRenderer;

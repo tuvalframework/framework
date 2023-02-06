@@ -2,10 +2,9 @@ import React from "react";
 import { UIViewClass } from "../../UIView/UIViewClass";
 import UIViewRenderer from "../../UIView/UIViewRenderer";
 import { ViewProperty } from "../../UIView/ViewProperty";
-import ColorPickerRenderer from "./EditableHeaderRenderer";
-import ChipsRenderer from "./EditableHeaderRenderer";
+import EditableHeaderRenderer from "./EditableHeaderRenderer";
 
-export class MenuButtonClass extends UIViewClass {
+export class EditableHeaderClass extends UIViewClass {
     /** @internal */
     @ViewProperty() vp_Value: string;
 
@@ -22,6 +21,6 @@ export class MenuButtonClass extends UIViewClass {
          return this;
      }
     public render() {
-        return (<UIViewRenderer wrap={false} control={this} renderer={ColorPickerRenderer}></UIViewRenderer>)
+        return (<UIViewRenderer wrap={false} control={this} renderer={EditableHeaderRenderer}></UIViewRenderer>)
     }
 }

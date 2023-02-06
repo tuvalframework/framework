@@ -1,5 +1,5 @@
-import { MenuButtonClass } from "./EditableHeaderClass";
+import { EditableHeaderClass } from "./EditableHeaderClass";
 
-export function MenuButton() {
-    return new MenuButtonClass();
+export function EditableHeader() {
+    return new EditableHeaderClass();
 }
