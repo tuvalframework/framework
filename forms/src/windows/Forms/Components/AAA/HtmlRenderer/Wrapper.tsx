@@ -124,7 +124,7 @@ export class Wrapper extends Component {
 
             if (this.props.renderAsAnimated) {
                 return (
-                    <motion.div view={this.props.control.constructor.name} className={_className} data-pr-tooltip={'sdfsdf'} {...this.props.elementProps}>
+                    <motion.div view={this.props.control.constructor.name} className={_className}  {...this.props.elementProps}>
                         <Tooltip target={'.' + _className} mouseTrack mouseTrackLeft={10} />
                         {this.props.children}
                     </motion.div>
