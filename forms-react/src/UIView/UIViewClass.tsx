@@ -141,6 +141,267 @@ export class UIViewClass {
         throw `ArgumentOutOfRange Exception in UIView::width method. Argument count: ${args.length}`;
     }
 
+    public minWidth(): this;
+    public minWidth(value: int): this;
+    public minWidth(value: string): this;
+    public minWidth(value: StyleAttribute): this;
+    public minWidth(...args: any[]): this {
+        if (args.length === 0) {
+            this.Appearance.MinWidth = '';
+            return this;
+        } else if (args.length === 1 && is.number(args[0])) {
+            const value = args[0];
+            this.Appearance.MinWidth = `${value}px`;
+            return this;
+        } else if (args.length === 1 && is.string(args[0])) {
+            const value: string = args[0];
+            this.Appearance.MinWidth = value;
+            return this;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.MinWidth = styleAttribute.default as any;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.MinWidth = styleAttribute.hover as any;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.MinWidth = styleAttribute.active as any;
+            }
+            if (styleAttribute.disabled != null) {
+                this.DisabledAppearance.MinWidth = styleAttribute.disabled as any;
+            }
+
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.MinWidth = styleAttribute.focus as any;
+            }
+
+            if (styleAttribute.before != null) {
+                this.BeforeAppearance.MinWidth = styleAttribute.before as any;
+            }
+            return this;
+        }
+
+        throw `ArgumentOutOfRange Exception in UIView::height method. Argument count: ${args.length}`;
+    }
+
+    public maxWidth(): this;
+    public maxWidth(value: int): this;
+    public maxWidth(value: string): this;
+    public maxWidth(value: StyleAttribute): this;
+    public maxWidth(...args: any[]): this {
+        if (args.length === 0) {
+            this.Appearance.MaxWidth = '';
+            return this;
+        } else if (args.length === 1 && is.number(args[0])) {
+            const value = args[0];
+            this.Appearance.MaxWidth = `${value}px`;
+            return this;
+        } else if (args.length === 1 && is.string(args[0])) {
+            const value: string = args[0];
+            this.Appearance.MaxWidth = value;
+            return this;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.MaxWidth = styleAttribute.default as any;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.MaxWidth = styleAttribute.hover as any;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.MaxWidth = styleAttribute.active as any;
+            }
+            if (styleAttribute.disabled != null) {
+                this.DisabledAppearance.MaxWidth = styleAttribute.disabled as any;
+            }
+
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.MaxWidth = styleAttribute.focus as any;
+            }
+
+            if (styleAttribute.before != null) {
+                this.BeforeAppearance.MaxWidth = styleAttribute.before as any;
+            }
+            return this;
+        }
+
+        throw `ArgumentOutOfRange Exception in UIView::height method. Argument count: ${args.length}`;
+    }
+
+    public allWidth(): this;
+    public allWidth(value: int): this;
+    public allWidth(value: string): this;
+    public allWidth(...args: any[]): this {
+        if (args.length === 0) {
+            this.Appearance.Width = this.Appearance.MinWidth = this.Appearance.MaxWidth = '';
+            return this;
+        } else if (args.length === 1 && is.number(args[0])) {
+            const value = args[0];
+            this.Appearance.Width = this.Appearance.MinWidth = this.Appearance.MaxWidth = `${value}px`;
+            return this;
+        } else if (args.length === 1 && is.string(args[0])) {
+            const value: string = args[0];
+            this.Appearance.Width = this.Appearance.MinWidth = this.Appearance.MaxWidth = value;
+            return this;
+        }
+
+        throw `ArgumentOutOfRange Exception in UIView::width method. Argument count: ${args.length}`;
+    }
+
+    public height(): this;
+    public height(value: int): this;
+    public height(value: string): this;
+    public height(value: StyleAttribute): this;
+    public height(...args: any[]): this {
+        if (args.length === 0) {
+             this.Appearance.Height = 'fit-content';
+            return this;
+        } else if (args.length === 1 && is.number(args[0])) {
+            const value = args[0];
+            this.Appearance.Height = `${value}px`;
+            return this;
+        } else if (args.length === 1 && is.string(args[0])) {
+            const value: string = args[0];
+            this.Appearance.Height = value;
+            return this;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.Height = styleAttribute.default as any;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.Height = styleAttribute.hover as any;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.Height = styleAttribute.active as any;
+            }
+            if (styleAttribute.disabled != null) {
+              this.DisabledAppearance.Height = styleAttribute.disabled as any;
+            }
+
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.Height = styleAttribute.focus as any;
+            }
+
+            if (styleAttribute.before != null) {
+                 this.BeforeAppearance.Height = styleAttribute.before as any;
+            }
+            return this;
+        }
+
+        throw `ArgumentOutOfRange Exception in UIView::height method. Argument count: ${args.length}`;
+    }
+
+    public allHeight(): this;
+    public allHeight(value: int): this;
+    public allHeight(value: string): this;
+    public allHeight(...args: any[]): this {
+        if (args.length === 0) {
+            this.Appearance.Height = this.Appearance.MaxHeight = this.Appearance.MinHeight = '';
+            return this;
+        } else if (args.length === 1 && is.number(args[0])) {
+            const value = args[0];
+            this.Appearance.Height = this.Appearance.MaxHeight = this.Appearance.MinHeight = `${value}px`;
+            return this;
+        } else if (args.length === 1 && is.string(args[0])) {
+            const value: string = args[0];
+            this.Appearance.Height = this.Appearance.MaxHeight = this.Appearance.MinHeight = value;
+            return this;
+        }
+
+        throw `ArgumentOutOfRange Exception in UIView::height method. Argument count: ${args.length}`;
+    }
+
+    public minHeight(): this;
+    public minHeight(value: int): this;
+    public minHeight(value: string): this;
+    public minHeight(value: StyleAttribute): this;
+    public minHeight(...args: any[]): this {
+        if (args.length === 0) {
+            this.Appearance.MinHeight = '';
+            return this;
+        } else if (args.length === 1 && is.number(args[0])) {
+            const value = args[0];
+            this.Appearance.MinHeight = `${value}px`;
+            return this;
+        } else if (args.length === 1 && is.string(args[0])) {
+            const value: string = args[0];
+            this.Appearance.MinHeight = value;
+            return this;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.MinHeight = styleAttribute.default as any;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.MinHeight = styleAttribute.hover as any;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.MinHeight = styleAttribute.active as any;
+            }
+            if (styleAttribute.disabled != null) {
+                this.DisabledAppearance.MinHeight = styleAttribute.disabled as any;
+            }
+
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.MinHeight = styleAttribute.focus as any;
+            }
+
+            if (styleAttribute.before != null) {
+                this.BeforeAppearance.MinHeight = styleAttribute.before as any;
+            }
+            return this;
+        }
+
+        throw `ArgumentOutOfRange Exception in UIView::minheight method. Argument count: ${args.length}`;
+    }
+
+    public maxHeight(): this;
+    public maxHeight(value: int): this;
+    public maxHeight(value: string): this;
+    public maxHeight(value: StyleAttribute): this;
+    public maxHeight(...args: any[]): this {
+        if (args.length === 0) {
+            this.Appearance.MaxHeight = '';
+            return this;
+        } else if (args.length === 1 && is.number(args[0])) {
+            const value = args[0];
+            this.Appearance.MaxHeight = `${value}px`;
+            return this;
+        } else if (args.length === 1 && is.string(args[0])) {
+            const value: string = args[0];
+            this.Appearance.MaxHeight = value;
+            return this;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.MaxHeight = styleAttribute.default as any;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.MaxHeight = styleAttribute.hover as any;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.MaxHeight = styleAttribute.active as any;
+            }
+            if (styleAttribute.disabled != null) {
+                this.DisabledAppearance.MaxHeight = styleAttribute.disabled as any;
+            }
+
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.MaxHeight = styleAttribute.focus as any;
+            }
+
+            if (styleAttribute.before != null) {
+                this.BeforeAppearance.MaxHeight = styleAttribute.before as any;
+            }
+            return this;
+        }
+
+        throw `ArgumentOutOfRange Exception in UIView::maxHeight method. Argument count: ${args.length}`;
+    }
+
+
     public background(value: ColorClass): this;
     public background(value: StyleAttribute): this;
     //public background(zstack: ZStackClass): this;

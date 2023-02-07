@@ -2,7 +2,7 @@ import React from "react";
 import { UIViewClass } from "../../UIView/UIViewClass";
 import UIViewRenderer from "../../UIView/UIViewRenderer";
 import { ViewProperty } from "../../UIView/ViewProperty";
-import DropdownRenderer from "./DropdownRenderer";
+import PrimeRenderer from "./Renderers/PrimeRenderer";
 import VibeRenderer from "./Renderers/VibeRenderer";
 
 export class DropdownClass extends UIViewClass {

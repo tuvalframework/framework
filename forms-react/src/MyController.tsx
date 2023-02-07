@@ -11,6 +11,8 @@ import { ColorPicker } from './components/ColorPicker/ColorPicker';
 import { MenuButton } from './components/MenuButton/MenuButton';
 import { EditableHeader } from './components/EditableHeader/EditableHeader';
 import { Dropdown } from "./components/Dropdown/Dropdown";
+import { Editor } from './components/Editor/Editor';
+import { InputGroup } from './components/InputGroup/InputGroup';
 
 const list = [{
     name: 'test'
@@ -59,6 +61,9 @@ export class MyController extends UIController {
 
     @State('1')
     private dropDownSelectedValue: string;
+
+    @State('')
+    private editorValue: string;
 
     public override LoadView(): UIViewClass {
 
@@ -130,7 +135,11 @@ export class MyController extends UIController {
                     .value(this.dropDownSelectedValue)
                     .model(this.dropDownDataSource)
                     .fields({ text: 'name', value: 'value' })
-                    .onChange(e => this.dropDownSelectedValue = e)
+                    .onChange(e => this.dropDownSelectedValue = e),
+                Text(this.editorValue),
+                Editor().value(this.editorValue).onChange(e => this.editorValue = e).height(320),
+                InputGroup()
+
 
             )
         )
