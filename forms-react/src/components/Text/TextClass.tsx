@@ -1,9 +1,9 @@
-import { UIViewClass } from '../../UIView/UIViewClass';
+import { UIViewClass } from '../UIView/UIViewClass';
 import TextRenderer from './TextRenderer';
 import { Renderer } from '../../RendererDecorator';
 import React from "react";
-import UIViewRenderer from '../../UIView/UIViewRenderer';
-import { ViewProperty } from '../../UIView/ViewProperty';
+import UIViewRenderer from '../UIView/UIViewRenderer';
+import { ViewProperty } from '../UIView/ViewProperty';
 
 
 export class TextClass extends UIViewClass{

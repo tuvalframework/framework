@@ -1,7 +1,7 @@
 import React from "react";
-import { UIViewClass } from "../../UIView/UIViewClass";
-import UIViewRenderer from "../../UIView/UIViewRenderer";
-import { ViewProperty } from "../../UIView/ViewProperty";
+import { UIViewClass } from "../UIView/UIViewClass";
+import UIViewRenderer from "../UIView/UIViewRenderer";
+import { ViewProperty } from "../UIView/ViewProperty";
 import InputMaskRenderer from "./InputMaskRenderer";
 
 export class InputMaskClass extends UIViewClass {

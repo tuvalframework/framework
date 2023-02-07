@@ -1,7 +1,7 @@
 import React from "react";
-import { UIViewClass } from "../../UIView/UIViewClass";
-import UIViewRenderer from "../../UIView/UIViewRenderer";
-import { ViewProperty } from "../../UIView/ViewProperty";
+import { UIViewClass } from "../UIView/UIViewClass";
+import UIViewRenderer from "../UIView/UIViewRenderer";
+import { ViewProperty } from "../UIView/ViewProperty";
 import CheckBoxRenderer from "./CheckBoxRenderer";
 import TextFieldRenderer from "./CheckBoxRenderer";
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { UIViewClass } from "../../UIView/UIViewClass";
+import { UIViewClass } from "../UIView/UIViewClass";
 import { TextClass } from "./TextClass";
 
 export interface IControlProperties {

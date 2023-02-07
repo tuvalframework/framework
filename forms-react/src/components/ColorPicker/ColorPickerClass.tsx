@@ -1,7 +1,7 @@
 import React from "react";
-import { UIViewClass } from "../../UIView/UIViewClass";
-import UIViewRenderer from "../../UIView/UIViewRenderer";
-import { ViewProperty } from "../../UIView/ViewProperty";
+import { UIViewClass } from "../UIView/UIViewClass";
+import UIViewRenderer from "../UIView/UIViewRenderer";
+import { ViewProperty } from "../UIView/ViewProperty";
 import ColorPickerRenderer from "./ColorPickerRenderer";
 import ChipsRenderer from "./ColorPickerRenderer";
 

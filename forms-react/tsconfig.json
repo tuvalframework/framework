@@ -25,7 +25,8 @@
     "jsx": "react",
     "jsxFactory": "React.createElement",
     "typeRoots": [
-      "node_modules/@types"
+      "node_modules/@types",
+      "node_modules/monday-ui-react-core/types"
     ]
   },
   "include": [

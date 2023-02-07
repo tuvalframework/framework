@@ -1,8 +1,8 @@
 import { cTop } from "./Constants";
 import { Text } from './components/Text/Text';
 import { State, UIController } from "./UIController";
-import { UIViewClass } from "./UIView/UIViewClass";
-import { VStack } from "./VStack/VStack";
+import { UIViewClass } from "./components/UIView/UIViewClass";
+import { VStack } from "./layout/VStack/VStack";
 //import { TextField } from 'monday-ui-react-core';
 import { TextField } from "./components/TextField/TextField";
 import { CheckBox } from './components/Checkbox/Checkbox';
@@ -13,6 +13,13 @@ import { EditableHeader } from './components/EditableHeader/EditableHeader';
 import { Dropdown } from "./components/Dropdown/Dropdown";
 import { Editor } from './components/Editor/Editor';
 import { InputGroup } from './components/InputGroup/InputGroup';
+import { InputMask } from './components/InputMask/InputMask';
+import { InputSwitch } from './components/InputSwitch/InputSwitch';
+import { InputNumber } from './components/InputNumber/InputNumber';
+import { InputTextArea } from "./components/InputTextarea/InputTextarea";
+import { Knob } from './components/Knob/Knob';
+import { int } from "@tuval/core";
+import { ListBox } from './components/ListBox/ListBox';
 
 const list = [{
     name: 'test'
@@ -64,6 +71,19 @@ export class MyController extends UIController {
 
     @State('')
     private editorValue: string;
+
+
+    @State(false)
+    private inputSwitchValue: boolean;
+
+    @State(0)
+    private inputNumberValue: number;
+
+    @State('')
+    private textAreaValue: string;
+
+    @State(0)
+    private knobValue: int;
 
     public override LoadView(): UIViewClass {
 
@@ -138,9 +158,15 @@ export class MyController extends UIController {
                     .onChange(e => this.dropDownSelectedValue = e),
                 Text(this.editorValue),
                 Editor().value(this.editorValue).onChange(e => this.editorValue = e).height(320),
-                InputGroup()
-
-
+                InputGroup(),
+                InputMask(),
+                InputSwitch().value(this.inputSwitchValue).onChange(e => this.inputSwitchValue = e),
+                InputNumber().value(this.inputNumberValue).onChange(e=> this.inputNumberValue = e),
+                InputTextArea().value(this.textAreaValue).onChange(e=> this.textAreaValue = e).width('100%'),
+                Knob().value(this.knobValue).onChange(e=> this.knobValue = e),
+                ListBox().model(this.dropDownDataSource).value(this.dropDownSelectedValue)
+                .fields({text:'name', value: 'value'})
+                .onChange(e=> this.dropDownSelectedValue = e)
             )
         )
     }

@@ -2,6 +2,8 @@ const path = require('path');
 const DeclarationBundlerPlugin = require('./declaration-bundler-webpack-plugin.fix');
 const DtsBundleWebpack = require('dts-bundle-webpack');
 const fs = require('fs');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
 var libraryName = '@tuval/forms';
 
@@ -85,6 +87,17 @@ const umdConfig = {
             {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    // Creates `style` nodes from JS strings
+                    "style-loader",
+                    // Translates CSS into CommonJS
+                    "css-loader",
+                    // Compiles Sass to CSS
+                    "sass-loader",
+                ],
             },
             {
                 test: /\.(png|jpg|gif)$/i,

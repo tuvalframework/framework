@@ -1,0 +1,23 @@
+@import './reset';
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  cursor: var(--system-cursor-default), auto;
+
+  font-family: var(--system-font-family);
+
+  overflow: hidden;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+
+  transition: background-color 150ms ease-in, background 150ms ease-in;
+}

@@ -1,4 +1,4 @@
-import { UIViewClass } from "./UIView/UIViewClass";
+import { UIViewClass } from "./components/UIView/UIViewClass";
 import { FormClass } from "./FormClass";
 
 

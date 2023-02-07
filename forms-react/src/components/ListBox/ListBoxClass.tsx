@@ -1,0 +1,42 @@
+import React from "react";
+import { UIViewClass } from "../UIView/UIViewClass";
+import UIViewRenderer from "../UIView/UIViewRenderer";
+import { ViewProperty } from "../UIView/ViewProperty";
+import ListBoxRenderer from "./ListBoxRenderer";
+
+export class ListBoxClass extends UIViewClass {
+
+    @ViewProperty() vp_fields: {text: string, value: string};
+    public fields(value: {text: string, value: string}): this {
+        this.vp_fields = value;
+        return this;
+    }
+
+    /** @internal */
+    @ViewProperty() vp_Value: string;
+
+    public value(value: string) {
+        this.vp_Value = value;
+        return this;
+    }
+
+    /** @internal */
+    @ViewProperty() vp_Model: object[];
+
+    public model(value: object[]) {
+        this.vp_Model = value;
+        return this;
+    }
+
+     /** @internal */
+     @ViewProperty() vp_OnChange: Function;
+
+     public onChange(value: Function) {
+         this.vp_OnChange = value;
+         return this;
+     }
+
+    public render() {
+        return (<UIViewRenderer wrap={false} control={this} renderer={ListBoxRenderer}></UIViewRenderer>)
+    }
+}

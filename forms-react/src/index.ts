@@ -1,5 +1,5 @@
 export * from './main'
-export * from './UIView/UIViewClass'
+export * from './components/UIView/UIViewClass'
 import './exports';
 
 

@@ -1,5 +1,5 @@
 import { css } from "@emotion/css";
-import { Icon, Menu, MenuButton, MenuItem, MenuTitle } from "monday-ui-react-core";
+import { Icon, Menu,  MenuButton,  MenuItem, MenuTitle } from "monday-ui-react-core";
 import Bolt from "monday-ui-react-core/dist/icons/Bolt";
 
 import React, { Fragment } from "react";
@@ -20,12 +20,12 @@ function MenuButtonRenderer({ control }: IControlProperties) {
     return (
         <Fragment>
             <Icon iconType={Icon.type.SVG} icon={Bolt} iconLabel="my bolt svg icon" iconSize={16} />
-            <MenuButton closeDialogOnContentClick={true}>
+            <MenuButton closeDialogOnContentClick={true} startingEdge={"top"} dialogPosition={"right-end"} component={Bolt}>
                 <Menu
                     id="menu"
                     size="medium"
                 >
-
+                    <h1>Test</h1>
                     <MenuTitle
                         caption="Look up, you might see"
                         captionPosition={"top" as any}

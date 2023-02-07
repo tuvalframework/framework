@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { UIViewClass } from "./UIView/UIViewClass";
+import { UIViewClass } from "./components/UIView/UIViewClass";
 
 
 export function State(defaultValue?: any): any/* PropertyDecorator */ {

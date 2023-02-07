@@ -1,10 +1,10 @@
-import { UIViewClass } from './UIView/UIViewClass';
+import { UIViewClass } from './components/UIView/UIViewClass';
 import TextRenderer from './components/Text/TextRenderer';
 import { Renderer } from './RendererDecorator';
 import React from "react";
-import UIViewRenderer from './UIView/UIViewRenderer';
+import UIViewRenderer from './components/UIView/UIViewRenderer';
 import FormRenderer from './FormRenderer';
-import { ViewProperty } from './UIView/ViewProperty';
+import { ViewProperty } from './components/UIView/ViewProperty';
 
 
 export class FormClass extends UIViewClass{
