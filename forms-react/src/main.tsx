@@ -58,9 +58,10 @@ function loadFonts(): void {
 
 export function StartApp() {
   loadFonts();
+
   const root = ReactDOM.createRoot(
     window.document.body
   );
-  const element = (<Application controller={MyController}></Application>);
+  const element = (<Application name="testapp" controller={MyController}></Application>);
   root.render(element);
 }

@@ -20,6 +20,10 @@ import { InputTextArea } from "./components/InputTextarea/InputTextarea";
 import { Knob } from './components/Knob/Knob';
 import { int } from "@tuval/core";
 import { ListBox } from './components/ListBox/ListBox';
+import { Application, useApplication } from './layout/Application/Application';
+import React from "react";
+import { ReactView } from "./components/ReactView/ReactView";
+import usePromise from 'react-promise-suspense';
 
 const list = [{
     name: 'test'
@@ -32,6 +36,35 @@ const list = [{
 }
 ];
 
+
+export class MyTestController extends UIController {
+    @State(10)
+    public counter: number;
+
+    public override LoadView(): UIViewClass {
+        return (
+            Text("wfdfgg " + this.counter)
+                .onClick(() => {
+                    const count = this.counter;
+                    this.counter = count + 1;
+                })
+        )
+    }
+
+}
+const controllerPromise = new Promise((resolve, reject) => {
+    alert("in promise");
+    setTimeout(() =>
+        resolve(MyTestController), 10000
+    )
+})
+const fetchController = input => controllerPromise.then(res => res);
+const About = () => {
+    // usePromise(Promise, [inputs,],)
+    const contoller = usePromise(fetchController, []);
+    //alert(contoller)
+    return (<Application name="TestApp" controller={contoller}></Application>)
+};
 export class MyController extends UIController {
     @State(10)
     public counter: number;
@@ -133,6 +166,12 @@ export class MyController extends UIController {
                 )
             ) */
             VStack({ alignment: cTop, spacing: 10 })(
+                ReactView(
+                    <React.Suspense>
+                        <About></About>
+                    </React.Suspense>
+                ),
+                Text(useApplication().Name),
                 TextField(),
                 Text((this.counter).toString())
                     .tooltip("Test tooltip")
@@ -161,12 +200,12 @@ export class MyController extends UIController {
                 InputGroup(),
                 InputMask(),
                 InputSwitch().value(this.inputSwitchValue).onChange(e => this.inputSwitchValue = e),
-                InputNumber().value(this.inputNumberValue).onChange(e=> this.inputNumberValue = e),
-                InputTextArea().value(this.textAreaValue).onChange(e=> this.textAreaValue = e).width('100%'),
-                Knob().value(this.knobValue).onChange(e=> this.knobValue = e),
+                InputNumber().value(this.inputNumberValue).onChange(e => this.inputNumberValue = e),
+                InputTextArea().value(this.textAreaValue).onChange(e => this.textAreaValue = e).width('100%'),
+                Knob().value(this.knobValue).onChange(e => this.knobValue = e),
                 ListBox().model(this.dropDownDataSource).value(this.dropDownSelectedValue)
-                .fields({text:'name', value: 'value'})
-                .onChange(e=> this.dropDownSelectedValue = e)
+                    .fields({ text: 'name', value: 'value' })
+                    .onChange(e => this.dropDownSelectedValue = e)
             )
         )
     }
