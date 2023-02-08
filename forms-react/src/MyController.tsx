@@ -57,7 +57,7 @@ export class TestController extends UIController {
 
     public override LoadView(): UIViewClass {
         return (
-            Text("Test app")
+            Text(useApplication().Name)
                 .onClick(() => {
                     const count = this.counter;
                     this.counter = count + 1;

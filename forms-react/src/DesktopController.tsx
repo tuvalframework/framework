@@ -31,7 +31,7 @@ export const ApplicationLoader = () => {
     const fetchController = input => controllerPromise.then(res => res);
     const contoller = usePromise(fetchController, [app_name]);
 
-    return (<Application name="TestApp" controller={contoller}></Application>)
+    return (<Application name={app_name} controller={contoller}></Application>)
 };
 
 export class DesktopController extends UIController {
