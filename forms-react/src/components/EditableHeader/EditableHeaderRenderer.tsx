@@ -1,6 +1,6 @@
 import { css } from "@emotion/css";
 import { Heading, Icon, Menu, MenuButton, MenuItem, MenuTitle } from "monday-ui-react-core";
-import  EditableHeading  from "monday-ui-react-core/dist/EditableHeading";
+import EditableHeading from "monday-ui-react-core/dist/EditableHeading";
 
 import Bolt from "monday-ui-react-core/dist/icons/Bolt";
 
@@ -23,7 +23,7 @@ function EditableHeaderRenderer({ control }: IControlProperties) {
 
     return (
         <Fragment>
-            <EditableHeading brandFont size={Heading.sizes.MEDIUM} value="This heading is editable" />
+            <EditableHeading brandFont size={Heading.sizes.MEDIUM} value={control.vp_Value} />
         </Fragment>
     );
 

@@ -21,9 +21,11 @@ import { Knob } from './components/Knob/Knob';
 import { int } from "@tuval/core";
 import { ListBox } from './components/ListBox/ListBox';
 import { Application, useApplication } from './layout/Application/Application';
-import React from "react";
+import React, { Fragment, useEffect } from "react";
 import { ReactView } from "./components/ReactView/ReactView";
 import usePromise from 'react-promise-suspense';
+import { Link, useParams } from "react-router-dom";
+import { DesktopController } from "./DesktopController";
 
 const list = [{
     name: 'test'
@@ -43,7 +45,19 @@ export class MyTestController extends UIController {
 
     public override LoadView(): UIViewClass {
         return (
-            Text("wfdfgg " + this.counter)
+            EditableHeader("Project Name")
+        )
+    }
+
+}
+
+export class TestController extends UIController {
+    @State(10)
+    public counter: number;
+
+    public override LoadView(): UIViewClass {
+        return (
+            Text("Test app")
                 .onClick(() => {
                     const count = this.counter;
                     this.counter = count + 1;
@@ -52,19 +66,12 @@ export class MyTestController extends UIController {
     }
 
 }
-const controllerPromise = new Promise((resolve, reject) => {
-    alert("in promise");
-    setTimeout(() =>
-        resolve(MyTestController), 10000
-    )
-})
-const fetchController = input => controllerPromise.then(res => res);
-const About = () => {
-    // usePromise(Promise, [inputs,],)
-    const contoller = usePromise(fetchController, []);
-    //alert(contoller)
-    return (<Application name="TestApp" controller={contoller}></Application>)
-};
+
+const AppCache = {};
+
+export interface IApplicationLoaderProps {
+    ApplicationName: string
+}
 export class MyController extends UIController {
     @State(10)
     public counter: number;
@@ -167,11 +174,16 @@ export class MyController extends UIController {
             ) */
             VStack({ alignment: cTop, spacing: 10 })(
                 ReactView(
-                    <React.Suspense>
-                        <About></About>
-                    </React.Suspense>
+                    <DesktopController />
                 ),
-                Text(useApplication().Name),
+                ReactView(
+                    <Fragment>
+                        <Link to="/app/com.tuvalsoft.app.organizationmanager">Organization Manager</Link>
+                        <Link to="/app/com.tuvalsoft.app.testapp">Test App</Link>
+                    </Fragment>
+                ),
+
+                //Text(useApplication().Name),
                 TextField(),
                 Text((this.counter).toString())
                     .tooltip("Test tooltip")

@@ -1,22 +1,22 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Form } from './Form';
-import { Text } from './components/Text/Text';
-import { MyController } from './MyController';
-import { CssHelper } from './utils/CssHelper';
 
 import './css/global.scss';
 
-import 'primereact/resources/themes/bootstrap4-light-blue/theme.css';
-import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+import 'primereact/resources/primereact.min.css';
+import 'primereact/resources/themes/bootstrap4-light-blue/theme.css';
 
 import 'primeflex/primeflex.css';
 
-import 'monday-ui-react-core/dist/main.css';
 import { Convert } from '@tuval/core';
-import { Application } from './layout/Application/Application';
+import 'monday-ui-react-core/dist/main.css';
+import { LayoutController } from './LayoutController';
+
+import {
+  BrowserRouter, createBrowserRouter, Link
+} from "react-router-dom";
 
 declare var FontFace;
 
@@ -31,25 +31,25 @@ fonts['primeicons'] = new FontFace('primeicons', `local('primeicons'), local('pr
 
 function loadFonts(): void {
   for (var font in fonts) {
-      if (fonts.hasOwnProperty(font)) {
-          const junction_font = fonts[font];
-          const resolve = (() => {
-              const _font = font;
-              return (loaded_face) => {
-                  (document as any).fonts.add(loaded_face);
-              }
-          })();
+    if (fonts.hasOwnProperty(font)) {
+      const junction_font = fonts[font];
+      const resolve = (() => {
+        const _font = font;
+        return (loaded_face) => {
+          (document as any).fonts.add(loaded_face);
+        }
+      })();
 
-          const reject = (() => {
-              const _font = font;
-              return (error) => {
-                  console.log('Error on load ' + _font + ' : ' + error);
+      const reject = (() => {
+        const _font = font;
+        return (error) => {
+          console.log('Error on load ' + _font + ' : ' + error);
 
-              }
-          })();
+        }
+      })();
 
-          junction_font.load().then(resolve).catch(reject);
-      }
+      junction_font.load().then(resolve).catch(reject);
+    }
   }
 }
 
@@ -59,9 +59,14 @@ function loadFonts(): void {
 export function StartApp() {
   loadFonts();
 
-  const root = ReactDOM.createRoot(
-    window.document.body
+  const root = ReactDOM.createRoot(window.document.body).render(
+    <BrowserRouter>
+      <LayoutController />
+    </BrowserRouter>
   );
-  const element = (<Application name="testapp" controller={MyController}></Application>);
-  root.render(element);
+
+
+
+  /*   const element = (<Application name="testapp" controller={MyController}></Application>);
+    root.render(element);*/
 }
