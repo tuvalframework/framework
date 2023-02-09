@@ -10,7 +10,7 @@ import 'primereact/resources/themes/bootstrap4-light-blue/theme.css';
 
 import 'primeflex/primeflex.css';
 
-import { Convert } from '@tuval/core';
+import { Convert, ModuleLoader } from '@tuval/core';
 import 'monday-ui-react-core/dist/main.css';
 import { LayoutController } from './LayoutController';
 
@@ -57,6 +57,17 @@ function loadFonts(): void {
 
 
 export function StartApp() {
+
+  ModuleLoader.LoadBundledModuleWithDecode("./com.tuvalsoft.app.procetra.app", "com.tuvalsoft.app.procetra").then((_app: any) => {
+    if (_app != null) {
+     debugger;
+      const app = new _app();
+      app.GetMainController();
+    } else {
+
+    }
+  });
+
   loadFonts();
 
   const root = ReactDOM.createRoot(window.document.body).render(

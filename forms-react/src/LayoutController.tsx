@@ -29,8 +29,8 @@ export class LayoutController extends UIController {
                 VStack({ alignment: cTopLeading })(
                     ReactView(
                         <Fragment>
-                            <Link to="/app/organizationmanager">Organization Man</Link>
-                            <Link to="/app/organizationmanager/a">Organization Man</Link>
+                            <Link to="/app/com.tuvalsoft.app.procetra">Organization Man</Link>
+                            <Link to="/app/com.tuvalsoft.app.procetra/a">Organization Man</Link>
                             <Link to="/app/organizationmanager/home/dashboard">Test App</Link>
                         </Fragment>
                     )

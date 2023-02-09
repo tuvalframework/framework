@@ -5,12 +5,11 @@ import { HomeController } from '../Controllers/HomeController';
 import { LayoutController } from '../Controllers/LayoutController';
 
 export const Routes = () => {
-
     return (
         UIRoutes(
-            UIRoute('a', LayoutController),
-
-            UIRoute('*', HomeController) //.redirectTo('/app(realmmanager)/dashboard')
+            UIRoute('/', LayoutController).children(
+                UIRoute('a', DashboardController)
+            )
         )
     )
 }

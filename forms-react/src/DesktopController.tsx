@@ -6,6 +6,7 @@ import React from "react";
 import { MyTestController, TestController } from "./MyController";
 import usePromise from "react-promise-suspense";
 import { Application } from "./layout/Application/Application";
+import { ModuleLoader } from "@tuval/core";
 
 
 const AppStore = [{
@@ -21,11 +22,20 @@ export const ApplicationLoader = () => {
     const { app_name } = useParams();
 
     const controllerPromise = new Promise((resolve, reject) => {
-        setTimeout(() => {
-            const app = AppStore.find(app => app.name === app_name)
-            resolve(app.controller)
-        }, 2000
-        )
+         ModuleLoader.LoadBundledModuleWithDecode(`./${app_name}.app`, app_name).then((_app: any) => {
+            if (_app != null) {
+                debugger;
+                const app = new _app();
+                resolve(app.GetMainController());
+            } else {
+
+            }
+        });
+        /*   setTimeout(() => {
+              const app = AppStore.find(app => app.name === app_name)
+              resolve(app.controller)
+          }, 2000
+          ) */
     })
 
     const fetchController = input => controllerPromise.then(res => res);
