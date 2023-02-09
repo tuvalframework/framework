@@ -1,7 +1,7 @@
 import { UIViewClass } from "./components/UIView/UIViewClass";
 import { State, UIController } from "./UIController";
 import { ReactView } from './components/ReactView/ReactView';
-import { createBrowserRouter, Link, Route, RouterProvider, Routes, useParams } from "react-router-dom";
+import { createBrowserRouter, Link, Outlet, Route, RouterProvider, Routes, useParams } from "react-router-dom";
 import React from "react";
 import { MyTestController, TestController } from "./MyController";
 import usePromise from "react-promise-suspense";
@@ -42,12 +42,12 @@ export class DesktopController extends UIController {
                 /*  <RouterProvider router={router} /> */
                 <Routes>
                     <Route path="/" element={<div>Home Me Test Me</div>} />
-                    <Route path="/app/:app_name" element={(
+                    <Route path="/app/:app_name/*" element={(
                         <React.Suspense fallback={<h1>Loading...</h1>} >
                             <ApplicationLoader></ApplicationLoader>
                         </React.Suspense>
                     )} />
-                    <Route path="about" element={<div>about</div>} />
+
                 </Routes>
             )
         )

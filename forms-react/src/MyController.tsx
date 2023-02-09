@@ -24,8 +24,11 @@ import { Application, useApplication } from './layout/Application/Application';
 import React, { Fragment, useEffect } from "react";
 import { ReactView } from "./components/ReactView/ReactView";
 import usePromise from 'react-promise-suspense';
-import { Link, useParams } from "react-router-dom";
+import { Link, Route, Routes, useParams } from "react-router-dom";
 import { DesktopController } from "./DesktopController";
+import { UIRouteOutlet } from "./components/Router/Outlet/UIRouteOutlet";
+import { LayoutController } from './test/Controllers/LayoutController';
+import { DashboardController } from './test/Controllers/DashboardController';
 
 const list = [{
     name: 'test'
@@ -45,7 +48,16 @@ export class MyTestController extends UIController {
 
     public override LoadView(): UIViewClass {
         return (
-            EditableHeader("Project Name")
+            VStack(
+                Text("MyTestController"),
+                ReactView(
+                    <Routes>
+                        <Route path="/" element={<LayoutController></LayoutController>}>
+                            <Route path="a" element={<h1>test</h1>} />
+                        </Route>
+                    </Routes>
+                )
+            )
         )
     }
 

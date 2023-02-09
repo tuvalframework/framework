@@ -135,6 +135,7 @@ const umdConfig = {
         path: path.resolve(__dirname, 'public'),
     },
     plugins: [
+        //new DtsBundlePlugin(),
         //new BundleAnalyzerPlugin(),
         {
             apply: (compiler) => {
@@ -176,7 +177,7 @@ const umdConfig = {
             moduleName: '"@tuval/core"',
             out: '../@types/index.d.ts',
           }), */
-        //new DtsBundlePlugin(),
+
         /*  new CopyWebpackPlugin([
            {
              from: './dist/index.d.ts',

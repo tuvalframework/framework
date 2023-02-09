@@ -22,8 +22,6 @@ import { UIController } from "./UIController";
 
 
 export class LayoutController extends UIController {
-
-
     public override LoadView(): UIViewClass {
 
         return (
@@ -32,7 +30,8 @@ export class LayoutController extends UIController {
                     ReactView(
                         <Fragment>
                             <Link to="/app/organizationmanager">Organization Man</Link>
-                            <Link to="/app/testapp">Test App</Link>
+                            <Link to="/app/organizationmanager/a">Organization Man</Link>
+                            <Link to="/app/organizationmanager/home/dashboard">Test App</Link>
                         </Fragment>
                     )
                 ).width(250),

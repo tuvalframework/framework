@@ -8,7 +8,7 @@ export function useApplication(): Application {
 
 export interface IApplication {
     name: string;
-    controller: Function
+    controller: Function;
 }
 export class Application extends React.Component<IApplication, any> {
     public get Name(): string {

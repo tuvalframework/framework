@@ -7,7 +7,6 @@ export function Skin(styleName: string) {
     return function (target: any, key: string) {
         const eventDescriptor: Object = {
             set: function (newValue: Function): void {
-                debugger;
                 this.StylePropertyBag[styleName] = newValue;
                 this.isModified = true;
                 this.IsEmpty = false;
@@ -1103,7 +1102,6 @@ export class AppearanceObject {
             hash |= 0; // Convert to 32bit integer
         }
 
-        debugger;
         this.Hash =  hash;
 
     }
