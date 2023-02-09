@@ -16,6 +16,10 @@ if (is.workerContext()) {
 /// #endif
 
 
+import React from 'react'
+
+globalObject['tuval$react'] = React;
+
 globalObject['tuval$forms'] = forms;
 
 if (is.workerContext()) {
