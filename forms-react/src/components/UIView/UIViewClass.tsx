@@ -77,6 +77,9 @@ export class UIViewClass {
         this.ActiveAppearance = new AppearanceObject(this);
         this.DisabledAppearance = new AppearanceObject(this);
         this.BeforeAppearance = new AppearanceObject(this);
+
+
+        this.Appearance.Position = PositionTypes.Relative;
     }
 
     public RenderStarted() {
@@ -95,7 +98,7 @@ export class UIViewClass {
         return this;
     }
 
-    public ForceUpdate() {}
+    public ForceUpdate() { }
 
     public width(): this;
     public width(value: int): this;
@@ -258,7 +261,7 @@ export class UIViewClass {
     public height(value: StyleAttribute): this;
     public height(...args: any[]): this {
         if (args.length === 0) {
-             this.Appearance.Height = 'fit-content';
+            this.Appearance.Height = 'fit-content';
             return this;
         } else if (args.length === 1 && is.number(args[0])) {
             const value = args[0];
@@ -280,7 +283,7 @@ export class UIViewClass {
                 this.ActiveAppearance.Height = styleAttribute.active as any;
             }
             if (styleAttribute.disabled != null) {
-              this.DisabledAppearance.Height = styleAttribute.disabled as any;
+                this.DisabledAppearance.Height = styleAttribute.disabled as any;
             }
 
             if (styleAttribute.focus != null) {
@@ -288,7 +291,7 @@ export class UIViewClass {
             }
 
             if (styleAttribute.before != null) {
-                 this.BeforeAppearance.Height = styleAttribute.before as any;
+                this.BeforeAppearance.Height = styleAttribute.before as any;
             }
             return this;
         }

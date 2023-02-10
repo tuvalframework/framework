@@ -22,9 +22,8 @@ export const ApplicationLoader = () => {
     const { app_name } = useParams();
 
     const controllerPromise = new Promise((resolve, reject) => {
-         ModuleLoader.LoadBundledModuleWithDecode(`./${app_name}.app`, app_name).then((_app: any) => {
+         ModuleLoader.LoadBundledModuleWithDecode(`/${app_name}.app`, app_name).then((_app: any) => {
             if (_app != null) {
-                debugger;
                 const app = new _app();
                 resolve(app.GetMainController());
             } else {

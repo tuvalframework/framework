@@ -1,4 +1,4 @@
-import { cTop } from "./Constants";
+import { cTop, cTopLeading } from "./Constants";
 import { Text } from './components/Text/Text';
 import { State, UIController } from "./UIController";
 import { UIViewClass } from "./components/UIView/UIViewClass";
@@ -30,6 +30,7 @@ import { UIRouteOutlet } from "./components/Router/Outlet/UIRouteOutlet";
 import { LayoutController } from './test/Controllers/LayoutController';
 import { DashboardController } from './test/Controllers/DashboardController';
 import { Routes } from "./test/views/Routes";
+import { HStack } from "./layout/HStack/HStack";
 
 const list = [{
     name: 'test'
@@ -49,16 +50,8 @@ export class MyTestController extends UIController {
 
     public override LoadView(): UIViewClass {
         return (
-            VStack(
+            HStack({alignment:cTopLeading})(
                 Text("MyTestController"),
-                Routes()
-                /* ReactView(
-                    <Routes>
-                        <Route path="/" element={<LayoutController></LayoutController>}>
-                            <Route path="a" element={<h1>test</h1>} />
-                        </Route>
-                    </Routes>
-                ) */
             )
         )
     }

@@ -1,4 +1,4 @@
-//@import './reset';
+@import './theme';
 
 html,
 body {
@@ -16,8 +16,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  box-sizing: border-box;
+a {
+  color: inherit;
+}
 
-  //transition: background-color 150ms ease-in, background 150ms ease-in;
+a,u {
+  text-decoration: none;
+}
+
+* {
+  /*-webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: grayscale;*/
+  box-sizing: border-box;
 }

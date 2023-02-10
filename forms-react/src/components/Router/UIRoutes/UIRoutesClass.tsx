@@ -32,6 +32,12 @@ export class UIRoutesClass extends UIViewClass {
          return this;
      }
 
+     public constructor() {
+        super();
+        this.Appearance.Width = '100%';
+        this.Appearance.Height = '100%';
+     }
+
     public render() {
         return (<UIViewRenderer wrap={false} control={this} renderer={UIRoutesRenderer}></UIViewRenderer>)
     }

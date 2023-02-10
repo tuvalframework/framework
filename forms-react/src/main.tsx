@@ -17,6 +17,7 @@ import { LayoutController } from './LayoutController';
 import {
   BrowserRouter, createBrowserRouter, Link
 } from "react-router-dom";
+import { MyTestController } from './MyController';
 
 declare var FontFace;
 
@@ -57,23 +58,13 @@ function loadFonts(): void {
 
 
 export function StartApp() {
-
-  ModuleLoader.LoadBundledModuleWithDecode("./com.tuvalsoft.app.procetra.app", "com.tuvalsoft.app.procetra").then((_app: any) => {
-    if (_app != null) {
-     debugger;
-      const app = new _app();
-      app.GetMainController();
-    } else {
-
-    }
-  });
-
   loadFonts();
 
   const root = ReactDOM.createRoot(window.document.body).render(
     <BrowserRouter>
       <LayoutController />
     </BrowserRouter>
+    /*     <MyTestController/> */
   );
 
 

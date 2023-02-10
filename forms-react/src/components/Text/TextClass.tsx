@@ -19,6 +19,6 @@ export class TextClass extends UIViewClass{
 
 
     public render() {
-        return (<UIViewRenderer wrap={true} control = {this} renderer={TextRenderer}></UIViewRenderer>)
+        return (<UIViewRenderer wrap={false} control = {this} renderer={TextRenderer}></UIViewRenderer>)
     }
 }

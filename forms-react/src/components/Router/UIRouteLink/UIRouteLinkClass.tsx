@@ -32,6 +32,6 @@ export class UIRouteLinkClass extends UIViewClass {
      }
 
     public render() {
-        return (<UIViewRenderer wrap={false} control={this} renderer={UIRouteLinkRenderer}></UIViewRenderer>)
+        return (<UIViewRenderer wrap={true} control={this} renderer={UIRouteLinkRenderer}></UIViewRenderer>)
     }
 }

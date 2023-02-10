@@ -9,7 +9,7 @@ export interface IControlProperties {
 
 function TextRenderer({ control }: IControlProperties) {
 
-    return (<div onClick={control.vp_OnClick?.bind(control)}>{control.sv_Text}</div>);
+    return (<span onClick={control.vp_OnClick?.bind(control)}>{control.sv_Text}</span>);
 
 }
 
