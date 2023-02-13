@@ -68,7 +68,7 @@ export class UIViewClass {
         this.BeginUpdate();
         const [key, setKey] = React.useState(Guid.NewGuid().ToString());
         this.vp_Key = key;
-        console.log(key);
+       // console.log(key);
         this.EndUpdate();
 
         this.Appearance = new AppearanceObject(this);

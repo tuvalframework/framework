@@ -13,6 +13,14 @@ export class IconClass extends UIViewClass {
         return this;
     }
 
+     /** @internal */
+     @ViewProperty(16) vp_Size: string | number;
+
+     public size(value: string | number) {
+         this.vp_Size = value;
+         return this;
+     }
+
     /** @internal */
     @ViewProperty() vp_IconType: string;
 

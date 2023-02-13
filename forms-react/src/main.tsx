@@ -64,11 +64,6 @@ export function StartApp() {
     <BrowserRouter>
       <LayoutController />
     </BrowserRouter>
-    /*     <MyTestController/> */
   );
 
-
-
-  /*   const element = (<Application name="testapp" controller={MyController}></Application>);
-    root.render(element);*/
 }

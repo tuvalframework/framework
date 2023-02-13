@@ -3,6 +3,7 @@ const DeclarationBundlerPlugin = require('./declaration-bundler-webpack-plugin.f
 const DtsBundleWebpack = require('dts-bundle-webpack');
 const fs = require('fs');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+var Visualizer = require('webpack-visualizer-plugin');
 
 
 var libraryName = '@tuval/forms';
@@ -136,7 +137,8 @@ const umdConfig = {
     },
     plugins: [
         //new DtsBundlePlugin(),
-       // new BundleAnalyzerPlugin(),
+        // new BundleAnalyzerPlugin(),
+
         {
             apply: (compiler) => {
                 compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {

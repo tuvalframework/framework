@@ -20,6 +20,7 @@
         "node": ">=6.0.0"
     },
     "scripts": {
+        "stats": "webpack --json > stats.json",
         "patch": "node publish.js",
         "bundle": "dts-bundle-generator --no-check --export-referenced-types=false  -o ./dist/index.d.ts ./dist_types/types/index.d.ts",
         "buildall": "node shell_all.js",
@@ -150,7 +151,8 @@
         "url-loader": "^4.1.1",
         "webpack": "^5.74.0",
         "webpack-bundle-analyzer": "^4.7.0",
-        "webpack-cli": "^4.10.0"
+        "webpack-cli": "^4.10.0",
+        "webpack-visualizer-plugin": "^0.1.11"
     },
     "dependencies": {
         "@types/react": "^18.0.27",

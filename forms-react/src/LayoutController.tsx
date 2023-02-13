@@ -1,18 +1,9 @@
-import { TextField, Chips, MenuButton } from "monday-ui-react-core";
-import { ColorPicker, Dropdown } from "monday-ui-react-core/dist/types/components";
-import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
-import { CheckBox } from "./components/Checkbox/Checkbox";
-import { EditableHeader } from "./components/EditableHeader/EditableHeader";
-import { Editor } from "./components/Editor/Editor";
-import { InputGroup } from "./components/InputGroup/InputGroup";
-import { InputMask } from "./components/InputMask/InputMask";
-import { InputNumber } from "./components/InputNumber/InputNumber";
-import { InputSwitch } from "./components/InputSwitch/InputSwitch";
-import { InputTextArea } from "./components/InputTextarea/InputTextarea";
-import { Knob } from "./components/Knob/Knob";
-import { ListBox } from "./components/ListBox/ListBox";
+import React from "react";
+import { useLocation } from 'react-router-dom';
+import { Icon } from './components/Icon/Icon';
+import { Icons } from './components/Icon/Icons';
 import { ReactView } from "./components/ReactView/ReactView";
+import { UIRouteLink } from "./components/Router/UIRouteLink/UIRouteLink";
 import { UIViewClass } from "./components/UIView/UIViewClass";
 import { cTop, cTopLeading } from './Constants';
 import { DesktopController } from "./DesktopController";
@@ -23,18 +14,29 @@ import { UIController } from "./UIController";
 
 export class LayoutController extends UIController {
     public override LoadView(): UIViewClass {
-
         return (
             HStack({ alignment: cTop, spacing: 10 })(
                 VStack({ alignment: cTopLeading })(
-                    ReactView(
-                        <Fragment>
-                            <Link to="/app/com.tuvalsoft.app.procetra">Organization Man</Link>
-                            <Link to="/app/com.tuvalsoft.app.procetra/a">Organization Man</Link>
-                            <Link to="/app/organizationmanager/home/dashboard">Test App</Link>
-                        </Fragment>
-                    )
-                ).width(250),
+                    HStack(
+                        UIRouteLink('/app/com.tuvalsoft.app.procetra')(
+                            Icon(Icons.Activity).size(25)
+                        )
+                    ).width(50).height(50).foregroundColor("white")
+                    ,
+                    HStack(
+                        UIRouteLink('/app/com.tuvalsoft.app.organizationmanager')(
+                            Icon(Icons.AddNewDoc).size(25)
+                        )
+                    ).width(50).height(50).foregroundColor("white")
+
+                    /*  ReactView(
+                         <Fragment>
+                             <Link to="/app/com.tuvalsoft.app.procetra">Organization Man</Link>
+                             <Link to="/app/com.tuvalsoft.app.procetra/a">Organization Man</Link>
+                             <Link to="/app/organizationmanager/home/dashboard">Test App</Link>
+                         </Fragment>
+                     ) */
+                ).width(50).background('#292F4C'),
                 VStack({ alignment: cTopLeading })(
                     ReactView(
                         <DesktopController />

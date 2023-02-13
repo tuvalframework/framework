@@ -16,6 +16,7 @@ export class UIRouteClass extends UIViewClass {
         return this;
     }
 
+
     /** @internal */
     @ViewProperty() vp_IsIndex: boolean;
 
