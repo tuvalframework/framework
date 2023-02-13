@@ -32,6 +32,8 @@ export { useNavigate } from 'react-router-dom'
 
 //-------------------
 
+export * from './data'
+
 import './exports';
 
 

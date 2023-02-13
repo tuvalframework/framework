@@ -136,7 +136,7 @@ const umdConfig = {
     },
     plugins: [
         //new DtsBundlePlugin(),
-        //new BundleAnalyzerPlugin(),
+       // new BundleAnalyzerPlugin(),
         {
             apply: (compiler) => {
                 compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
