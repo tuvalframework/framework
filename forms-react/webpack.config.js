@@ -40,30 +40,9 @@ const umdConfig = {
     devtool: 'source-map',
     entry: './src/index.ts',
     externals: [
-        /*   '@tuval/core',
+          '@tuval/core',
           '@tuval/cg',
-          '@tuval/graphics',
-          '@tuval/components/buttons',
-          '@tuval/components/calendars',
-          '@tuval/components/compression',
-          '@tuval/components/core',
-          '@tuval/components/data',
-          '@tuval/components/diagram',
-          '@tuval/components/dropdowns',
-          '@tuval/components/excelexport',
-          '@tuval/components/filemanager',
-          '@tuval/components/fileutils',
-          '@tuval/components/grids',
-          '@tuval/components/inputs',
-          '@tuval/components/layouts',
-          '@tuval/components/lists',
-          '@tuval/components/navigations',
-          '@tuval/components/pdfexport',
-          '@tuval/components/popups',
-          '@tuval/components/splitbuttons',
-          '@tuval/components/charts',
-          '@tuval/components/svgbase',
-          '@tuval/brokers/client', */
+          '@tuval/graphics'
     ],
     module: {
         rules: [
@@ -133,7 +112,7 @@ const umdConfig = {
     output: {
         libraryTarget: 'umd',
         filename: 'index.js',
-        path: path.resolve(__dirname, 'public'),
+        path: path.resolve(__dirname, 'dist'),
     },
     plugins: [
         //new DtsBundlePlugin(),

@@ -17,9 +17,16 @@ export * from './components/Router/Navigate'
 export * from './components/List'
 export * from './components/Fragment'
 
+export * from './components/ReactView/ReactView'
+export * from './components/ReactView/ReactViewClass'
+
+export * from './DesktopController'
+
 export * from './Color'
 export * from './ColorClass'
 export * from './ColorConverter'
+
+export * from './components/Icon'
 
 export * from './UITemplate'
 export * from './Theme'
@@ -27,8 +34,11 @@ export * from './Theme'
 export * from './UIController'
 export * from './Constants'
 
+export * from './Bios'
+
 //--------------------
-export { useNavigate, useLocation } from 'react-router-dom'
+export { useNavigate, useLocation, useParams } from 'react-router-dom'
+export { useState } from 'react'
 
 
 //-------------------
