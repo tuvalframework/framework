@@ -3,4 +3,4 @@ rm index.js.map
 npm version prerelease --preid=beta
 cp package.json dist
 cd dist
-npm publish --access public
+npm publish --tag beta --access public
