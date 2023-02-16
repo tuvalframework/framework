@@ -1,6 +1,6 @@
 import { int } from "@tuval/core";
 import { AlignmentType } from "../../Constants";
-import { UIViewClass } from "../UIView/UIViewClass";
+import { UIView } from "../UIView/UIView";
 import {  TooltipClass } from "./TooltipClass";
 
 
@@ -11,6 +11,6 @@ interface VStackParams {
 
 
 
-export function Tooltip(...views: UIViewClass[]): TooltipClass {
+export function Tooltip(...views: UIView[]): TooltipClass {
     return new TooltipClass().children(...views);
 }

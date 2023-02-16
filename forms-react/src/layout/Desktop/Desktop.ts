@@ -1,6 +1,6 @@
 import { int } from "@tuval/core";
 import { AlignmentType } from "../../Constants";
-import { UIViewClass } from "../../components/UIView/UIViewClass";
+import { UIView } from "../../components/UIView/UIView";
 import { DesktopClass } from './DesktopClass';
 
 

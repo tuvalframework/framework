@@ -1,10 +1,10 @@
 import React from "react";
-import { UIViewClass } from "../UIView/UIViewClass";
+import { UIView } from "../UIView/UIView";
 import UIViewRenderer from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import InputNumberRenderer from "./InputNumberRenderer";
 
-export class InputNumberClass extends UIViewClass {
+export class InputNumberClass extends UIView {
     /** @internal */
     @ViewProperty() vp_Value: number;
 

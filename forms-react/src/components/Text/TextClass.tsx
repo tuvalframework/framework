@@ -1,4 +1,4 @@
-import { UIViewClass } from '../UIView/UIViewClass';
+import { UIView } from '../UIView/UIView';
 import TextRenderer from './TextRenderer';
 import { Renderer } from '../../RendererDecorator';
 import React from "react";
@@ -17,7 +17,7 @@ export enum TextAlignment {
     trailing = 2
 }
 
-export class TextClass extends UIViewClass {
+export class TextClass extends UIView {
 
     /** @internal */
     @ViewProperty() MultilineTextAlignment: TextAlignment = TextAlignment.leading;

@@ -1,11 +1,11 @@
 import React from "react";
-import { UIViewClass } from "../UIView/UIViewClass";
+import { UIView } from "../UIView/UIView";
 import UIViewRenderer from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import ColorPickerRenderer from "./ColorPickerRenderer";
 import ChipsRenderer from "./ColorPickerRenderer";
 
-export class ColorPickerClass extends UIViewClass {
+export class ColorPickerClass extends UIView {
     /** @internal */
     @ViewProperty() vp_Value: string;
 

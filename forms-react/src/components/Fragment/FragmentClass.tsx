@@ -1,15 +1,15 @@
 import React from "react";
-import { UIViewClass } from "../UIView/UIViewClass";
+import { UIView } from "../UIView/UIView";
 import UIViewRenderer from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import FragmentRenderer from "./FragmentRenderer";
 
-export class FragmentClass extends UIViewClass {
+export class FragmentClass extends UIView {
 
     /** @internal */
-    @ViewProperty() vp_Children: UIViewClass[];
+    @ViewProperty() vp_Children: UIView[];
 
-    public children(value: UIViewClass[]) {
+    public children(value: UIView[]) {
         this.vp_Children = value;
         return this;
     }

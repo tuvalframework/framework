@@ -1,10 +1,10 @@
 import React from "react";
-import { UIViewClass } from "../UIView/UIViewClass";
+import { UIView } from "../UIView/UIView";
 import UIViewRenderer from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import ChipsRenderer from "./ChipsRenderer";
 
-export class ChipsClass extends UIViewClass {
+export class ChipsClass extends UIView {
     /** @internal */
     @ViewProperty() vp_Value: string[];
 

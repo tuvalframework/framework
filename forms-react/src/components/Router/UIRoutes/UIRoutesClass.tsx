@@ -1,12 +1,12 @@
 import React from "react";
-import { UIViewClass } from "../../UIView/UIViewClass";
+import { UIView } from "../../UIView/UIView";
 import UIViewRenderer from "../../UIView/UIViewRenderer";
 import { ViewProperty } from "../../UIView/ViewProperty";
 import { UIRouteFunction } from "../UIRoute/UIRoute";
 import { UIRouteClass } from "../UIRoute/UIRouteClass";
 import UIRoutesRenderer from "./UIRoutesRenderer";
 
-export class UIRoutesClass extends UIViewClass {
+export class UIRoutesClass extends UIView {
 
     /** @internal */
     @ViewProperty() vp_Link: string;

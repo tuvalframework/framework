@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, Routes } from "react-router-dom";
-import { UIViewClass } from "../../UIView/UIViewClass";
+import { UIView } from "../../UIView/UIView";
 import { UIRoutesClass } from "./UIRoutesClass";
 
 export interface IControlProperties {
@@ -13,7 +13,7 @@ function UIRoutesRenderer({ control }: IControlProperties) {
     return (
         <Routes>
             {
-                control.vp_Chidren.map((view: UIViewClass) => view.render())
+                control.vp_Chidren.map((view: UIView) => view.render())
             }
         </Routes>
     );

@@ -1,12 +1,12 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import { UIViewClass } from "../../UIView/UIViewClass";
+import { UIView } from "../../UIView/UIView";
 import UIViewRenderer from "../../UIView/UIViewRenderer";
 import { ViewProperty } from "../../UIView/ViewProperty";
 import { ControllerConstructor } from "./UIRoute";
 import UIRouteRenderer from "./UIRouteRenderer";
 
-export class UIRouteClass extends UIViewClass {
+export class UIRouteClass extends UIView {
 
     /** @internal */
     @ViewProperty() vp_RoutePath: string;
@@ -34,9 +34,9 @@ export class UIRouteClass extends UIViewClass {
     }
 
     /** @internal */
-    @ViewProperty() vp_Chidren: UIViewClass[];
+    @ViewProperty() vp_Chidren: UIView[];
 
-    public children(...value: UIViewClass[]) {
+    public children(...value: UIView[]) {
         this.vp_Chidren = value;
         return this;
     }
@@ -53,7 +53,7 @@ export class UIRouteClass extends UIViewClass {
         return (
             <Route path={this.vp_RoutePath} element={React.createElement(this.vp_RouteController, {}, [])}>
                 {
-                    this.vp_Chidren?.map((view: UIViewClass) => view.render())
+                    this.vp_Chidren?.map((view: UIView) => view.render())
                 }
             </Route>
         )

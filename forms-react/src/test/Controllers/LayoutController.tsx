@@ -1,4 +1,4 @@
-import { UIViewClass } from "../../components/UIView/UIViewClass";
+import { UIView } from "../../components/UIView/UIView";
 import { UIController } from "../../UIController";
 import { Text } from '../../components/Text/Text';
 import { UIRouteOutlet } from '../../components/Router/Outlet/UIRouteOutlet';
@@ -10,7 +10,7 @@ import React from "react";
 
 export class LayoutController extends UIController {
 
-    public override LoadView(): UIViewClass {
+    public override LoadView(): UIView {
         return (
             VStack(
                 Text(useLocation().pathname),

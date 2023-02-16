@@ -1,12 +1,12 @@
 import { int, is } from "@tuval/core";
 import React from "react";
-import { UIViewClass } from "../../components/UIView/UIViewClass";
+import { UIView } from "../../components/UIView/UIView";
 import UIViewRenderer from "../../components/UIView/UIViewRenderer";
 import { ViewProperty } from "../../components/UIView/ViewProperty";
 import { AlignmentType, cBottom, cBottomLeading, cBottomTrailing, cCenter, cLeading, cTop, cTopLeading, cTopTrailing, cTrailing } from "../../Constants";
 import DataContextRenderer from "./DataContextRenderer";
 
-export class DataContextClass extends UIViewClass {
+export class DataContextClass extends UIView {
 
     @ViewProperty() vp_DataProvider:any;
     public dataProvider(value: any): this {
@@ -21,9 +21,9 @@ export class DataContextClass extends UIViewClass {
     }
 
      /** @internal */
-     @ViewProperty() vp_Chidren: UIViewClass[];
+     @ViewProperty() vp_Chidren: UIView[];
 
-     public children(...value:UIViewClass[]) {
+     public children(...value:UIView[]) {
         this.vp_Chidren = value;
         return this;
      }

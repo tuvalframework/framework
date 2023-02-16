@@ -14,5 +14,8 @@ import 'monday-ui-react-core/dist/main.css';
 import { StartBios } from './Bios';
 import { LayoutController } from './LayoutController';
 
-
-StartBios(LayoutController);
+/* 
+window.addEventListener("load", (event) => {
+    StartBios(LayoutController);
+});
+ */

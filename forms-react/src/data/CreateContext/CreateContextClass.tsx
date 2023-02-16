@@ -1,13 +1,13 @@
 import React from "react";
-import { UIViewClass } from "../../components/UIView/UIViewClass";
+import { UIView } from "../../components/UIView/UIView";
 import UIViewRenderer from "../../components/UIView/UIViewRenderer";
 import { ViewProperty } from "../../components/UIView/ViewProperty";
 import CreateContextRenderer from "./CreateContextRenderer";
 
-export class CreateContextClass extends UIViewClass {
+export class CreateContextClass extends UIView {
 
-    @ViewProperty() vp_Children:(create?: Function, isLoading?: boolean, isSuccess?: boolean) => UIViewClass;
-    public children(value: (create?: Function, isLoading?: boolean, isSuccess?: boolean) => UIViewClass): this {
+    @ViewProperty() vp_Children:(create?: Function, isLoading?: boolean, isSuccess?: boolean) => UIView;
+    public children(value: (create?: Function, isLoading?: boolean, isSuccess?: boolean) => UIView): this {
         this.vp_Children = value;
         return this;
     }

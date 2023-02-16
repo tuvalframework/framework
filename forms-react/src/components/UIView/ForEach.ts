@@ -1,7 +1,7 @@
 import { foreach, ICollection, IEnumerable, IEnumerator, IList, int } from "@tuval/core";
-import { UIViewClass } from "./UIViewClass";
+import { UIView } from "./UIView";
 
-type ForEachIterateFunction<T> = (item: T, index?: number) => UIViewClass;
+type ForEachIterateFunction<T> = (item: T, index?: number) => UIView;
 export function ForEach<T>(enumarable: IEnumerator<T> | IEnumerable<T> | IList<T> | Array<T> | ICollection<T> | Iterator<T> | Iterable<T> | Set<T>): (value: ForEachIterateFunction<T>) => any[] {
     return (enumFunc: ForEachIterateFunction<T>) => {
         const result: any[] = [];

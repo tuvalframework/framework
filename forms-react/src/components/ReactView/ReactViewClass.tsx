@@ -1,4 +1,4 @@
-import { UIViewClass } from '../UIView/UIViewClass';
+import { UIView } from '../UIView/UIView';
 
 import React, { ReactNode } from "react";
 import UIViewRenderer from '../UIView/UIViewRenderer';
@@ -6,7 +6,7 @@ import ReactViewRenderer from './ReactViewRenderer';
 import { ViewProperty } from '../UIView/ViewProperty';
 
 
-export class ReactViewClass extends UIViewClass{
+export class ReactViewClass extends UIView{
 
     @ViewProperty()
     public vp_ReactNode: ReactNode;

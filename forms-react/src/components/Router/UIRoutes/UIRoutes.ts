@@ -1,4 +1,4 @@
-import { UIViewClass } from "../../UIView/UIViewClass";
+import { UIView } from "../../UIView/UIView";
 import { UIRouteFunction } from "../UIRoute/UIRoute";
 import { UIRouteClass } from "../UIRoute/UIRouteClass";
 import { UIRouteLinkClass } from "../UIRouteLink/UIRouteLinkClass";

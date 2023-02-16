@@ -1,4 +1,4 @@
-import { UIViewClass } from "../../components/UIView/UIViewClass";
+import { UIView } from "../../components/UIView/UIView";
 import { RecordContextClass } from "./RecordContextClass";
 
 export interface IRecordContextContentFunctionParams<T> {
@@ -7,7 +7,7 @@ export interface IRecordContextContentFunctionParams<T> {
     error?: any;
 }
 
-export type RecordContextContentFunction<T> = (params: IRecordContextContentFunctionParams<T>) => UIViewClass;
+export type RecordContextContentFunction<T> = (params: IRecordContextContentFunctionParams<T>) => UIView;
 
 export function UIRecordContext<T = any>(content: RecordContextContentFunction<T>): RecordContextClass<T> {
     return new RecordContextClass<T>().children(content);

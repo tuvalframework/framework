@@ -1,5 +1,5 @@
 import React from "react";
-import { UIViewClass } from "../UIView/UIViewClass";
+import { UIView } from "../UIView/UIView";
 import UIViewRenderer from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import CheckBoxRenderer from "./CheckBoxRenderer";
@@ -7,7 +7,7 @@ import TextFieldRenderer from "./CheckBoxRenderer";
 
 
 
-export class CheckBoxClass extends UIViewClass {
+export class CheckBoxClass extends UIView {
     /** @internal */
     @ViewProperty() vp_Checked: boolean;
 
@@ -17,9 +17,9 @@ export class CheckBoxClass extends UIViewClass {
     }
 
      /** @internal */
-     @ViewProperty() vp_LabelView: UIViewClass;
+     @ViewProperty() vp_LabelView: UIView;
 
-     public labelView(value: UIViewClass) {
+     public labelView(value: UIView) {
          this.vp_LabelView = value;
          return this;
      }

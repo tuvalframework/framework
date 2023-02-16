@@ -1,13 +1,13 @@
 import { int, is } from "@tuval/core";
 import React from "react";
-import { UIViewClass } from "../../components/UIView/UIViewClass";
+import { UIView } from "../../components/UIView/UIView";
 import UIViewRenderer from "../../components/UIView/UIViewRenderer";
 import { ViewProperty } from "../../components/UIView/ViewProperty";
 import { AlignmentType, cBottom, cBottomLeading, cBottomTrailing, cCenter, cLeading, cTop, cTopLeading, cTopTrailing, cTrailing } from "../../Constants";
 import RecordContextRenderer from "./RecordContextRenderer";
 import { RecordContextContentFunction } from "./UIRecordContext";
 
-export class RecordContextClass<T> extends UIViewClass {
+export class RecordContextClass<T> extends UIView {
 
     /** @internal */
     @ViewProperty() vp_Chidren: RecordContextContentFunction<T>;

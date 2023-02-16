@@ -1,16 +1,16 @@
 import React from "react";
-import { UIViewClass } from "../UIView/UIViewClass";
+import { UIView } from "../UIView/UIView";
 import UIViewRenderer from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import ListRenderer from "./ListRenderer";
 import ListBoxRenderer from "./ListRenderer";
 
-export class ListClass extends UIViewClass {
+export class ListClass extends UIView {
 
     /** @internal */
-    @ViewProperty() vp_Children: UIViewClass[];
+    @ViewProperty() vp_Children: UIView[];
 
-    public children(value: UIViewClass[]) {
+    public children(value: UIView[]) {
         this.vp_Children = value;
         return this;
     }

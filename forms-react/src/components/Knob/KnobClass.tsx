@@ -1,12 +1,12 @@
 import React from "react";
-import { UIViewClass } from "../UIView/UIViewClass";
+import { UIView } from "../UIView/UIView";
 import UIViewRenderer from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import KnobRenderer from "./KnobRenderer";
 import InputSwitchRenderer from "./KnobRenderer";
 import { int } from '@tuval/core';
 
-export class KnobClass extends UIViewClass {
+export class KnobClass extends UIView {
     /** @internal */
     @ViewProperty() vp_Value: int;
 

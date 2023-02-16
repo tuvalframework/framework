@@ -1,6 +1,6 @@
 import { is } from "@tuval/core";
 import React, { useState } from "react";
-import { UIViewClass } from "../UIView/UIViewClass";
+import { UIView } from "../UIView/UIView";
 import { RenderingTypes, TextAlignment, TextClass } from "./TextClass";
 import * as MarkdownIt from "markdown-it";
 

@@ -1,5 +1,5 @@
 import { UIController } from "../../../UIController";
-import { UIViewClass } from "../../UIView/UIViewClass";
+import { UIView } from "../../UIView/UIView";
 import { UIRouteLinkClass } from "../UIRouteLink/UIRouteLinkClass";
 import { UIRouteClass } from "./UIRouteClass";
 

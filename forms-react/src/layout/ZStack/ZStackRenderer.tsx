@@ -1,6 +1,6 @@
 import { css } from "@emotion/css";
 import React, { Fragment, useState } from "react";
-import { UIViewClass } from "../../components/UIView/UIViewClass";
+import { UIView } from "../../components/UIView/UIView";
 import { ZStackClass } from "./ZStackClass";
 
 
@@ -22,7 +22,7 @@ function ZStackRenderer({ control }: IControlProperties) {
         //@ts-ignore
         <Fragment>
             {
-                control.vp_Chidren.map((view: UIViewClass) => {
+                control.vp_Chidren.map((view: UIView) => {
                     if (control.vp_Spacing) {
                         view.Appearance.MarginBottom = control.vp_Spacing;
                     }

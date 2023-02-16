@@ -4,7 +4,7 @@ import { Icon } from './components/Icon/Icon';
 import { Icons } from './components/Icon/Icons';
 import { ReactView } from "./components/ReactView/ReactView";
 import { UIRouteLink } from "./components/Router/UIRouteLink/UIRouteLink";
-import { UIViewClass } from "./components/UIView/UIViewClass";
+import { UIView } from "./components/UIView/UIView";
 import { cTop, cTopLeading } from './Constants';
 import { DesktopController } from "./DesktopController";
 import { HStack } from "./layout/HStack/HStack";
@@ -13,7 +13,7 @@ import { UIController } from "./UIController";
 
 
 export class LayoutController extends UIController {
-    public override LoadView(): UIViewClass {
+    public override LoadView(): UIView {
         return (
             HStack({ alignment: cTop, spacing: 10 })(
                 VStack({ alignment: cTopLeading })(

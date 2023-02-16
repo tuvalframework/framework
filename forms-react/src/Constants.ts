@@ -1,4 +1,4 @@
-import { UIViewClass } from "./components/UIView/UIViewClass";
+import { UIView } from "./components/UIView/UIView";
 
 export const cHorizontal = 'cHorizontal';
 export const cVertical = 'cVertical';
@@ -47,22 +47,22 @@ export enum CornerRadiusTypes {
 
 
 export class FontSizeTypes {
-    public static XSmall = (view: UIViewClass) => { view.fontSize('0.75rem'); /* 12px */ view.lineHeight('1rem'); /* 16px */ }
-    public static Small = (view: UIViewClass) => { view.fontSize('0.875rem'); /* 14px */ view.lineHeight('1.25rem'); /* 20px */ }
-    public static Base = (view: UIViewClass) => { view.fontSize('1rem'); /* 16px */      view.lineHeight('1.5rem'); /* 24px */ }
-    public static Large = (view: UIViewClass) => { view.fontSize('1.125rem'); /* 18px */ view.lineHeight('1.75rem'); /* 28px */ }
-    public static LargeX = (view: UIViewClass) => { view.fontSize('1.25rem'); /* 20px */ view.lineHeight('1.75rem'); /* 28px */ }
-    public static Large2X = (view: UIViewClass) => { view.fontSize('1.5rem'); /* 24px */ view.lineHeight('2rem'); /* 32px */ }
-    public static Large3X = (view: UIViewClass) => { view.fontSize('1.875rem'); /* 30px */ view.lineHeight('2.25rem'); /* 36px */ }
+    public static XSmall = (view: UIView) => { view.fontSize('0.75rem'); /* 12px */ view.lineHeight('1rem'); /* 16px */ }
+    public static Small = (view: UIView) => { view.fontSize('0.875rem'); /* 14px */ view.lineHeight('1.25rem'); /* 20px */ }
+    public static Base = (view: UIView) => { view.fontSize('1rem'); /* 16px */      view.lineHeight('1.5rem'); /* 24px */ }
+    public static Large = (view: UIView) => { view.fontSize('1.125rem'); /* 18px */ view.lineHeight('1.75rem'); /* 28px */ }
+    public static LargeX = (view: UIView) => { view.fontSize('1.25rem'); /* 20px */ view.lineHeight('1.75rem'); /* 28px */ }
+    public static Large2X = (view: UIView) => { view.fontSize('1.5rem'); /* 24px */ view.lineHeight('2rem'); /* 32px */ }
+    public static Large3X = (view: UIView) => { view.fontSize('1.875rem'); /* 30px */ view.lineHeight('2.25rem'); /* 36px */ }
 }
 
 export class FontSmoothingTypes {
-    public static Antialiased = (view: UIViewClass) => {
+    public static Antialiased = (view: UIView) => {
         view.Appearance.StylePropertyBag['-webkit-font-smoothing'] = 'antialiased';
         view.Appearance.StylePropertyBag['-moz-osx-font-smoothing'] = 'grayscale';
     }
 
-    public static Subpixel = (view: UIViewClass) => {
+    public static Subpixel = (view: UIView) => {
         view.Appearance.StylePropertyBag['-webkit-font-smoothing'] = 'auto';
         view.Appearance.StylePropertyBag['-moz-osx-font-smoothing'] = 'auto';
     }

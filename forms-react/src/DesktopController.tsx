@@ -1,4 +1,4 @@
-import { UIViewClass } from "./components/UIView/UIViewClass";
+import { UIView } from "./components/UIView/UIView";
 import { State, UIController } from "./UIController";
 import { ReactView } from './components/ReactView/ReactView';
 import { createBrowserRouter, Link, Navigate, Outlet, Route, RouterProvider, Routes, useLocation, useParams } from "react-router-dom";
@@ -48,18 +48,18 @@ export const ApplicationLoader = () => {
     })
 
     const fetchController = input => controllerPromise.then(res => res);
-    const contoller = usePromise(fetchController, [app_name]);
+    const contoller: any = usePromise(fetchController, [app_name]);
 
     return (<Application name={app_name} controller={contoller}></Application>)
 };
 
 export class DesktopController extends UIController {
 
-    public override LoadView(): UIViewClass {
+    public override LoadView(): UIView {
         return (
             ReactView(
                 <Routes>
-                    <Route path="/" element={<div>Home Me Test Me</div>} />
+                    {/* <Route path="/" element={<div>Home Me Test Me</div>} /> */}
                     <Route path="/app/:app_name/*" element={(
                         <React.Suspense fallback={<h1>Loading...</h1>} >
                             <ApplicationLoader></ApplicationLoader>

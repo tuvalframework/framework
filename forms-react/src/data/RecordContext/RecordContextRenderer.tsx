@@ -1,7 +1,7 @@
 import { convertLegacyDataProvider, DataProviderContext, RecordContextProvider, useGetOne } from "ra-core";
 import React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { UIViewClass } from "../../components/UIView/UIViewClass";
+import { UIView } from "../../components/UIView/UIView";
 import { RecordContextClass } from "./RecordContextClass";
 
 

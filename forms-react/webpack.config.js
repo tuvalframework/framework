@@ -43,7 +43,7 @@ const umdConfig = {
           '@tuval/core',
           '@tuval/cg',
           '@tuval/graphics'
-    ],
+    ], 
     module: {
         rules: [
             /*   {

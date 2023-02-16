@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { UIViewClass } from "../../components/UIView/UIViewClass";
+import { UIView } from "../../components/UIView/UIView";
 import { DataContextClass } from "./DataContextClass";
 import { convertLegacyDataProvider, DataProviderContext } from "ra-core";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -37,7 +37,7 @@ function DataContextRenderer({ control }: IControlProperties) {
         <DataProviderContext.Provider value={finalDataProvider}>
             <QueryClientProvider client={query}>
                 {
-                    control.vp_Chidren.map((view: UIViewClass) => {
+                    control.vp_Chidren.map((view: UIView) => {
                         return view.render();
                     })
                 }

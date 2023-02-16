@@ -1,10 +1,10 @@
 import React from "react";
-import { UIViewClass } from "../UIView/UIViewClass";
+import { UIView } from "../UIView/UIView";
 import UIViewRenderer from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import IconRenderer from "./IconRenderer";
 
-export class IconClass extends UIViewClass {
+export class IconClass extends UIView {
     /** @internal */
     @ViewProperty() vp_Icon: string | any;
 

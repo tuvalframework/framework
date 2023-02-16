@@ -1,5 +1,5 @@
 import React from "react";
-import { UIViewClass } from "../../UIView/UIViewClass";
+import { UIView } from "../../UIView/UIView";
 import UIViewRenderer from "../../UIView/UIViewRenderer";
 import { ViewProperty } from "../../UIView/ViewProperty";
 import ListTitleRenderer from "./ListTitleRenderer";
@@ -7,7 +7,7 @@ import ListTitleRenderer from "./ListTitleRenderer";
 import ListRenderer from "./ListTitleRenderer";
 import ListBoxRenderer from "./ListTitleRenderer";
 
-export class ListTitleClass extends UIViewClass {
+export class ListTitleClass extends UIView {
 
     /** @internal */
     @ViewProperty() vp_Title: string;

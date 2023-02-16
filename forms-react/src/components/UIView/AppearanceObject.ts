@@ -1,6 +1,6 @@
 
 import { clone, StringBuilder } from '@tuval/core';
-import { UIViewClass } from './UIViewClass';
+import { UIView } from './UIView';
 
 
 export function Skin(styleName: string) {
@@ -44,7 +44,7 @@ export enum BorderAppearanceStyle {
 export class AppearanceObject {
     public IsEmpty: boolean = true;
     public isModified: boolean = false;
-    private control: UIViewClass;
+    private control: UIView;
     public StylePropertyBag = {};
 
     /**
@@ -1073,7 +1073,7 @@ export class AppearanceObject {
     public ZIndex: string;
 
 
-    public constructor(obj: UIViewClass) {
+    public constructor(obj: UIView) {
         this.control = obj;
     }
 

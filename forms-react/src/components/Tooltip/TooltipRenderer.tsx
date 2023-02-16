@@ -1,6 +1,6 @@
 import { Tooltip } from "monday-ui-react-core";
 import React, { Fragment, useState } from "react";
-import { UIViewClass } from "../UIView/UIViewClass";
+import { UIView } from "../UIView/UIView";
 import { TooltipClass } from "./TooltipClass";
 
 
@@ -16,7 +16,7 @@ function TooltipRenderer({ control }: IControlProperties) {
             <Tooltip content="Item name: Bottom sheets" position={Tooltip.positions.RIGHT} >
                 <div className="monday-storybook-tooltip_icon-wrapper">
                     {
-                        control.vp_Chidren.map((view: UIViewClass) => view.render())
+                        control.vp_Chidren.map((view: UIView) => view.render())
                     }
                 </div>
             </Tooltip>

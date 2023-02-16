@@ -1,11 +1,11 @@
 import React from "react";
-import { UIViewClass } from "../UIView/UIViewClass";
+import { UIView } from "../UIView/UIView";
 import UIViewRenderer from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import ColorPickerRenderer from "./MenuButtonRenderer";
 import ChipsRenderer from "./MenuButtonRenderer";
 
-export class MenuButtonClass extends UIViewClass {
+export class MenuButtonClass extends UIView {
     /** @internal */
     @ViewProperty() vp_Value: string;
 

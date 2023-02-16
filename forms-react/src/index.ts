@@ -1,5 +1,5 @@
-export * from './main'
-export * from './components/UIView/UIViewClass'
+//export * from './main'
+export * from './components/UIView/UIView'
 export * from './components/UIView/ForEach'
 export * from './components/Text/Text'
 

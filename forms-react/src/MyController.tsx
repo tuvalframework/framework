@@ -1,7 +1,7 @@
 import { cTop, cTopLeading } from "./Constants";
 import { Text } from './components/Text/Text';
 import { State, UIController } from "./UIController";
-import { UIViewClass } from "./components/UIView/UIViewClass";
+import { UIView } from "./components/UIView/UIView";
 import { VStack } from "./layout/VStack/VStack";
 //import { TextField } from 'monday-ui-react-core';
 import { TextField } from "./components/TextField/TextField";
@@ -48,7 +48,7 @@ export class MyTestController extends UIController {
     @State(10)
     public counter: number;
 
-    public override LoadView(): UIViewClass {
+    public override LoadView(): UIView {
         return (
             HStack({alignment:cTopLeading})(
                 Text("MyTestController"),
@@ -62,7 +62,7 @@ export class TestController extends UIController {
     @State(10)
     public counter: number;
 
-    public override LoadView(): UIViewClass {
+    public override LoadView(): UIView {
         return (
             Text(useApplication().Name)
                 .onClick(() => {
@@ -132,7 +132,7 @@ export class MyController extends UIController {
     @State(0)
     private knobValue: int;
 
-    public override LoadView(): UIViewClass {
+    public override LoadView(): UIView {
 
         return (
             /*   ReactView(

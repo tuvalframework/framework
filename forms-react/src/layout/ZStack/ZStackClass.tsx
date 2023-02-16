@@ -2,13 +2,13 @@ import { foreach, int, is } from "@tuval/core";
 import React from "react";
 import { AlignmentType, cBottom, cBottomLeading, cBottomTrailing, cCenter, cLeading, cTop, cTopLeading, cTopTrailing, cTrailing } from "../../Constants";
 import { UIController } from "../../UIController";
-import { UIViewClass } from "../../components/UIView/UIViewClass";
+import { UIView } from "../../components/UIView/UIView";
 import UIViewRenderer from "../../components/UIView/UIViewRenderer";
 import { ViewProperty } from "../../components/UIView/ViewProperty";
 import VStackRenderer from "./ZStackRenderer";
 import ZStackRenderer from "./ZStackRenderer";
 
-export class ZStackClass extends UIViewClass {
+export class ZStackClass extends UIView {
 
     /** @internal */
     @ViewProperty() vp_Spacing: string;
@@ -17,9 +17,9 @@ export class ZStackClass extends UIViewClass {
     @ViewProperty() vp_Alignment: string;
 
      /** @internal */
-     @ViewProperty() vp_Chidren: UIViewClass[];
+     @ViewProperty() vp_Chidren: UIView[];
 
-     public children(...value:UIViewClass[]) {
+     public children(...value:UIView[]) {
         this.vp_Chidren = value;
         return this;
      }

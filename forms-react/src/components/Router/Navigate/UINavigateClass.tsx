@@ -1,10 +1,10 @@
 import React from "react";
 import { Navigate, Route } from "react-router-dom";
-import { UIViewClass } from "../../UIView/UIViewClass";
+import { UIView } from "../../UIView/UIView";
 import UIViewRenderer from "../../UIView/UIViewRenderer";
 import { ViewProperty } from "../../UIView/ViewProperty";
 
-export class UIRouteClass extends UIViewClass {
+export class UIRouteClass extends UIView {
 
     /** @internal */
     @ViewProperty() vp_To: string;

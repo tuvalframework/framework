@@ -1,12 +1,12 @@
 import React from "react";
-import { UIViewClass } from "../UIView/UIViewClass";
+import { UIView } from "../UIView/UIView";
 import UIViewRenderer from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import MultiSelectRenderer from "./MultiSelectRenderer";
 
 
 
-export class MultiSelectClass extends UIViewClass {
+export class MultiSelectClass extends UIView {
     @ViewProperty() vp_Fields: {text: string, value: string};
     public fields(value: {text: string, value: string}): this {
         this.vp_Fields = value;

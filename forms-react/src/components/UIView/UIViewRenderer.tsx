@@ -1,10 +1,10 @@
 import React, { Fragment, FunctionComponent, useInsertionEffect, useMemo, useState } from "react";
-import { UIViewClass } from "./UIViewClass";
+import { UIView } from "./UIView";
 import { css } from '@emotion/css'
 import { Tooltip } from "monday-ui-react-core";
 
 export interface IControlProperties {
-    control: UIViewClass;
+    control: UIView;
     renderer: FunctionComponent<any>;
     wrap: boolean;
 }

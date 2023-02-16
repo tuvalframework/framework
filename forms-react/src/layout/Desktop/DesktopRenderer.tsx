@@ -1,5 +1,5 @@
 import React, { Fragment, useMemo, useState } from "react";
-import { UIViewClass } from "../../components/UIView/UIViewClass";
+import { UIView } from "../../components/UIView/UIView";
 import { DesktopController } from "../../DesktopController";
 import { DesktopClass } from "./DesktopClass";
 

@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { UIViewClass } from "./components/UIView/UIViewClass";
+import { UIView } from "./components/UIView/UIView";
 
 
 export function State(defaultValue?: any): any/* PropertyDecorator */ {
@@ -44,7 +44,7 @@ export class UIController extends React.Component<any, any> {
 
     }
 
-    public LoadView(): UIViewClass {
+    public LoadView(): UIView {
         return null;
     }
 

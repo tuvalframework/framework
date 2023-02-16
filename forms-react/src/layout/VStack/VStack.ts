@@ -1,6 +1,6 @@
 import { int } from "@tuval/core";
 import { AlignmentType } from "../../Constants";
-import { UIViewClass } from "../../components/UIView/UIViewClass";
+import { UIView } from "../../components/UIView/UIView";
 import { VStackClass } from "./VStackClass";
 
 
@@ -9,17 +9,17 @@ interface VStackParams {
     spacing?: int;
 }
 
-type FunctionVStack = (...views: UIViewClass[]) => VStackClass;
+type FunctionVStack = (...views: UIView[]) => VStackClass;
 
 
 /* export function VStack(value: string): FunctionVStack; */
 export function VStack(): VStackClass;
-export function VStack(...views: (UIViewClass)[]): VStackClass;
+export function VStack(...views: (UIView)[]): VStackClass;
 export function VStack(value: VStackParams): FunctionVStack;
 export function VStack(...args: any[]): FunctionVStack | VStackClass {
     if (args.length === 0) {
         return new VStackClass();
-    } else if (args.length === 1 && typeof args[0] === 'object' && args[0].constructor === Object && !(args[0] instanceof UIViewClass)) {
+    } else if (args.length === 1 && typeof args[0] === 'object' && args[0].constructor === Object && !(args[0] instanceof UIView)) {
         const params: VStackParams = args[0];
         /*  let alignment: Alignment = null;
          switch (params.alignment) {
@@ -52,7 +52,7 @@ export function VStack(...args: any[]): FunctionVStack | VStackClass {
                  break;
          } */
 
-        return (...views: UIViewClass[]) => {
+        return (...views: UIView[]) => {
                 return new VStackClass().children(...views).alignment(params.alignment).spacing(params.spacing)
         }
     } else {

@@ -1,5 +1,5 @@
 import React from "react";
-import { UIViewClass } from "../UIView/UIViewClass";
+import { UIView } from "../UIView/UIView";
 import UIViewRenderer from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import CalendarRenderer from "./CalendarRenderer";
@@ -8,7 +8,7 @@ import AutoCompleteRenderer from "./CalendarRenderer";
 
 
 
-export class CalendarClass extends UIViewClass {
+export class CalendarClass extends UIView {
 
 
     /** @internal */

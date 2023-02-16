@@ -1,10 +1,10 @@
 import React from "react";
-import { UIViewClass } from "../UIView/UIViewClass";
+import { UIView } from "../UIView/UIView";
 import UIViewRenderer from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import InputSwitchRenderer from "./InputSwitchRenderer";
 
-export class InputSwitchClass extends UIViewClass {
+export class InputSwitchClass extends UIView {
     /** @internal */
     @ViewProperty() vp_Value: boolean;
 
