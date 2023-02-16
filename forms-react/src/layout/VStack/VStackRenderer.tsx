@@ -14,6 +14,10 @@ function VStackRenderer({ control }: IControlProperties) {
         <Fragment>
             {
                 control.vp_Chidren.map((view: UIView) => {
+                    if (view == null) {
+                        return null;
+                    }
+                    
                     if (control.vp_Spacing) {
                         view.Appearance.MarginBottom = control.vp_Spacing;
                     }

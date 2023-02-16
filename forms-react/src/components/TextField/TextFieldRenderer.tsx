@@ -12,33 +12,36 @@ export interface IControlProperties {
 }
 
 
-function TextFieldProxy(props) {
+function TextFieldProxy(_props) {
+    const props = { ..._props };
+
     const _className = `textfield-view`;
 
-    const children = this.props.children;
+    const children = props.children;
 
-    let className = this.props.className;
+    let className = props.className;
 
 
-    const isMultiline = this.props.control.vp_Multiline;
+    const isMultiline = props.control.vp_Multiline;
 
-    delete this.props['className'];
-    delete this.props['control'];
-    delete this.props['children'];
+    delete props['className'];
+    delete props['control'];
+    delete props['children'];
 
     if (isMultiline) {
         return (
-            <InputTextarea {...this.props} className={className}></InputTextarea>
+            <InputTextarea {...props} className={className}></InputTextarea>
         )
     } else {
         return (
-            <InputText {...this.props} className={className}></InputText>
+            <InputText {...props} className={className}></InputText>
         )
     }
 }
 
-const MyInputText = (params) => {
+const MyInputText = (_params) => {
 
+    const params = {..._params};
     const getLabel = () => {
         if (is.function(params.obj.vp_LabelTemplate)) {
             const view: UIView = params.obj.vp_LabelTemplate(params.obj.vp_Label);
@@ -59,7 +62,7 @@ const MyInputText = (params) => {
 
     if (params.obj.vp_FormField == null || controller == null) {
         if (is.nullOrUndefined(params.value)) {
-            params.value = '';
+            //params.value = '';
         }
         return (
             <Fragment>
@@ -123,7 +126,7 @@ function TextFieldRenderer({ control }: IControlProperties) {
     `;
 
     const attributes = {}
-     if (control.vp_Autofocus) {
+    if (control.vp_Autofocus) {
         attributes['autofocus'] = true;
     }
 
@@ -134,6 +137,7 @@ function TextFieldRenderer({ control }: IControlProperties) {
 
     return (
         <MyInputText
+            className={className}
             obj={control}
             renderer={this}
             tabIndex={control.vp_TabIndex}

@@ -12,7 +12,7 @@ function FragmentRenderer({ control }: IControlProperties) {
     return (
         <Fragment>
             {
-                control.vp_Children.map(child => child.render()) as any
+                control.vp_Children.map(child => child && child.render()) as any
             }
         </Fragment>
     );

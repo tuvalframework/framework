@@ -1,4 +1,5 @@
 import React from "react";
+import { ValidateRule } from "../../UIFormController";
 import { UIView } from "../UIView/UIView";
 import UIViewRenderer from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
@@ -58,6 +59,17 @@ export class DropdownClass extends UIView {
          this.vp_Placeholder = value;
          return this;
      }
+
+      /** @internal */
+    @ViewProperty() vp_FormField: { name: string, rules: ValidateRule[] };
+
+    public formField(name: string, rules: ValidateRule[]): this {
+        this.vp_FormField = {
+            name: name,
+            rules: rules
+        };
+        return this;
+    }
 
      /** @internal */
      @ViewProperty() vp_OnChange: Function;

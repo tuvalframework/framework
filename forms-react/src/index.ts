@@ -1,9 +1,8 @@
-//export * from './main'
+export * from './main'
 export * from './components'
 
 export * from './components/UIView/UIView'
 export * from './components/UIView/ForEach'
-export * from './components/Text/Text'
 
 export * from './layout'
 
@@ -36,6 +35,8 @@ export * from './Theme'
 export * from './UIController'
 export * from './UIFormController'
 export * from './Constants'
+
+export * from './UIAppearance'
 
 export * from './Bios'
 

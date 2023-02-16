@@ -13,7 +13,7 @@ function HStackRenderer({ control }: IControlProperties) {
     return (
         <Fragment>
             {
-                control.vp_Chidren.map((view: UIView) => view.render())
+                control.vp_Chidren.map((view: UIView) => view &&  view.render())
             }
         </Fragment>
 

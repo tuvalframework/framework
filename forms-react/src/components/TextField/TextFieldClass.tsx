@@ -35,21 +35,21 @@ export class TextFieldClass extends UIView {
         return this;
     }
 
-     /** @internal */
-     @ViewProperty() vp_Multiline: boolean;
+    /** @internal */
+    @ViewProperty() vp_Multiline: boolean;
 
-     public multiline(value: boolean): this {
-         this.vp_Multiline = value;
-         return this;
-     }
+    public multiline(value: boolean): this {
+        this.vp_Multiline = value;
+        return this;
+    }
 
-        /** @internal */
-        @ViewProperty() vp_Autofocus: boolean;
+    /** @internal */
+    @ViewProperty() vp_Autofocus: boolean;
 
-        public autofocus(value: boolean): this {
-            this.vp_Autofocus = value;
-            return this;
-        }
+    public autofocus(value: boolean): this {
+        this.vp_Autofocus = value;
+        return this;
+    }
 
     /** @internal */
     @ViewProperty() vp_OnChange: Function;
@@ -58,6 +58,19 @@ export class TextFieldClass extends UIView {
         this.vp_OnChange = value;
         return this;
     }
+
+    public constructor() {
+        super();
+
+        this.Appearance.Width = '100%';
+        this.Appearance.Height = 'fit-content';
+        //this.Appearance.Border = 'solid 1px gray';
+        this.Appearance.Overflow = 'hidden';
+
+
+        this.vp_Autofocus = false;
+    }
+
     public render() {
         return (<UIViewRenderer wrap={false} control={this} renderer={TextFieldRenderer}></UIViewRenderer>)
     }

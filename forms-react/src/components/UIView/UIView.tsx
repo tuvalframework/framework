@@ -26,13 +26,7 @@ export class UIView {
     @ViewProperty()
     public vp_Key: string;
 
-    @ViewProperty()
-    public vp_Background: string;
-
-    public backgroundColor(value: string) {
-        this.vp_Background = value;
-        return this;
-    }
+   
 
     @ViewProperty()
     public vp_Tooltip: string;
@@ -88,6 +82,8 @@ export class UIView {
     public RenderFinished() {
         this.isInRenderProcess = false;
     }
+
+    
 
     //-------------Events--------
     /** @internal */
@@ -447,6 +443,57 @@ export class UIView {
         throw `ArgumentOutOfRange Exception in UIView::maxHeight method. Argument count: ${args.length}`;
     }
 
+    public backgroundColor(value: StyleAttribute): this;
+    public backgroundColor(value: string): this;
+    public backgroundColor(...args: any[]): this {
+        if (args.length === 0 || args[0] == null) {
+            this.Appearance.BackgroundColor = '';
+        } else if (args.length === 1 && is.string(args[0])) {
+            const image = args[0];
+            this.Appearance.BackgroundColor = image;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                if (is.string(styleAttribute.default)) {
+                    this.Appearance.BackgroundColor = styleAttribute.default;
+                } else if (styleAttribute.default instanceof ColorClass) {
+                    this.Appearance.BackgroundColor = styleAttribute.default.color;
+                }
+
+            }
+            if (styleAttribute.hover != null) {
+                if (is.string(styleAttribute.hover)) {
+                    this.HoverAppearance.BackgroundColor = styleAttribute.hover;
+                } else if (styleAttribute.hover instanceof ColorClass) {
+                    this.HoverAppearance.BackgroundColor = styleAttribute.hover.color;
+                }
+            }
+            if (styleAttribute.active != null) {
+                if (is.string(styleAttribute.active)) {
+                    this.ActiveAppearance.BackgroundColor = styleAttribute.active;
+                } else if (styleAttribute.active instanceof ColorClass) {
+                    this.ActiveAppearance.BackgroundColor = styleAttribute.active.color;
+                }
+            }
+            if (styleAttribute.disabled != null) {
+                if (is.string(styleAttribute.disabled)) {
+                    this.DisabledAppearance.BackgroundColor = styleAttribute.disabled;
+                } else if (styleAttribute.disabled instanceof ColorClass) {
+                    this.DisabledAppearance.BackgroundColor = styleAttribute.disabled.color;
+                }
+            }
+
+            if (styleAttribute.focus != null) {
+                if (is.string(styleAttribute.focus)) {
+                    this.FocusAppearance.BackgroundColor = styleAttribute.focus;
+                } else if (styleAttribute.focus instanceof ColorClass) {
+                    this.FocusAppearance.BackgroundColor = styleAttribute.focus.color;
+                }
+            }
+        }
+        return this;
+        //throw 'Argument Exception in ' + this.constructor.name + '::backgroundColor function.';
+    }
 
     public background(value: ColorClass): this;
     public background(value: StyleAttribute): this;
