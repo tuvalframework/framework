@@ -3,7 +3,7 @@ import { convertLegacyDataProvider, DataProviderContext, RecordContextProvider, 
 import React, { Fragment } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { UIView } from "../../components/UIView/UIView";
-import { useFormController } from "../../UIFormController ";
+import { useFormController } from "../../UIFormController";
 import { CreateContextClass } from "./CreateContextClass";
 
 

@@ -89,6 +89,7 @@ export class UIView {
         this.isInRenderProcess = false;
     }
 
+    //-------------Events--------
     /** @internal */
     @ViewProperty((): void => { })
     public vp_OnClick: Function;
@@ -97,6 +98,45 @@ export class UIView {
         this.vp_OnClick = value;
         return this;
     }
+
+     /** @internal */
+     @ViewProperty((): void => { })
+     public vp_OnFocus: Function;
+ 
+     public onFocus(value: Function) {
+         this.vp_OnFocus = value;
+         return this;
+     }
+
+        /** @internal */
+        @ViewProperty((): void => { })
+        public vp_OnBlur: Function;
+    
+        public onBlur(value: Function) {
+            this.vp_OnBlur = value;
+            return this;
+        }
+
+    //-------------------------
+
+    /** @internal */
+    @ViewProperty(false)
+    public vp_Disabled: boolean;
+
+    public disabled(value: boolean) {
+        this.vp_Disabled = value;
+        return this;
+    }
+
+       /** @internal */
+       @ViewProperty()
+       public vp_TabIndex: number;
+   
+       public tabIndex(value: number) {
+           this.vp_TabIndex = value;
+           return this;
+       }
+   
 
     public ForceUpdate() { }
 
@@ -1562,6 +1602,7 @@ export class UIView {
         }
         return this;
     }
+
 
     public render(): React.ReactNode {
         return null;

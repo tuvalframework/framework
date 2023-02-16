@@ -10,7 +10,6 @@ import { Chips } from './components/Chips/Chips';
 import { ColorPicker } from './components/ColorPicker/ColorPicker';
 import { MenuButton } from './components/MenuButton/MenuButton';
 import { EditableHeader } from './components/EditableHeader/EditableHeader';
-import { Dropdown } from "./components/Dropdown/Dropdown";
 import { Editor } from './components/Editor/Editor';
 import { InputGroup } from './components/InputGroup/InputGroup';
 import { InputMask } from './components/InputMask/InputMask';
@@ -24,7 +23,7 @@ import { Application, useApplication } from './layout/Application/Application';
 import React, { Fragment, useEffect } from "react";
 import { ReactView } from "./components/ReactView/ReactView";
 import usePromise from 'react-promise-suspense';
-import { Link, Route,  useParams } from "react-router-dom";
+import { Link, Route, useParams } from "react-router-dom";
 import { DesktopController } from "./DesktopController";
 import { UIRouteOutlet } from "./components/Router/Outlet/UIRouteOutlet";
 import { LayoutController } from './test/Controllers/LayoutController';
@@ -50,7 +49,7 @@ export class MyTestController extends UIController {
 
     public override LoadView(): UIView {
         return (
-            HStack({alignment:cTopLeading})(
+            HStack({ alignment: cTopLeading })(
                 Text("MyTestController"),
             )
         )
@@ -208,12 +207,12 @@ export class MyController extends UIController {
                 ColorPicker().value(this.colorPickerValue).onChange((e) => this.colorPickerValue = e),
                 MenuButton(),
                 EditableHeader(),
-                Dropdown()
+               /*  Dropdown()
                     .width('100%')
                     .value(this.dropDownSelectedValue)
                     .model(this.dropDownDataSource)
                     .fields({ text: 'name', value: 'value' })
-                    .onChange(e => this.dropDownSelectedValue = e),
+                    .onChange(e => this.dropDownSelectedValue = e), */
                 Text(this.editorValue),
                 Editor().value(this.editorValue).onChange(e => this.editorValue = e).height(320),
                 InputGroup(),

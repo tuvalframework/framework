@@ -7,6 +7,28 @@ import VibeRenderer from "./Renderers/VibeRenderer";
 
 export class DropdownClass extends UIView {
 
+    @ViewProperty() vp_itemTemplate: (option: any) => UIView ;
+  
+
+
+    public itemTemplate(value: (option: any) => UIView ): this {
+        this.vp_itemTemplate = value;
+        return this;
+    }
+
+    @ViewProperty() vp_emptyTemplate: () => UIView ;
+    public emptyTemplate(value: () => UIView ): this {
+        this.vp_emptyTemplate = value;
+        return this;
+    }
+
+
+    @ViewProperty() vp_selectedItemTemplate: (option: any) => UIView ;
+    public selectedItemTemplate(value: (option: any) => UIView ): this {
+        this.vp_selectedItemTemplate = value;
+        return this;
+    }
+
     @ViewProperty() vp_fields: {text: string, value: string};
     public fields(value: {text: string, value: string}): this {
         this.vp_fields = value;
@@ -28,6 +50,14 @@ export class DropdownClass extends UIView {
         this.vp_Model = value;
         return this;
     }
+
+     /** @internal */
+     @ViewProperty() vp_Placeholder: string;
+
+     public placeholder(value: string) {
+         this.vp_Placeholder = value;
+         return this;
+     }
 
      /** @internal */
      @ViewProperty() vp_OnChange: Function;
