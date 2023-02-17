@@ -36,6 +36,6 @@ export class RecordContextClass<T> extends UIView {
     }
 
     public render() {
-        return (<UIViewRenderer wrap={true}  control = {this} renderer={RecordContextRenderer}></UIViewRenderer>)
+        return (<UIViewRenderer wrap={false}  control = {this} renderer={RecordContextRenderer}></UIViewRenderer>)
     }
 }

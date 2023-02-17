@@ -90,12 +90,10 @@ const MyInputText = (_params) => {
 
         //params['value'] = controller.GetValue(params.obj.vp_FormField.name);
 
-        params['onInput'] = (e) => params.renderer.delayedEvent(e, (e) => {
-
+        params['onChange'] =  (e) => {
             controller.SetFieldState(params.obj.vp_FormField.name, { isTouched: true });
             controller.SetValue(params.obj.vp_FormField.name, e.target.value);
-
-        }, 'onInput')
+        }
 
 
 

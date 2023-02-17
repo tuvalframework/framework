@@ -44,7 +44,7 @@ function loadFonts(): void {
 
 
 export function StartBios(biosController: any) {
-  loadFonts();
+  //loadFonts();
 //  if (biosController) {
     const root = ReactDOM.createRoot(window.document.body).render(
       <BrowserRouter>

@@ -33,6 +33,6 @@ export class DataContextClass extends UIView {
     }
 
     public render() {
-        return (<UIViewRenderer wrap={true}  control = {this} renderer={DataContextRenderer}></UIViewRenderer>)
+        return (<UIViewRenderer wrap={false}  control = {this} renderer={DataContextRenderer}></UIViewRenderer>)
     }
 }

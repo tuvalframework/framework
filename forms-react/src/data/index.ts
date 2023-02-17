@@ -1,6 +1,8 @@
 export * from './DataContext'
 export * from './RecordContext'
 export * from './CreateContext'
+export * from './UpdateContext'
+export * from './DeleteContext'
 
 export * from 'ra-core'
 

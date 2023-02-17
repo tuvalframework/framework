@@ -90,13 +90,18 @@ const defaultField: IField = {
 }
 
 export class UIFormController extends UIController {
+
+    @State(false)
+    public IsLoaded: boolean;
+
     @State({})
     private formData: { [key: string]: IField };
 
     @State()
     public isValid: boolean;
 
-    public validateForm() {
+   
+    public validateForm(): any {
 
         //this.BeginUpdate();
         // let errors = [];
@@ -124,8 +129,8 @@ export class UIFormController extends UIController {
                 data[key] = this.formData[key].value;
             }
 
-            this.OnSubmit(data);
             return [true, data];
+            //this.OnSubmit(data);
         } else {
             for (let key in this.formData) {
                 const field = this.formData[key];
@@ -133,29 +138,29 @@ export class UIFormController extends UIController {
             }
 
             this.isValid = false;
-
-            const data = {};
-            for (let key in this.formData) {
-                data[key] = this.formData[key].value;
-            }
-
-            return [false, data]
         }
 
+        return [false, null]
         //this.EndUpdate();
     }
     protected OnSubmit(data) { }
 
     public Submit() {
-
-        this.validateForm();
+        const [isValid, data] = this.validateForm();
+        if (isValid) {
+            this.OnSubmit(data);
+        }
     }
 
-    public ResetForm() { }
+    public ResetForm() { 
+        for (let key in this.formData) {
+            this.SetValue(key, null);
+        }
+    }
 
     public ClearErrors() { }
 
-    public SetValue(name: string, value: any) {
+    public SetValue(name: string, value: any, silent: boolean = false, isDirty: boolean = false) {
         if (name != null) {
             const fieldName = name;
 
@@ -165,7 +170,9 @@ export class UIFormController extends UIController {
             const fieldInfo = this.formData[fieldName];
             fieldInfo.value = value;
 
-            this.formData = { ...this.formData };
+            if (!silent) {
+                this.formData = { ...this.formData };
+            }
         }
     }
 
@@ -209,7 +216,6 @@ export class UIFormController extends UIController {
         }
     }
 
-
     public SetFieldTouch(name: string, isTouched: boolean): IFieldState {
         if (name != null) {
             const fieldName = name;
@@ -237,6 +243,7 @@ export class UIFormController extends UIController {
 
         }
     }
+
 
     public render(): React.ReactNode {
 

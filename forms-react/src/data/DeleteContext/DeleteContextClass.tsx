@@ -2,12 +2,14 @@ import React from "react";
 import { UIView } from "../../components/UIView/UIView";
 import UIViewRenderer from "../../components/UIView/UIViewRenderer";
 import { ViewProperty } from "../../components/UIView/ViewProperty";
-import CreateContextRenderer from "./CreateContextRenderer";
+import DeleteContextRenderer from "./DeleteContextRenderer";
+import UpdateContextRenderer from "./DeleteContextRenderer";
+import CreateContextRenderer from "./DeleteContextRenderer";
 
-export class CreateContextClass extends UIView {
+export class DeleteContextClass extends UIView {
 
-    @ViewProperty() vp_Children:(create?: Function, isLoading?: boolean, isSuccess?: boolean) => UIView;
-    public children(value: (create?: Function, isLoading?: boolean, isSuccess?: boolean) => UIView): this {
+    @ViewProperty() vp_Children:(update?: Function, isLoading?: boolean, isSuccess?: boolean) => UIView;
+    public children(value: (update?: Function, isLoading?: boolean, isSuccess?: boolean) => UIView): this {
         this.vp_Children = value;
         return this;
     }
@@ -42,6 +44,6 @@ export class CreateContextClass extends UIView {
     }
 
     public render() {
-        return (<UIViewRenderer wrap={false}  control = {this} renderer={CreateContextRenderer}></UIViewRenderer>)
+        return (<UIViewRenderer wrap={false}  control = {this} renderer={DeleteContextRenderer}></UIViewRenderer>)
     }
 }
