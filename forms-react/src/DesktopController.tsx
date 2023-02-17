@@ -29,7 +29,7 @@ export const ApplicationLoader = () => {
         if (AppCache[app_name]) {
             resolve(AppCache[app_name]);
         } else {
-            ModuleLoader.LoadBundledModuleWithDecode(`/${app_name}.app`, app_name).then((_app: any) => {
+            ModuleLoader.LoadBundledModuleWithDecode(`/static/applications/${app_name}.app`, app_name).then((_app: any) => {
                 if (_app != null) {
                     const app = new _app();
                     AppCache[app_name] = app.GetMainController();
@@ -60,7 +60,7 @@ export class DesktopController extends UIController {
             ReactView(
                 <Routes>
                     {/* <Route path="/" element={<div>Home Me Test Me</div>} /> */}
-                    <Route path="/app/:app_name/*" element={(
+                    <Route path="/newconsole/app/:app_name/*" element={(
                         <React.Suspense fallback={<h1>Loading...</h1>} >
                             <ApplicationLoader></ApplicationLoader>
                         </React.Suspense>

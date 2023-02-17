@@ -92,6 +92,7 @@ export class TextClass extends UIView {
     }
 
     public render() {
-        return (<UIViewRenderer wrap={true} control={this} renderer={TextRenderer}></UIViewRenderer>)
+       /*  return (<UIViewRenderer wrap={true} control={this} renderer={TextRenderer}></UIViewRenderer>) */
+       return (<h1>sdfjsklf</h1>)
     }
 }
