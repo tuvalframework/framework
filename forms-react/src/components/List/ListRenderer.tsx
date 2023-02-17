@@ -1,9 +1,6 @@
-import React, { useState } from "react";
-import { List, TextField } from 'monday-ui-react-core';
-import { ListBox } from "primereact";
-import { is } from "@tuval/core";
+import { List } from 'monday-ui-react-core';
+import React from "react";
 import { ListClass } from "./ListClass";
-import { ListWrapperComponentType } from "monday-ui-react-core/dist/types/components/List/ListConstants";
 
 export interface IControlProperties {
     control: ListClass

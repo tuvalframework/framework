@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { InputTextarea } from 'primereact';
 import { css } from "@emotion/css";
-import { InputTextareaClass } from "./InputTextareaClass";
 import { is } from "@tuval/core";
+import { InputTextarea } from 'primereact';
+import React from "react";
+import { InputTextareaClass } from "./InputTextareaClass";
 
 export interface IControlProperties {
     control: InputTextareaClass

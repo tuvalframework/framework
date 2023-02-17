@@ -1,6 +1,5 @@
 import { forEach } from "@tuval/core";
-import React, { useState } from "react";
-import { UIView } from "./components/UIView/UIView";
+import React from "react";
 import { FormClass } from "./FormClass";
 
 export interface IControlProperties {

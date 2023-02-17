@@ -42,7 +42,7 @@ export * from './Bios'
 
 //--------------------
 export { useNavigate, useLocation, useParams } from 'react-router-dom'
-export { useState } from 'react'
+export { useState , useEffect} from 'react'
 
 
 //-------------------

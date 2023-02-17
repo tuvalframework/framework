@@ -11,6 +11,7 @@ export interface IControlProperties {
 
 function ButtonRenderer({ control }: IControlProperties) {
 
+    debugger;
 
     const className = css`
     ${control.Appearance.ToString()}
@@ -20,15 +21,19 @@ function ButtonRenderer({ control }: IControlProperties) {
 `;
 
     if (is.array(control.vp_Children) && control.vp_Children.length > 0) {
-        <Button
-            className={className}
-            label={control.vp_Label}
-            disabled={control.vp_Disabled}
-            loading={control.vp_Loading}
-            onClick={(e) => is.function(control.vp_OnClick) ? control.vp_OnClick(e) : void 0}
-            style={{ display: 'flex', justifyContent: 'center' }}>
-
-        </Button >
+        return (
+            <Button
+                className={className}
+                label={control.vp_Label}
+                disabled={control.vp_Disabled}
+                loading={control.vp_Loading}
+                onClick={(e) => is.function(control.vp_OnClick) ? control.vp_OnClick(e) : void 0}
+                style={{ display: 'flex', justifyContent: 'center' }}>
+                    {
+                        control.vp_Children.map(view=> view && view.render())
+                    }
+            </Button >
+        )
     } else {
         return (
             <Button className={className}>

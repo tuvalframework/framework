@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { UIView } from "./components/UIView/UIView";
 
 
@@ -23,6 +23,11 @@ export function State(defaultValue?: any): any/* PropertyDecorator */ {
 }
 
 function UIControllerProxy({ children, controller }) {
+
+    useEffect(() => {
+        setTimeout(() => controller.BindRouterParams(), 10000)
+    }, []);
+
     return (
         <Fragment>
             {controller.LoadView().render()}
@@ -44,11 +49,14 @@ export class UIController extends React.Component<any, any> {
 
     }
 
+    protected BindRouterParams(routerParams?: any) { }
+
     public LoadView(): UIView {
         return null;
     }
 
     public render(): React.ReactNode {
+
 
         return (
             <UIControllerProxy controller={this}>

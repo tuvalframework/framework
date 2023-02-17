@@ -1,8 +1,8 @@
-import React, { Fragment, useState } from "react";
+import { convertLegacyDataProvider, DataProviderContext } from "ra-core";
+import React from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { UIView } from "../../components/UIView/UIView";
 import { DataContextClass } from "./DataContextClass";
-import { convertLegacyDataProvider, DataProviderContext } from "ra-core";
-import { QueryClient, QueryClientProvider } from "react-query";
 
 export const query = new QueryClient({
     defaultOptions: {

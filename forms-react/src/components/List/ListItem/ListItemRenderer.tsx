@@ -1,10 +1,9 @@
-import React, { Fragment, useState } from "react";
-import { List, ListItem, ListItemIcon, ListTitle, TextField } from 'monday-ui-react-core';
-import { ListBox } from "primereact";
 import { is } from "@tuval/core";
+import { ListItem, ListItemIcon } from 'monday-ui-react-core';
+import React, { Fragment } from "react";
 import { ListItemClass } from "./ListItemClass";
 
-import  Send  from 'monday-ui-react-core/dist/icons/Send';
+import Send from 'monday-ui-react-core/dist/icons/Send';
 
 export interface IControlProperties {
     control: ListItemClass

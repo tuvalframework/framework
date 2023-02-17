@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { MultiSelect } from 'primereact';
 import { css } from "@emotion/css";
 import { is } from "@tuval/core";
+import { MultiSelect } from 'primereact';
+import React from "react";
 import { MultiSelectClass } from "./MultiSelectClass";
 
 export interface IControlProperties {

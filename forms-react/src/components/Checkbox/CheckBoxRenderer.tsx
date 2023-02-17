@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Checkbox } from 'primereact';
 import { css } from "@emotion/css";
-import { CheckBoxClass } from "./CheckboxClass";
 import { is } from '@tuval/core';
+import { Checkbox } from 'primereact';
+import React from "react";
+import { CheckBoxClass } from "./CheckboxClass";
 
 export interface IControlProperties {
     control: CheckBoxClass

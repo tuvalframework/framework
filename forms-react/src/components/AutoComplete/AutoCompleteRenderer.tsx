@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { TextField } from 'monday-ui-react-core';
-import { AutoCompleteClass } from "./AutoCompleteClass";
-import { AutoComplete } from "primereact";
 import { is } from "@tuval/core";
+import { AutoComplete } from "primereact";
+import React from "react";
+import { AutoCompleteClass } from "./AutoCompleteClass";
 
 export interface IControlProperties {
     control: AutoCompleteClass

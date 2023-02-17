@@ -16,6 +16,7 @@ function UIRadioGroupRenderer({ control }: IControlProperties) {
     const [groupGuid] = useState(Guid.NewGuid().ToString());
     const [guid] = useState(Guid.NewGuid().ToString());
     const [radioButtonValue, setRadioButtonValue] = useState(null);
+    
     return (
        
             <Fragment>

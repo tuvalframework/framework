@@ -1,5 +1,5 @@
 import { Tooltip } from "monday-ui-react-core";
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { UIView } from "../UIView/UIView";
 import { TooltipClass } from "./TooltipClass";
 

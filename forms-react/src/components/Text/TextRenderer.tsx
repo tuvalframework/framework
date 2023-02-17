@@ -1,8 +1,7 @@
 import { is } from "@tuval/core";
-import React, { useState } from "react";
-import { UIView } from "../UIView/UIView";
-import { RenderingTypes, TextAlignment, TextClass } from "./TextClass";
 import * as MarkdownIt from "markdown-it";
+import React from "react";
+import { RenderingTypes, TextAlignment, TextClass } from "./TextClass";
 
 export interface IControlProperties {
     control: TextClass
