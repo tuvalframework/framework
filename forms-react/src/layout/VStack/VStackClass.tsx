@@ -144,6 +144,6 @@ export class VStackClass extends UIView {
         return this;
     }
     public render() {
-        return (<UIViewRenderer wrap={true}  control = {this} renderer={VStackRenderer}></UIViewRenderer>)
+        return (<VStackRenderer  control = {this} ></VStackRenderer>)
     }
 }

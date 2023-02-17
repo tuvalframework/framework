@@ -24,9 +24,9 @@ export function State(defaultValue?: any): any/* PropertyDecorator */ {
 
 function UIControllerProxy({ children, controller }) {
 
-    /* useEffect(() => {
+     useEffect(() => {
         controller.BindRouterParams();
-    }, []); */
+    }, []); 
 
     return (
         <Fragment>

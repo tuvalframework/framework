@@ -60,8 +60,8 @@ export class UIView {
     public constructor() {
 
         this.BeginUpdate();
-        const [key, setKey] = React.useState(Guid.NewGuid().ToString());
-        this.vp_Key = key;
+       // const [key, setKey] = React.useState(Guid.NewGuid().ToString());
+       // this.vp_Key = key;
        // console.log(key);
         this.EndUpdate();
 

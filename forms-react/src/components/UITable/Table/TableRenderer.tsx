@@ -12,6 +12,15 @@ export interface IControlProperties {
 
 
 function TableRenderer({ control }: IControlProperties) {
+
+    const className = css`
+    ${control.Appearance.ToString()}
+    ${control.HoverAppearance.IsEmpty ? '' : '&:hover { ' + control.HoverAppearance.ToString() + ' }'}
+    ${control.ActiveAppearance.IsEmpty ? '' : '&:active { ' + control.ActiveAppearance.ToString() + ' }'}
+    ${control.FocusAppearance.IsEmpty ? '' : '&:focus { ' + control.FocusAppearance.ToString() + ' }'}
+`;
+
+
     const attributeObject = {}
     attributeObject['alignment'] = control.vp_Alignment;
     attributeObject['spacing'] = control.vp_Spacing;
@@ -53,14 +62,16 @@ function TableRenderer({ control }: IControlProperties) {
         headerStyle = control.vp_HeaderAppearance.Appearance?.GetStyleObject();
     }
     return (
-        <table style={{ width: '100%', height: '100%', borderCollapse: 'collapse' }}>
-            <thead style={headerStyle}>
-                <tr> {headerResult}</tr>
-            </thead>
-            <tbody>
-                {rowNodes}
-            </tbody>
-        </table>
+        <div className={className}>
+            <table style={{ width: '100%', height: '100%', borderCollapse: 'collapse' }}>
+                <thead style={headerStyle}>
+                    <tr> {headerResult}</tr>
+                </thead>
+                <tbody>
+                    {rowNodes}
+                </tbody>
+            </table>
+        </div>
     );
 }
 

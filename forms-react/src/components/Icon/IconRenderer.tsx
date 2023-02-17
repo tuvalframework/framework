@@ -21,7 +21,13 @@ function IconRenderer({ control }: IControlProperties) {
     `;
 
     return (
-        <Icon iconType={control.vp_IconType as any} icon={control.vp_Icon} iconLabel="my bolt svg icon" iconSize={control.vp_Size} />
+        <Icon
+            iconType={control.vp_IconType as any}
+            icon={control.vp_Icon}
+            iconLabel="my bolt svg icon"
+            iconSize={control.vp_Size}
+            ignoreFocusStyle={true}
+        />
     );
 
 }
