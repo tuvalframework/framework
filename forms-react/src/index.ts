@@ -2,6 +2,7 @@
 export * from './components'
 
 export * from './components/UIView/UIView'
+export * from './components/UIView/ViewProperty'
 export * from './components/UIView/ForEach'
 
 export * from './layout'

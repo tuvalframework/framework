@@ -19,13 +19,11 @@ function MenuButtonRenderer({ control }: IControlProperties) {
 
     return (
         <Fragment>
-            <Icon iconType={Icon.type.SVG} icon={Bolt} iconLabel="my bolt svg icon" iconSize={16} />
-            <MenuButton closeDialogOnContentClick={true} startingEdge={"top"} dialogPosition={"right-end"} component={Bolt}>
+            <MenuButton closeDialogOnContentClick={true} componentPosition={'start'} dialogPosition={"bottom-start"} component={Bolt}>
                 <Menu
                     id="menu"
                     size="medium"
                 >
-                    <h1>Test</h1>
                     <MenuTitle
                         caption="Look up, you might see"
                         captionPosition={"top" as any}

@@ -7,8 +7,8 @@ import CreateContextRenderer from "./UpdateContextRenderer";
 
 export class UpdateContextClass extends UIView {
 
-    @ViewProperty() vp_Children:(update?: Function, isLoading?: boolean, isSuccess?: boolean) => UIView;
-    public children(value: (update?: Function, isLoading?: boolean, isSuccess?: boolean) => UIView): this {
+    @ViewProperty() vp_Children:(update?: Function,data?: any, isLoading?: boolean, isSuccess?: boolean) => UIView;
+    public children(value: (update?: Function,data?: any, isLoading?: boolean, isSuccess?: boolean) => UIView): this {
         this.vp_Children = value;
         return this;
     }

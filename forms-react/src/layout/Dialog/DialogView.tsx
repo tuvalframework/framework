@@ -13,10 +13,10 @@ export class DialogView extends UIView {
     @ViewProperty('')
     public Header: string;
 
-    @ViewProperty('320px')
+    @ViewProperty('')
     public Width: string;
 
-    @ViewProperty('320px')
+    @ViewProperty('')
     public Height: string;
 
     @ViewProperty(true)

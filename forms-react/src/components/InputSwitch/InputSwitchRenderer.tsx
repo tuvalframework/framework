@@ -20,7 +20,7 @@ function InputSwitchRenderer({ control }: IControlProperties) {
     `;
 
     return (
-        <InputSwitch checked={control.vp_Value} onChange={(e) => is.function(control.vp_OnChange) ? control.vp_OnChange(e.value) : void 0} />
+        <InputSwitch checked={control.vp_Checked} onChange={(e) => is.function(control.vp_OnChange) ? control.vp_OnChange(e.value) : void 0} />
     )
 
 }

@@ -1650,7 +1650,67 @@ export class UIView {
         return this;
     }
 
+    // Animate Props
 
+    @ViewProperty() renderAsAnimated: boolean;
+    
+    @ViewProperty() _initial: any;
+    @ViewProperty() _animate: any;
+    @ViewProperty() _transition: any;
+    @ViewProperty() _whileHover: any;
+    @ViewProperty() _whileTap: any;
+    @ViewProperty() _whileDrag: any;
+    @ViewProperty() _whileFocus: any;
+    @ViewProperty() _whileInView: any;
+    @ViewProperty() _exit: any;
+
+    public initial(value: any): this {
+        this._initial = value;
+        this.renderAsAnimated = true;
+        return this;
+    }
+    public animate(value: any): this {
+        this._animate = value;
+        this.renderAsAnimated = true;
+        return this;
+    }
+    public __transition(value: any): this {
+        this._transition = value;
+        this.renderAsAnimated = true;
+        return this;
+    }
+
+    public hover(value: any): this {
+        this._whileHover = value;
+        this.renderAsAnimated = true;
+        return this;
+    }
+
+    public tap(value: any): this {
+        this._whileHover = value;
+        this.renderAsAnimated = true;
+        return this;
+    }
+    public drag(value: any): this {
+        this._whileDrag = value;
+        this.renderAsAnimated = true;
+        return this;
+    }
+    public focus(value: any): this {
+        this._whileFocus = value;
+        this.renderAsAnimated = true;
+        return this;
+    }
+
+
+
+    //---------------
+
+    public GetEventsObject() : Object {
+        const events = {};
+        events['onClick'] = is.function(this.vp_OnClick) ? (e) => this.vp_OnClick(e) : void 0;
+        return events;
+    }
     public render(): React.ReactNode {
         return null;
     }

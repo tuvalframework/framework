@@ -44,7 +44,7 @@ const UIViewRenderer = ({ control, renderer, wrap }: IControlProperties) => {
     let component = null;
     if (wrap) {
         component = (
-            <div className={_className} >
+            <div className={_className} {...control.GetEventsObject()} >
                 {React.createElement(renderer, { control: control })}
             </div>
         )

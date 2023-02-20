@@ -1,3 +1,4 @@
+import { is } from "@tuval/core";
 import React from "react";
 import { UIView } from "../../UIView/UIView";
 import UIViewRenderer from "../../UIView/UIViewRenderer";
@@ -11,7 +12,11 @@ export class UIRouteLinkClass extends UIView {
     @ViewProperty() vp_Link: string;
 
     public link(value: string) {
-        this.vp_Link = value;
+        if (is.nullOrEmpty(value)) {
+            this.vp_Link = 'javascript:;'
+        } else {
+            this.vp_Link = value;
+        }
         return this;
     }
 
@@ -23,13 +28,13 @@ export class UIRouteLinkClass extends UIView {
         return this;
     }
 
-     /** @internal */
-     @ViewProperty() vp_Chidren: UIView[];
+    /** @internal */
+    @ViewProperty() vp_Chidren: UIView[];
 
-     public children(...value: UIView[]) {
-         this.vp_Chidren = value;
-         return this;
-     }
+    public children(...value: UIView[]) {
+        this.vp_Chidren = value;
+        return this;
+    }
 
     public render() {
         return (<UIViewRenderer wrap={true} control={this} renderer={UIRouteLinkRenderer}></UIViewRenderer>)

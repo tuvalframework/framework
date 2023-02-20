@@ -76,7 +76,7 @@ function UpdateContextRenderer({ control }: IControlProperties) {
 
 
     // const { data, isLoading, error } = useGetOne(control.vp_Resource, control.vp_Filter);
-    const view = control.vp_Children(handleUpdate, isLoading, isSuccess);
+    const view = control.vp_Children(handleUpdate,getOneResult.data, isLoading, isSuccess);
     return (
         <Fragment>
             {view.render()}

@@ -217,7 +217,7 @@ export class MyController extends UIController {
                 Editor().value(this.editorValue).onChange(e => this.editorValue = e).height(320),
                 InputGroup(),
                 InputMask(),
-                InputSwitch().value(this.inputSwitchValue).onChange(e => this.inputSwitchValue = e),
+                InputSwitch().checked(this.inputSwitchValue).onChange(e => this.inputSwitchValue = e),
                 InputNumber().value(this.inputNumberValue).onChange(e => this.inputNumberValue = e),
                 InputTextArea().value(this.textAreaValue).onChange(e => this.textAreaValue = e).width('100%'),
                 Knob().value(this.knobValue).onChange(e => this.knobValue = e),

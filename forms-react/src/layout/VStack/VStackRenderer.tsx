@@ -19,7 +19,7 @@ function VStackRenderer({ control }: IControlProperties) {
 `;
 
     return (
-        <div className={className}>
+        <div className={className} {...control.GetEventsObject()}>
             {
                 control.vp_Chidren.map((view: UIView) => {
                     if (view == null) {

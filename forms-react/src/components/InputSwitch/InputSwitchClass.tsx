@@ -6,10 +6,10 @@ import InputSwitchRenderer from "./InputSwitchRenderer";
 
 export class InputSwitchClass extends UIView {
     /** @internal */
-    @ViewProperty() vp_Value: boolean;
+    @ViewProperty() vp_Checked: boolean;
 
-    public value(value: boolean) {
-        this.vp_Value = value;
+    public checked(value: boolean) {
+        this.vp_Checked = value;
         return this;
     }
 
