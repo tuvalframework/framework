@@ -28,11 +28,15 @@ function UIControllerProxy({ children, controller }) {
         controller.BindRouterParams();
     }, []); 
 
-    return (
-        <Fragment>
-            {controller.LoadView().render()}
-        </Fragment>
-    )
+    const view = controller.LoadView();
+    if (view != null) {
+        return (
+            <Fragment>
+                {controller.LoadView().render()}
+            </Fragment>
+        )
+    }
+    
 }
 
 export class UIController extends React.Component<any, any> {

@@ -152,6 +152,6 @@ export class HStackClass extends UIView {
         return this;
     }
     public render() {
-        return (<UIViewRenderer wrap={true}  control={this} renderer={HStackRenderer}></UIViewRenderer>)
+        return (<HStackRenderer control={this}></HStackRenderer>)
     }
 }
