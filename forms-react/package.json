@@ -105,10 +105,12 @@
         ]
     },
     "devDependencies": {
+        "@codemirror/lang-javascript": "^6.1.4",
         "@emotion/css": "^11.10.5",
         "@tuval/cg": "^0.0.16",
         "@tuval/core": "^0.0.92",
         "@tuval/graphics": "^0.0.10",
+        "@uiw/react-codemirror": "^4.19.9",
         "apexcharts": "^3.35.5",
         "arraybuffer-loader": "^1.0.8",
         "chart.js": "^4.2.0",
@@ -119,6 +121,7 @@
         "file-loader": "^6.2.0",
         "framer-motion": "^9.0.4",
         "ifdef-loader": "^2.3.2",
+        "install": "^0.13.0",
         "jss": "^10.9.2",
         "jss-plugin-camel-case": "^10.9.2",
         "jss-plugin-default-unit": "^10.9.2",
@@ -129,6 +132,7 @@
         "jss-plugin-vendor-prefixer": "^10.9.2",
         "markdown-it": "^13.0.1",
         "monday-ui-react-core": "^1.92.0",
+        "npm": "^9.5.0",
         "primeflex": "^3.3.0",
         "query-string": "^7.1.1",
         "quill": "^1.3.7",

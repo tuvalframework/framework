@@ -79,6 +79,6 @@ export class DropdownClass extends UIView {
          return this;
      }
     public render() {
-        return (<UIViewRenderer wrap={false} control={this} renderer={VibeRenderer}></UIViewRenderer>)
+        return (<UIViewRenderer wrap={true} control={this} renderer={PrimeRenderer}></UIViewRenderer>)
     }
 }

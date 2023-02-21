@@ -43,7 +43,8 @@ export * from './Bios'
 
 //--------------------
 export { useNavigate, useLocation, useParams } from 'react-router-dom'
-export { useState , useEffect} from 'react'
+export { useState , useEffect, useMemo} from 'react'
+export {useGetList} from 'ra-core'
 
 
 //-------------------

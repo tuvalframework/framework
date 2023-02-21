@@ -29,6 +29,6 @@ export class IconClass extends UIView {
         return this;
     }
     public render() {
-        return (<UIViewRenderer wrap={false} control={this} renderer={IconRenderer}></UIViewRenderer>)
+        return (<UIViewRenderer wrap={true} control={this} renderer={IconRenderer}></UIViewRenderer>)
     }
 }

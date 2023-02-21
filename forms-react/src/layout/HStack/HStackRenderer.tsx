@@ -4,6 +4,7 @@ import React, { Fragment } from "react";
 import { UIView } from "../../components/UIView/UIView";
 import { HStackClass } from "./HStackClass";
 import { motion } from "framer-motion"
+import { Tooltip } from "monday-ui-react-core";
 
 
 export interface IControlProperties {
@@ -56,10 +57,11 @@ function HStackRenderer({ control }: IControlProperties) {
             elementProperties['exit'] = control._exit;
         }
         console.log(elementProperties)
+
+
         return (
             <motion.div className={className} {...events} {...elementProperties}>
                 {
-
                     control.vp_Chidren.map((view: UIView) => {
                         if (view == null) {
                             return null;
@@ -75,7 +77,7 @@ function HStackRenderer({ control }: IControlProperties) {
         );
     }
 
-    return (
+    const finalComponent = (
         <div className={className} {...events}>
             {
 
@@ -91,7 +93,17 @@ function HStackRenderer({ control }: IControlProperties) {
                 })
             }
         </div>
-    );
+    )
+
+    if (control.vp_Tooltip) {
+        return (
+            <Tooltip content={control.vp_Tooltip} position={Tooltip.positions.BOTTOM} showDelay={1000} >
+                {finalComponent}
+            </Tooltip>
+        )
+    }
+    return finalComponent;
+
 
 }
 

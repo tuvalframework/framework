@@ -1650,6 +1650,11 @@ export class UIView {
         return this;
     }
 
+    public zIndex(value: int): this {
+        this.Appearance.ZIndex = value.toString();
+        return this;
+    }
+
     // Animate Props
 
     @ViewProperty() renderAsAnimated: boolean;

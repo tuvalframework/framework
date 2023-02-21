@@ -102,14 +102,14 @@ const MyInputText = (_params) => {
             delete params['height']; // we do not want 100% height
         }
         return (
-            <div style={{ width: '100%' }}>
+            <Fragment>
                 {getLabel()}
                 <TextFieldProxy control={params.obj} {...params} />
                 {fieldState.errors.map(error => (
                     <small className="p-error">{error}</small>
                 ))}
 
-            </div>
+            </Fragment>
         )
     }
 }
@@ -142,7 +142,7 @@ function TextFieldRenderer({ control }: IControlProperties) {
             {...attributes}
             value={control.vp_Value}
             placeholder={control.vp_Placeholder}
-            onChange={(e) => is.function(control.onChange) ? control.onChange(e.target.value) : void 0}>
+            onChange={(e) => is.function(control.vp_OnChange) ? control.vp_OnChange(e.target.value) : void 0}>
         </MyInputText>
     );
 

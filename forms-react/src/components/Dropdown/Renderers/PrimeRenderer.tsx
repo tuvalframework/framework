@@ -8,8 +8,8 @@ import { DropdownClass } from "../DropdownClass";
 
 
 
-const MyDropDown = (params) => {
-
+const MyDropDown = (_params) => {
+    const params = {..._params}
     const getLabel = () => {
         if (is.function(params.obj.vp_LabelTemplate)) {
             const view: UIView = params.obj.vp_LabelTemplate(params.obj.vp_Label);
@@ -46,21 +46,23 @@ const MyDropDown = (params) => {
 
         params['value'] = controller.GetValue(params.obj.vp_FormField.name);
 
-        params['onChange'] = (e) => controller.SetValue(params.obj.vp_FormField.name, e.target.value)
+        params['onChange'] = (e) => {
+            controller.SetValue(params.obj.vp_FormField.name, e.target.value)
+        }
 
         const fieldState = controller.GetFieldState(params.obj.vp_FormField.name);
         if (fieldState.errors.length > 0) {
             delete params['height']; // we do not want 100% height
         }
         return (
-            <div style={{ width: '100%' }}>
+           <Fragment>
                 {getLabel()}
                 <Dropdown  {...params} />
                 {fieldState.errors.map(error => (
                     <small className="p-error">{error}</small>
                 ))}
 
-            </div>
+            </Fragment>
         )
     }
 }
@@ -101,21 +103,20 @@ function PrimeRenderer({ control }: IControlProperties) {
     }
 
     const selectedTemplate = (option, props) => {
-        console.group('Drop Down Context')
-        console.log(option)
+       // console.group('Drop Down Context')
+       // console.log(option)
 
 
         if (option && is.function(control.vp_selectedItemTemplate)) {
             const view: UIView = control.vp_selectedItemTemplate(option);
 
             if (view != null) {
-                console.log(view);
                 console.groupEnd();
 
                 return view.render();
             }
         }
-        console.groupEnd()
+       // console.groupEnd()
 
         return (
             <span>
@@ -127,6 +128,7 @@ function PrimeRenderer({ control }: IControlProperties) {
 
     const style = {};
     style['width'] = '100%';
+    style['height'] = '100%';
     // style['height'] = '100%';
     style['backgroundColor'] = control.Appearance.BackgroundColor;
     style['background'] = control.Appearance.Background;

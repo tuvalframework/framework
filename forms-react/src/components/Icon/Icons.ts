@@ -88,6 +88,9 @@ import Favorite from "monday-ui-react-core/dist/icons/Favorite";
 
 
 import MoveArrowRight from "monday-ui-react-core/dist/icons/MoveArrowRight";
+import MoveArrowLeft from "monday-ui-react-core/dist/icons/MoveArrowLeft";
+import MoveArrowLeftDouble from "monday-ui-react-core/dist/icons/MoveArrowLeftDouble";
+import MoveArrowUp from "monday-ui-react-core/dist/icons/MoveArrowUp";
 
 
 export const Icons = {
@@ -178,5 +181,8 @@ export const Icons = {
     Favorite: Favorite,
 
 
-    MoveArrowRight:MoveArrowRight
+    MoveArrowRight: MoveArrowRight,
+    MoveArrowLeft: MoveArrowLeft,
+    MoveArrowLeftDouble: MoveArrowLeftDouble,
+    MoveArrowUp: MoveArrowUp
 }
