@@ -21,6 +21,6 @@ export class InputSwitchClass extends UIView {
         return this;
     }
     public render() {
-        return (<UIViewRenderer wrap={true} control={this} renderer={InputSwitchRenderer}></UIViewRenderer>)
+        return (<UIViewRenderer wrap={false} control={this} renderer={InputSwitchRenderer}></UIViewRenderer>)
     }
 }

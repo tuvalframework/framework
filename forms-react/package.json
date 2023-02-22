@@ -113,6 +113,7 @@
         "@uiw/react-codemirror": "^4.19.9",
         "apexcharts": "^3.35.5",
         "arraybuffer-loader": "^1.0.8",
+        "bootstrap-switch-button-react": "^1.2.0",
         "chart.js": "^4.2.0",
         "css-loader": "^6.7.1",
         "declaration-bundler-webpack-plugin": "^1.0.3",

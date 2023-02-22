@@ -1,7 +1,7 @@
 import { ByteArray, is } from "@tuval/core";
 import * as MarkdownIt from "markdown-it";
 import { FileUpload } from 'primereact';
-import React, { Fragment } from "react";
+import React, { Fragment, useRef } from "react";
 import { UIFileUploadClass } from "./UIFileUploadClass";
 import { fromUTF8Array } from "./utils";
 
@@ -11,41 +11,65 @@ export interface IControlProperties {
     control: UIFileUploadClass
 }
 
-const md = new MarkdownIt({
-    html: true,
-    linkify: true,
-    typographer: true
-});
 
+ function getFileName(event) {
+
+    if (!event || !event.files || event.files.length === 0) {
+        return;
+    }
+
+    const name = event.files[0].name;
+    const lastDot = name.lastIndexOf('.');
+
+    const fileName = name.substring(0, lastDot);
+    const ext = name.substring(lastDot + 1);
+
+    return fileName;
+}
+function getFileNameExt(event) {
+
+    if (!event || !event.files || event.files.length === 0) {
+        return;
+    }
+
+    const name = event.files[0].name;
+    const lastDot = name.lastIndexOf('.');
+
+    const fileName = name.substring(0, lastDot);
+    const ext = name.substring(lastDot + 1);
+
+    return ext;
+
+}
 
 
 function UIFileUploadRenderer({ control }: IControlProperties) {
-
+    const fileUploadRef = useRef(null);
     let fileContentAsByte: ByteArray;
     let m_SelectedFileName: string = '';
     let m_SelectedFileExt: string = '';
 
     const uploadHandler = (obj: UIFileUploadClass, event) => {
-        // this.fileUploadRef.clear()
+        
+
         event.options.clear();
 
         var reader = new FileReader();
-        const _this = this;
         reader.onload = function (e) {
 
             var arrayBuffer: any = this.result;
-            _this.fileContentAsByte = new Uint8Array(arrayBuffer);
+            fileContentAsByte = new Uint8Array(arrayBuffer);
             //binaryString = String.fromCharCode.apply(null, array);
 
             //console.log(arrayBuffer);
-            _this.m_SelectedFileName = _this.getFileName(event);
-            _this.m_SelectedFileExt = _this.getFileNameExt(event);
+            m_SelectedFileName = getFileName(event);
+            m_SelectedFileExt = getFileNameExt(event);
             if (is.function(control.vp_OnFileReady)) {
                 control.vp_OnFileReady({
-                    GetFileContentAsString: () => fromUTF8Array(_this.fileContentAsByte),
-                    fileName: _this.m_SelectedFileName,
-                    fileExt: _this.m_SelectedFileExt,
-                    fileAsByteArray: _this.fileContentAsByte,
+                    GetFileContentAsString: () => fromUTF8Array(fileContentAsByte),
+                    fileName: m_SelectedFileName,
+                    fileExt: m_SelectedFileExt,
+                    fileAsByteArray: fileContentAsByte,
                     file: event.files[0]
                 });
             }
@@ -58,23 +82,28 @@ function UIFileUploadRenderer({ control }: IControlProperties) {
     contentStyle['width'] = '100%';
     contentStyle['height'] = '100%';
 
-    const style = {};
+   /*  const style = {};
     style['width'] = control.Appearance.Width;
-    style['height'] = control.Appearance.Height;
+    style['height'] = control.Appearance.Height; */
 
     const chooseOptions = {};
     chooseOptions['style'] = { display: 'none' }
 
+    const headerTemplate = (options) => {
+        [];
+    }
+
+    
     return (
         <Fragment>
-            <FileUpload name="demo[]" url="" style={style} contentStyle={contentStyle} onUpload={() => console.log('Uploaded')} auto={true} customUpload accept={control.vp_AllowedExtensions} maxFileSize={1024 * 1024 * 100}
-                uploadHandler={(e) => this.uploadHandler(control, e)} headerTemplate={this.headerTemplate} emptyTemplate={<div style={{ width: '100%', height: '100%' }} onClick={() => this.fileUploadRef.choose()}>
+            <FileUpload name="demo[]" url=""  contentStyle={contentStyle} onUpload={() => console.log('Uploaded')} auto={true} customUpload accept={control.vp_AllowedExtensions} maxFileSize={1024 * 1024 * 100}
+                uploadHandler={(e) => uploadHandler(control, e)} headerTemplate={headerTemplate} emptyTemplate={<div style={{ width: '100%', height: '100%' }} onClick={() => fileUploadRef.current.getInput().click()}>
                     {
                         control.vp_Children.map(view =>view && view.render())
                     }
                 </div>} />
-            <FileUpload ref={(el) => this.fileUploadRef = el} mode="basic" chooseOptions={chooseOptions} name="demo[]" url="" onUpload={() => console.log('Uploaded')} auto={true} customUpload accept={control.vp_AllowedExtensions} maxFileSize={1024 * 1024 * 100}
-                uploadHandler={(e) => this.uploadHandler(control, e)} />
+            <FileUpload ref={fileUploadRef} mode="basic" chooseOptions={chooseOptions} name="demo[]" url="" onUpload={() => console.log('Uploaded')} auto={true} customUpload accept={control.vp_AllowedExtensions} maxFileSize={1024 * 1024 * 100}
+                uploadHandler={(e) => uploadHandler(control, e)} />
         </Fragment>
     )
 }
