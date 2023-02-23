@@ -17,7 +17,6 @@ function RecordContextRenderer({ control }: IControlProperties) {
         filter: control.vp_Filter
     });
 
-    debugger
     const view = control.vp_Content({ data, isLoading, total, error, refetch });
     return (
         <Fragment>

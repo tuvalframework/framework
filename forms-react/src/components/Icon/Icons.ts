@@ -67,7 +67,6 @@ import DocTemplate from "monday-ui-react-core/dist/icons/DocTemplate";
 import DoubleCheck from "monday-ui-react-core/dist/icons/DoubleCheck";
 import Download from "monday-ui-react-core/dist/icons/Download";
 import Drag from "monday-ui-react-core/dist/icons/Drag";
-
 import Dropdown from "monday-ui-react-core/dist/icons/Dropdown";
 import DropdownChevronDown from "monday-ui-react-core/dist/icons/DropdownChevronDown";
 import DropdownChevronLeft from "monday-ui-react-core/dist/icons/DropdownChevronLeft";
@@ -85,12 +84,97 @@ import Event from "monday-ui-react-core/dist/icons/Event";
 import Expand from "monday-ui-react-core/dist/icons/Expand";
 import ExternalPage from "monday-ui-react-core/dist/icons/ExternalPage";
 import Favorite from "monday-ui-react-core/dist/icons/Favorite";
-
-
-import MoveArrowRight from "monday-ui-react-core/dist/icons/MoveArrowRight";
+import Featured from "monday-ui-react-core/dist/icons/Featured";
+import Feedback from "monday-ui-react-core/dist/icons/Feedback";
+import File from "monday-ui-react-core/dist/icons/File";
+import Filter from "monday-ui-react-core/dist/icons/Filter";
+import Folder from "monday-ui-react-core/dist/icons/Folder";
+import Form from "monday-ui-react-core/dist/icons/Form";
+import Formula from "monday-ui-react-core/dist/icons/Formula";
+import Forum from "monday-ui-react-core/dist/icons/Forum";
+import Fullscreen from "monday-ui-react-core/dist/icons/Fullscreen";
+import FullscreenClose from "monday-ui-react-core/dist/icons/FullscreenClose";
+import Gallery from "monday-ui-react-core/dist/icons/Gallery";
+import Gantt from "monday-ui-react-core/dist/icons/Gantt";
+import Gif from "monday-ui-react-core/dist/icons/Gif";
+import Globe from "monday-ui-react-core/dist/icons/Globe";
+import Graph from "monday-ui-react-core/dist/icons/Graph";
+import Group from "monday-ui-react-core/dist/icons/Group";
+import Guest from "monday-ui-react-core/dist/icons/Guest";
+import Health from "monday-ui-react-core/dist/icons/Health";
+import Help from "monday-ui-react-core/dist/icons/Help";
+import Hide from "monday-ui-react-core/dist/icons/Hide";
+import Highlight from "monday-ui-react-core/dist/icons/Highlight";
+import HighlightColorBucket from "monday-ui-react-core/dist/icons/HighlightColorBucket";
+import Home from "monday-ui-react-core/dist/icons/Home";
+import Idea from "monday-ui-react-core/dist/icons/Idea";
+import Image from "monday-ui-react-core/dist/icons/Image";
+import Inbox from "monday-ui-react-core/dist/icons/Inbox";
+import Info from "monday-ui-react-core/dist/icons/Info";
+import Integrations from "monday-ui-react-core/dist/icons/Integrations";
+import Invite from "monday-ui-react-core/dist/icons/Invite";
+import IPRestrictions from "monday-ui-react-core/dist/icons/IPRestrictions";
+import Italic from "monday-ui-react-core/dist/icons/Italic";
+import Item from "monday-ui-react-core/dist/icons/Item";
+import ItemDefaultValues from "monday-ui-react-core/dist/icons/ItemDefaultValues";
+import ItemHeightTriple from "monday-ui-react-core/dist/icons/ItemHeightTriple";
+import Keyboard from "monday-ui-react-core/dist/icons/Keyboard";
+import Labs from "monday-ui-react-core/dist/icons/Labs";
+import Launch from "monday-ui-react-core/dist/icons/Launch";
+import Layout from "monday-ui-react-core/dist/icons/Layout";
+import LearnMore from "monday-ui-react-core/dist/icons/LearnMore";
+import Lines from "monday-ui-react-core/dist/icons/Lines";
+import Link from "monday-ui-react-core/dist/icons/Link";
+import Location from "monday-ui-react-core/dist/icons/Location";
+import Locked from "monday-ui-react-core/dist/icons/Locked";
+import LogIn from "monday-ui-react-core/dist/icons/LogIn";
+import LogOut from "monday-ui-react-core/dist/icons/LogOut";
+import LongText from "monday-ui-react-core/dist/icons/LongText";
+import Mention from "monday-ui-react-core/dist/icons/Mention";
+import Menu from "monday-ui-react-core/dist/icons/Menu";
+import Microphone from "monday-ui-react-core/dist/icons/Microphone";
+import Minimize from "monday-ui-react-core/dist/icons/Minimize";
+import Mirror from "monday-ui-react-core/dist/icons/Mirror";
+import Mobile from "monday-ui-react-core/dist/icons/Mobile";
+import Moon from "monday-ui-react-core/dist/icons/Moon";
+import MoreActions from "monday-ui-react-core/dist/icons/MoreActions";
+import MoreBelow from "monday-ui-react-core/dist/icons/MoreBelow";
+import MoreBelowFilled from "monday-ui-react-core/dist/icons/MoreBelowFilled";
+import MoveArrowDown from "monday-ui-react-core/dist/icons/MoveArrowDown";
 import MoveArrowLeft from "monday-ui-react-core/dist/icons/MoveArrowLeft";
 import MoveArrowLeftDouble from "monday-ui-react-core/dist/icons/MoveArrowLeftDouble";
+import MoveArrowRight from "monday-ui-react-core/dist/icons/MoveArrowRight";
 import MoveArrowUp from "monday-ui-react-core/dist/icons/MoveArrowUp";
+
+import Mute from "monday-ui-react-core/dist/icons/Mute";
+import MyWeek from "monday-ui-react-core/dist/icons/MyWeek";
+import NavigationChevronDown from "monday-ui-react-core/dist/icons/NavigationChevronDown";
+import NavigationChevronLeft from "monday-ui-react-core/dist/icons/NavigationChevronLeft";
+import NavigationChevronRight from "monday-ui-react-core/dist/icons/NavigationChevronRight";
+import NavigationChevronUp from "monday-ui-react-core/dist/icons/NavigationChevronUp";
+import NavigationDoubleChevronLeft from "monday-ui-react-core/dist/icons/NavigationDoubleChevronLeft";
+import NewTab from "monday-ui-react-core/dist/icons/NewTab";
+import Night from "monday-ui-react-core/dist/icons/Night";
+import NoColor from "monday-ui-react-core/dist/icons/NoColor";
+import Note from "monday-ui-react-core/dist/icons/Note";
+import Notifications from "monday-ui-react-core/dist/icons/Notifications";
+import NotificationsMuted from "monday-ui-react-core/dist/icons/NotificationsMuted";
+import Numbers from "monday-ui-react-core/dist/icons/Numbers";
+import Offline from "monday-ui-react-core/dist/icons/Offline";
+import Open from "monday-ui-react-core/dist/icons/Open";
+import Page from "monday-ui-react-core/dist/icons/Page";
+import Paste from "monday-ui-react-core/dist/icons/Paste";
+import Pause from "monday-ui-react-core/dist/icons/Pause";
+import Person from "monday-ui-react-core/dist/icons/Person";
+import PersonRound from "monday-ui-react-core/dist/icons/PersonRound";
+import Pin from "monday-ui-react-core/dist/icons/Pin";
+import Play from "monday-ui-react-core/dist/icons/Play";
+import Print from "monday-ui-react-core/dist/icons/Print";
+import PushNotification from "monday-ui-react-core/dist/icons/PushNotification";
+import Quote from "monday-ui-react-core/dist/icons/Quote";
+import Radio from "monday-ui-react-core/dist/icons/Radio";
+import Recurring from "monday-ui-react-core/dist/icons/Recurring";
+import RecycleBin from "monday-ui-react-core/dist/icons/RecycleBin";
 
 
 export const Icons = {
@@ -179,10 +263,94 @@ export const Icons = {
     Expand: Expand,
     ExternalPage: ExternalPage,
     Favorite: Favorite,
-
-
+    Featured: Featured,
+    Feedback: Feedback,
+    File: File,
+    Filter: Filter,
+    Folder: Folder,
+    Form: Form,
+    Formula: Formula,
+    Forum: Forum,
+    Fullscreen: Fullscreen,
+    FullscreenClose: FullscreenClose,
+    Gallery: Gallery,
+    Gantt: Gantt,
+    Gif: Gif,
+    Globe: Globe,
+    Graph: Graph,
+    Group: Group,
+    Guest: Guest,
+    Health: Health,
+    Help: Help,
+    Hide: Hide,
+    Highlight: Highlight,
+    HighlightColorBucket: HighlightColorBucket,
+    Home: Home,
+    Idea: Idea,
+    Image: Image,
+    Inbox: Inbox,
+    Info: Info,
+    Integrations: Integrations,
+    Invite: Invite,
+    IPRestrictions: IPRestrictions,
+    Italic: Italic,
+    Item: Item,
+    ItemDefaultValues: ItemDefaultValues,
+    ItemHeightTriple: ItemHeightTriple,
+    Keyboard: Keyboard,
+    Labs: Labs,
+    Launch: Launch,
+    Layout: Layout,
+    LearnMore: LearnMore,
+    Lines: Lines,
+    Link: Link,
+    Location: Location,
+    Locked: Locked,
+    LogIn: LogIn,
+    LogOut: LogOut,
+    LongText: LongText,
+    Mention: Mention,
+    Menu: Menu,
+    Microphone: Microphone,
+    Minimize: Minimize,
+    Mirror: Mirror,
+    Mobile: Mobile,
+    Moon: Moon,
+    MoreActions: MoreActions,
+    MoreBelow: MoreBelow,
+    MoreBelowFilled: MoreBelowFilled,
+    MoveArrowDown: MoveArrowDown,
     MoveArrowRight: MoveArrowRight,
     MoveArrowLeft: MoveArrowLeft,
     MoveArrowLeftDouble: MoveArrowLeftDouble,
-    MoveArrowUp: MoveArrowUp
+    MoveArrowUp: MoveArrowUp,
+    Mute: Mute,
+    MyWeek: MyWeek,
+    NavigationChevronDown: NavigationChevronDown,
+    NavigationChevronLeft: NavigationChevronLeft,
+    NavigationChevronRight: NavigationChevronRight,
+    NavigationChevronUp: NavigationChevronUp,
+    NavigationDoubleChevronLeft: NavigationDoubleChevronLeft,
+    NewTab: NewTab,
+    Night: Night,
+    NoColor: NoColor,
+    Note: Note,
+    Notifications: Notifications,
+    NotificationsMuted: NotificationsMuted,
+    Numbers: Numbers,
+    Offline: Offline,
+    Open: Open,
+    Page: Page,
+    Paste: Paste,
+    Pause: Pause,
+    Person: Person,
+    PersonRound: PersonRound,
+    Pin: Pin,
+    Play: Play,
+    Print: Print,
+    PushNotification: PushNotification,
+    Quote: Quote,
+    Radio: Radio,
+    Recurring: Recurring,
+    RecycleBin: RecycleBin
 }

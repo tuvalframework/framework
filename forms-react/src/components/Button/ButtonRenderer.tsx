@@ -11,8 +11,6 @@ export interface IControlProperties {
 
 function ButtonRenderer({ control }: IControlProperties) {
 
-    debugger;
-
     const className = css`
     ${control.Appearance.ToString()}
     ${control.HoverAppearance.IsEmpty ? '' : '&:hover { ' + control.HoverAppearance.ToString() + ' }'}
