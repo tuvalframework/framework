@@ -6,6 +6,6 @@ import { DesktopClass } from './DesktopClass';
 
 
 /* export function VStack(value: string): FunctionVStack; */
-export function Desktop(): DesktopClass {
-    return new DesktopClass()
+export function Desktop(baseUrl?: string): DesktopClass {
+    return new DesktopClass().baseUrl(baseUrl)
 }

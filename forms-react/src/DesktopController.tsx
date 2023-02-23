@@ -60,7 +60,7 @@ export class DesktopController extends UIController {
             ReactView(
                 <Routes>
                     {/* <Route path="/" element={<div>Home Me Test Me</div>} /> */}
-                    <Route path="/newconsole/app/:app_name/*" element={(
+                    <Route path={this.props.baseUrl + "/app/:app_name/*"} element={(
                         <React.Suspense fallback={<h1>Loading...</h1>} >
                             <ApplicationLoader></ApplicationLoader>
                         </React.Suspense>

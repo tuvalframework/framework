@@ -30,6 +30,8 @@ function UIControllerProxy({ children, controller }) {
     }, []); 
 
     const view = controller.LoadView();
+
+   
     if (view != null) {
         return (
             <Fragment>

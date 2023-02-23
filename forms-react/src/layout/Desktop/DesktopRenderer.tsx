@@ -11,7 +11,7 @@ export interface IControlProperties {
 
 function DesktopRenderer({ control }: IControlProperties) {
     return (
-       <DesktopController/>
+       <DesktopController baseUrl={control.vp_BaseUrl}/>
     );
 }
 

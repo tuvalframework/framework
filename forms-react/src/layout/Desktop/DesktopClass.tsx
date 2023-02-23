@@ -10,6 +10,13 @@ import DesktopRenderer from "./DesktopRenderer";
 
 export class DesktopClass extends UIView {
 
+     /** @internal */
+     @ViewProperty() vp_BaseUrl: string;
+
+     public baseUrl(value: string) {
+         this.vp_BaseUrl = value;
+         return this;
+     }
 
     public constructor() {
         super();
