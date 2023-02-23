@@ -12,6 +12,7 @@ export interface IControlProperties {
 
 function RecordContextRenderer({ control }: IControlProperties) {
     const { data, isLoading, error } = useGetOne(control.vp_Resource, control.vp_Filter);
+    
     const view = control.vp_Chidren({ data, isLoading, error });
     return (
         <RecordContextProvider value={data}>
