@@ -1,6 +1,7 @@
 import { clone, Convert, int, is } from "@tuval/core";
-import React from "react";
+import React, { Fragment, useEffect } from "react";
 import { createContext } from "react";
+import { useParams } from "react-router-dom";
 import { State, UIController } from "./UIController";
 
 export const UIFormContext = createContext(null!);
@@ -12,6 +13,25 @@ export const useFormController = (): UIFormController =>
 export const useController = (): UIController =>
     React.useContext(UIControllerContext);
 
+
+
+function UIControllerProxy({ children, controller }) {
+    const params = useParams();
+
+    useEffect(() => {
+        controller.BindRouterParams(params);
+    }, []);
+
+    const view = controller.LoadView();
+    if (view != null) {
+        return (
+            <Fragment>
+                {controller.LoadView().render()}
+            </Fragment>
+        )
+    }
+
+}
 
 
 export abstract class ValidateRule {
@@ -100,7 +120,7 @@ export class UIFormController extends UIController {
     @State()
     public isValid: boolean;
 
-   
+
     public validateForm(): any {
 
         //this.BeginUpdate();
@@ -152,7 +172,7 @@ export class UIFormController extends UIController {
         }
     }
 
-    public ResetForm() { 
+    public ResetForm() {
         for (let key in this.formData) {
             this.SetValue(key, null);
         }
@@ -249,7 +269,10 @@ export class UIFormController extends UIController {
 
         return (
             <UIFormContext.Provider value={this}>
-                {super.render()}
+                <UIControllerProxy controller={this}>
+                    {super.render()}
+                </UIControllerProxy>
+
             </UIFormContext.Provider>
         )
     }

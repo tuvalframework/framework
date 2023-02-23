@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { UIView } from "./components/UIView/UIView";
 
 
@@ -23,9 +24,9 @@ export function State(defaultValue?: any): any/* PropertyDecorator */ {
 }
 
 function UIControllerProxy({ children, controller }) {
-
+    const params = useParams();
      useEffect(() => {
-        controller.BindRouterParams();
+        controller.BindRouterParams(params);
     }, []); 
 
     const view = controller.LoadView();
