@@ -9,7 +9,7 @@ import { DropdownClass } from "../DropdownClass";
 
 
 const MyDropDown = (_params) => {
-    const params = {..._params}
+    const params = { ..._params }
     const getLabel = () => {
         if (is.function(params.obj.vp_LabelTemplate)) {
             const view: UIView = params.obj.vp_LabelTemplate(params.obj.vp_Label);
@@ -55,7 +55,7 @@ const MyDropDown = (_params) => {
             delete params['height']; // we do not want 100% height
         }
         return (
-           <Fragment>
+            <Fragment>
                 {getLabel()}
                 <Dropdown  {...params} />
                 {fieldState.errors.map(error => (
@@ -103,8 +103,8 @@ function PrimeRenderer({ control }: IControlProperties) {
     }
 
     const selectedTemplate = (option, props) => {
-       // console.group('Drop Down Context')
-       // console.log(option)
+        // console.group('Drop Down Context')
+        // console.log(option)
 
 
         if (option && is.function(control.vp_selectedItemTemplate)) {
@@ -116,7 +116,7 @@ function PrimeRenderer({ control }: IControlProperties) {
                 return view.render();
             }
         }
-       // console.groupEnd()
+        // console.groupEnd()
 
         return (
             <span>
@@ -143,8 +143,8 @@ function PrimeRenderer({ control }: IControlProperties) {
             style={style}
             optionLabel={control.vp_fields?.text}
             optionValue={control.vp_fields?.value}
-            valueTemplate={selectedTemplate}
-            itemTemplate={template}
+            valueTemplate={control.vp_selectedItemTemplate && selectedTemplate}
+            itemTemplate={control.vp_itemTemplate && template}
             emptyMessage={emptyTemplate()}
             value={control.vp_Value}
             options={control.vp_Model}

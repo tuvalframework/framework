@@ -3,15 +3,38 @@ import { ValidateRule } from "../../UIFormController";
 import { UIView } from "../UIView/UIView";
 import UIViewRenderer from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
+import { FieldSettingsModel } from "./FieldSettingsModel";
 import PrimeRenderer from "./Renderers/PrimeRenderer";
 import VibeRenderer from "./Renderers/VibeRenderer";
 
 export class DropdownClass extends UIView {
 
+     /** @internal */
+     @ViewProperty() vp_FloatLabel: boolean;
+
+     public floatlabel(value: boolean) {
+         this.vp_FloatLabel = value;
+         return this;
+     }
+
+      /** @internal */
+      @ViewProperty() vp_PlaceHolder: string;
+
+      public placeHolder(value: string) {
+          this.vp_PlaceHolder = value;
+          return this;
+      }
+
+       /** @internal */
+       @ViewProperty() vp_AllowFiltering: boolean;
+
+       public allowFiltering(value: boolean) {
+           this.vp_AllowFiltering = value;
+           return this;
+       }
+
+
     @ViewProperty() vp_itemTemplate: (option: any) => UIView ;
-  
-
-
     public itemTemplate(value: (option: any) => UIView ): this {
         this.vp_itemTemplate = value;
         return this;
@@ -30,8 +53,8 @@ export class DropdownClass extends UIView {
         return this;
     }
 
-    @ViewProperty() vp_fields: {text: string, value: string};
-    public fields(value: {text: string, value: string}): this {
+    @ViewProperty() vp_fields: FieldSettingsModel;
+    public fields(value: FieldSettingsModel): this {
         this.vp_fields = value;
         return this;
     }
@@ -50,6 +73,9 @@ export class DropdownClass extends UIView {
     public model(value: object[]) {
         this.vp_Model = value;
         return this;
+    }
+    public dataSource(value: object[]) {
+        return this.model(value);
     }
 
      /** @internal */
