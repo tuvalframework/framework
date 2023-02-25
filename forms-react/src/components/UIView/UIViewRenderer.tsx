@@ -10,7 +10,7 @@ export interface IControlProperties {
 }
 
 
-const UIViewRenderer = ({ control, renderer, wrap }: IControlProperties) => {
+export const UIViewRenderer = ({ control, renderer, wrap }: IControlProperties) => {
     control.RenderStarted();
 
     const [value, setValue] = useState(0);
@@ -75,5 +75,3 @@ const UIViewRenderer = ({ control, renderer, wrap }: IControlProperties) => {
 
     return finalComponent;
 }
-
-export default UIViewRenderer;

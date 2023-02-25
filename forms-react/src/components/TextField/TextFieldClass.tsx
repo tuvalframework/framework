@@ -1,7 +1,7 @@
 import React from "react";
 import { ValidateRule } from "../../UIFormController";
 import { UIView } from "../UIView/UIView";
-import UIViewRenderer from "../UIView/UIViewRenderer";
+import {UIViewRenderer} from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import TextFieldRenderer from "./TextFieldRenderer";
 

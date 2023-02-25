@@ -1,6 +1,6 @@
 import React from "react";
 import { UIView } from "../UIView/UIView";
-import UIViewRenderer from "../UIView/UIViewRenderer";
+import {UIViewRenderer} from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import ListRenderer from "./ListRenderer";
 import ListBoxRenderer from "./ListRenderer";

@@ -1,7 +1,7 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import { UIView } from "../../UIView/UIView";
-import UIViewRenderer from "../../UIView/UIViewRenderer";
+import {UIViewRenderer} from "../../UIView/UIViewRenderer";
 import { ViewProperty } from "../../UIView/ViewProperty";
 import { ControllerConstructor } from "./UIRoute";
 import UIRouteRenderer from "./UIRouteRenderer";

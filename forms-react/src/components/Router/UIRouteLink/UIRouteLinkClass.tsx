@@ -1,7 +1,7 @@
 import { is } from "@tuval/core";
 import React from "react";
 import { UIView } from "../../UIView/UIView";
-import UIViewRenderer from "../../UIView/UIViewRenderer";
+import {UIViewRenderer} from "../../UIView/UIViewRenderer";
 import { ViewProperty } from "../../UIView/ViewProperty";
 import UIRouteLinkRenderer from "./UIRouteLinkRenderer";
 import ListBoxRenderer from "./UIRouteLinkRenderer";

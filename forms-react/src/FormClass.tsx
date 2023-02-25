@@ -2,7 +2,7 @@ import { UIView } from './components/UIView/UIView';
 import TextRenderer from './components/Text/TextRenderer';
 import { Renderer } from './RendererDecorator';
 import React from "react";
-import UIViewRenderer from './components/UIView/UIViewRenderer';
+import {UIViewRenderer} from './components/UIView/UIViewRenderer';
 import FormRenderer from './FormRenderer';
 import { ViewProperty } from './components/UIView/ViewProperty';
 

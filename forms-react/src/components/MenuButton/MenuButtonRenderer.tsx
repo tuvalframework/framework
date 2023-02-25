@@ -1,5 +1,5 @@
 import { css } from "@emotion/css";
-import { Icon, Menu,  MenuButton,  MenuItem, MenuTitle } from "monday-ui-react-core";
+import { DialogContentContainer, Icon, Menu, MenuButton, MenuGridItem, MenuItem, MenuTitle } from "monday-ui-react-core";
 import Bolt from "monday-ui-react-core/dist/icons/Bolt";
 
 import React, { Fragment } from "react";
@@ -19,6 +19,7 @@ function MenuButtonRenderer({ control }: IControlProperties) {
 
     return (
         <Fragment>
+
             <MenuButton closeDialogOnContentClick={true} componentPosition={'start'} dialogPosition={"bottom-start"} component={Bolt}>
                 <Menu
                     id="menu"
@@ -28,27 +29,10 @@ function MenuButtonRenderer({ control }: IControlProperties) {
                         caption="Look up, you might see"
                         captionPosition={"top" as any}
                     />
-                    <MenuItem>
-                        <h1>hfghgfhfg</h1>
-                    </MenuItem>
-                    <MenuItem
-                        icon={Bolt}
-                        // iconType={"SVG" as any}
-                        onClick={function noRefCheck() { }}
-                        title="The sun"
-                    />
-                    <MenuItem
-                        icon={""}
-                        iconType={"SVG" as any}
-                        onClick={function noRefCheck() { }}
-                        title="The moon"
-                    />
-                    <MenuItem
-                        icon={""}
-                        iconType={"SVG" as any}
-                        onClick={function noRefCheck() { }}
-                        title="And the stars"
-                    />
+                    <MenuGridItem>
+                      <h1>sdhfjhskdfhksd</h1>
+                    </MenuGridItem>
+
                 </Menu>
             </MenuButton>
         </Fragment>

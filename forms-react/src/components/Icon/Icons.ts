@@ -176,6 +176,18 @@ import Radio from "monday-ui-react-core/dist/icons/Radio";
 import Recurring from "monday-ui-react-core/dist/icons/Recurring";
 import RecycleBin from "monday-ui-react-core/dist/icons/RecycleBin";
 
+import Redo from "monday-ui-react-core/dist/icons/Redo";
+import Remove from "monday-ui-react-core/dist/icons/Remove";
+import Replay from "monday-ui-react-core/dist/icons/Replay";
+import Retry from "monday-ui-react-core/dist/icons/Retry";
+import Robot from "monday-ui-react-core/dist/icons/Robot";
+import Rotate from "monday-ui-react-core/dist/icons/Rotate";
+import Search from "monday-ui-react-core/dist/icons/Search";
+import Security from "monday-ui-react-core/dist/icons/Security";
+import Send from "monday-ui-react-core/dist/icons/Send";
+import Settings from "monday-ui-react-core/dist/icons/Settings";
+import SettingsKnobs from "monday-ui-react-core/dist/icons/SettingsKnobs";
+
 
 export const Icons = {
     Academy: Academy,
@@ -352,5 +364,16 @@ export const Icons = {
     Quote: Quote,
     Radio: Radio,
     Recurring: Recurring,
-    RecycleBin: RecycleBin
+    RecycleBin: RecycleBin,
+    Redo: Redo,
+    Remove: Remove,
+    Replay: Replay,
+    Retry: Retry,
+    Robot: Robot,
+    Rotate: Rotate,
+    Search: Search,
+    Security: Security,
+    Send: Send,
+    Settings: Settings,
+    SettingsKnobs: SettingsKnobs
 }

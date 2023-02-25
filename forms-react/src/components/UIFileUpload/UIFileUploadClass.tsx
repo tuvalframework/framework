@@ -2,7 +2,7 @@ import { UIView } from '../UIView/UIView';
 import TextRenderer from './UIFileUploadRenderer';
 import { Renderer } from '../../RendererDecorator';
 import React from "react";
-import UIViewRenderer from '../UIView/UIViewRenderer';
+import {UIViewRenderer} from '../UIView/UIViewRenderer';
 import { ViewProperty } from '../UIView/ViewProperty';
 import { ByteArray } from '@tuval/core';
 import UIFileUploadRenderer from './UIFileUploadRenderer';

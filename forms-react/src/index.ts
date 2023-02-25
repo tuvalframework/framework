@@ -2,6 +2,7 @@
 export * from './components'
 
 export * from './components/UIView/UIView'
+export * from './components/UIView/UIViewRenderer'
 export * from './components/UIView/ViewProperty'
 export * from './components/UIView/ForEach'
 
@@ -42,9 +43,9 @@ export * from './UIAppearance'
 export * from './Bios'
 
 //--------------------
-export { useNavigate, useLocation, useParams } from 'react-router-dom'
+export { useNavigate, useLocation, useParams, Link } from 'react-router-dom'
 export { useState , useEffect, useMemo} from 'react'
-export {useGetList, useStore} from 'ra-core'
+export {useGetList, useStore, useRecordContext} from 'ra-core'
 
 
 //-------------------

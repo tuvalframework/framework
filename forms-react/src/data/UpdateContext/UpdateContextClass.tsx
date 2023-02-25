@@ -1,6 +1,6 @@
 import React from "react";
 import { UIView } from "../../components/UIView/UIView";
-import UIViewRenderer from "../../components/UIView/UIViewRenderer";
+import {UIViewRenderer} from "../../components/UIView/UIViewRenderer";
 import { ViewProperty } from "../../components/UIView/ViewProperty";
 import UpdateContextRenderer from "./UpdateContextRenderer";
 import CreateContextRenderer from "./UpdateContextRenderer";

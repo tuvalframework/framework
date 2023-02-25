@@ -3,7 +3,7 @@ import React from "react";
 import { AlignmentType, cBottom, cBottomLeading, cBottomTrailing, cCenter, cLeading, cTop, cTopLeading, cTopTrailing, cTrailing } from "../../Constants";
 import { UIController } from "../../UIController";
 import { UIView } from "../UIView/UIView";
-import UIViewRenderer from "../UIView/UIViewRenderer";
+import {UIViewRenderer} from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import TooltipRenderer from "./TooltipRenderer";
 import HStackRenderer from "./TooltipRenderer";

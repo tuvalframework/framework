@@ -1,7 +1,7 @@
 import React from "react";
 import { AppearanceClass } from "../../../UIAppearance";
 import { UIView } from "../../UIView/UIView";
-import UIViewRenderer from "../../UIView/UIViewRenderer";
+import {UIViewRenderer} from "../../UIView/UIViewRenderer";
 import { ViewProperty } from "../../UIView/ViewProperty";
 import { BodyClass } from "../Body";
 import { TableColumnClass } from "../TableColumn";
