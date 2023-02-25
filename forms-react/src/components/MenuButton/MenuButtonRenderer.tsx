@@ -3,6 +3,7 @@ import { DialogContentContainer, Icon, Menu, MenuButton, MenuGridItem, MenuItem,
 import Bolt from "monday-ui-react-core/dist/icons/Bolt";
 
 import React, { Fragment } from "react";
+import { Icons } from "../Icon";
 import { MenuButtonClass } from "./MenuButtonClass";
 
 export interface IControlProperties {
@@ -20,7 +21,8 @@ function MenuButtonRenderer({ control }: IControlProperties) {
     return (
         <Fragment>
 
-            <MenuButton closeDialogOnContentClick={true} componentPosition={'start'} dialogPosition={"bottom-start"} component={Bolt}>
+            <MenuButton closeDialogOnContentClick={true} componentPosition={'start'}  dialogOffset={{main: -35, secondary: 30}}
+            dialogPosition={"left-start"} component={Icons.Menu}>
                 <Menu
                     id="menu"
                     size="medium"
@@ -29,10 +31,22 @@ function MenuButtonRenderer({ control }: IControlProperties) {
                         caption="Look up, you might see"
                         captionPosition={"top" as any}
                     />
-                    <MenuGridItem>
-                      <h1>sdhfjhskdfhksd</h1>
-                    </MenuGridItem>
 
+                   {/*  <MenuGridItem>
+                        <h1>sdhfjhskdfhksd</h1>
+                    </MenuGridItem> */}
+                    <MenuItem
+                        icon={Icons.Edit}
+                        // iconType={"SVG" as any}
+                        onClick={function noRefCheck() { }}
+                        title="Edit"
+                    />
+                    <MenuItem
+                        icon={Icons.Delete}
+                        onClick={function noRefCheck() { }}
+                        title="Delete"
+                    />
+                   
                 </Menu>
             </MenuButton>
         </Fragment>
