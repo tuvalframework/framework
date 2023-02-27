@@ -22,7 +22,7 @@ function MenuButtonRenderer({ control }: IControlProperties) {
         <Fragment>
 
             <MenuButton closeDialogOnContentClick={true} componentPosition={'start'}  dialogOffset={{main: -35, secondary: 30}}
-            dialogPosition={"left-start"} component={Icons.Menu}>
+            dialogPosition={"left-start"} component={Icons.Menu} zIndex={10000}>
                 <Menu
                     id="menu"
                     size="medium"

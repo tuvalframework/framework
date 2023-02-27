@@ -15,7 +15,7 @@ export const useController = (): UIController =>
 
 
 
-function UIControllerProxy({ children, controller }) {
+export function UIControllerProxy({ children, controller }) {
     const params = useParams();
 
     useEffect(() => {

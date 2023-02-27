@@ -7,8 +7,38 @@ import { ViewProperty } from "../../components/UIView/ViewProperty";
 import { ModalDialogs } from "./DialogContainerClass";
 import { Fragment } from "../../components/Fragment";
 import { int } from "@tuval/core";
+import { ReactView } from "../../components/ReactView/ReactView";
 
-export class DialogView extends UIView {
+interface IDialogControllerProps {
+    view:DialogView
+}
+
+class DialogController extends UIFormController {
+    public override LoadView(): UIView {
+
+        let view =  this.props.view.LoadView();
+
+        if (view == null) {
+            view = Fragment()
+        }
+
+       const propsView: DialogView = this.props.view;
+       propsView.SetValue = this.SetValue.bind(this);
+       propsView.GetValue = this.GetValue.bind(this);
+
+        return (
+            ReactView(
+                <Dialog header={this.props.view.Header} visible={this.props.view.Visible} style={{ width: this.props.view.Width, height: this.props.view.Height }} onHide={() => this.props.view.Hide()}>
+                    {
+                        view.render()
+                    }
+                </Dialog>
+            )
+        )
+    }
+}
+
+export  class DialogView extends UIView {
 
     @ViewProperty('')
     public Header: string;
@@ -21,6 +51,9 @@ export class DialogView extends UIView {
 
     @ViewProperty(true)
     public Visible: boolean;
+
+    public   SetValue(name: string, value: any, silent?, isDirty?) {}
+    public   GetValue(name: string) {}
 
     public ShowDialog() {
         this.Visible = true;
@@ -37,7 +70,7 @@ export class DialogView extends UIView {
         return new Promise((resolve, reject) => {
             this.Visible = true;
             ModalDialogs.Add(this);
-           // this.OnShown();
+            // this.OnShown();
             this.ShowDialogAsyncResolve = resolve;
             this.ShowDialogAsyncReject = reject;
         });
@@ -56,19 +89,8 @@ export class DialogView extends UIView {
     }
 
     public render(): React.ReactNode {
-
-        let view = this.LoadView();
-
-        if (view == null) {
-            view = Fragment()
-        }
-
         return (
-            <Dialog header={this.Header}  visible={this.Visible} style={{ width: this.Width, height: this.Height }} onHide={() => this.Hide()}>
-                {
-                    view.render()
-                }
-            </Dialog>
+            <DialogController view={this}> </DialogController>
         )
     }
 }
