@@ -62,7 +62,7 @@ function HStackRenderer({ control }: IControlProperties) {
         return (
             <motion.div className={className} {...events} {...elementProperties}>
                 {
-                    control.vp_Chidren.map((view: UIView) => {
+                    is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView) => {
                         if (view == null) {
                             return null;
                         }
@@ -81,7 +81,7 @@ function HStackRenderer({ control }: IControlProperties) {
         <div className={className} {...events}>
             {
 
-                control.vp_Chidren.map((view: UIView) => {
+                is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView) => {
                     if (view == null) {
                         return null;
                     }

@@ -7,6 +7,7 @@ import { MyTestController, TestController } from "./MyController";
 import usePromise from "react-promise-suspense";
 import { Application } from "./layout/Application/Application";
 import { ModuleLoader } from "@tuval/core";
+import { Loader } from "monday-ui-react-core";
 
 
 const AppCache = {}
@@ -61,7 +62,7 @@ export class DesktopController extends UIController {
                 <Routes>
                     {/* <Route path="/" element={<div>Home Me Test Me</div>} /> */}
                     <Route path={this.props.baseUrl + "/app/:app_name/*"} element={(
-                        <React.Suspense fallback={<h1>Loading...</h1>} >
+                        <React.Suspense fallback={ <Loader size={Loader.sizes.MEDIUM} />} >
                             <ApplicationLoader></ApplicationLoader>
                         </React.Suspense>
                     )}
