@@ -13,7 +13,7 @@ function TooltipRenderer({ control }: IControlProperties) {
 
     return (
         <Fragment>
-            <Tooltip content="Item name: Bottom sheets" position={Tooltip.positions.RIGHT} >
+            <Tooltip style={{zIndex: 10001}}  content="Item name: Bottom sheets" position={Tooltip.positions.RIGHT} >
                 <div className="monday-storybook-tooltip_icon-wrapper">
                     {
                         control.vp_Chidren.map((view: UIView) => view.render())

@@ -97,7 +97,7 @@ function HStackRenderer({ control }: IControlProperties) {
 
     if (control.vp_Tooltip) {
         return (
-            <Tooltip content={control.vp_Tooltip} position={Tooltip.positions.BOTTOM} showDelay={1000} >
+            <Tooltip style={{ zIndex: 10001 }} content={control.vp_Tooltip} position={Tooltip.positions.RIGHT} showDelay={1000}  >
                 {finalComponent}
             </Tooltip>
         )

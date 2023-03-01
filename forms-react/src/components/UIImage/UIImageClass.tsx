@@ -71,6 +71,6 @@ export class UIImageClass extends UIView {
 
 
     public render() {
-        return (<UIViewRenderer wrap={true} control={this} renderer={UIImageRenderer}></UIViewRenderer>)
+        return (<UIViewRenderer wrap={false} control={this} renderer={UIImageRenderer}></UIViewRenderer>)
     }
 }

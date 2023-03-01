@@ -26,7 +26,9 @@ export function State(defaultValue?: any): any/* PropertyDecorator */ {
 function UIControllerProxy({ children, controller }) {
     const params = useParams();
      useEffect(() => {
+        controller.OnControllerLoaded();
         controller.BindRouterParams(params);
+        return () => controller.OnControllerUnLoaded();
     }, []); 
 
     const view = controller.LoadView();
@@ -57,6 +59,9 @@ export class UIController extends React.Component<any, any> {
     }
 
     protected BindRouterParams(routerParams?: any) { }
+
+    protected OnControllerLoaded() {}
+    protected OnControllerUnLoaded() {}
 
     public LoadView(): UIView {
         return null;

@@ -23,7 +23,7 @@ function EditableHeaderRenderer({ control }: IControlProperties) {
 
     return (
         <Fragment>
-            <EditableHeading brandFont size={Heading.sizes.MEDIUM} value={control.vp_Value} />
+            <EditableHeading className={className} brandFont size={Heading.sizes.MEDIUM} value={control.vp_Value} />
         </Fragment>
     );
 

@@ -61,7 +61,7 @@ export const UIViewRenderer = ({ control, renderer, wrap }: IControlProperties) 
     let finalComponent;
     if (control.vp_Tooltip) {
         finalComponent = (
-            <Tooltip content={control.vp_Tooltip} position={Tooltip.positions.RIGHT} >
+            <Tooltip style={{zIndex: 10001}}  content={control.vp_Tooltip} position={Tooltip.positions.RIGHT} >
                 <div className="monday-storybook-tooltip_icon-wrapper">
                     {
                         component
