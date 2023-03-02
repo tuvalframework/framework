@@ -1,10 +1,31 @@
 const path = require('path');
 const DeclarationBundlerPlugin = require('./declaration-bundler-webpack-plugin.fix');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const DtsBundleWebpack = require('dts-bundle-webpack');
+const fs = require('fs');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
+var Visualizer = require('webpack-visualizer-plugin');
+
+
+var libraryName = '@tuval/forms';
+
+function DtsBundlePlugin() { }
+DtsBundlePlugin.prototype.apply = function (compiler) {
+    compiler.plugin('done', function () {
+        var dts = require('dts-bundle');
+        if (!dts) {
+            throw 'Dts not found.';
+        }
+        dts.bundle({
+            name: libraryName,
+            main: 'dist_types/types/index.d.ts',
+            out: '../../dist/index.d.ts',
+            verbose: true,
+            removeSource: true,
+            removeSource: false,
+            outputAsModuleFolder: true // to use npm in-package typings
+        });
+    });
+};
 
 const opts = {
     WEB: true,
@@ -14,37 +35,54 @@ const opts = {
     //"ifdef-triple-slash": false // add this to use double slash comment instead of default triple slash
 };
 
-var libraryName = '@tuval/forms';
-
-const webConfig = {
+const umdConfig = {
     target: 'web',
-    //target: 'es5',
     mode: 'development',
     devtool: 'source-map',
     entry: './src/index.ts',
+    externals: {
+        '@tuval/core': 'tuval$core',
+    }
+    ,
     module: {
         rules: [
-            /*  {
-               test: /\.js$/,
-               use: ['babel-loader', 'webpack-conditional-loader']
-             }, */
             {
-                test: /\.tsx?$/,
-                use: [
-                    { loader: "ts-loader", options: { configFile: 'web.tsconfig.json' } },
-                    { loader: "ifdef-loader", options: opts }
-                ],
-                exclude: /node_modules/,
-
+                test: /\.svg$/i,
+                issuer: /\.[jt]sx?$/,
+                use: ['@svgr/webpack'],
             },
+            /*   {
+                test: /\.js$/,
+                use: ['babel-loader', 'webpack-conditional-loader']
+              }, */
             {
                 test: /\.(wasm|eot|woff|woff2|svg|ttf)([\?]?.*)$/,
                 type: 'javascript/auto',
                 loader: 'arraybuffer-loader',
             },
             {
+                test: /\.tsx?$/,
+                //use: 'ts-loader',
+                use: [
+                    { loader: "ts-loader" },
+                    //  { loader: "ifdef-loader", options: opts }
+                ],
+                exclude: /node_modules/,
+            },
+            {
                 test: /\.css$/,
-                use: ['to-string-loader', 'css-loader']
+                use: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    // Creates `style` nodes from JS strings
+                    "style-loader",
+                    // Translates CSS into CommonJS
+                    "css-loader",
+                    // Compiles Sass to CSS
+                    "sass-loader",
+                ],
             },
             {
                 test: /\.(png|jpg|gif)$/i,
@@ -55,12 +93,12 @@ const webConfig = {
                     }
                 }]
             },
-            /* {
-                test: /\.(woff|woff2|eot|ttf|otf)$/,
-                use: [
-                    'file-loader'
-                ]
-            } */
+            /*  {
+               test: /\.(woff|woff2|eot|ttf|otf)$/,
+               use: [
+                 'file-loader'
+               ]
+             } */
         ],
     },
     resolve: {
@@ -77,16 +115,73 @@ const webConfig = {
         }
     },
     output: {
-        filename: 'tuval-forms.js',
-        library: {
-            name: 'Tuval',
-            type: 'assign-properties',
-        },
-        path: path.resolve(__dirname, 'dist_web'),
+        // libraryTarget: 'umd',
+        filename: 'index.js',
+        path: path.resolve(__dirname, 'dist'),
     },
     plugins: [
-        //new BundleAnalyzerPlugin(),
+        //new DtsBundlePlugin(),
+        // new BundleAnalyzerPlugin(),
+
+        {
+            apply: (compiler) => {
+                compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
+                    var dts = require('dts-bundle');
+
+                    dts.bundle({
+                        name: libraryName,
+                        main: 'dist_types/types/index.d.ts',
+                        out: '../../dist/index.d.ts',
+                        removeSource: true,
+                        outputAsModuleFolder: true // to use npm in-package typings
+                    });
+                });
+            }
+        },
+        {
+            apply: (compiler) => {
+                compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
+                    fs.appendFile('./dist/index.js', `
+// console.log('forms module loaded.');
+`, (err) => {
+                        if (err) throw err;
+                        console.log('The lyrics were updated!');
+                    });
+                });
+            }
+        }
+        /* new DtsBundleWebpack({
+            name:libraryName,
+            main: 'dist_types/types/index.d.ts',
+            out: '../../dist/index.d.ts',
+        }) */
+        /* new CleanWebpackPlugin(
+         {
+           cleanAfterEveryBuildPatterns: ['./@types', './dist']
+         }),  */
+        /*   new DeclarationBundlerPlugin({
+            moduleName: '"@tuval/core"',
+            out: '../@types/index.d.ts',
+          }), */
+
+        /*  new CopyWebpackPlugin([
+           {
+             from: './dist/index.d.ts',
+             to: '../diagram/node_modules/@tuval/core/index.d.ts'
+           }
+         ]),  */
+        // new BundleAnalyzerPlugin(),
+        /*  new TypedocWebpackPlugin({
+          out: '../docs',
+          module: 'commonjs',
+          target: 'es6',
+          name: 'Tuval Framework - Core',
+          mode: 'file',
+          theme: 'minimal',
+          includeDeclarations: false,
+          ignoreCompilerErrors: true,
+        })  */
     ]
 };
 
-module.exports = [webConfig /* webClientConfig */ /* umdConfig */ /* , umdWebProcess */ ];
+module.exports = [umdConfig /* webClientConfig */ /* umdConfig */ /* , umdWebProcess */];

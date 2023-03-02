@@ -15,7 +15,6 @@ if (is.workerContext()) {
 ///globalObject = global;
 /// #endif
 
-
 import React from 'react'
 import ReactDOM from 'react-dom/client';
 
