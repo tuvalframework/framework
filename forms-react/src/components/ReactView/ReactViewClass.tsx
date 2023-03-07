@@ -8,6 +8,14 @@ import { ViewProperty } from '../UIView/ViewProperty';
 
 export class ReactViewClass extends UIView{
 
+    @ViewProperty(false)
+    public vp_Frame: boolean;
+
+    public frame(value: boolean) {
+        this.vp_Frame = value;
+        return this;
+    }
+
     @ViewProperty()
     public vp_ReactNode: ReactNode;
 

@@ -1072,6 +1072,9 @@ export class AppearanceObject {
     @Skin('z-index')
     public ZIndex: string;
 
+    @Skin('-webkit-font-smoothing')
+    public WebkitFontSmoothing: string;
+
 
     public constructor(obj: UIView) {
         this.control = obj;
