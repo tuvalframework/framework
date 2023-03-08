@@ -2,6 +2,7 @@ import { clone, Convert, int, is } from "@tuval/core";
 import React, { Fragment, useEffect } from "react";
 import { createContext } from "react";
 import { useParams } from "react-router-dom";
+import { query } from "./data/DataContext/DataContextRenderer";
 import { State, UIController } from "./UIController";
 
 export const UIFormContext = createContext(null!);
@@ -275,6 +276,13 @@ export class UIFormController extends UIController {
 
             </UIFormContext.Provider>
         )
+    }
+
+    public InvalidateQueries() {
+        query.invalidateQueries();
+    }
+    public InvalidateQuerie(queryName: string) {
+        query.invalidateQueries({ queryKey: [queryName] });
     }
 
 }
