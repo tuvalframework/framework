@@ -97,7 +97,7 @@ export class HeadingClass extends UIView {
     public constructor() {
         super();
         this.Appearance.WebkitFontSmoothing = 'antialiased';
-        this.Appearance.LineHeight = '1';
+       // this.Appearance.LineHeight = '1';
         this.Appearance.Display = 'flex';
         this.Appearance.AlignItems = 'center';
 

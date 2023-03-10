@@ -59,6 +59,20 @@ export class TextFieldClass extends UIView {
         return this;
     }
 
+    @ViewProperty()
+    public vp_Label: string;
+    public label(value: string): this {
+        this.vp_Label = value;
+        return this;
+    }
+    
+    @ViewProperty()
+    public vp_LabelTemplate: (label: string) => UIView;
+    public labelTemplate(value: (label: string) => UIView): this {
+        this.vp_LabelTemplate = value;
+        return this;
+    }
+
     public constructor() {
         super();
 

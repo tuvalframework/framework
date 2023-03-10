@@ -121,7 +121,7 @@ const umdConfig = {
     },
     plugins: [
         //new DtsBundlePlugin(),
-        // new BundleAnalyzerPlugin(),
+       // new BundleAnalyzerPlugin(),
 
         {
             apply: (compiler) => {

@@ -2,13 +2,33 @@ import { UIView } from "./components/UIView/UIView";
 import { State, UIController } from "./UIController";
 import { ReactView } from './components/ReactView/ReactView';
 import { createBrowserRouter, Link, Navigate, Outlet, Route, RouterProvider, Routes, useLocation, useParams } from "react-router-dom";
-import React from "react";
+import React, { Fragment } from "react";
 import { MyTestController, TestController } from "./MyController";
 import usePromise from "react-promise-suspense";
 import { Application } from "./layout/Application/Application";
 import { ModuleLoader } from "@tuval/core";
 import { Loader } from "monday-ui-react-core";
+import { HStack, VStack } from "./layout";
+import { Heading } from "./components";
 
+
+export function getAppName() {
+    try {
+        let regex = /\/app\/com\.([A-Za-z]+)\.([A-Za-z]+)\.([A-Za-z]+)/i;
+
+        // Alternative syntax using RegExp constructor
+        // const regex = new RegExp('(?:^\\/app\\/+|\\G(?!^)\\.)\\K\\w+', 'g')
+
+        const str = window.location.href;
+
+        let m;
+        console.log(m = regex.exec(str))
+        return m[3];
+    }
+    catch {
+        return '';
+    }
+}
 
 const AppCache = {}
 export const Paths = {}
@@ -19,7 +39,7 @@ export const ApplicationLoader = () => {
     const location = useLocation();
 
 
-    if ( `/app/${app_name}` === location.pathname && Paths[app_name] != null && Paths[app_name] !== `/app/${app_name}` ) {
+    if (`/app/${app_name}` === location.pathname && Paths[app_name] != null && Paths[app_name] !== `/app/${app_name}`) {
         console.log(`/app/${app_name}` === location.pathname)
         return (<Navigate to={Paths[app_name]}></Navigate>)
     } else {
@@ -62,7 +82,20 @@ export class DesktopController extends UIController {
                 <Routes>
                     {/* <Route path="/" element={<div>Home Me Test Me</div>} /> */}
                     <Route path={this.props.baseUrl + "/app/:app_name/*"} element={(
-                        <React.Suspense fallback={ <Loader size={Loader.sizes.MEDIUM} />} >
+                        <React.Suspense fallback={
+                            <Fragment>
+                                {
+                                    VStack(
+                                        Heading(getAppName()).h2(),
+                                        ReactView(
+                                            <Loader size={Loader.sizes.MEDIUM} />
+                                        )
+                                    ).render()
+                                }
+                                
+                            </Fragment>
+                            
+                        } >
                             <ApplicationLoader></ApplicationLoader>
                         </React.Suspense>
                     )}

@@ -1,6 +1,6 @@
 {
     "name": "@tuval/forms",
-    "version": "1.0.1-beta.83",
+    "version": "1.0.1-beta.85",
     "description": "",
     "keywords": [],
     "main": "index.js",
@@ -107,6 +107,7 @@
     "devDependencies": {
         "@codemirror/lang-javascript": "^6.1.4",
         "@emotion/css": "^11.10.5",
+        "@radix-ui/react-popover": "1.0.5",
         "@svgr/webpack": "^6.5.1",
         "@tuval/cg": "^0.0.16",
         "@tuval/core": "^0.0.92",
