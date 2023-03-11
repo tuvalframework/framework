@@ -1655,6 +1655,25 @@ export class UIView {
         return this;
     }
 
+    public variable(name: string, value: StyleAttribute): this {
+        if (value.default != null) {
+            this.Appearance.StylePropertyBag[name] = value.default;
+        }
+        if (value.hover != null) {
+            this.HoverAppearance.StylePropertyBag[name] = value.hover;
+        }
+        if (value.active != null) {
+            this.ActiveAppearance.StylePropertyBag[name] = value.active;
+        }
+        if (value.disabled != null) {
+            this.DisabledAppearance.StylePropertyBag[name] = value.disabled;
+        }
+        if (value.focus != null) {
+            this.FocusAppearance.StylePropertyBag[name] = value.focus;
+        }
+        return this;
+    }
+
     // Animate Props
 
     @ViewProperty() renderAsAnimated: boolean;

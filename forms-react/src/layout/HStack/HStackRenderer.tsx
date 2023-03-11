@@ -19,6 +19,9 @@ function HStackRenderer({ control }: IControlProperties) {
     ${control.HoverAppearance.IsEmpty ? '' : '&:hover { ' + control.HoverAppearance.ToString() + ' }'}
     ${control.ActiveAppearance.IsEmpty ? '' : '&:active { ' + control.ActiveAppearance.ToString() + ' }'}
     ${control.FocusAppearance.IsEmpty ? '' : '&:focus { ' + control.FocusAppearance.ToString() + ' }'}
+    & .before-element:before {
+        ${control.BeforeAppearance.ToString()}
+     }
 `;
 
     const events = {};
@@ -77,6 +80,19 @@ function HStackRenderer({ control }: IControlProperties) {
         );
     }
 
+    const beforeStyleObject = control.BeforeAppearance.GetStyleObject();
+    let beforeElement = null;
+    if (!!Object.keys(beforeStyleObject).length) {
+     
+        const style = {};
+        style['position'] = 'absolute';
+        style['width'] = '100%';
+        style['height'] = '100%';
+        style['zIndex'] = '-1000';
+
+        beforeElement = (<i className={'before-element'} style={style}></i>)
+    }
+
     const finalComponent = (
         <div className={className} {...events}>
             {
@@ -92,6 +108,7 @@ function HStackRenderer({ control }: IControlProperties) {
                     return view.render();
                 })
             }
+            {beforeElement}
         </div>
     )
 
