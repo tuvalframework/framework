@@ -6,6 +6,15 @@ import ColorPickerRenderer from "./MenuButtonRenderer";
 import ChipsRenderer from "./MenuButtonRenderer";
 
 export class MenuButtonClass extends UIView {
+
+    /** @internal */
+    @ViewProperty() vp_Icon: any;
+
+    public icon(value: any) {
+        this.vp_Icon = value;
+        return this;
+    }
+
     /** @internal */
     @ViewProperty() vp_Value: string;
 
