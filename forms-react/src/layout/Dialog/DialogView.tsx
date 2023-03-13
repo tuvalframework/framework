@@ -28,7 +28,10 @@ class DialogController extends UIFormController {
 
         return (
             ReactView(
-                <Dialog header={this.props.view.Header} visible={this.props.view.Visible} style={{ width: this.props.view.Width, height: this.props.view.Height }} onHide={() => this.props.view.Hide()}>
+                <Dialog header={this.props.view.Header} 
+                position={this.props.view.Position}
+                visible={this.props.view.Visible}
+                 style={{ width: this.props.view.Width, height: this.props.view.Height }} onHide={() => this.props.view.Hide()}>
                     {
                         view.render()
                     }
@@ -51,6 +54,9 @@ export  class DialogView extends UIView {
 
     @ViewProperty(true)
     public Visible: boolean;
+
+    @ViewProperty('center')
+    public Position: string;
 
     public   SetValue(name: string, value: any, silent?, isDirty?) {}
     public   GetValue(name: string) {}
