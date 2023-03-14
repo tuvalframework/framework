@@ -115,12 +115,19 @@ export class UIFormController extends UIController {
     @State(false)
     public IsLoaded: boolean;
 
-    @State({})
+    @State()
     private formData: { [key: string]: IField };
 
     @State()
     public isValid: boolean;
 
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            formData: {}
+        }
+    }
 
     public validateForm(): any {
 
@@ -174,14 +181,16 @@ export class UIFormController extends UIController {
     }
 
     public ResetForm() {
-        for (let key in this.formData) {
-            this.SetValue(key, null);
-        }
+        this.formData = {};
+        /*  for (let key in this.formData) {
+             this.SetValue(key, null);
+         } */
     }
 
     public ClearErrors() { }
 
     public SetValue(name: string, value: any, silent: boolean = false, isDirty: boolean = false) {
+        console.log('set value ', name, '  ', value);
         if (name != null) {
             const fieldName = name;
 
