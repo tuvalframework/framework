@@ -61,6 +61,39 @@ export class RequiredRule extends ValidateRule {
     }
 }
 
+export class RegExRule extends ValidateRule {
+    private regEx: RegExp;
+
+    public constructor(regEx: RegExp, errorMessage: string) {
+        super(errorMessage);
+        this.regEx = regEx;
+    }
+
+    public validate(): boolean {
+        if (this.regEx.test(this.Field.value)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+}
+
+export class CustomRule extends ValidateRule {
+    private func: Function;
+
+    public constructor(func: Function, errorMessage: string) {
+        super(errorMessage);
+        this.func = func;
+    }
+
+    public validate(): boolean {
+       return this.func(this.Field.value);
+    }
+}
+
+
 export class MaxLengthRule extends ValidateRule {
 
     private maxLength: int;
@@ -123,7 +156,7 @@ export class UIFormController extends UIController {
 
     constructor(props) {
         super(props);
-        
+
         this.state = {
             formData: {}
         }
@@ -190,7 +223,7 @@ export class UIFormController extends UIController {
     public ClearErrors() { }
 
     public SetValue(name: string, value: any, silent: boolean = false, isDirty: boolean = false) {
-        console.log('set value ', name, '  ', value);
+     
         if (name != null) {
             const fieldName = name;
 
