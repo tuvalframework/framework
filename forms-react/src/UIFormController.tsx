@@ -89,7 +89,7 @@ export class CustomRule extends ValidateRule {
     }
 
     public validate(): boolean {
-       return this.func(this.Field.value);
+        return this.func(this.Field.value);
     }
 }
 
@@ -223,7 +223,7 @@ export class UIFormController extends UIController {
     public ClearErrors() { }
 
     public SetValue(name: string, value: any, silent: boolean = false, isDirty: boolean = false) {
-     
+
         if (name != null) {
             const fieldName = name;
 
@@ -312,9 +312,11 @@ export class UIFormController extends UIController {
 
         return (
             <UIFormContext.Provider value={this}>
-                <UIControllerProxy controller={this}>
-                    {super.render()}
-                </UIControllerProxy>
+                <UIControllerContext.Provider value={this}>
+                    <UIControllerProxy controller={this}>
+                        {super.render()}
+                    </UIControllerProxy>
+                </UIControllerContext.Provider>
 
             </UIFormContext.Provider>
         )

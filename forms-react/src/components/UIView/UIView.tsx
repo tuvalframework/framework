@@ -36,6 +36,16 @@ export class UIView {
         return this;
     }
 
+    @ViewProperty()
+    public vp_Tag: any;
+
+    public tag(value: any) {
+        this.vp_Tag = value;
+        return this;
+    }
+
+
+
     @ViewProperty(0)
     private forceUpdateKey: number;
 

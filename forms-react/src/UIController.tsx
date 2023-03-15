@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { UIView } from "./components/UIView/UIView";
+import { query } from "./data/DataContext/DataContextRenderer";
 
 
 export function State(defaultValue?: any): any/* PropertyDecorator */ {
@@ -74,5 +75,12 @@ export class UIController extends React.Component<any, any> {
             <UIControllerProxy controller={this}>
             </UIControllerProxy>
         )
+    }
+
+    public InvalidateQueries() {
+        query.invalidateQueries();
+    }
+    public InvalidateQuerie(queryName: string) {
+        query.invalidateQueries({ queryKey: [queryName] });
     }
 }

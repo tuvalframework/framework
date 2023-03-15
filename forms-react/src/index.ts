@@ -5,6 +5,7 @@ export * from './components/UIView/UIView'
 export * from './components/UIView/UIViewRenderer'
 export * from './components/UIView/ViewProperty'
 export * from './components/UIView/ForEach'
+export * from './components/UIView/Switch'
 
 export * from './layout'
 

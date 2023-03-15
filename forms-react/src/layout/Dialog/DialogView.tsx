@@ -8,6 +8,7 @@ import { ModalDialogs } from "./DialogContainerClass";
 import { Fragment } from "../../components/Fragment";
 import { int } from "@tuval/core";
 import { ReactView } from "../../components/ReactView/ReactView";
+import { query } from "../../data/DataContext/DataContextRenderer";
 
 interface IDialogControllerProps {
     view:DialogView
@@ -99,4 +100,12 @@ export  class DialogView extends UIView {
             <DialogController view={this}> </DialogController>
         )
     }
+
+    public InvalidateQueries() {
+        query.invalidateQueries();
+    }
+    public InvalidateQuerie(queryName: string) {
+        query.invalidateQueries({ queryKey: [queryName] });
+    }
+
 }
