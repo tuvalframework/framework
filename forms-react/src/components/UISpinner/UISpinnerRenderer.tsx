@@ -15,7 +15,7 @@ function UISpinnerRenderer({ control }: IControlProperties) {
 
    
     return (
-        <Loader size={Loader.sizes.MEDIUM} />
+        <Loader size={control.vp_Size} />
     )
 
 }

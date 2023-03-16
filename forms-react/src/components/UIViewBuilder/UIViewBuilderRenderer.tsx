@@ -1,6 +1,6 @@
 import { Guid } from '@tuval/core';
 import { RadioButton } from 'primereact';
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { UIViewBuilderClass } from './UIViewBuilderClass';
 
 
@@ -12,6 +12,10 @@ export interface IControlProperties {
 
 
 function UIViewBuilderRenderer({ control }: IControlProperties) {    
+   /*  useEffect(()=>{
+        alert('mounted')
+        return ()=> alert('unmounted')
+    }) */
     return (
        
             <Fragment>

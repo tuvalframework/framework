@@ -20,6 +20,11 @@ function TableRenderer({ control }: IControlProperties) {
     ${control.FocusAppearance.IsEmpty ? '' : '&:focus { ' + control.FocusAppearance.ToString() + ' }'}
 `;
 
+   /*  const rowClassName = css`
+    --show:0;
+    &:hover { --show: 1; }
+`; */
+
 
     const attributeObject = {}
     attributeObject['alignment'] = control.vp_Alignment;
@@ -53,8 +58,17 @@ function TableRenderer({ control }: IControlProperties) {
                 row_columns.push(<td>{'Error'}</td>);
             }
         });
-        const style = control.vp_RowAppearance?.Appearance?.GetStyleObject();
-        rowNodes.push(<tr style={style}>{row_columns}</tr>);
+
+
+        //const style = control.vp_RowAppearance?.Appearance?.GetStyleObject();
+        const rowClassName = css`
+    ${control.vp_RowAppearance?.Appearance.ToString()}
+    ${control.vp_RowAppearance?.HoverAppearance.IsEmpty ? '' : '&:hover { ' + control.vp_RowAppearance?.HoverAppearance.ToString() + ' }'}
+    ${control.vp_RowAppearance?.ActiveAppearance.IsEmpty ? '' : '&:active { ' + control.vp_RowAppearance?.ActiveAppearance.ToString() + ' }'}
+    ${control.vp_RowAppearance?.FocusAppearance.IsEmpty ? '' : '&:focus { ' + control.vp_RowAppearance?.FocusAppearance.ToString() + ' }'}
+`;
+
+        rowNodes.push(<tr className={rowClassName}>{row_columns}</tr>);
     });
 
     let headerStyle = {};
@@ -65,7 +79,7 @@ function TableRenderer({ control }: IControlProperties) {
         <div className={className}>
             <table style={{ width: '100%', height: '100%', borderCollapse: 'collapse' }}>
                 <thead style={headerStyle}>
-                    <tr> {headerResult}</tr>
+                    {headerResult}
                 </thead>
                 <tbody>
                     {rowNodes}

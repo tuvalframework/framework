@@ -22,7 +22,7 @@ function IconRenderer({ control }: IControlProperties) {
         font-style:normal;
         font-weight:normal;
         font-variant:normal;
-        font-size:inherit;
+        font-size: ${control.Appearance.FontSize == null ? 'inherit' : control.Appearance.FontSize } ;
         text-transform:none;
         line-height:1;
         -webkit-font-smoothing: antialiased;

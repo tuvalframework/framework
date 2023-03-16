@@ -11,9 +11,23 @@ import UISpinnerRenderer from './UISpinnerRenderer';
 
 
 
+export enum LoaderSizes {
+    XS = 16,
+    SMALL = 24,
+    MEDIUM = 40,
+    LARGE = 64
+}
 
 export class UISpinnerClass extends UIView {
 
+     /** @internal */
+     @ViewProperty(LoaderSizes.MEDIUM) vp_Size:LoaderSizes;
+     public size(value: LoaderSizes): this {
+         this.vp_Size = value;
+         return this;
+     }
+
+     
      /** @internal */
     @ViewProperty() vp_HeaderTemplate:UIView;
     public headerTemplate(value: UIView): this {

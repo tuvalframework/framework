@@ -1668,18 +1668,28 @@ export class UIView {
     public variable(name: string, value: StyleAttribute): this {
         if (value.default != null) {
             this.Appearance.StylePropertyBag[name] = value.default;
+            this.Appearance.isModified = true;
+            this.Appearance.IsEmpty = false;
         }
         if (value.hover != null) {
             this.HoverAppearance.StylePropertyBag[name] = value.hover;
+            this.HoverAppearance.isModified = true;
+            this.HoverAppearance.IsEmpty = false;
         }
         if (value.active != null) {
             this.ActiveAppearance.StylePropertyBag[name] = value.active;
+            this.ActiveAppearance.isModified = true;
+            this.ActiveAppearance.IsEmpty = false;
         }
         if (value.disabled != null) {
             this.DisabledAppearance.StylePropertyBag[name] = value.disabled;
+            this.DisabledAppearance.isModified = true;
+            this.DisabledAppearance.IsEmpty = false;
         }
         if (value.focus != null) {
             this.FocusAppearance.StylePropertyBag[name] = value.focus;
+            this.FocusAppearance.isModified = true;
+            this.FocusAppearance.IsEmpty = false;
         }
         return this;
     }

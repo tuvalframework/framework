@@ -45,7 +45,13 @@ function MenuButtonRenderer({ control }: IControlProperties) {
                         <MenuItem
                             icon={menuItem.icon instanceof UIView ? IconWrapper : menuItem.icon}
                             // iconType={"SVG" as any}
-                            onClick={() => is.function(menuItem.onClick) ? menuItem.onClick() : void 0}
+                            onClick={
+                                (e) => {
+                                    is.function(menuItem.onClick) ? menuItem.onClick() : void 0;
+
+
+                                }
+                            }
                             title={menuItem.title}
                         />
                     )
@@ -59,7 +65,8 @@ function MenuButtonRenderer({ control }: IControlProperties) {
         <Fragment>
 
             <MenuButton closeDialogOnContentClick={true} componentPosition={'start'} dialogOffset={{ main: -25, secondary: 30 }}
-                dialogPosition={"right-start"} component={control.vp_Icon} zIndex={10000} size={MenuButton.sizes.XS}>
+                dialogPosition={"right-start"} component={control.vp_Icon} zIndex={10000} size={MenuButton.sizes.XS}
+            >
                 <Menu id="menu" size="medium" >
 
                     {
