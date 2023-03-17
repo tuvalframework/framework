@@ -1,5 +1,6 @@
 import { UIView } from "./components/UIView/UIView";
 
+export const cAll = 'cAll';
 export const cHorizontal = 'cHorizontal';
 export const cVertical = 'cVertical';
 export const cLeft = 'cLeft';

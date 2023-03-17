@@ -1,12 +1,12 @@
 import { UIView } from "../../components/UIView/UIView";
-import { AlignmentType, cHorizontal, cTopLeading, cVertical } from "../../Constants";
+import { AlignmentType, cAll, cHorizontal, cTopLeading, cVertical } from "../../Constants";
 import { VStack } from "../VStack/VStack";
 import { VStackClass } from "../VStack/VStackClass";
 
 
 
 interface ScrollViewParams {
-    axes?: 'cHorizontal' | 'cVertical';
+    axes?: 'cHorizontal' | 'cVertical' | 'cAll';
     alignment?:AlignmentType;
     showsIndicators?: boolean;
     content?: any;
@@ -43,8 +43,8 @@ export function ScrollView(...args: any[]): FunctionScrollView | VStackClass {
                     ).position('absolute')
                 )
                     .width('100%')
-                    .overflowX((axes === cHorizontal || axes == null) ? 'auto' : 'hidden')
-                    .overflowY((axes === cVertical || axes == null) ? 'auto' : 'hidden')
+                    .overflowX((axes === cHorizontal || axes == null || axes == cAll) ? 'auto' :   'hidden')
+                    .overflowY((axes === cVertical || axes == null || axes == cAll) ? 'auto' : 'hidden')
             )
         }
     } else {

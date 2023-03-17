@@ -128,7 +128,7 @@ function PrimeRenderer({ control }: IControlProperties) {
 
     const style = {};
     style['width'] = '100%';
-    style['height'] = '100%';
+   //style['height'] = '100%';
     // style['height'] = '100%';
     style['backgroundColor'] = control.Appearance.BackgroundColor;
     style['background'] = control.Appearance.Background;

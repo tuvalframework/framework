@@ -150,7 +150,7 @@ function TextFieldRenderer({ control }: IControlProperties) {
             {...attributes}
             value={control.vp_Value}
             placeholder={control.vp_Placeholder}
-            onChange={(e) => is.function(control.vp_OnChange) ? control.vp_OnChange(e.target.value) : void 0}>
+            onChange={(e) => is.function(control.vp_OnChange) ? control.vp_OnChange(e.value == null ? e.target?.value : e.value) : void 0}>
         </MyInputText>
     );
 
