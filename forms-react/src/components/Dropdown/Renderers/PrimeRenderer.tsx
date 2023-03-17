@@ -137,6 +137,7 @@ function PrimeRenderer({ control }: IControlProperties) {
 
     return (
         <MyDropDown
+            className={className}
             obj={control}
             onFocus={(e) => is.function(control.vp_OnFocus) ? control.vp_OnFocus(e) : void 0}
             onBlur={(e) => is.function(control.vp_OnBlur) ? control.vp_OnBlur(e) : void 0}

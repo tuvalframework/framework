@@ -1,11 +1,11 @@
 import { css } from "@emotion/css";
 import { is } from "@tuval/core";
-import { InputText, InputTextarea } from 'primereact';
+import { InputText, InputTextarea, InputNumber } from 'primereact';
 import { useRecordContext } from "ra-core";
 import React, { Fragment } from "react";
 import { UIFormController, useFormController } from "../../UIFormController";
 import { UIView } from "../UIView/UIView";
-import { TextFieldClass } from "./TextFieldClass";
+import { MaskTypes, TextFieldClass } from "./TextFieldClass";
 
 export interface IControlProperties {
     control: TextFieldClass
@@ -23,6 +23,7 @@ function TextFieldProxy(_props) {
 
 
     const isMultiline = props.control.vp_Multiline;
+    const maskType = props.control.vp_MaskType;
 
     delete props['className'];
     delete props['control'];
@@ -33,15 +34,24 @@ function TextFieldProxy(_props) {
             <InputTextarea {...props} className={className}></InputTextarea>
         )
     } else {
-        return (
-            <InputText {...props} className={className}></InputText>
-        )
+        switch (maskType) {
+            case MaskTypes.Number:
+                props['onValueChange'] = props['onChange'];
+                return (
+                    <InputNumber {...props} style={{width:'100%'}} inputClassName={className}></InputNumber>
+                )
+            default:
+                return (
+                    <InputText {...props} className={className}></InputText>
+                )
+        }
+
     }
 }
 
 const MyInputText = (_params) => {
 
-    const params = {..._params};
+    const params = { ..._params };
     const getLabel = () => {
         if (is.function(params.obj.vp_LabelTemplate)) {
             const view: UIView = params.obj.vp_LabelTemplate(params.obj.vp_Label);
@@ -54,7 +64,7 @@ const MyInputText = (_params) => {
             )
         }
     }
-    
+
 
     const controller: UIFormController = useFormController();
     // console.log(controller);
@@ -79,7 +89,7 @@ const MyInputText = (_params) => {
         const record = useRecordContext();
 
         if (record && !formState.isTouched) {
-            
+
             params['value'] = record[params.obj.vp_FormField.name];
         } else {
             params['value'] = controller.GetValue(params.obj.vp_FormField.name);
@@ -88,7 +98,7 @@ const MyInputText = (_params) => {
 
         //params['value'] = controller.GetValue(params.obj.vp_FormField.name);
 
-        params['onChange'] =  (e) => {
+        params['onChange'] = (e) => {
             controller.SetFieldState(params.obj.vp_FormField.name, { isTouched: true });
             controller.SetValue(params.obj.vp_FormField.name, e.target.value);
         }

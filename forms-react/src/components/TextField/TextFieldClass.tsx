@@ -6,6 +6,10 @@ import { ViewProperty } from "../UIView/ViewProperty";
 import TextFieldRenderer from "./TextFieldRenderer";
 
 
+export enum MaskTypes {
+    None = 0,
+    Number = 1
+}
 
 export class TextFieldClass extends UIView {
     /** @internal */
@@ -73,6 +77,13 @@ export class TextFieldClass extends UIView {
         return this;
     }
 
+     /** @internal */
+     @ViewProperty(MaskTypes.None) vp_MaskType: MaskTypes;
+     public maskType(value: MaskTypes) {
+         this.vp_MaskType = value;
+         return this;
+     }
+
     public constructor() {
         super();
 
@@ -84,6 +95,7 @@ export class TextFieldClass extends UIView {
 
         this.vp_Autofocus = false;
     }
+
 
     public render() {
         return (<UIViewRenderer wrap={false} control={this} renderer={TextFieldRenderer}></UIViewRenderer>)

@@ -2,7 +2,7 @@ import { UIView } from '../UIView/UIView';
 import TextRenderer from './TextRenderer';
 import { Renderer } from '../../RendererDecorator';
 import React from "react";
-import {UIViewRenderer} from '../UIView/UIViewRenderer';
+import { UIViewRenderer } from '../UIView/UIViewRenderer';
 import { ViewProperty } from '../UIView/ViewProperty';
 
 
@@ -16,6 +16,7 @@ export enum TextAlignment {
     leading = 1,
     trailing = 2
 }
+
 
 export class TextClass extends UIView {
 
@@ -42,6 +43,8 @@ export class TextClass extends UIView {
 
     /** @internal */
     @ViewProperty() vp_Text: string;
+
+   
 
     public constructor() {
         super();
@@ -92,7 +95,7 @@ export class TextClass extends UIView {
     }
 
     public render() {
-         return (<UIViewRenderer wrap={true} control={this} renderer={TextRenderer}></UIViewRenderer>) 
-       
+        return (<UIViewRenderer wrap={true} control={this} renderer={TextRenderer}></UIViewRenderer>)
+
     }
 }
