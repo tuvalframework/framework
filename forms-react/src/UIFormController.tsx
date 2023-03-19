@@ -130,7 +130,7 @@ export interface IField {
     options: IFieldOptions;
 }
 
-const defaultField: IField = {
+export const defaultField: IField = {
     value: null,
     options: {
         rules: []

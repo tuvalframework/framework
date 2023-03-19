@@ -1,4 +1,4 @@
-import { UIFormController } from "../../UIFormController";
+import { defaultField, IField, IFieldState, UIControllerContext, UIFormContext, UIFormController, ValidateRule } from "../../UIFormController";
 import { Dialog } from "primereact";
 import { State } from "../../UIController";
 import React from "react";
@@ -6,33 +6,34 @@ import { UIView } from "../../components/UIView/UIView";
 import { ViewProperty } from "../../components/UIView/ViewProperty";
 import { ModalDialogs } from "./DialogContainerClass";
 import { Fragment } from "../../components/Fragment";
-import { int } from "@tuval/core";
+import { clone, int } from "@tuval/core";
 import { ReactView } from "../../components/ReactView/ReactView";
 import { query } from "../../data/DataContext/DataContextRenderer";
 
 interface IDialogControllerProps {
-    view:DialogView
+    view: DialogView
 }
 
 class DialogController extends UIFormController {
     public override LoadView(): UIView {
 
-        let view =  this.props.view.LoadView();
+        let view = this.props.view.LoadView();
 
         if (view == null) {
             view = Fragment()
         }
 
-       const propsView: DialogView = this.props.view;
-       propsView.SetValue = this.SetValue.bind(this);
-       propsView.GetValue = this.GetValue.bind(this);
+        const propsView: DialogView = this.props.view;
+        propsView.SetValue = this.SetValue.bind(this);
+        propsView.GetValue = this.GetValue.bind(this);
 
         return (
             ReactView(
-                <Dialog header={this.props.view.Header} 
-                position={this.props.view.Position}
-                visible={this.props.view.Visible}
-                 style={{ width: this.props.view.Width, height: this.props.view.Height }} onHide={() => this.props.view.Hide()}>
+                <Dialog header={this.props.view.Header}
+                    position={this.props.view.Position}
+                    showHeader={this.props.view.ShowHeader}
+                    visible={this.props.view.Visible}
+                    style={{ width: this.props.view.Width, height: this.props.view.Height }} onHide={() => this.props.view.Hide()}>
                     {
                         view.render()
                     }
@@ -42,7 +43,7 @@ class DialogController extends UIFormController {
     }
 }
 
-export  class DialogView extends UIView {
+export class DialogView extends UIView {
 
     @ViewProperty('')
     public Header: string;
@@ -59,10 +60,21 @@ export  class DialogView extends UIView {
     @ViewProperty('center')
     public Position: string;
 
-    public   SetValue(name: string, value: any, silent?, isDirty?) {}
-    public   GetValue(name: string) {}
+    @ViewProperty(true)
+    public ShowHeader: boolean;
+
+    @ViewProperty()
+    private formData: { [key: string]: IField };
+
+    @ViewProperty()
+    public isValid: boolean;
+
+
+    //public SetValue(name: string, value: any, silent?, isDirty?) { }
+    //public GetValue(name: string) { }
 
     public ShowDialog() {
+        this.formData = {};
         this.Visible = true;
         ModalDialogs.Add(this);
     }
@@ -97,7 +109,13 @@ export  class DialogView extends UIView {
 
     public render(): React.ReactNode {
         return (
-            <DialogController view={this}> </DialogController>
+            <UIFormContext.Provider value={this}>
+                <UIControllerContext.Provider value={this}>
+                    <DialogController view={this}> </DialogController>
+                </UIControllerContext.Provider>
+
+            </UIFormContext.Provider>
+
         )
     }
 
@@ -107,5 +125,153 @@ export  class DialogView extends UIView {
     public InvalidateQuerie(queryName: string) {
         query.invalidateQueries({ queryKey: [queryName] });
     }
+
+
+
+    public validateForm(): any {
+
+        //this.BeginUpdate();
+        // let errors = [];
+        let errorCount = 0;
+
+        for (let key in this.formData) {
+            const field: IField = this.formData[key];
+            const errors = field.state.errors = [];
+            for (let i = 0; i < field.options.rules.length; i++) {
+                const rule = field.options.rules[i];
+                rule.setField(field);
+                const validate = rule.validate();
+                if (!validate) {
+                    errorCount++;
+                    errors.push(rule.ErrorMessage);
+                }
+            }
+        }
+
+        if (errorCount === 0) {
+            this.formData = { ...this.formData }
+
+            const data = {};
+            for (let key in this.formData) {
+                data[key] = this.formData[key].value;
+            }
+
+            return [true, data];
+            //this.OnSubmit(data);
+        } else {
+            for (let key in this.formData) {
+                const field = this.formData[key];
+                field.state.invalid = true;
+            }
+
+            this.isValid = false;
+        }
+
+        return [false, null]
+        //this.EndUpdate();
+    }
+    protected OnSubmit(data) { }
+
+    public Submit() {
+        const [isValid, data] = this.validateForm();
+        if (isValid) {
+            this.OnSubmit(data);
+        }
+    }
+
+    public ResetForm() {
+        this.formData = {};
+        /*  for (let key in this.formData) {
+             this.SetValue(key, null);
+         } */
+    }
+
+    public ClearErrors() { }
+
+    public SetValue(name: string, value: any, silent: boolean = false, isDirty: boolean = false) {
+
+        if (name != null) {
+            const fieldName = name;
+
+            if (this.formData[fieldName] == null) {
+                this.formData[fieldName] = clone(defaultField);
+            }
+            const fieldInfo = this.formData[fieldName];
+            fieldInfo.value = value;
+
+            if (!silent) {
+                this.formData = { ...this.formData };
+            }
+        }
+    }
+
+    public GetValue(name: string) {
+        if (name != null) {
+            const fieldName = name;
+
+            if (this.formData[fieldName] == null) {
+                this.formData[fieldName] = clone(defaultField);
+            }
+            const fieldInfo = this.formData[fieldName];
+            return fieldInfo.value;
+        }
+    }
+
+    public GetFieldState(name: string): IFieldState {
+        if (name != null) {
+            const fieldName = name;
+
+            if (this.formData[fieldName] == null) {
+                this.formData[fieldName] = clone(defaultField);
+            }
+
+            const fieldInfo = this.formData[fieldName];
+
+            return fieldInfo.state;
+        }
+    }
+
+    public SetFieldState(name: string, state: IFieldState): void {
+        if (name != null) {
+            const fieldName = name;
+
+            if (this.formData[fieldName] == null) {
+                this.formData[fieldName] = clone(defaultField);
+            }
+
+            const fieldInfo = this.formData[fieldName];
+
+            fieldInfo.state = Object.assign(fieldInfo.state, state);
+        }
+    }
+
+    public SetFieldTouch(name: string, isTouched: boolean): IFieldState {
+        if (name != null) {
+            const fieldName = name;
+
+            if (this.formData[fieldName] == null) {
+                return null;
+            }
+            const fieldInfo = this.formData[fieldName];
+
+            fieldInfo.state.isTouched = isTouched;
+
+            this.formData = { ...this.formData };
+        }
+    }
+
+    public register(name: string, rules: ValidateRule[]) {
+        if (name != null) {
+            const fieldName = name;
+
+            if (this.formData[fieldName] == null) {
+                this.formData[fieldName] = clone(defaultField);
+            }
+            const fieldInfo = this.formData[fieldName];
+            fieldInfo.options.rules = rules;
+
+        }
+    }
+
 
 }

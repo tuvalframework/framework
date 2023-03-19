@@ -23,7 +23,7 @@ function CodeEditorRenderer({ control }: IControlProperties) {
     return (
        
         <CodeMirror
-            value="console.log('hello world!');"
+            value={control.vp_Value}
             height="100%"
             width="100%"
              //@ts-ignore

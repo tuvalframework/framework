@@ -24,12 +24,12 @@ function InputSwitchRenderer({ control }: IControlProperties) {
     return (
         <BootstrapSwitchButton
             checked={control.vp_Checked}
-            onlabel='On'
+            onlabel={control.vp_OnLabel ? control.vp_OnLabel  : 'On'}
             onstyle='primary'
-            offlabel='Off'
+            offlabel={control.vp_offLabel ? control.vp_offLabel  : 'Off'}
             offstyle='light'
-            width={60}
-            height={30}
+            width={control.Appearance.Width?.replace('px', '')}
+            height={control.Appearance.Height?.replace('px', '')}
             onChange={(e) => is.function(control.vp_OnChange) ? control.vp_OnChange(e) : void 0}
         />
         /*   <InputSwitch checked={control.vp_Checked} onChange={(e) => is.function(control.vp_OnChange) ? control.vp_OnChange(e.value) : void 0} /> */
