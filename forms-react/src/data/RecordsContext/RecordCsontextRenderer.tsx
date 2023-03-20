@@ -15,6 +15,14 @@ function RecordContextRenderer({ control }: IControlProperties) {
         pagination: control.vp_Pagination,
         sort: control.vp_Sort,
         filter: control.vp_Filter
+    },
+    {
+        onError : (err:any) => {
+          
+            if (err.response?.status === 401){
+                window.location.href = '/logout'
+            }
+        }
     });
 
     const view = control.vp_Content({ data, isLoading, total, error, refetch });

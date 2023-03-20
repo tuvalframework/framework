@@ -11,7 +11,13 @@ export interface IControlProperties {
 
 
 function RecordContextRenderer({ control }: IControlProperties) {
-    const { data, isLoading, error } = useGetOne(control.vp_Resource, control.vp_Filter);
+    const { data, isLoading, error } = useGetOne(control.vp_Resource, control.vp_Filter,{
+        onError : (err:any) => {
+            if (err.response?.status === 401){
+                window.location.href = '/logout'
+            }
+        }
+    });
     
     const view = control.vp_Chidren({ data, isLoading, error });
     return (
