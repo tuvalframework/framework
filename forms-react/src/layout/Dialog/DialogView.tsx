@@ -1,7 +1,7 @@
 import { defaultField, IField, IFieldState, UIControllerContext, UIFormContext, UIFormController, ValidateRule } from "../../UIFormController";
 import { Dialog } from "primereact";
 import { State } from "../../UIController";
-import React from "react";
+import React, { useState } from "react";
 import { UIView } from "../../components/UIView/UIView";
 import { ViewProperty } from "../../components/UIView/ViewProperty";
 import { ModalDialogs } from "./DialogContainerClass";
@@ -17,6 +17,12 @@ interface IDialogControllerProps {
 class DialogController extends UIFormController {
     public override LoadView(): UIView {
 
+        const [value, setValue] = useState(0);
+        this.props.view.ForceUpdate = () => {
+            const newValue = value + 1;
+            setValue(newValue);
+        }
+        
         let view = this.props.view.LoadView();
 
         if (view == null) {

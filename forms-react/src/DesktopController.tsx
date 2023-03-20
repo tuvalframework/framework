@@ -6,7 +6,7 @@ import React, { Fragment } from "react";
 import { MyTestController, TestController } from "./MyController";
 import usePromise from "react-promise-suspense";
 import { Application } from "./layout/Application/Application";
-import { ModuleLoader } from "@tuval/core";
+import { is, ModuleLoader } from "@tuval/core";
 import { Loader } from "monday-ui-react-core";
 import { HStack, VStack } from "./layout";
 import { Heading } from "./components";
@@ -50,7 +50,10 @@ export const ApplicationLoader = () => {
         if (AppCache[app_name]) {
             resolve(AppCache[app_name]);
         } else {
-            ModuleLoader.LoadBundledModuleWithDecode(`/static/applications/${app_name}.app`, app_name).then((_app: any) => {
+            const app_path = `/realmocean/store/app/open-testing/${app_name}`;
+            // alert(app_path)
+            const app_path_local = `/static/applications/${app_name}.app`;
+            ModuleLoader.LoadBundledModuleWithDecode(!is.localhost() ? app_path_local : app_path, app_name).then((_app: any) => {
                 if (_app != null) {
                     const app = new _app();
                     AppCache[app_name] = app.GetMainController();
@@ -92,9 +95,9 @@ export class DesktopController extends UIController {
                                         )
                                     ).render()
                                 }
-                                
+
                             </Fragment>
-                            
+
                         } >
                             <ApplicationLoader></ApplicationLoader>
                         </React.Suspense>
