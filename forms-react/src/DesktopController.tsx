@@ -53,7 +53,7 @@ export const ApplicationLoader = () => {
             const app_path = `/realmocean/store/app/open-testing/${app_name}`;
             // alert(app_path)
             const app_path_local = `/static/applications/${app_name}.app`;
-            ModuleLoader.LoadBundledModuleWithDecode(!is.localhost() ? app_path_local : app_path, app_name).then((_app: any) => {
+            ModuleLoader.LoadBundledModuleWithDecode(is.localhost() ? app_path_local : app_path, app_name).then((_app: any) => {
                 if (_app != null) {
                     const app = new _app();
                     AppCache[app_name] = app.GetMainController();

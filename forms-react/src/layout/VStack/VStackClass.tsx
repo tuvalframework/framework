@@ -3,11 +3,18 @@ import React from "react";
 import { AlignmentType, cBottom, cBottomLeading, cBottomTrailing, cCenter, cLeading, cTop, cTopLeading, cTopTrailing, cTrailing } from "../../Constants";
 import { UIController } from "../../UIController";
 import { UIView } from "../../components/UIView/UIView";
-import {UIViewRenderer} from "../../components/UIView/UIViewRenderer";
+import { UIViewRenderer } from "../../components/UIView/UIViewRenderer";
 import { ViewProperty } from "../../components/UIView/ViewProperty";
 import VStackRenderer from "./VStackRenderer";
+import { TooltipPositions } from "../../components/Tooltip/TooltipClass";
 
 export class VStackClass extends UIView {
+
+    /** @internal */
+    @ViewProperty() vp_TooltipPosition: TooltipPositions;
+    public tooltipPosition(value: TooltipPositions) {
+        this.vp_TooltipPosition = value;
+    }
 
     /** @internal */
     @ViewProperty() vp_Spacing: string;
@@ -15,13 +22,13 @@ export class VStackClass extends UIView {
     /** @internal */
     @ViewProperty() vp_Alignment: string;
 
-     /** @internal */
-     @ViewProperty() vp_Chidren: UIView[];
+    /** @internal */
+    @ViewProperty() vp_Chidren: UIView[];
 
-     public children(...value:UIView[]) {
+    public children(...value: UIView[]) {
         this.vp_Chidren = value;
         return this;
-     }
+    }
 
     public constructor() {
         super();
@@ -35,7 +42,9 @@ export class VStackClass extends UIView {
 
         this.Appearance.AlignItems = 'center';
         this.Appearance.JustifyItems = 'center';
-       // this.Appearance.Transition = '200ms cubic-bezier(0, 0, 0.2, 1) 0ms';
+
+        this.vp_TooltipPosition = TooltipPositions.BOTTOM;
+        // this.Appearance.Transition = '200ms cubic-bezier(0, 0, 0.2, 1) 0ms';
     }
 
 
@@ -144,6 +153,6 @@ export class VStackClass extends UIView {
         return this;
     }
     public render() {
-        return (<VStackRenderer  control = {this} ></VStackRenderer>)
+        return (<VStackRenderer control={this} ></VStackRenderer>)
     }
 }

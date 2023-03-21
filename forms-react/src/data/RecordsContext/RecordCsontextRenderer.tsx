@@ -19,7 +19,7 @@ function RecordContextRenderer({ control }: IControlProperties) {
     {
         onError : (err:any) => {
           
-            if (err.response?.status === 401){
+            if (err.status === 401){
                 window.location.href = '/logout'
             }
         }

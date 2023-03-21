@@ -6,8 +6,17 @@ import { UIView } from "../../components/UIView/UIView";
 import {UIViewRenderer} from "../../components/UIView/UIViewRenderer";
 import { ViewProperty } from "../../components/UIView/ViewProperty";
 import HStackRenderer from "./HStackRenderer";
+import { TooltipPositions } from "../../components/Tooltip/TooltipClass";
 
 export class HStackClass extends UIView {
+
+     /** @internal */
+     @ViewProperty() vp_TooltipPosition: TooltipPositions;
+     public tooltipPosition(value: TooltipPositions) {
+        this.vp_TooltipPosition = value;
+     }
+
+     
 
     /** @internal */
     @ViewProperty() vp_Spacing: string;
@@ -35,6 +44,8 @@ export class HStackClass extends UIView {
 
         this.Appearance.AlignItems = 'center';
         this.Appearance.JustifyItems = 'center';
+
+        this.vp_TooltipPosition = TooltipPositions.BOTTOM;
     }
 
 

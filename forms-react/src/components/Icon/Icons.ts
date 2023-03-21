@@ -188,6 +188,8 @@ import Send from "monday-ui-react-core/dist/icons/Send";
 import Settings from "monday-ui-react-core/dist/icons/Settings";
 import SettingsKnobs from "monday-ui-react-core/dist/icons/SettingsKnobs";
 
+import Workspace from "monday-ui-react-core/dist/icons/Workspace";
+
 
 export const Icons = {
     Academy: Academy,
@@ -375,5 +377,7 @@ export const Icons = {
     Security: Security,
     Send: Send,
     Settings: Settings,
-    SettingsKnobs: SettingsKnobs
+    SettingsKnobs: SettingsKnobs,
+    
+    Workspace: Workspace
 }
