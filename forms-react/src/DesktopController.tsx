@@ -2,15 +2,17 @@ import { UIView } from "./components/UIView/UIView";
 import { State, UIController } from "./UIController";
 import { ReactView } from './components/ReactView/ReactView';
 import { createBrowserRouter, Link, Navigate, Outlet, Route, RouterProvider, Routes, useLocation, useParams } from "react-router-dom";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { MyTestController, TestController } from "./MyController";
 import usePromise from "react-promise-suspense";
 import { Application } from "./layout/Application/Application";
 import { is, ModuleLoader } from "@tuval/core";
 import { Loader } from "monday-ui-react-core";
+import {Toast} from 'primereact'
 import { HStack, VStack } from "./layout";
 import { Heading } from "./components";
-
+import { TrackJS } from 'trackjs';
+import { Tracker } from "./tracker";
 
 export function getAppName() {
     try {
@@ -99,7 +101,9 @@ export class DesktopController extends UIController {
                             </Fragment>
 
                         } >
-                            <ApplicationLoader></ApplicationLoader>
+                            <ErrorBoundary>
+                                <ApplicationLoader></ApplicationLoader>
+                            </ErrorBoundary>
                         </React.Suspense>
                     )}
                         action={async ({ params, request }) => {
@@ -112,4 +116,82 @@ export class DesktopController extends UIController {
         )
     }
 
+}
+
+/**
+ * NEW: The error boundary has a function component wrapper.
+ */
+function ErrorBoundary({ children }) {
+    const [hasError, setHasError] = useState(false);
+    const location = useLocation();
+    useEffect(() => {
+        if (hasError) {
+            setHasError(false);
+        }
+    }, [location.key]);
+    return (
+        /**
+         * NEW: The class component error boundary is now
+         *      a child of the functional component.
+         */
+        <ErrorBoundaryInner
+            hasError={hasError}
+            setHasError={setHasError}
+        >
+            {children}
+        </ErrorBoundaryInner>
+    );
+}
+
+
+
+/**
+ * NEW: The class component accepts getters and setters for
+ *      the parent functional component's error state.
+ */
+class ErrorBoundaryInner extends React.Component<any, any> {
+    private ref;
+    constructor(props) {
+        super(props);
+        this.state = { hasError: false };
+        this.ref = React.createRef();  
+    }
+
+    static getDerivedStateFromError(_error) {
+        return { hasError: true };
+    }
+
+    componentDidUpdate(prevProps, _previousState) {
+        if (!this.props.hasError && prevProps.hasError) {
+            this.setState({ hasError: false });
+        }
+    }
+
+    componentDidCatch(_error, _errorInfo) {
+     
+        if (_errorInfo && _errorInfo.componentStack) {
+            // The component stack is sometimes useful in development mode
+            // In production it can be somewhat obfuscated, so feel free to omit this line.
+            //console.log(_errorInfo.componentStack);
+        }
+
+       
+        _error['Hey'] = 'sdfsdf'
+        _error['Mert'] = 'sdfsdf'
+
+
+        Tracker.track(_error);
+       
+
+        this.props.setHasError(true);
+        this.setState({ errorText: JSON.stringify(_error) });
+    }
+
+    render() {
+        return this.state.hasError
+            ? <p>{this.state.errorText}</p>
+
+
+            : this.props.children;
+    }
 }

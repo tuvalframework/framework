@@ -1,6 +1,6 @@
 {
     "name": "@tuval/forms",
-    "version": "1.0.1-beta.116",
+    "version": "1.0.1-beta.120",
     "description": "",
     "keywords": [],
     "main": "index.js",
@@ -169,6 +169,7 @@
         "http-server": "^14.1.1",
         "primereact": "^9.0.0-beta.1",
         "react": "^18.2.0",
-        "react-dom": "^18.2.0"
+        "react-dom": "^18.2.0",
+        "trackjs": "^3.10.1"
     }
 }
