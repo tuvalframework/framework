@@ -1,7 +1,8 @@
 import { css } from "@emotion/css";
 import { foreach, is } from "@tuval/core";
 import { Mention } from 'primereact';
-import React, { Fragment } from "react";
+import React from "react";
+import { Fragment } from "../../Fragment/Fragment";
 import { UIView } from "../../UIView/UIView";
 import { TableColumnClass } from "../TableColumn";
 import { TableClass } from "./TableClass";
@@ -14,16 +15,17 @@ export interface IControlProperties {
 function TableRenderer({ control }: IControlProperties) {
 
     const className = css`
+    & > table > tbody > tr:last-child { border:none !important; }
     ${control.Appearance.ToString()}
     ${control.HoverAppearance.IsEmpty ? '' : '&:hover { ' + control.HoverAppearance.ToString() + ' }'}
     ${control.ActiveAppearance.IsEmpty ? '' : '&:active { ' + control.ActiveAppearance.ToString() + ' }'}
     ${control.FocusAppearance.IsEmpty ? '' : '&:focus { ' + control.FocusAppearance.ToString() + ' }'}
 `;
 
-   /*  const rowClassName = css`
-    --show:0;
-    &:hover { --show: 1; }
-`; */
+    /*  const rowClassName = css`
+     --show:0;
+     &:hover { --show: 1; }
+ `; */
 
 
     const attributeObject = {}
@@ -34,7 +36,7 @@ function TableRenderer({ control }: IControlProperties) {
     const rowViewFunctions = [];
     foreach(control.vp_Header, tableColumn => {
         if (tableColumn != null) {
-            const headerView: UIView = tableColumn.vp_HeaderView;
+            const headerView: UIView =  control.vp_ShowHeader ?  tableColumn.vp_HeaderView : Fragment();
             if (headerView != null) {
                 let headerNode = headerView.render();
                 const style = tableColumn.Appearance?.GetStyleObject();
@@ -78,9 +80,12 @@ function TableRenderer({ control }: IControlProperties) {
     return (
         <div className={className}>
             <table style={{ width: '100%', height: '100%', borderCollapse: 'collapse' }}>
-                <thead style={headerStyle}>
-                    {headerResult}
-                </thead>
+               
+                    <thead style={headerStyle}>
+                        {headerResult}
+                    </thead>
+                
+
                 <tbody>
                     {rowNodes}
                 </tbody>

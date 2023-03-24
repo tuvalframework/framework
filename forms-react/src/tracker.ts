@@ -2,17 +2,14 @@ import { TrackJS } from 'trackjs';
 
 export const Tracker: any = TrackJS;
 
-TrackJS.install({
+/* TrackJS.install({
     token: 'YOUR_TOKEN_HERE',
     console: {
         warn: false
     }
-});
+}); */
 
-/* TrackJS.removeMetadata('realm_info')
-TrackJS.addMetadata('realm_info', JSON.stringify({
-    name: 'mert'
-})) */
+
 
 
 interface TrackerContext {

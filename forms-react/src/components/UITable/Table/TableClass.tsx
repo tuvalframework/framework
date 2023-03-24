@@ -12,6 +12,14 @@ import TableRenderer from "./TableRenderer";
 
 export class TableClass extends UIView {
   
+      /** @internal */
+      @ViewProperty() vp_ShowHeader: boolean;
+    
+      showHeader(value: boolean): this {
+          this.vp_ShowHeader = value;
+          return this;
+      }
+    
     /** @internal */
     @ViewProperty() vp_Spacing: string;
 
@@ -61,6 +69,7 @@ export class TableClass extends UIView {
         super();
         this.Appearance.Width ='100%';
         this.Appearance.Height ='100%';
+        this.vp_ShowHeader = true;
 
     }
 
