@@ -26,6 +26,7 @@ function EditableHeaderRenderer({ control }: IControlProperties) {
         <Fragment>
             <EditableHeading
                 className={className}
+                type={control.vp_Type}
                 size={control.vp_Size as any}
                 //@ts-ignore
                 value={control.vp_Value}

@@ -31,6 +31,14 @@ export class EditableHeaderClass extends UIView {
         return this;
     }
 
+     /** @internal */
+     @ViewProperty(EditableHeadingTypes.h3) vp_Type: EditableHeadingTypes;
+
+     public type(value: EditableHeadingTypes) {
+         this.vp_Type = value;
+         return this;
+     }
+
     /** @internal */
     @ViewProperty(EditableHeadingSizes.MEDIUM) vp_Size: EditableHeadingSizes;
 
