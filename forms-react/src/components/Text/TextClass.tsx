@@ -49,7 +49,9 @@ export class TextClass extends UIView {
     public constructor() {
         super();
 
-        this.Appearance.FontSize = 'var(--font-size)';
+        // HSTack ten fontsize verilemedigi icin inherit yapildi
+        this.Appearance.FontSize = 'inherit'
+        //'var(--font-size)';
         // Sola yaslanmıyor
         this.Appearance.Display = 'flex';
         this.Appearance.AlignItems = 'inherit';
