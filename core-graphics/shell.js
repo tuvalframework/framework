@@ -4,10 +4,4 @@ if (shell.exec('npm run wbuild').code !== 0) {
     shell.exit(1);
 }
 
-// shell.cp('-Rf', './dist/*', '../graphics/node_modules/@tuval/core-graphics');
-shell.cp('-Rf', './dist/*', '../graphics/node_modules/@tuval/cg');
-shell.cp('-Rf', './dist/*', '../winforms/node_modules/@tuval/cg');
-shell.cp('-Rf', './dist/*', '../forms/node_modules/@tuval/cg');
-shell.cp('-Rf', './dist/*', '../../Tuval_Test_v2/node_modules/@tuval/cg');
-shell.cp('-Rf', './dist/*', '../../DemoApp/node_modules/@tuval/cg');
-//shell.cp('-Rf', './dist/tuval-core-graphics-wp.js', '../../Tuval_Test/dist/webworker');
+shell.cp('-Rf', './dist/index.js', '../../../realmocean/realm-runtime/src/portal/static/bios/tuval-cg.js');

@@ -90,12 +90,15 @@ const umdConfig = {
             path: false
         }
     },
-    externals: [
-      '@tuval/core'
-    ],
+    externals: {
+      '@tuval/core':'tuval$core'
+    },
     output: {
-        libraryTarget: 'umd',
         filename: 'index.js',
+        library: {
+            name: 'Tuval',
+            type: 'assign-properties',
+        },
         path: path.resolve(__dirname, 'dist'),
     },
     plugins: [

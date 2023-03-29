@@ -9,6 +9,7 @@ if (is.workerContext()) {
 }
 globalObject['tuval$core$graphics'] = CoreGraphics;
 
+
 if (is.workerContext()) {
     console.log('tuval core graphics yüklendi.');
     console.log(globalObject['tuval$core']);

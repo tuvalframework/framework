@@ -51,7 +51,13 @@ import { TextStyle } from '../Text/TextStyle';
 declare var OffscreenCanvas, OffscreenCanvasRenderingContext2D;
 
 var leadDiv = document.createElement("div");
-document.body.appendChild(leadDiv);
+try{
+    document.body.appendChild(leadDiv);
+}
+catch {
+
+}
+
 
 var __canvas = document.createElement("canvas");
 
