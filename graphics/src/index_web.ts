@@ -86,7 +86,7 @@ export * from './drawing/createCanvasElement';
 export * from './services/IMouseEventService';
 export * from './TTween';
 export * from './Modules';
-export * from './GUIConsole';
+//export * from './GUIConsole';
 
 export * from './drawing/imaging/PixelFormat';
 export * from './drawing/SystemFonts';

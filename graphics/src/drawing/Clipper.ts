@@ -1289,7 +1289,7 @@ class ClipperBase {
         let resultTop = paths[i][0].y;
         let resultBottom = resultTop;
         for (; i < cnt; i++) {
-            for (let j = 0; j < paths[i].length; j++) {
+            for (let j = 0; j < (paths[i] as any).length; j++) {
                 if (paths[i][j].x < resultLeft) {
                     resultLeft = paths[i][j].x;
                 } else if (paths[i][j].x > resultRight) {

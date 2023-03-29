@@ -459,7 +459,7 @@ export class DisplayObject extends EventDispatcher {
         }
         ctx.transform(mtx.a, mtx.b, mtx.c, mtx.d, tx, ty);
         ctx.globalAlpha *= this.alpha;
-        if (this.compositeOperation) { ctx.globalCompositeOperation = this.compositeOperation; }
+        if (this.compositeOperation) { (ctx as any).globalCompositeOperation = this.compositeOperation; }
         if (this.shadow) { this._applyShadow(ctx, this.shadow); }
     };
 

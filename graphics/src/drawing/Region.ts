@@ -168,8 +168,8 @@ export class Region {
     public static PathToPointFArray(pg: Path, scale: float): CGPoint[] {
         const result: CGPoint[] = [];
         for (let i = 0; i < pg.Count; ++i) {
-            result[i].X = pg[i].X / scale;
-            result[i].Y = pg[i].Y / scale;
+            result[i].X = (pg[i] as any).X / scale;
+            result[i].Y = (pg[i] as any).Y / scale;
         }
         return result;
     }
