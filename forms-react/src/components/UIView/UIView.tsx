@@ -105,6 +105,15 @@ export class UIView {
         return this;
     }
 
+    /** @internal */
+    @ViewProperty((): void => { })
+    public vp_OnMouseDown: Function;
+
+    public onMouseDown(value: Function) {
+        this.vp_OnMouseDown = value;
+        return this;
+    }
+
      /** @internal */
      @ViewProperty((): void => { })
      public vp_OnFocus: Function;
@@ -1660,9 +1669,38 @@ export class UIView {
         return this;
     }
 
-    public zIndex(value: int): this {
-        this.Appearance.ZIndex = value.toString();
-        return this;
+
+    public zIndex(value: StyleAttribute): this;
+    public zIndex(value: int): this;
+    public zIndex(...args: any[]): this {
+        if (args.length === 1 && (is.string(args[0]) || is.int(args[0])) ) {
+            const value = args[0];
+            this.Appearance.ZIndex = value.toString();
+            return this;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.ZIndex = styleAttribute.default as string ;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.ZIndex = styleAttribute.hover as string;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.ZIndex = styleAttribute.active as string;
+            }
+            if (styleAttribute.disabled != null) {
+                this.DisabledAppearance.ZIndex = styleAttribute.disabled as string;
+            }
+
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.ZIndex = styleAttribute.focus as string;
+            }
+            if (styleAttribute.before != null) {
+                this.BeforeAppearance.ZIndex = styleAttribute.before as string;
+            }
+            return this;
+        }
+        throw 'Argument Exception in ' + this.constructor.name + '::zIndex function.';
     }
 
     public variable(name: string, value: StyleAttribute): this {
@@ -1753,6 +1791,7 @@ export class UIView {
     public GetEventsObject() : Object {
         const events = {};
         events['onClick'] = is.function(this.vp_OnClick) ? (e) => this.vp_OnClick(e) : void 0;
+        events['onMouseDown'] = is.function(this.vp_OnMouseDown) ? (e) => this.vp_OnMouseDown(e) : void 0;
         return events;
     }
     public render(): React.ReactNode {
