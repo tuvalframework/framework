@@ -13,6 +13,7 @@ import { HStack, VStack } from "./layout";
 import { Heading } from "./components";
 import { TrackJS } from 'trackjs';
 import { Tracker } from "./tracker";
+import { Theme } from "./thema-system";
 
 export function getAppName() {
     try {
@@ -33,6 +34,7 @@ export function getAppName() {
 }
 
 const AppCache = {}
+const AppThemeCache = {}
 export const Paths = {}
 
 export const ApplicationLoader = () => {
@@ -50,7 +52,10 @@ export const ApplicationLoader = () => {
 
     const controllerPromise = new Promise((resolve, reject) => {
         if (AppCache[app_name]) {
-            resolve(AppCache[app_name]);
+            resolve({
+                controller: AppCache[app_name],
+                theme: AppThemeCache[app_name]
+            });
         } else {
             const app_path = `/realmocean/store/app/open-testing/${app_name}`;
             // alert(app_path)
@@ -59,7 +64,11 @@ export const ApplicationLoader = () => {
                 if (_app != null) {
                     const app = new _app();
                     AppCache[app_name] = app.GetMainController();
-                    resolve(app.GetMainController());
+                    AppThemeCache[app_name] = is.function(app.GetAppTheme) ?  app.GetAppTheme() : null;
+                    resolve({
+                        controller: app.GetMainController(),
+                        theme: is.function(app.GetAppTheme) ? app.GetAppTheme() : null
+                    });
                 } else {
 
                 }
@@ -74,9 +83,9 @@ export const ApplicationLoader = () => {
     })
 
     const fetchController = input => controllerPromise.then(res => res);
-    const contoller: any = usePromise(fetchController, [app_name]);
+    const appInfo: any = usePromise(fetchController, [app_name]);
 
-    return (<Application name={app_name} controller={contoller}></Application>)
+    return (<Application name={app_name} controller={appInfo.controller} theme={appInfo.theme}></Application>)
 };
 
 export class DesktopController extends UIController {

@@ -1,4 +1,5 @@
-import { ColorClass } from "./ColorClass";
+import { ColorClass } from "./thema-system/ColorClass";
+
 
 
 export class UITemplate {

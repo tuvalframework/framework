@@ -1,12 +1,13 @@
 import { BREAK, foreach, List } from "@tuval/core";
 import React, { Fragment, useEffect, useState } from "react";
 import { UIView } from "../../components/UIView/UIView";
+import { getAppFullName, useApplication } from "../Application/Application";
 import VStackRenderer from "../VStack/VStackRenderer";
 import { DialogView } from "./DialogView";
 
 
 
-class ModalCollection extends List<DialogView> {
+export class ModalCollection extends List<DialogView> {
     public Remove(removedItem: DialogView): boolean {
         let found = null;
         foreach(this, ((item: DialogView) => {
@@ -35,12 +36,21 @@ class ModalCollection extends List<DialogView> {
     public OnDoalogAdded() {}
 }
 
-export const ModalDialogs = new ModalCollection();
+export const ModalDialogs = {}
 
-function DialogContainer() {
+export function DialogContainer() {
+    const appName = getAppFullName();
+
+    const application = useApplication();
+
     const [value, setValue] = useState(0)
     useEffect(()=> {
-        ModalDialogs.OnDoalogAdded = () => {
+      
+       /*  ModalDialogs.OnDoalogAdded = () => {
+            const newValue = value + 1;
+            setValue(newValue)
+        } */
+        ModalDialogs[appName].OnDoalogAdded = () => {
             const newValue = value + 1;
             setValue(newValue)
         }
@@ -48,7 +58,7 @@ function DialogContainer() {
     
     return (
         <Fragment>
-            {ModalDialogs.ToArray().map(dialog => dialog.render())}
+            {ModalDialogs[appName].ToArray().map(dialog => dialog.render())}
         </Fragment>
     )
 }

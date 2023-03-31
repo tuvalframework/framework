@@ -9,6 +9,7 @@ import { Fragment } from "../../components/Fragment";
 import { clone, int } from "@tuval/core";
 import { ReactView } from "../../components/ReactView/ReactView";
 import { query } from "../../data/DataContext/DataContextRenderer";
+import { getAppFullName } from "../Application/Application";
 
 interface IDialogControllerProps {
     view: DialogView
@@ -80,9 +81,10 @@ export class DialogView extends UIView {
     //public GetValue(name: string) { }
 
     public ShowDialog() {
+        const appName = getAppFullName();
         this.formData = {};
         this.Visible = true;
-        ModalDialogs.Add(this);
+        ModalDialogs[appName].Add(this);
     }
 
     @ViewProperty(true)
@@ -92,9 +94,10 @@ export class DialogView extends UIView {
     protected ShowDialogAsyncReject: any;
 
     public ShowDialogAsync(): Promise<any> {
+        const appName = getAppFullName();
         return new Promise((resolve, reject) => {
             this.Visible = true;
-            ModalDialogs.Add(this);
+            ModalDialogs[appName].Add(this);
             // this.OnShown();
             this.ShowDialogAsyncResolve = resolve;
             this.ShowDialogAsyncReject = reject;
@@ -105,8 +108,9 @@ export class DialogView extends UIView {
 
 
     public Hide() {
+        const appName = getAppFullName();
         this.Visible = false;
-        ModalDialogs.Remove(this);
+        ModalDialogs[appName].Remove(this);
     }
 
     public LoadView(): UIView {

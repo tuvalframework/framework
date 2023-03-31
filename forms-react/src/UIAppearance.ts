@@ -1,12 +1,12 @@
 
 import { int, is } from '@tuval/core';
-import { ColorClass } from './ColorClass';
 import { AppearanceObject } from './components/UIView/AppearanceObject';
 import { StyleAttribute } from './components/UIView/StyleAttribute';
 import { UIView } from './components/UIView/UIView';
 
 
 import { cBottom, cHorizontal, cLeft, CornerRadiusTypes, cRight, cTop, cVertical, FontWeightModifierTypes, IFont, PositionTypes, ShadowTypes, TextAligns, TextTransforms } from './Constants';
+import { ColorClass } from './thema-system/ColorClass';
 
 
 

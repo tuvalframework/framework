@@ -33,7 +33,7 @@ export * from './ColorConverter'
 export * from './components/Icon'
 
 export * from './UITemplate'
-export * from './Theme'
+
 
 export * from './UIController'
 export * from './UIFormController'
@@ -57,3 +57,5 @@ import './exports';
 import { Navigate } from 'react-router-dom';
 
 export * from './tracker'
+export * from './thema-system'
+export * from './If'

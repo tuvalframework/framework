@@ -6,3 +6,4 @@ export * from './ScrollView/ScrollView';
 export * from './Desktop';
 export * from './Dialog';
 export * from './Spacer/Spacer';
+export * from './Theme';

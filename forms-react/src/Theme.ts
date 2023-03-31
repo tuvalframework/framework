@@ -1,4 +1,4 @@
-export const Theme = {
+/* export const Theme = {
     primaryBackgroundHoverColor: 'var(--primary-background-hover-color)',
     primaryColor: 'var(--primary-color)',
     fontFamily: 'var(--font-family)',
@@ -7,4 +7,4 @@ export const Theme = {
     surfceColor: 'var(--surfce-color)',
     darkBackgroundColor : 'var(--dark-background-color)',
     secondaryBackgroundColor : 'var(--secondary-background-color)'
-}
+} */

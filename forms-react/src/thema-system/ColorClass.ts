@@ -2,7 +2,7 @@ import { ColorConverter } from "./ColorConverter";
 import { int, TMath, float } from '@tuval/core';
 import { alpha, lighten, darken } from './colorManipulator';
 
-export class _ColorClass {
+export class ColorClass {
     public color: string;
 
     public constructor(color: string) {
