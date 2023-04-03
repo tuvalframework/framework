@@ -27,14 +27,16 @@ export class ModalCollection extends List<DialogView> {
     }
 
     public override Add(item: DialogView): number {
-      
-       const result = super.Add(item);
-       this.OnDoalogAdded();
-       return result;
+
+        const result = super.Add(item);
+        this.OnDoalogAdded();
+        return result;
     }
 
-    public OnDoalogAdded() {}
+    public OnDoalogAdded() { }
 }
+
+export const noAppDialogs = new ModalCollection();
 
 export const ModalDialogs = {}
 
@@ -44,21 +46,32 @@ export function DialogContainer() {
     const application = useApplication();
 
     const [value, setValue] = useState(0)
-    useEffect(()=> {
-      
-       /*  ModalDialogs.OnDoalogAdded = () => {
-            const newValue = value + 1;
-            setValue(newValue)
-        } */
-        ModalDialogs[appName].OnDoalogAdded = () => {
-            const newValue = value + 1;
-            setValue(newValue)
+    useEffect(() => {
+
+        /*  ModalDialogs.OnDoalogAdded = () => {
+             const newValue = value + 1;
+             setValue(newValue)
+         } */
+        if (application) {
+            ModalDialogs[appName].OnDoalogAdded = () => {
+                const newValue = value + 1;
+                setValue(newValue)
+            }
+        } else {
+            noAppDialogs.OnDoalogAdded = () => {
+                const newValue = value + 1;
+                setValue(newValue)
+            }
         }
     })
-    
+
     return (
         <Fragment>
-            {ModalDialogs[appName].ToArray().map(dialog => dialog.render())}
+            {
+                application == null ?
+                    noAppDialogs.ToArray().map(dialog => dialog.render()) :
+                    ModalDialogs[appName].ToArray().map(dialog => dialog.render())
+            }
         </Fragment>
     )
 }
@@ -66,10 +79,10 @@ export function DialogContainer() {
 
 export class DialogContainerClass extends UIView {
 
-   
+
     public constructor() {
         super();
-       
+
     }
 
     public render() {

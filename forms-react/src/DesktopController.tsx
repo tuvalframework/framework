@@ -35,6 +35,7 @@ export function getAppName() {
 
 const AppCache = {}
 const AppThemeCache = {}
+const AppMainColorCache = {}
 export const Paths = {}
 
 export const ApplicationLoader = () => {
@@ -54,7 +55,8 @@ export const ApplicationLoader = () => {
         if (AppCache[app_name]) {
             resolve({
                 controller: AppCache[app_name],
-                theme: AppThemeCache[app_name]
+                theme: AppThemeCache[app_name],
+                app_main_color:  AppMainColorCache[app_name]
             });
         } else {
             const app_path = `/realmocean/store/app/open-testing/${app_name}`;
@@ -65,9 +67,12 @@ export const ApplicationLoader = () => {
                     const app = new _app();
                     AppCache[app_name] = app.GetMainController();
                     AppThemeCache[app_name] = is.function(app.GetAppTheme) ?  app.GetAppTheme() : null;
+                    AppThemeCache[app_name] = is.function(app.GetMainThemeColor) ?  app.GetMainThemeColor() : null;
+
                     resolve({
                         controller: app.GetMainController(),
-                        theme: is.function(app.GetAppTheme) ? app.GetAppTheme() : null
+                        theme: is.function(app.GetAppTheme) ? app.GetAppTheme() : null,
+                        app_main_color: is.function(app.GetMainThemeColor) ?  app.GetMainThemeColor() : null
                     });
                 } else {
 
@@ -85,7 +90,7 @@ export const ApplicationLoader = () => {
     const fetchController = input => controllerPromise.then(res => res);
     const appInfo: any = usePromise(fetchController, [app_name]);
 
-    return (<Application name={app_name} controller={appInfo.controller} theme={appInfo.theme}></Application>)
+    return (<Application name={app_name} controller={appInfo.controller} theme={appInfo.theme} mainColor={appInfo.app_main_color}></Application>)
 };
 
 export class DesktopController extends UIController {

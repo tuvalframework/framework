@@ -4,7 +4,7 @@ import { State } from "../../UIController";
 import React, { useState } from "react";
 import { UIView } from "../../components/UIView/UIView";
 import { ViewProperty } from "../../components/UIView/ViewProperty";
-import { ModalDialogs } from "./DialogContainerClass";
+import { ModalDialogs, noAppDialogs } from "./DialogContainerClass";
 import { Fragment } from "../../components/Fragment";
 import { clone, int } from "@tuval/core";
 import { ReactView } from "../../components/ReactView/ReactView";
@@ -23,7 +23,7 @@ class DialogController extends UIFormController {
             const newValue = value + 1;
             setValue(newValue);
         }
-        
+
         let view = this.props.view.LoadView();
 
         if (view == null) {
@@ -84,7 +84,13 @@ export class DialogView extends UIView {
         const appName = getAppFullName();
         this.formData = {};
         this.Visible = true;
-        ModalDialogs[appName].Add(this);
+
+        if (ModalDialogs[appName] == null) {
+            noAppDialogs.Add(this);
+        } else {
+            ModalDialogs[appName].Add(this);
+        }
+
     }
 
     @ViewProperty(true)
@@ -97,7 +103,11 @@ export class DialogView extends UIView {
         const appName = getAppFullName();
         return new Promise((resolve, reject) => {
             this.Visible = true;
-            ModalDialogs[appName].Add(this);
+            if (ModalDialogs[appName] == null) {
+                noAppDialogs.Add(this);
+            } else {
+                ModalDialogs[appName].Add(this);
+            }
             // this.OnShown();
             this.ShowDialogAsyncResolve = resolve;
             this.ShowDialogAsyncReject = reject;
@@ -110,7 +120,12 @@ export class DialogView extends UIView {
     public Hide() {
         const appName = getAppFullName();
         this.Visible = false;
-        ModalDialogs[appName].Remove(this);
+
+        if (ModalDialogs[appName] == null) {
+            noAppDialogs.Remove(this);
+        } else {
+            ModalDialogs[appName].Remove(this);
+        }
     }
 
     public LoadView(): UIView {

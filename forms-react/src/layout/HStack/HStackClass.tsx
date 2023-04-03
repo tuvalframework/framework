@@ -14,6 +14,7 @@ export class HStackClass extends UIView {
      @ViewProperty() vp_TooltipPosition: TooltipPositions;
      public tooltipPosition(value: TooltipPositions) {
         this.vp_TooltipPosition = value;
+        return this;
      }
 
      

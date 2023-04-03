@@ -31,7 +31,8 @@ export function getAppFullName() {
 export interface IApplication {
     name: string;
     controller: Function;
-    theme: Theme
+    theme: Theme,
+    mainColor: string
 }
 
 
@@ -52,6 +53,10 @@ export class Application extends React.Component<IApplication, any> {
     }
 
     public render(): React.ReactNode {
+
+        const r: any = document.querySelector(':root');
+        r.style.setProperty('--main-theme-color', this.props.mainColor);
+
         const appName = getAppFullName();
 
         if (ModalDialogs[appName] == null) {
