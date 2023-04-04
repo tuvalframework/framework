@@ -3,6 +3,7 @@ import { UIView } from "../UIView/UIView";
 import { UIViewRenderer } from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import HeadingRenderer from "./HeadingRenderer";
+import { int } from "@tuval/core";
 
 
 export enum HeadingTypes {
@@ -31,6 +32,22 @@ export class HeadingClass extends UIView {
         return this;
     }
 
+     /** @internal */
+     @ViewProperty() vp_Ellipsis: boolean;
+
+     public ellipsis(value: boolean) {
+         this.vp_Ellipsis = value;
+         return this;
+     }
+
+      /** @internal */
+      @ViewProperty() vp_EllipsisMaxLines: int;
+
+      public ellipsisMaxLines(value: int) {
+          this.vp_EllipsisMaxLines = value;
+          return this;
+      }
+
     /** @internal */
     @ViewProperty() vp_Type: HeadingTypes;
 
@@ -57,6 +74,10 @@ export class HeadingClass extends UIView {
     }
     public h5() {
         this.vp_Type = HeadingTypes.h5;
+        return this;
+    }
+    public h6() {
+        this.vp_Type = HeadingTypes.h6;
         return this;
     }
 
@@ -98,8 +119,8 @@ export class HeadingClass extends UIView {
         super();
         this.Appearance.WebkitFontSmoothing = 'antialiased';
        // this.Appearance.LineHeight = '1';
-        this.Appearance.Display = 'flex';
-        this.Appearance.AlignItems = 'center';
+       // this.Appearance.Display = 'flex';
+       // this.Appearance.AlignItems = 'center';
 
     }
 

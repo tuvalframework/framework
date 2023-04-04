@@ -153,6 +153,21 @@ export class UIView {
        }
    
 
+         /** @internal */
+         @ViewProperty()
+         public vp_Visible: boolean;
+
+       public visible(value: boolean): this {
+        if (value === true) {
+            this.vp_Visible = true;
+            this.Appearance.Visibility = 'visible';
+        } else {
+            this.vp_Visible = false;
+            this.Appearance.Visibility = 'hidden';
+        }
+        return this;
+    }
+
     public ForceUpdate() { }
 
     public width(): this;

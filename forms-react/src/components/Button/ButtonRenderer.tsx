@@ -1,6 +1,7 @@
 import { css } from "@emotion/css";
 import { is } from "@tuval/core";
 import { Button } from "primereact";
+import { Button as MondayButton } from "monday-ui-react-core";
 import React from "react";
 import { ButtonClass } from "./ButtonClass";
 
@@ -20,17 +21,26 @@ function ButtonRenderer({ control }: IControlProperties) {
 
     if (is.array(control.vp_Children) && control.vp_Children.length > 0) {
         return (
-            <Button
+            <MondayButton
                 className={className}
-                label={control.vp_Label}
-                disabled={control.vp_Disabled}
-                loading={control.vp_Loading}
-                onClick={(e) => is.function(control.vp_OnClick) ? control.vp_OnClick(e) : void 0}
-                style={{ display: 'flex', justifyContent: 'center' }}>
-                    {
-                        control.vp_Children.map(view=> view && view.render())
-                    }
-            </Button >
+                kind={MondayButton.kinds.SECONDARY}
+                size={MondayButton.sizes.SMALL}
+                onClick={(e) => is.function(control.vp_OnClick) ? control.vp_OnClick(e) : void 0}>
+                {
+                    control.vp_Children.map(view => view && view.render())
+                }
+            </MondayButton>
+            /*    <Button
+                   className={className}
+                   label={control.vp_Label}
+                   disabled={control.vp_Disabled}
+                   loading={control.vp_Loading}
+                   onClick={(e) => is.function(control.vp_OnClick) ? control.vp_OnClick(e) : void 0}
+                   style={{ display: 'flex', justifyContent: 'center' }}>
+                       {
+                           control.vp_Children.map(view=> view && view.render())
+                       }
+               </Button > */
         )
     } else {
         return (

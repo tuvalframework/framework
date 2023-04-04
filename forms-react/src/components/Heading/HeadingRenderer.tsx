@@ -22,7 +22,12 @@ function HeadingRenderer({ control }: IControlProperties) {
 
     return (
        
-            <Heading className={className} value={control.vp_Value} type={control.vp_Type} size={control.vp_Size as any} />
+            <Heading className={className} 
+            ellipsis={control.vp_Ellipsis}
+            ellipsisMaxLines={control.vp_EllipsisMaxLines}
+            value={control.vp_Value} 
+            type={control.vp_Type} 
+            size={control.vp_Size as any} />
        
     );
 
