@@ -6,13 +6,23 @@ import ButtonRenderer from "./ButtonRenderer";
 
 
 
-export type VariantType = 'contained' | 'text' | 'outlined';
+export  enum ButtonType {
+    PRIMARY = "primary",
+    SECONDARY = "secondary",
+    TERTIARY = "tertiary"
+}
+
+export  enum ButtonSize {
+     SMALL= "small",
+     MEDIUM= "medium",
+     LARGE= "large",
+     XXS= "xxs",
+     XS= "xs"
+}
+
 export type ColorType = 'primary' | 'secondary' | 'danger' | 'success';
 
-export interface IButtonProps {
-    variant?: VariantType;
-    color?: ColorType;
-}
+
 
 export class ButtonClass extends UIView {
 
@@ -31,11 +41,18 @@ export class ButtonClass extends UIView {
     }
 
     /** @internal */
-    @ViewProperty() vp_Variant: VariantType;
-    public variant(value: VariantType): this {
-        this.vp_Variant = value;
+    @ViewProperty() vp_Kind: ButtonType;
+    public kind(value: ButtonType): this {
+        this.vp_Kind = value;
         return this;
     }
+
+     /** @internal */
+     @ViewProperty() vp_Size: ButtonSize;
+     public size(value: ButtonSize): this {
+         this.vp_Size = value;
+         return this;
+     }
 
     /** @internal */
     @ViewProperty() vp_Color: ColorType;
@@ -51,6 +68,11 @@ export class ButtonClass extends UIView {
         return this;
     }
 
+    public constructor() {
+        super();
+        this.kind(ButtonType.PRIMARY);
+        this.size(ButtonSize.MEDIUM);
+    }
     public render() {
         return (<UIViewRenderer wrap={false} control={this} renderer={ButtonRenderer}></UIViewRenderer>)
     }

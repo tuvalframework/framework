@@ -23,8 +23,10 @@ function ButtonRenderer({ control }: IControlProperties) {
         return (
             <MondayButton
                 className={className}
-                kind={MondayButton.kinds.SECONDARY}
-                size={MondayButton.sizes.SMALL}
+                kind={control.vp_Kind as any}
+                size={control.vp_Size as any}
+                loading={control.vp_Loading}
+                disabled={control.vp_Disabled}
                 onClick={(e) => is.function(control.vp_OnClick) ? control.vp_OnClick(e) : void 0}>
                 {
                     control.vp_Children.map(view => view && view.render())
