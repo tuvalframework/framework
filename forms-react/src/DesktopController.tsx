@@ -190,9 +190,7 @@ class ErrorBoundaryInner extends React.Component<any, any> {
         }
 
        
-        _error['Hey'] = 'sdfsdf'
-        _error['Mert'] = 'sdfsdf'
-
+        _error['Hata'] = JSON.stringify(_error)
 
         Tracker.track(_error);
        

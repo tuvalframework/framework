@@ -5,6 +5,7 @@ import { StyleAttribute } from "./StyleAttribute";
 import { ColorClass } from "./ColorClass";
 import React from "react";
 import { AlignmentType, cBottom, cBottomLeading, cBottomTrailing, cCenter, cHorizontal, cLeading, cLeft, CornerRadiusTypes, cRight, cTop, cTopLeading, cTopTrailing, cTrailing, cVertical, FontWeightModifierTypes, PositionTypes, ShadowTypes, TextAligns, TextTransforms, VerticalAligns } from "../../Constants";
+import { css } from "@emotion/css";
 
 const DefaultPaddingValue = '1rem';
 const DefaultMarginValue = '5px';
@@ -26,7 +27,7 @@ export class UIView {
     @ViewProperty()
     public vp_Key: string;
 
-   
+
 
     @ViewProperty()
     public vp_Tooltip: string;
@@ -70,9 +71,9 @@ export class UIView {
     public constructor() {
 
         this.BeginUpdate();
-       // const [key, setKey] = React.useState(Guid.NewGuid().ToString());
-       // this.vp_Key = key;
-       // console.log(key);
+        // const [key, setKey] = React.useState(Guid.NewGuid().ToString());
+        // this.vp_Key = key;
+        // console.log(key);
         this.EndUpdate();
 
         this.Appearance = new AppearanceObject(this);
@@ -93,7 +94,7 @@ export class UIView {
         this.isInRenderProcess = false;
     }
 
-    
+
 
     //-------------Events--------
     /** @internal */
@@ -114,23 +115,23 @@ export class UIView {
         return this;
     }
 
-     /** @internal */
-     @ViewProperty((): void => { })
-     public vp_OnFocus: Function;
- 
-     public onFocus(value: Function) {
-         this.vp_OnFocus = value;
-         return this;
-     }
+    /** @internal */
+    @ViewProperty((): void => { })
+    public vp_OnFocus: Function;
 
-        /** @internal */
-        @ViewProperty((): void => { })
-        public vp_OnBlur: Function;
-    
-        public onBlur(value: Function) {
-            this.vp_OnBlur = value;
-            return this;
-        }
+    public onFocus(value: Function) {
+        this.vp_OnFocus = value;
+        return this;
+    }
+
+    /** @internal */
+    @ViewProperty((): void => { })
+    public vp_OnBlur: Function;
+
+    public onBlur(value: Function) {
+        this.vp_OnBlur = value;
+        return this;
+    }
 
     //-------------------------
 
@@ -143,21 +144,21 @@ export class UIView {
         return this;
     }
 
-       /** @internal */
-       @ViewProperty()
-       public vp_TabIndex: number;
-   
-       public tabIndex(value: number) {
-           this.vp_TabIndex = value;
-           return this;
-       }
-   
+    /** @internal */
+    @ViewProperty()
+    public vp_TabIndex: number;
 
-         /** @internal */
-         @ViewProperty()
-         public vp_Visible: boolean;
+    public tabIndex(value: number) {
+        this.vp_TabIndex = value;
+        return this;
+    }
 
-       public visible(value: boolean): this {
+
+    /** @internal */
+    @ViewProperty()
+    public vp_Visible: boolean;
+
+    public visible(value: boolean): this {
         if (value === true) {
             this.vp_Visible = true;
             this.Appearance.Visibility = 'visible';
@@ -1688,14 +1689,14 @@ export class UIView {
     public zIndex(value: StyleAttribute): this;
     public zIndex(value: int): this;
     public zIndex(...args: any[]): this {
-        if (args.length === 1 && (is.string(args[0]) || is.int(args[0])) ) {
+        if (args.length === 1 && (is.string(args[0]) || is.int(args[0]))) {
             const value = args[0];
             this.Appearance.ZIndex = value.toString();
             return this;
         } else if (args.length === 1 && typeof args[0] === 'object') {
             const styleAttribute: StyleAttribute = args[0];
             if (styleAttribute.default != null) {
-                this.Appearance.ZIndex = styleAttribute.default as string ;
+                this.Appearance.ZIndex = styleAttribute.default as string;
             }
             if (styleAttribute.hover != null) {
                 this.HoverAppearance.ZIndex = styleAttribute.hover as string;
@@ -1750,7 +1751,7 @@ export class UIView {
     // Animate Props
 
     @ViewProperty() renderAsAnimated: boolean;
-    
+
     @ViewProperty() _initial: any;
     @ViewProperty() _animate: any;
     @ViewProperty() _transition: any;
@@ -1803,11 +1804,22 @@ export class UIView {
 
     //---------------
 
-    public GetEventsObject() : Object {
+    public GetEventsObject(): Object {
         const events = {};
         events['onClick'] = is.function(this.vp_OnClick) ? (e) => this.vp_OnClick(e) : void 0;
         events['onMouseDown'] = is.function(this.vp_OnMouseDown) ? (e) => this.vp_OnMouseDown(e) : void 0;
         return events;
+    }
+
+    public GetClassName(): string {
+        const className = css`
+        ${this.Appearance.ToString()}
+        ${this.HoverAppearance.IsEmpty ? '' : '&:hover { ' + this.HoverAppearance.ToString() + ' }'}
+        ${this.ActiveAppearance.IsEmpty ? '' : '&:active { ' + this.ActiveAppearance.ToString() + ' }'}
+        ${this.FocusAppearance.IsEmpty ? '' : '&:focus { ' + this.FocusAppearance.ToString() + ' }'}
+    `;
+
+        return className;
     }
     public render(): React.ReactNode {
         return null;
