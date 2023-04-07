@@ -60,7 +60,7 @@ const MyInputText = (_params) => {
             }
         } else {
             return (
-                <label className="block">{params.obj.vp_Label}</label>
+                <label className="font-bold block mb-2">{params.obj.vp_Label}</label>
             )
         }
     }

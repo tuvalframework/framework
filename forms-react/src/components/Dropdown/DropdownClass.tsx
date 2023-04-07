@@ -10,6 +10,30 @@ import VibeRenderer from "./Renderers/VibeRenderer";
 export class DropdownClass extends UIView {
 
      /** @internal */
+     @ViewProperty() vp_Label: string;
+
+     public label(value: string) {
+         this.vp_Label = value;
+         return this;
+     }
+
+     /** @internal */
+     @ViewProperty() vp_Resource: string;
+
+     public resource(value: string) {
+         this.vp_Resource = value;
+         return this;
+     }
+
+      /** @internal */
+      @ViewProperty() vp_Filter: any;
+
+      public filter(value: any) {
+          this.vp_Filter = value;
+          return this;
+      }
+
+     /** @internal */
      @ViewProperty() vp_FloatLabel: boolean;
 
      public floatlabel(value: boolean) {

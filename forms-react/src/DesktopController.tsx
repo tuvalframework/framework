@@ -2,13 +2,13 @@ import { UIView } from "./components/UIView/UIView";
 import { State, UIController } from "./UIController";
 import { ReactView } from './components/ReactView/ReactView';
 import { createBrowserRouter, Link, Navigate, Outlet, Route, RouterProvider, Routes, useLocation, useParams } from "react-router-dom";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, Profiler, useEffect, useState } from "react";
 import { MyTestController, TestController } from "./MyController";
 import usePromise from "react-promise-suspense";
 import { Application } from "./layout/Application/Application";
 import { is, ModuleLoader } from "@tuval/core";
 import { Loader } from "monday-ui-react-core";
-import {Toast} from 'primereact'
+import { Toast } from 'primereact'
 import { HStack, VStack } from "./layout";
 import { Heading } from "./components";
 import { TrackJS } from 'trackjs';
@@ -39,6 +39,19 @@ const AppMainColorCache = {}
 export const Paths = {}
 
 export const ApplicationLoader = () => {
+    function measureInteraction() {
+        // performance.now() returns the number of ms
+        // elapsed since the page was opened
+        const startTimestamp = performance.now();
+      
+        return {
+          end() {
+            const endTimestamp = performance.now();
+            console.log('The interaction took', endTimestamp - startTimestamp, 'ms');
+          },
+        };
+      }
+
     const { app_name } = useParams();
 
     const location = useLocation();
@@ -56,23 +69,26 @@ export const ApplicationLoader = () => {
             resolve({
                 controller: AppCache[app_name],
                 theme: AppThemeCache[app_name],
-                app_main_color:  AppMainColorCache[app_name]
+                app_main_color: AppMainColorCache[app_name]
             });
         } else {
             const app_path = `/realmocean/store/app/open-testing/${app_name}`;
             // alert(app_path)
             const app_path_local = `/static/applications/${app_name}.app`;
+
+            const interaction = measureInteraction();
             ModuleLoader.LoadBundledModuleWithDecode(is.localhost() ? app_path_local : app_path, app_name).then((_app: any) => {
                 if (_app != null) {
                     const app = new _app();
                     AppCache[app_name] = app.GetMainController();
-                    AppThemeCache[app_name] = is.function(app.GetAppTheme) ?  app.GetAppTheme() : null;
-                    AppThemeCache[app_name] = is.function(app.GetMainThemeColor) ?  app.GetMainThemeColor() : null;
+                    AppThemeCache[app_name] = is.function(app.GetAppTheme) ? app.GetAppTheme() : null;
+                    AppThemeCache[app_name] = is.function(app.GetMainThemeColor) ? app.GetMainThemeColor() : null;
 
+                    interaction.end();
                     resolve({
                         controller: app.GetMainController(),
                         theme: is.function(app.GetAppTheme) ? app.GetAppTheme() : null,
-                        app_main_color: is.function(app.GetMainThemeColor) ?  app.GetMainThemeColor() : null
+                        app_main_color: is.function(app.GetMainThemeColor) ? app.GetMainThemeColor() : null
                     });
                 } else {
 
@@ -96,6 +112,15 @@ export const ApplicationLoader = () => {
 export class DesktopController extends UIController {
 
     public override LoadView(): UIView {
+        const handleRender = (id, phase, actualDuration) => {
+            console.log(
+                `The ${id} interaction took ` +
+                `${actualDuration}ms to render (${phase})`,
+            );
+            // Would log “The ComposeButton interaction
+            // took 25.2999999970197678ms to render (update)”
+        };
+
         return (
             ReactView(
                 <Routes>
@@ -116,7 +141,9 @@ export class DesktopController extends UIController {
 
                         } >
                             <ErrorBoundary>
-                                <ApplicationLoader></ApplicationLoader>
+                                <Profiler id="ComposeButton" onRender={handleRender}>
+                                    <ApplicationLoader></ApplicationLoader>
+                                </Profiler>
                             </ErrorBoundary>
                         </React.Suspense>
                     )}
@@ -168,7 +195,7 @@ class ErrorBoundaryInner extends React.Component<any, any> {
     constructor(props) {
         super(props);
         this.state = { hasError: false };
-        this.ref = React.createRef();  
+        this.ref = React.createRef();
     }
 
     static getDerivedStateFromError(_error) {
@@ -182,18 +209,18 @@ class ErrorBoundaryInner extends React.Component<any, any> {
     }
 
     componentDidCatch(_error, _errorInfo) {
-     
+
         if (_errorInfo && _errorInfo.componentStack) {
             // The component stack is sometimes useful in development mode
             // In production it can be somewhat obfuscated, so feel free to omit this line.
             //console.log(_errorInfo.componentStack);
         }
 
-       
+
         _error['Hata'] = JSON.stringify(_error)
 
         Tracker.track(_error);
-       
+
 
         this.props.setHasError(true);
         this.setState({ errorText: JSON.stringify(_error) });

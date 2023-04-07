@@ -23,6 +23,14 @@ export enum EditableHeadingSizes {
 
 
 export class EditableHeaderClass extends UIView {
+     /** @internal */
+     @ViewProperty() vp_Placeholder: string;
+
+     public placeholder(value: string) {
+         this.vp_Placeholder = value;
+         return this;
+     }
+
     /** @internal */
     @ViewProperty() vp_Value: string;
 

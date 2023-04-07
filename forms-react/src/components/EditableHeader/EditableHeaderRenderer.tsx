@@ -15,6 +15,9 @@ export interface IControlProperties {
 }
 
 function EditableHeaderRenderer({ control }: IControlProperties) {
+
+
+
     const className = css`
     ${control.Appearance.ToString()}
     ${control.HoverAppearance.IsEmpty ? '' : '&:hover { ' + control.HoverAppearance.ToString() + ' }'}
@@ -28,6 +31,7 @@ function EditableHeaderRenderer({ control }: IControlProperties) {
                 className={className}
                 type={control.vp_Type}
                 size={control.vp_Size as any}
+                placeholder={control.vp_Placeholder}
                 //@ts-ignore
                 value={control.vp_Value}
                 onFinishEditing={(e) => is.function(control.vp_OnChange) ? control.vp_OnChange(e) : void 0} />

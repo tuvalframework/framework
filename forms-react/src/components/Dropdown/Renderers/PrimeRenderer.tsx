@@ -5,6 +5,8 @@ import React, { Fragment } from "react";
 import { UIFormController, useFormController } from "../../../UIFormController";
 import { UIView } from "../../UIView/UIView";
 import { DropdownClass } from "../DropdownClass";
+import { useGetList, useGetOne } from "ra-core";
+import { ReactView } from "../../ReactView/ReactView";
 
 
 
@@ -18,7 +20,7 @@ const MyDropDown = (_params) => {
             }
         } else {
             return (
-                <label className="block">{params.obj.vp_Label}</label>
+                <label className="font-bold block mb-2">{params.obj.vp_Label}</label>
             )
         }
     }
@@ -128,39 +130,66 @@ function PrimeRenderer({ control }: IControlProperties) {
 
     const style = {};
     style['width'] = '100%';
-   //style['height'] = '100%';
+    //style['height'] = '100%';
     // style['height'] = '100%';
     style['backgroundColor'] = control.Appearance.BackgroundColor;
     style['background'] = control.Appearance.Background;
     style['color'] = control.Appearance.Color;
 
+    if (control.vp_Resource != null) {
+        const { data, total, isLoading, error, refetch } = useGetList(control.vp_Resource, {
+            //pagination: control.vp_Pagination,
+          //  sort: control.vp_Sort,
+            filter: control.vp_Filter
+        },
+        {
+            onError : (err:any) => {
+              
+                if (err.status === 401){
+                    window.location.href = '/logout'
+                }
+            }
+        });
 
-    return (
-        <MyDropDown
-            className={className}
-            obj={control}
-            onFocus={(e) => is.function(control.vp_OnFocus) ? control.vp_OnFocus(e) : void 0}
-            onBlur={(e) => is.function(control.vp_OnBlur) ? control.vp_OnBlur(e) : void 0}
-            style={style}
-            optionLabel={control.vp_fields?.text}
-            optionValue={control.vp_fields?.value}
-            valueTemplate={control.vp_selectedItemTemplate && selectedTemplate}
-            itemTemplate={control.vp_itemTemplate && template}
-            emptyMessage={emptyTemplate()}
-            value={control.vp_Value}
-            options={control.vp_Model}
-            onChange={(e) => { control.vp_OnChange(e.value) }}
-            placeholder={control.vp_Placeholder} />
-        /*  <Dropdown
-             className={className}
-             value={control.vp_Value}
-             onChange={(e) => is.function(control.vp_OnChange) ? control.vp_OnChange(e.value) : void 0}
-             options={control.vp_Model}
-             optionLabel={control.vp_fields?.text}
-             optionValue={control.vp_fields?.value}
-             placeholder="Select a City"
-         /> */
-    );
+        return (
+            <MyDropDown
+                className={className}
+                obj={control}
+                onFocus={(e) => is.function(control.vp_OnFocus) ? control.vp_OnFocus(e) : void 0}
+                onBlur={(e) => is.function(control.vp_OnBlur) ? control.vp_OnBlur(e) : void 0}
+                style={style}
+                optionLabel={control.vp_fields?.text}
+                optionValue={control.vp_fields?.value}
+                valueTemplate={control.vp_selectedItemTemplate && selectedTemplate}
+                itemTemplate={control.vp_itemTemplate && template}
+                emptyMessage={emptyTemplate()}
+                value={control.vp_Value}
+                options={data}
+                onChange={(e) => { control.vp_OnChange(e.value) }}
+                placeholder={control.vp_Placeholder} />
+        )
+    } else {
+        return (
+            <MyDropDown
+                className={className}
+                obj={control}
+                onFocus={(e) => is.function(control.vp_OnFocus) ? control.vp_OnFocus(e) : void 0}
+                onBlur={(e) => is.function(control.vp_OnBlur) ? control.vp_OnBlur(e) : void 0}
+                style={style}
+                optionLabel={control.vp_fields?.text}
+                optionValue={control.vp_fields?.value}
+                valueTemplate={control.vp_selectedItemTemplate && selectedTemplate}
+                itemTemplate={control.vp_itemTemplate && template}
+                emptyMessage={emptyTemplate()}
+                value={control.vp_Value}
+                options={control.vp_Model}
+                onChange={(e) => { control.vp_OnChange(e.value) }}
+                placeholder={control.vp_Placeholder} />
+           
+        );
+    }
+
+   
 
 }
 
