@@ -38,6 +38,8 @@ export class UISpinnerClass extends UIView {
 
     public constructor() {
         super();
+        this.width(50);
+        this.height(50);
     }
 
 
