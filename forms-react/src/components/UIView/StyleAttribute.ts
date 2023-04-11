@@ -7,4 +7,5 @@ export interface StyleAttribute {
     disabled?: string | ColorClass;
     focus?: string | ColorClass;
     before?: string | ColorClass;
+    after?: string | ColorClass;
 }

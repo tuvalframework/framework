@@ -14,15 +14,23 @@ export interface IControlProperties {
 
 function HStackRenderer({ control }: IControlProperties) {
 
+
     const className = css`
     ${control.Appearance.ToString()}
     ${control.HoverAppearance.IsEmpty ? '' : '&:hover { ' + control.HoverAppearance.ToString() + ' }'}
     ${control.ActiveAppearance.IsEmpty ? '' : '&:active { ' + control.ActiveAppearance.ToString() + ' }'}
     ${control.FocusAppearance.IsEmpty ? '' : '&:focus { ' + control.FocusAppearance.ToString() + ' }'}
-    & .before-element:before {
+    &:before {
         ${control.BeforeAppearance.ToString()}
      }
+    &:after {
+        ${control.AfterAppearance.ToString()}
+     }
 `;
+
+if (!control.BeforeAppearance.IsEmpty) {
+    console.log(control.BeforeAppearance.ToString())
+}
 
     const events = {};
     events['onClick'] = is.function(control.vp_OnClick) ? (e) => control.vp_OnClick(e) : void 0;
@@ -82,8 +90,8 @@ function HStackRenderer({ control }: IControlProperties) {
 
     const beforeStyleObject = control.BeforeAppearance.GetStyleObject();
     let beforeElement = null;
-    if (!!Object.keys(beforeStyleObject).length) {
-     
+   /*  if (!!Object.keys(beforeStyleObject).length) {
+
         const style = {};
         style['position'] = 'absolute';
         style['width'] = '100%';
@@ -91,7 +99,8 @@ function HStackRenderer({ control }: IControlProperties) {
         style['zIndex'] = '-1000';
 
         beforeElement = (<i className={'before-element'} style={style}></i>)
-    }
+    } */
+
 
     const finalComponent = (
         <div className={className} {...events}>
@@ -102,19 +111,19 @@ function HStackRenderer({ control }: IControlProperties) {
                         return null;
                     }
 
-                    if (control.vp_Spacing && index !== control.vp_Chidren.length - 1 ) {
+                    if (control.vp_Spacing && index !== control.vp_Chidren.length - 1) {
                         view.Appearance.MarginRight = control.vp_Spacing;
                     }
                     return view.render();
                 })
             }
-            {beforeElement}
+           {/*  {beforeElement} */}
         </div>
     )
 
     if (control.vp_Tooltip) {
         return (
-            <Tooltip style={{ zIndex: 10001 }} content={control.vp_Tooltip} position={control.vp_TooltipPosition as any}  showDelay={100}  >
+            <Tooltip style={{ zIndex: 10001 }} content={control.vp_Tooltip} position={control.vp_TooltipPosition as any} showDelay={100}  >
                 {finalComponent}
             </Tooltip>
         )

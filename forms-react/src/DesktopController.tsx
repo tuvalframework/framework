@@ -33,6 +33,33 @@ export function getAppName() {
     }
 }
 
+
+export function getAppFullName() {
+    try {
+        let regex = /\/app\/com\.([A-Za-z]+)\.([A-Za-z]+)\.([A-Za-z]+)/i;
+
+        // Alternative syntax using RegExp constructor
+        // const regex = new RegExp('(?:^\\/app\\/+|\\G(?!^)\\.)\\K\\w+', 'g')
+
+        const str = window.location.href;
+
+
+        const m = regex.exec(str);
+        if (m.length !== 4) {
+            return null
+        }
+
+        if (is.nullOrEmpty(m[3])) {
+            return null;
+        }
+        //alert(`com.${m[1]}.${m[2]}.${m[3]}`)
+        return `com.${m[1]}.${m[2]}.${m[3]}`;
+    }
+    catch {
+        return null;
+    }
+}
+
 const AppCache = {}
 const AppThemeCache = {}
 const AppMainColorCache = {}
@@ -105,6 +132,11 @@ export const ApplicationLoader = () => {
 
     const fetchController = input => controllerPromise.then(res => res);
     const appInfo: any = usePromise(fetchController, [app_name]);
+
+    Tracker.removeMetadata("app");
+   
+    Tracker.addMetadata("app", getAppFullName());
+   
 
     return (<Application name={app_name} controller={appInfo.controller} theme={appInfo.theme} mainColor={appInfo.app_main_color}></Application>)
 };

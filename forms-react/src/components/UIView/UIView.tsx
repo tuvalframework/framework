@@ -68,6 +68,9 @@ export class UIView {
     @ViewProperty()
     public BeforeAppearance: AppearanceObject;
 
+    @ViewProperty()
+    public AfterAppearance: AppearanceObject;
+
     public constructor() {
 
         this.BeginUpdate();
@@ -82,6 +85,7 @@ export class UIView {
         this.ActiveAppearance = new AppearanceObject(this);
         this.DisabledAppearance = new AppearanceObject(this);
         this.BeforeAppearance = new AppearanceObject(this);
+        this.AfterAppearance = new AppearanceObject(this);
 
 
         this.Appearance.Position = PositionTypes.Relative;
@@ -212,6 +216,9 @@ export class UIView {
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.Width = styleAttribute.before as any;
             }
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.Width = styleAttribute.after as any;
+            }
             return this;
         }
 
@@ -255,6 +262,10 @@ export class UIView {
 
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.MinWidth = styleAttribute.before as any;
+            }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.MinWidth = styleAttribute.after as any;
             }
             return this;
         }
@@ -300,6 +311,12 @@ export class UIView {
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.MaxWidth = styleAttribute.before as any;
             }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.MaxWidth = styleAttribute.after as any;
+            }
+
+            
             return this;
         }
 
@@ -364,6 +381,11 @@ export class UIView {
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.Height = styleAttribute.before as any;
             }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.Height = styleAttribute.after as any;
+            }
+
             return this;
         }
 
@@ -428,6 +450,10 @@ export class UIView {
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.MinHeight = styleAttribute.before as any;
             }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.MinHeight = styleAttribute.after as any;
+            }
             return this;
         }
 
@@ -471,6 +497,10 @@ export class UIView {
 
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.MaxHeight = styleAttribute.before as any;
+            }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.MaxHeight = styleAttribute.after as any;
             }
             return this;
         }
@@ -580,6 +610,11 @@ export class UIView {
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.Background = styleAttribute.before instanceof ColorClass ? styleAttribute.before.color : styleAttribute.before;
             }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.Background = styleAttribute.after as any;
+            }
+
             return this;
         }
 
@@ -608,6 +643,19 @@ export class UIView {
             if (styleAttribute.disabled != null) {
                 this.DisabledAppearance.BackgroundImage = styleAttribute.disabled instanceof ColorClass ? styleAttribute.disabled.color : styleAttribute.disabled;
             }
+
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.BackgroundImage = styleAttribute.focus instanceof ColorClass ? styleAttribute.focus.color : styleAttribute.focus;
+            }
+
+            if (styleAttribute.before != null) {
+                this.BeforeAppearance.BackgroundImage = styleAttribute.before instanceof ColorClass ? styleAttribute.before.color : styleAttribute.before;
+            }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.BackgroundImage = styleAttribute.after as any;
+            }
+
             return this;
         }
         throw 'Argument Exception in ' + this.constructor.name + '::backgroundImage function.';
@@ -647,6 +695,10 @@ export class UIView {
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.Position = styleAttribute.before as any;
             }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.Position = styleAttribute.after as any;
+            }
         }
         return this;
         //throw 'Argument Exception in ' + this.constructor.name + '::backgroundColor function.';
@@ -681,6 +733,10 @@ export class UIView {
 
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.Left = styleAttribute.before as any;
+            }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.Left = styleAttribute.after as any;
             }
         }
         return this;
@@ -717,6 +773,10 @@ export class UIView {
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.Top = styleAttribute.before as any;
             }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.Top = styleAttribute.after as any;
+            }
         }
         return this;
         //throw 'Argument Exception in ' + this.constructor.name + '::backgroundColor function.';
@@ -752,6 +812,10 @@ export class UIView {
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.Right = styleAttribute.before as any;
             }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.Right = styleAttribute.after as any;
+            }
         }
         return this;
         //throw 'Argument Exception in ' + this.constructor.name + '::backgroundColor function.';
@@ -786,6 +850,10 @@ export class UIView {
 
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.Bottom = styleAttribute.before as any;
+            }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.Bottom = styleAttribute.after as any;
             }
         }
         return this;
@@ -823,6 +891,10 @@ export class UIView {
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.Transform = styleAttribute.before instanceof ColorClass ? styleAttribute.before.color : styleAttribute.before;
             }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.Transform = styleAttribute.after as any;
+            }
             return this;
         }
         throw 'Argument Exception in ' + this.constructor.name + '::border function.';
@@ -838,9 +910,50 @@ export class UIView {
     }
     //#endregion
 
-    public clipPath(value: string): this {
-        this.Appearance.ClipPath = value;
-        return this;
+ 
+
+    public clipPath(): this;
+    public clipPath(value: string): this;
+    public clipPath(value: StyleAttribute): this;
+    public clipPath(...args: any[]): this {
+        if (args.length === 0) {
+            this.Appearance.ClipPath = '';
+            return this;
+        }  else if (args.length === 1 && is.string(args[0])) {
+            const value: string = args[0];
+            this.Appearance.ClipPath = value;
+            return this;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.ClipPath = styleAttribute.default as any;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.ClipPath = styleAttribute.hover as any;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.ClipPath = styleAttribute.active as any;
+            }
+            if (styleAttribute.disabled != null) {
+                this.DisabledAppearance.ClipPath = styleAttribute.disabled as any;
+            }
+
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.ClipPath = styleAttribute.focus as any;
+            }
+
+            if (styleAttribute.before != null) {
+                this.BeforeAppearance.ClipPath = styleAttribute.before as any;
+            }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.ClipPath = styleAttribute.after as any;
+            }
+
+            return this;
+        }
+
+        throw `ArgumentOutOfRange Exception in UIView::ClipPath method. Argument count: ${args.length}`;
     }
 
     public filter(value: string): this {
@@ -1026,6 +1139,10 @@ export class UIView {
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.Content = styleAttribute.before as any;
             }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.Content = styleAttribute.after as any;
+            }
         }
         return this;
         //throw 'Argument Exception in ' + this.constructor.name + '::backgroundColor function.';
@@ -1060,6 +1177,10 @@ export class UIView {
 
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.Cursor = styleAttribute.before as any;
+            }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.Cursor = styleAttribute.after as any;
             }
         }
         return this;
@@ -1158,6 +1279,10 @@ export class UIView {
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.Border = styleAttribute.before instanceof ColorClass ? styleAttribute.before.color : styleAttribute.before;
             }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.Border = styleAttribute.after as any;
+            }
             return this;
         }
         throw 'Argument Exception in ' + this.constructor.name + '::border function.';
@@ -1192,6 +1317,11 @@ export class UIView {
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.BorderLeft = styleAttribute.before instanceof ColorClass ? styleAttribute.before.color : styleAttribute.before;
             }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.BorderLeft = styleAttribute.after as any;
+            }
+
             return this;
         }
         throw 'Argument Exception in ' + this.constructor.name + '::border function.';
@@ -1226,6 +1356,10 @@ export class UIView {
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.BorderRight = styleAttribute.before instanceof ColorClass ? styleAttribute.before.color : styleAttribute.before;
             }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.BorderRight = styleAttribute.after as any;
+            }
             return this;
         }
         throw 'Argument Exception in ' + this.constructor.name + '::border function.';
@@ -1257,6 +1391,10 @@ export class UIView {
             }
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.BorderTop = styleAttribute.before instanceof ColorClass ? styleAttribute.before.color : styleAttribute.before;
+            }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.BorderTop = styleAttribute.after as any;
             }
             return this;
         }
@@ -1291,6 +1429,10 @@ export class UIView {
             }
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.BorderBottom = styleAttribute.before instanceof ColorClass ? styleAttribute.before.color : styleAttribute.before;
+            }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.BorderBottom = styleAttribute.after as any;
             }
             return this;
         }
@@ -1370,21 +1512,200 @@ export class UIView {
     }
 
 
-    public marginLeft(value: string) {
-        this.Appearance.MarginLeft = value;
-        return this;
+    public marginLeft(): this;
+    public marginLeft(value: int): this;
+    public marginLeft(value: string): this;
+    public marginLeft(value: StyleAttribute): this;
+    public marginLeft(...args: any[]): this {
+        if (args.length === 0) {
+            this.Appearance.MarginLeft = 'inherit';
+            return this;
+        } else if (args.length === 1 && is.number(args[0])) {
+            const value = args[0];
+            this.Appearance.MarginLeft = `${value}px`;
+
+            return this;
+        } else if (args.length === 1 && is.string(args[0])) {
+            const value: string = args[0];
+            this.Appearance.MarginLeft = value;
+            return this;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.MarginLeft = styleAttribute.default as any;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.MarginLeft = styleAttribute.hover as any;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.MarginLeft = styleAttribute.active as any;
+            }
+            if (styleAttribute.disabled != null) {
+                this.DisabledAppearance.MarginLeft = styleAttribute.disabled as any;
+            }
+
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.MarginLeft = styleAttribute.focus as any;
+            }
+
+            if (styleAttribute.before != null) {
+                this.BeforeAppearance.MarginLeft = styleAttribute.before as any;
+            }
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.MarginLeft = styleAttribute.after as any;
+            }
+            return this;
+        }
+
+        throw `ArgumentOutOfRange Exception in UIView::marginLeft method. Argument count: ${args.length}`;
     }
-    public marginRight(value: string) {
-        this.Appearance.MarginRight = value;
-        return this;
+   
+
+    public marginRight(): this;
+    public marginRight(value: int): this;
+    public marginRight(value: string): this;
+    public marginRight(value: StyleAttribute): this;
+    public marginRight(...args: any[]): this {
+        if (args.length === 0) {
+            this.Appearance.MarginRight = 'inherit';
+            return this;
+        } else if (args.length === 1 && is.number(args[0])) {
+            const value = args[0];
+            this.Appearance.MarginRight = `${value}px`;
+
+            return this;
+        } else if (args.length === 1 && is.string(args[0])) {
+            const value: string = args[0];
+            this.Appearance.MarginRight = value;
+            return this;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.MarginRight = styleAttribute.default as any;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.MarginRight = styleAttribute.hover as any;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.MarginRight = styleAttribute.active as any;
+            }
+            if (styleAttribute.disabled != null) {
+                this.DisabledAppearance.MarginRight = styleAttribute.disabled as any;
+            }
+
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.MarginRight = styleAttribute.focus as any;
+            }
+
+            if (styleAttribute.before != null) {
+                this.BeforeAppearance.MarginRight = styleAttribute.before as any;
+            }
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.MarginRight = styleAttribute.after as any;
+            }
+            return this;
+        }
+
+        throw `ArgumentOutOfRange Exception in UIView::marginRight method. Argument count: ${args.length}`;
     }
-    public marginTop(value: string) {
-        this.Appearance.MarginTop = value;
-        return this;
+
+  
+    public marginTop(): this;
+    public marginTop(value: int): this;
+    public marginTop(value: string): this;
+    public marginTop(value: StyleAttribute): this;
+    public marginTop(...args: any[]): this {
+        if (args.length === 0) {
+            this.Appearance.MarginTop = 'inherit';
+            return this;
+        } else if (args.length === 1 && is.number(args[0])) {
+            const value = args[0];
+            this.Appearance.MarginTop = `${value}px`;
+
+            return this;
+        } else if (args.length === 1 && is.string(args[0])) {
+            const value: string = args[0];
+            this.Appearance.MarginTop = value;
+            return this;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.MarginTop = styleAttribute.default as any;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.MarginTop = styleAttribute.hover as any;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.MarginTop = styleAttribute.active as any;
+            }
+            if (styleAttribute.disabled != null) {
+                this.DisabledAppearance.MarginTop = styleAttribute.disabled as any;
+            }
+
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.MarginTop = styleAttribute.focus as any;
+            }
+
+            if (styleAttribute.before != null) {
+                this.BeforeAppearance.MarginTop = styleAttribute.before as any;
+            }
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.MarginTop = styleAttribute.after as any;
+            }
+            return this;
+        }
+
+        throw `ArgumentOutOfRange Exception in UIView::marginLeft method. Argument count: ${args.length}`;
     }
-    public marginBottom(value: string) {
-        this.Appearance.MarginBottom = value;
-        return this;
+
+  
+
+    public marginBottom(): this;
+    public marginBottom(value: int): this;
+    public marginBottom(value: string): this;
+    public marginBottom(value: StyleAttribute): this;
+    public marginBottom(...args: any[]): this {
+        if (args.length === 0) {
+            this.Appearance.MarginBottom = 'inherit';
+            return this;
+        } else if (args.length === 1 && is.number(args[0])) {
+            const value = args[0];
+            this.Appearance.MarginBottom = `${value}px`;
+
+            return this;
+        } else if (args.length === 1 && is.string(args[0])) {
+            const value: string = args[0];
+            this.Appearance.MarginBottom = value;
+            return this;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.MarginBottom = styleAttribute.default as any;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.MarginBottom = styleAttribute.hover as any;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.MarginBottom = styleAttribute.active as any;
+            }
+            if (styleAttribute.disabled != null) {
+                this.DisabledAppearance.MarginBottom = styleAttribute.disabled as any;
+            }
+
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.MarginBottom = styleAttribute.focus as any;
+            }
+
+            if (styleAttribute.before != null) {
+                this.BeforeAppearance.MarginBottom = styleAttribute.before as any;
+            }
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.MarginBottom = styleAttribute.after as any;
+            }
+            return this;
+        }
+
+        throw `ArgumentOutOfRange Exception in UIView::marginBottom method. Argument count: ${args.length}`;
     }
 
     public padding(): this;
@@ -1559,6 +1880,10 @@ export class UIView {
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.Opacity = styleAttribute.before as any;
             }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.Opacity = styleAttribute.after as any;
+            }
             return this;
         }
 
@@ -1595,6 +1920,10 @@ export class UIView {
 
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.Display = styleAttribute.before as any;
+            }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.Display = styleAttribute.after as any;
             }
         }
         return this;
@@ -1713,6 +2042,10 @@ export class UIView {
             }
             if (styleAttribute.before != null) {
                 this.BeforeAppearance.ZIndex = styleAttribute.before as string;
+            }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.ZIndex = styleAttribute.after as any;
             }
             return this;
         }

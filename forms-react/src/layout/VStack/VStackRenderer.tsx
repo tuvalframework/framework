@@ -20,7 +20,14 @@ function VStackRenderer({ control }: IControlProperties) {
     ${control.ActiveAppearance.IsEmpty ? '' : '&:active { ' + control.ActiveAppearance.ToString() + ' }'}
     ${control.FocusAppearance.IsEmpty ? '' : '&:focus { ' + control.FocusAppearance.ToString() + ' }'}
     ${control.BeforeAppearance.IsEmpty ? '' : '&:focus { ' + control.FocusAppearance.ToString() + ' }'}
-`;
+    &:before {
+        ${control.BeforeAppearance.ToString()}
+     }
+    &:after {
+        ${control.AfterAppearance.ToString()}
+     }
+
+    `;
 
     const events = {};
     events['onClick'] = is.function(control.vp_OnClick) ? (e) => control.vp_OnClick(e) : void 0;
