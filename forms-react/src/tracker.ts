@@ -1,7 +1,7 @@
 import { TrackJS } from 'trackjs';
 
 export const Tracker: any = TrackJS;
-debugger
+
 
 /* window.location.hash: "#2"
 ​
@@ -22,8 +22,8 @@ window.location.protocol: "http:"
 window.location.search: "?query=1"
  */
  TrackJS.install({
-    token: '36b9a7b6c9634aa5a009b061da931cd9',
-   // forwardingDomain: window.location.protocol + '//' + window.location.host + "/tracker/capture",
+    token: '45006292608d4c11b1cea731207c78de',
+   forwardingDomain: window.location.protocol + '//' + window.location.host + "/realmocean/tracker/capture",
     console: {
         warn: false
     }
