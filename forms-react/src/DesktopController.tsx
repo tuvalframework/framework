@@ -194,7 +194,7 @@ export class DesktopController extends UIController {
 /**
  * NEW: The error boundary has a function component wrapper.
  */
-function ErrorBoundary({ children }) {
+export function ErrorBoundary({ children }) {
     const [hasError, setHasError] = useState(false);
     const location = useLocation();
     useEffect(() => {
@@ -222,7 +222,7 @@ function ErrorBoundary({ children }) {
  * NEW: The class component accepts getters and setters for
  *      the parent functional component's error state.
  */
-class ErrorBoundaryInner extends React.Component<any, any> {
+export class ErrorBoundaryInner extends React.Component<any, any> {
     private ref;
     constructor(props) {
         super(props);

@@ -5,6 +5,8 @@ import { UIView } from "../../components/UIView/UIView";
 import { HStackClass } from "./HStackClass";
 import { motion } from "framer-motion"
 import { Tooltip } from "monday-ui-react-core";
+import { ErrorBoundary } from "../../ErrorBoundary";
+import { Text, TextClass } from "../../components";
 
 
 export interface IControlProperties {
@@ -28,9 +30,9 @@ function HStackRenderer({ control }: IControlProperties) {
      }
 `;
 
-if (!control.BeforeAppearance.IsEmpty) {
-    console.log(control.BeforeAppearance.ToString())
-}
+    if (!control.BeforeAppearance.IsEmpty) {
+        console.log(control.BeforeAppearance.ToString())
+    }
 
     const events = {};
     events['onClick'] = is.function(control.vp_OnClick) ? (e) => control.vp_OnClick(e) : void 0;
@@ -90,34 +92,38 @@ if (!control.BeforeAppearance.IsEmpty) {
 
     const beforeStyleObject = control.BeforeAppearance.GetStyleObject();
     let beforeElement = null;
-   /*  if (!!Object.keys(beforeStyleObject).length) {
-
-        const style = {};
-        style['position'] = 'absolute';
-        style['width'] = '100%';
-        style['height'] = '100%';
-        style['zIndex'] = '-1000';
-
-        beforeElement = (<i className={'before-element'} style={style}></i>)
-    } */
+    /*  if (!!Object.keys(beforeStyleObject).length) {
+ 
+         const style = {};
+         style['position'] = 'absolute';
+         style['width'] = '100%';
+         style['height'] = '100%';
+         style['zIndex'] = '-1000';
+ 
+         beforeElement = (<i className={'before-element'} style={style}></i>)
+     } */
 
 
     const finalComponent = (
         <div className={className} {...events}>
             {
-
                 is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView, index) => {
-                    if (view == null) {
-                        return null;
-                    }
+                    try {
+                        if (view == null) {
+                            return null;
+                        }
 
-                    if (control.vp_Spacing && index !== control.vp_Chidren.length - 1) {
-                        view.Appearance.MarginRight = control.vp_Spacing;
+                        if (control.vp_Spacing && index !== control.vp_Chidren.length - 1) {
+                            view.Appearance.MarginRight = control.vp_Spacing;
+                        }
+                        return view.render();
+                    } catch (e) {
+                        alert(e)
+                        return Text(e.toString()).foregroundColor('red').render()
                     }
-                    return view.render();
                 })
             }
-           {/*  {beforeElement} */}
+            {/*  {beforeElement} */}
         </div>
     )
 
@@ -128,7 +134,10 @@ if (!control.BeforeAppearance.IsEmpty) {
             </Tooltip>
         )
     }
-    return finalComponent;
+    return (
+        finalComponent
+
+    )
 
 
 }

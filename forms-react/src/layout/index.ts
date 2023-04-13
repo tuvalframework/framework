@@ -7,3 +7,4 @@ export * from './Desktop';
 export * from './Dialog';
 export * from './Spacer/Spacer';
 export * from './Theme';
+export * from './ErrorBoundary';

@@ -5,6 +5,7 @@ import { Tooltip } from "monday-ui-react-core";
 import React, { Fragment } from "react";
 import { UIView } from "../../components/UIView/UIView";
 import { VStackClass } from "./VStackClass";
+import { ErrorBoundary } from "../../ErrorBoundary";
 
 
 export interface IControlProperties {
@@ -105,12 +106,16 @@ function VStackRenderer({ control }: IControlProperties) {
 
     if (control.vp_Tooltip) {
         return (
-            <Tooltip style={{zIndex: 10001}}  content={control.vp_Tooltip} position={control.vp_TooltipPosition as any} showDelay={100} >
+            <Tooltip style={{ zIndex: 10001 }} content={control.vp_Tooltip} position={control.vp_TooltipPosition as any} showDelay={100} >
                 {finalComponent}
             </Tooltip>
         )
     }
-    return finalComponent;
+    return (
+
+        finalComponent
+
+    )
 
 
 }
