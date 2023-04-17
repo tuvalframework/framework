@@ -704,6 +704,85 @@ export class UIView {
         //throw 'Argument Exception in ' + this.constructor.name + '::backgroundColor function.';
     }
 
+    public flexBasis(value: StyleAttribute): this;
+    public flexBasis(value: string): this;
+    public flexBasis(...args: any[]): this {
+        if (args.length === 0 || args[0] == null) {
+            this.Appearance.FlexBasis = '';
+        } else if (args.length === 1 && is.string(args[0])) {
+            const image = args[0];
+            this.Appearance.FlexBasis = image;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.FlexBasis = styleAttribute.default as any;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.FlexBasis = styleAttribute.hover as any;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.FlexBasis = styleAttribute.active as any;
+            }
+            if (styleAttribute.disabled != null) {
+                this.DisabledAppearance.FlexBasis = styleAttribute.disabled as any;
+            }
+
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.FlexBasis = styleAttribute.focus as any;
+            }
+
+            if (styleAttribute.before != null) {
+                this.BeforeAppearance.FlexBasis = styleAttribute.before as any;
+            }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.FlexBasis = styleAttribute.after as any;
+            }
+        }
+        return this;
+        //throw 'Argument Exception in ' + this.constructor.name + '::backgroundColor function.';
+    }
+
+    public flex(value: StyleAttribute): this;
+    public flex(value: string): this;
+    public flex(...args: any[]): this {
+        if (args.length === 0 || args[0] == null) {
+            this.Appearance.flex = '';
+        } else if (args.length === 1 && is.string(args[0])) {
+            const image = args[0];
+            this.Appearance.flex = image;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.flex = styleAttribute.default as any;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.flex = styleAttribute.hover as any;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.flex = styleAttribute.active as any;
+            }
+            if (styleAttribute.disabled != null) {
+                this.DisabledAppearance.flex = styleAttribute.disabled as any;
+            }
+
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.flex = styleAttribute.focus as any;
+            }
+
+            if (styleAttribute.before != null) {
+                this.BeforeAppearance.flex = styleAttribute.before as any;
+            }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.flex = styleAttribute.after as any;
+            }
+        }
+        return this;
+        //throw 'Argument Exception in ' + this.constructor.name + '::backgroundColor function.';
+    }
+
+
     public left(value: StyleAttribute): this;
     public left(value: string): this;
     public left(...args: any[]): this {
