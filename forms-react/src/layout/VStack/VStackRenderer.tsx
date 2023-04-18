@@ -90,12 +90,12 @@ function VStackRenderer({ control }: IControlProperties) {
         <div className={className} {...events}>
             {
 
-                is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView) => {
+                is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView, index) => {
                     if (view == null || !(view instanceof UIView)) {
                         return null;
                     }
 
-                    if (control.vp_Spacing) {
+                    if (control.vp_Spacing && index !== control.vp_Chidren.length - 1) {
                         view.Appearance.MarginBottom = control.vp_Spacing;
                     }
                     return view.render();
