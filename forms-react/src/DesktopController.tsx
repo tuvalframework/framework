@@ -6,7 +6,7 @@ import React, { Fragment, Profiler, useEffect, useState } from "react";
 import { MyTestController, TestController } from "./MyController";
 import usePromise from "react-promise-suspense";
 import { Application } from "./layout/Application/Application";
-import { is, ModuleLoader } from "@tuval/core";
+import { EventBus, is, ModuleLoader } from "@tuval/core";
 import { Loader } from "monday-ui-react-core";
 import { Toast } from 'primereact'
 import { HStack, VStack } from "./layout";
@@ -66,6 +66,7 @@ const AppMainColorCache = {}
 export const Paths = {}
 
 export const ApplicationLoader = () => {
+    
     function measureInteraction() {
         // performance.now() returns the number of ms
         // elapsed since the page was opened
@@ -74,7 +75,11 @@ export const ApplicationLoader = () => {
         return {
           end() {
             const endTimestamp = performance.now();
-            console.log('The interaction took', endTimestamp - startTimestamp, 'ms');
+            EventBus.Default.fire('app.loaded', {
+                app_name: getAppFullName(),
+                time: endTimestamp - startTimestamp
+            })
+            //console.log('The interaction took', endTimestamp - startTimestamp, 'ms');
           },
         };
       }

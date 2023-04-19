@@ -56,10 +56,15 @@ function TextRenderer({ control }: IControlProperties) {
             <span style={style}>{control.vp_Text}</span>
         )
 
-    } else {
+    } else if (control.RenderingType === RenderingTypes.Markdown)  {
 
         return (
             <div className='markdown-body' dangerouslySetInnerHTML={{ __html: !is.nullOrEmpty(control.vp_Text) ? md.render(control.vp_Text) : '' }}></div>
+        )
+    } else if (control.RenderingType === RenderingTypes.Html)  {
+
+        return (
+            <span dangerouslySetInnerHTML={{ __html: !is.nullOrEmpty(control.vp_Text) ? control.vp_Text : '' }}></span>
         )
     }
 

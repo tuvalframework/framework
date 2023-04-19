@@ -8,7 +8,8 @@ import { ViewProperty } from '../UIView/ViewProperty';
 
 export enum RenderingTypes {
     Normal = 1,
-    Markdown = 2
+    Markdown = 2,
+    Html = 3
 }
 
 export enum TextAlignment {
