@@ -34,6 +34,7 @@ export * from './components/Icon'
 
 export * from './UITemplate'
 
+export * from './loaders/WidgetLoader'
 
 export * from './UIController'
 export * from './UIFormController'
@@ -47,6 +48,7 @@ export * from './Bios'
 export { useNavigate, useLocation, useParams, Link } from 'react-router-dom'
 export { useState , useEffect, useMemo} from 'react'
 export {useGetList, useStore, useRecordContext} from 'ra-core'
+export { css } from "@emotion/css";
 
 
 //-------------------
