@@ -105,9 +105,7 @@ function WidgetRenderer({ control }: IControlProperties) {
             </Fragment>
         } >
             <ErrorBoundary>
-                <WidgetLoader widget={control.vp_qn} config={control.vp_Config} onSave={(content) => {
-
-
+                <WidgetLoader widget={control.vp_qn} config={control.vp_Config} data={control.vp_Data} onSave={(content) => {
                 }}></WidgetLoader>
             </ErrorBoundary>
         </React.Suspense>

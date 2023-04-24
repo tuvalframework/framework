@@ -7,7 +7,7 @@ import React from "react";
 const WidgetCache = {}
 export const Paths = {}
 
-export const WidgetLoader = ({ widget, config, onSave }) => {
+export const WidgetLoader = ({ widget, config,data, onSave }) => {
     // const { app_name } = useParams();
  
      const location = useLocation();
@@ -51,5 +51,5 @@ export const WidgetLoader = ({ widget, config, onSave }) => {
      const fetchController = input => controllerPromise.then(res => res);
      const contoller: any = usePromise(fetchController, [widget]);
  
-     return (<WidgetComponent name={widget} controller={contoller} config={config} onSave={onSave}></WidgetComponent>)
+     return (<WidgetComponent name={widget} controller={contoller} config={config} data={data} onSave={onSave}></WidgetComponent>)
  }

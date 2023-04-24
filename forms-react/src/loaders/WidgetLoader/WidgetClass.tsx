@@ -17,6 +17,8 @@ export class WidgetClass extends UIView {
        return this;
    }
 
+
+
     /** @internal */
     @ViewProperty() vp_Loading: boolean;
     public loading(value: boolean): this {
@@ -26,7 +28,7 @@ export class WidgetClass extends UIView {
 
     /** @internal */
     @ViewProperty() vp_Data: any;
-    public kind(value: any): this {
+    public data(value: any): this {
         this.vp_Data = value;
         return this;
     }
