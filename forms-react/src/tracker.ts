@@ -450,13 +450,13 @@ window.location.search: "?query=1"
  */
 
 
-/* TrackJS.install({
-    token: '1d74474e4c1f4a5b840066b4cb6f02d1',
-    forwardingDomain: window.location.protocol + '//' + window.location.host + "/realmocean/tracker/capture",
+ TrackJS.install({
+    token: '0cfa5474771f40f7b8a7d7366ccbcc58',
+    //forwardingDomain: window.location.protocol + '//' + window.location.host + "/realmocean/tracker/capture",
     console: {
         warn: false
     }
-}); */
+}); 
 
 
 //alert(window.location.protocol + '//' +window.location.host + "/tracker/capture")

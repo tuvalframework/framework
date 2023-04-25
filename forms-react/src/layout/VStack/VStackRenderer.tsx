@@ -87,7 +87,7 @@ function VStackRenderer({ control }: IControlProperties) {
     }
 
     const finalComponent = (
-        <div className={className} {...events}>
+        <div ref={control.vp_Ref} className={className} {...events}>
             {
 
                 is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView, index) => {

@@ -45,6 +45,13 @@ export class UIView {
         return this;
     }
 
+    @ViewProperty() vp_Ref: any;
+    public ref(value: any): this {
+        this.vp_Ref = value;
+        return this;
+    }
+
+
 
 
     @ViewProperty(0)
@@ -89,6 +96,8 @@ export class UIView {
 
 
         this.Appearance.Position = PositionTypes.Relative;
+
+        this.vp_Ref = React.createRef();
     }
 
     public RenderStarted() {
@@ -316,7 +325,7 @@ export class UIView {
                 this.AfterAppearance.MaxWidth = styleAttribute.after as any;
             }
 
-            
+
             return this;
         }
 
@@ -989,7 +998,7 @@ export class UIView {
     }
     //#endregion
 
- 
+
 
     public clipPath(): this;
     public clipPath(value: string): this;
@@ -998,7 +1007,7 @@ export class UIView {
         if (args.length === 0) {
             this.Appearance.ClipPath = '';
             return this;
-        }  else if (args.length === 1 && is.string(args[0])) {
+        } else if (args.length === 1 && is.string(args[0])) {
             const value: string = args[0];
             this.Appearance.ClipPath = value;
             return this;
@@ -1638,7 +1647,7 @@ export class UIView {
 
         throw `ArgumentOutOfRange Exception in UIView::marginLeft method. Argument count: ${args.length}`;
     }
-   
+
 
     public marginRight(): this;
     public marginRight(value: int): this;
@@ -1688,7 +1697,7 @@ export class UIView {
         throw `ArgumentOutOfRange Exception in UIView::marginRight method. Argument count: ${args.length}`;
     }
 
-  
+
     public marginTop(): this;
     public marginTop(value: int): this;
     public marginTop(value: string): this;
@@ -1737,7 +1746,7 @@ export class UIView {
         throw `ArgumentOutOfRange Exception in UIView::marginLeft method. Argument count: ${args.length}`;
     }
 
-  
+
 
     public marginBottom(): this;
     public marginBottom(value: int): this;
