@@ -30,7 +30,7 @@ export const WidgetLoader = ({ widget, config,data, onSave }) => {
              const app_path_local = `/static/applications/${widget}`;
  
             // const app_path_local = `/static/applications/${widget}`;
-             ModuleLoader.LoadBundledModuleWithDecode(is.localhost() ? app_path_local : app_path, widget).then((_app: any) => {
+             ModuleLoader.LoadBundledModuleWithDecode(/* is.localhost() ? */ app_path_local /* : app_path */, widget).then((_app: any) => {
                  if (_app != null) {
                      const app = new _app();
                      WidgetCache[widget] = app.GetMainController();
