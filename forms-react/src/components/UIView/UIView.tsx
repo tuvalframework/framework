@@ -146,6 +146,15 @@ export class UIView {
         return this;
     }
 
+       /** @internal */
+       @ViewProperty((): void => { })
+       public vp_OnScroll: Function;
+   
+       public onScroll(value: Function) {
+           this.vp_OnScroll = value;
+           return this;
+       }
+
     //-------------------------
 
     /** @internal */
@@ -181,6 +190,16 @@ export class UIView {
         }
         return this;
     }
+
+
+       /** @internal */
+       @ViewProperty()
+       public vp_ScrollTop: number;
+   
+       public scrollTop(value: number) {
+           this.vp_ScrollTop = value;
+           return this;
+       }
 
     public ForceUpdate() { }
 
@@ -2229,6 +2248,7 @@ export class UIView {
         const events = {};
         events['onClick'] = is.function(this.vp_OnClick) ? (e) => this.vp_OnClick(e) : void 0;
         events['onMouseDown'] = is.function(this.vp_OnMouseDown) ? (e) => this.vp_OnMouseDown(e) : void 0;
+        events['onScroll'] = is.function(this.vp_OnScroll) ? (e) => this.vp_OnScroll(this.vp_Ref.current?.scrollTop) : void 0;
         return events;
     }
 

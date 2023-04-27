@@ -2,7 +2,7 @@ import { css } from "@emotion/css";
 import { is } from "@tuval/core";
 import { motion } from "framer-motion";
 import { Tooltip } from "monday-ui-react-core";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { UIView } from "../../components/UIView/UIView";
 import { VStackClass } from "./VStackClass";
 import { ErrorBoundary } from "../../ErrorBoundary";
@@ -30,8 +30,13 @@ function VStackRenderer({ control }: IControlProperties) {
 
     `;
 
-    const events = {};
-    events['onClick'] = is.function(control.vp_OnClick) ? (e) => control.vp_OnClick(e) : void 0;
+    useEffect(() => {
+        if (control.vp_ScrollTop != null && control.vp_Ref.current) {
+            control.vp_Ref.current.scrollTop = control.vp_ScrollTop;
+        }
+    })
+
+    const events = control.GetEventsObject();
 
     const elementProperties = {}
     if (control.renderAsAnimated) {
