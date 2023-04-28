@@ -35,6 +35,7 @@ export * from './components/Icon'
 export * from './UITemplate'
 
 export * from './loaders/WidgetLoader'
+export * from './data/DataProviderContext'
 
 export * from './UIController'
 export * from './UIFormController'
@@ -49,6 +50,8 @@ export { useNavigate, useLocation, useParams, Link } from 'react-router-dom'
 export { useState , useEffect, useMemo} from 'react'
 export {useGetList, useStore, useRecordContext} from 'ra-core'
 export { css } from "@emotion/css";
+
+export { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
 
 
 //-------------------
