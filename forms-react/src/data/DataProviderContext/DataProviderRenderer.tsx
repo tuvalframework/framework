@@ -1,16 +1,26 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { DataProtocolClass } from "./DataProviderClass";
+import { DataProtocolClass, DataProtocolContext } from "./DataProviderClass";
 import { ProviderLoader } from "./ProviderLoader";
 import { VStack } from "../../layout/VStack/VStack";
 import { Spinner } from "../../components/UISpinner/UISpinner";
 import { useLocation } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ModuleLoader } from "@tuval/core";
+import { useAsync } from "react-async-hook";
 
 export interface IControlProperties {
     control: DataProtocolClass<any>
 }
 
 
-
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            staleTime: 5 * 60 * 1000, // 5 minutes
+            retry: false
+        }
+    },
+});
 
 /**
  * NEW: The error boundary has a function component wrapper.
@@ -90,24 +100,73 @@ class ErrorBoundaryInner extends React.Component<any, any> {
     }
 }
 
+const LoadProvider = (providerName: string) => {
+    const app_path = `/realmocean/store/widget/open-testing/${providerName}`;
+    // alert(app_path)
+    const app_path_local = `/static/applications/${providerName}`;
 
-function DataProtocolRenderer({ control }: IControlProperties) {
+    return new Promise((resolve, reject) => {
+        ModuleLoader.LoadBundledModuleWithDecode(/* is.localhost() ? */ app_path_local /* : app_path */, providerName).then((_app: any) => {
+            if (_app != null) {
+                const app = new _app();
+                // ProviderCache[widget] = app.GetMainController();
+                resolve(app.GetProvider());
+            } else {
+
+            }
+        });
+    })
+}
+
+function _DataProtocolRenderer({ control }: IControlProperties) {
+    const [queryClient] = useState(new QueryClient());
 
     return (
-        <React.Suspense fallback={
-            <Fragment>
-                {
-                    VStack(
-                        Spinner()
-                    ).render()
-                }
-            </Fragment>
-        } >
-            <ErrorBoundary>
-                <ProviderLoader widget={control.vp_qn} config={control.vp_Config}  content={control.vp_Content} onSave={(content) => {
-                }}></ProviderLoader>
-            </ErrorBoundary>
-        </React.Suspense>
+        <QueryClientProvider client={queryClient}>
+            <React.Suspense fallback={
+                <Fragment>
+                    {
+                        VStack(
+                            Spinner()
+                        ).render()
+                    }
+                </Fragment>
+            } >
+                <ErrorBoundary>
+                    <ProviderLoader widget={control.vp_qn} config={control.vp_Config} content={control.vp_Content} onSave={(content) => {
+                    }}></ProviderLoader>
+                </ErrorBoundary>
+            </React.Suspense>
+        </QueryClientProvider>
+    )
+
+}
+
+
+const ProviderContentProxy = ({ config, content, /* data, isLoading, error */ }) => {
+    const view = content(/*{  data, isLoading, error } */);
+    return (
+        <Fragment>
+            {
+                view.render()
+            }
+        </Fragment>
+    )
+
+}
+
+function DataProtocolRenderer({ control }: IControlProperties) {
+   
+
+    const { result, loading: isLoading, error } = useAsync(LoadProvider, [control.vp_qn]);
+    if (isLoading) return null;
+
+    return (
+        <QueryClientProvider client={queryClient}>
+            <DataProtocolContext.Provider value={{ provider: result, config: control.vp_Config }}>
+                <ProviderContentProxy config={control.vp_Config} content={control.vp_Content}></ProviderContentProxy>
+            </DataProtocolContext.Provider>
+        </QueryClientProvider>
     )
 
 }

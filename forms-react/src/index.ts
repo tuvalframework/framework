@@ -52,7 +52,7 @@ export {useGetList, useStore, useRecordContext} from 'ra-core'
 export { css } from "@emotion/css";
 
 export { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
-
+export { useQuery, QueryClient } from 'react-query';
 
 //-------------------
 
