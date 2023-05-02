@@ -21,10 +21,6 @@ export interface IControlProperties {
 
 function DataContextRenderer({ control }: IControlProperties) {
 
-    const finalQueryClient = new QueryClient()/* React.useMemo(() => obj.vp_QueryClient || new QueryClient(), [
-        obj.vp_QueryClient,
-    ]);
-*/
     const finalDataProvider = React.useMemo(
         () =>
             control.vp_DataProvider instanceof Function

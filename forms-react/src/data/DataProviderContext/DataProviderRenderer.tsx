@@ -5,8 +5,9 @@ import { VStack } from "../../layout/VStack/VStack";
 import { Spinner } from "../../components/UISpinner/UISpinner";
 import { useLocation } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { ModuleLoader } from "@tuval/core";
+import { ModuleLoader, Reflect } from "@tuval/core";
 import { useAsync } from "react-async-hook";
+import { TaskProtocol } from "./Protocols";
 
 export interface IControlProperties {
     control: DataProtocolClass<any>
@@ -118,6 +119,21 @@ const LoadProvider = (providerName: string) => {
     })
 }
 
+/* const LoadProvider = (providerName: string) => {
+    const app_path = `/realmocean/store/widget/open-testing/${providerName}`;
+    // alert(app_path)
+    const app_path_local = `/static/applications/${providerName}`;
+    return (
+        Promise.all([
+            _LoadProvider('com.tuvalsoft.provider.tasks'),
+            _LoadProvider('com.tuvalsoft.provider.okr')
+        ])
+    )
+
+} */
+
+
+
 function _DataProtocolRenderer({ control }: IControlProperties) {
     const [queryClient] = useState(new QueryClient());
 
@@ -156,14 +172,44 @@ const ProviderContentProxy = ({ config, content, /* data, isLoading, error */ })
 }
 
 function DataProtocolRenderer({ control }: IControlProperties) {
-   
+
+    let dataProtocolContextObject = {}
+    const dataProtocolContext = React.useContext(DataProtocolContext);
+
+
 
     const { result, loading: isLoading, error } = useAsync(LoadProvider, [control.vp_qn]);
+    /* let result;
+    if (results != null) {
+        result = results[0];
+    } */
+    //const result = results[0]
+
     if (isLoading) return null;
+
+    /* for(let i=0;i<results.length;i++){
+        
+    } */
+
+    debugger
+    const providers = window.Reflect.ownKeys(result as any);
+   
+    for (let i = 0; i < providers.length; i++) {
+       
+        if (dataProtocolContext == null) {
+            dataProtocolContextObject[providers[i]] = { provider: result[providers[i]], config: control.vp_Config };
+        } else if (dataProtocolContext.dataProtocolContextObject == null) {
+            dataProtocolContextObject = dataProtocolContext.dataProtocolContextObject = {};
+            dataProtocolContextObject[providers[i]] = { provider: result[providers[i]], config: control.vp_Config };
+        } else {
+            dataProtocolContextObject = dataProtocolContext.dataProtocolContextObject;
+            dataProtocolContextObject[providers[i]] = { provider: result[providers[i]], config: control.vp_Config };
+        }
+    }
 
     return (
         <QueryClientProvider client={queryClient}>
-            <DataProtocolContext.Provider value={{ provider: result, config: control.vp_Config }}>
+            <DataProtocolContext.Provider value={{ dataProtocolContextObject }}>
                 <ProviderContentProxy config={control.vp_Config} content={control.vp_Content}></ProviderContentProxy>
             </DataProtocolContext.Provider>
         </QueryClientProvider>
