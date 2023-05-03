@@ -99,16 +99,16 @@ export const useProviderQuery = (query: string, variables: any = {}): any => {
 
 export const useProtocol = (provider: any): any => {
 
-    debugger
+
     const context = React.useContext(DataProtocolContext);
-    console.log(context.dataProtocolContextObject)
+
     //return context.dataProtocolContextObject[provider];
     const dataProviderContextValue = context.dataProtocolContextObject[provider];
     return {
         query: (query: string, variables: any = {}) => {
             const client = useQueryClient();
 
-
+            console.log(dataProviderContextValue.config)
             const vars = Object.assign({ ...variables }, dataProviderContextValue.config.variables || {});
             let keys = Object.keys(vars);
 
@@ -174,6 +174,22 @@ export const useProtocol = (provider: any): any => {
                 {}
             );
             const data = ((_data as any)?.data as any)?.domain;
+            return { data: data ? data : {}, isLoading, error };
+        },
+        mutation: (name: string, variables: any = {}) => {
+            const client = useQueryClient();
+
+            const dataProvider = dataProviderContextValue.provider;
+            const { data: data, isLoading, error } = useQuery(
+                // Sometimes the id comes as a string (e.g. when read from the URL in a Show view).
+                // Sometimes the id comes as a number (e.g. when read from a Record in useGetList response).
+                // As the react-query cache is type-sensitive, we always stringify the identifier to get a match
+                [name, { ...variables }],
+                () =>
+                    dataProvider[name](client, variables),
+                {}
+            );
+          
             return { data: data ? data : {}, isLoading, error };
         }
     }
