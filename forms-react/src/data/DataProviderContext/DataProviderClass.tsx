@@ -6,7 +6,7 @@ import { UIView } from "../../components/UIView/UIView";
 import { ViewProperty } from "../../components/UIView/ViewProperty";
 import { useAsync } from 'react-async-hook';
 import { is } from "@tuval/core";
-import { useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { gql } from "@apollo/client";
 
 
@@ -106,6 +106,7 @@ export const useProtocol = (provider: any): any => {
     const dataProviderContextValue = context.dataProtocolContextObject[provider];
     return {
         query: (query: string, variables: any = {}) => {
+            debugger
             const client = useQueryClient();
 
             console.log(dataProviderContextValue.config)
@@ -127,15 +128,15 @@ export const useProtocol = (provider: any): any => {
 
             // alert(JSON.stringify(domainVariablesDefs.join(',')))
 
-            keys = Object.keys(dataProviderContextValue.config.variables);
+           /*  keys = Object.keys(dataProviderContextValue.config.variables);
 
             for (let i = 0; i < keys.length; i++) {
                 if (dataProviderContextValue.config.variables[keys[i]] == null) {
                     delete dataProviderContextValue.config.variables[keys[i]];
                 }
-            }
+            } */
 
-            const domainVariables = Object.keys(dataProviderContextValue.config.variables).map(key => {
+            const domainVariables = Object.keys(vars).map(key => {
                 return [key, ':', '$' + key].join('')
             })
 
@@ -176,21 +177,70 @@ export const useProtocol = (provider: any): any => {
             const data = ((_data as any)?.data as any)?.domain;
             return { data: data ? data : {}, isLoading, error };
         },
-        mutation: (name: string, variables: any = {}) => {
-            const client = useQueryClient();
+        lazyQuery: (query: string, _variables: any = {}) => {
 
             const dataProvider = dataProviderContextValue.provider;
-            const { data: data, isLoading, error } = useQuery(
-                // Sometimes the id comes as a string (e.g. when read from the URL in a Show view).
-                // Sometimes the id comes as a number (e.g. when read from a Record in useGetList response).
-                // As the react-query cache is type-sensitive, we always stringify the identifier to get a match
-                [name, { ...variables }],
-                () =>
-                    dataProvider[name](client, variables),
-                {}
-            );
-          
-            return { data: data ? data : {}, isLoading, error };
+
+            const client = useQueryClient();
+            const mutation = useMutation((variables: any) => {
+             
+                const domainVariablesDefs = Object.keys(variables).map(key => {
+                    const value = variables[key];
+                    if (is.string(value)) {
+                        return ['$' + key, ':', 'String'].join('')
+                    }
+                })
+
+                const domainVariables = Object.keys(variables).map(key => {
+                    return [key, ':', '$' + key].join('')
+                })
+
+                let _query = '';
+                if (Object.keys(variables).length > 0) {
+                    _query = `
+            query provider(${domainVariablesDefs})
+                {
+                    domain(${domainVariables}) {
+                       ${query}
+                    }
+                }
+          `
+                } else {
+                    _query = `
+            query provider {
+                    domain {
+                       ${query}
+                    }
+            }
+          `
+                }
+
+                return dataProvider['query'](client,_query, variables, dataProviderContextValue.config)
+            })
+
+            return [mutation.mutate,mutation.isLoading, mutation.data];
+
+        },
+        service: (name: string, _variables: any = {}) => {
+
+            const dataProvider = dataProviderContextValue.provider;
+
+            const client = useQueryClient();
+            const mutation = useMutation(variables => {
+                return dataProvider[name](client, variables)
+            })
+
+            const resultObject = {};
+            resultObject['isLoading'] = mutation.isLoading;
+            resultObject[name] = mutation.mutate;
+            const data: any = mutation.data;
+            if (data != null && data.data! != null) {
+                resultObject['result'] = data.data[name];
+            } else {
+                resultObject['result'] = {};
+            }
+
+            return resultObject;
         }
     }
 }

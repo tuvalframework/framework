@@ -22,3 +22,9 @@ export function ProviderContext(qn: string): Function {
         return new DataProtocolClass()._content(content).qn(qn);
     }
 }
+
+export function BrokerContext(qn: string): Function {
+    return (content: DataProtocolContentFunction): DataProtocolClass<any> => {
+        return new DataProtocolClass()._content(content).qn(qn);
+    }
+}
