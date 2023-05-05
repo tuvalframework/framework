@@ -38,6 +38,14 @@ export class PopupButtonClass extends UIView {
         return this;
     }
 
+     /** @internal */
+     @ViewProperty() vp_HideHandle: (handle: Function)=> void;
+
+     public hideHandle(value:  (handle: Function)=> void) {
+         this.vp_HideHandle = value;
+         return this;
+     }
+
     /** @internal */
     @ViewProperty() vp_Children: UIView[];
 

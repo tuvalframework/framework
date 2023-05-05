@@ -8,6 +8,41 @@ import { Icons } from "../Icon";
 import { UIView } from "../UIView/UIView";
 import { MenuButtonClass } from "./MenuButtonClass";
 
+export enum BasePosition {
+    START = "Start",
+    CENTER = "Center",
+    END = "End",
+    STRETCH = "Stretch"
+}
+export enum DialogPosition {
+    LEFT = "left",
+    LEFT_START = "left-start",
+    LEFT_END = "left-end",
+    RIGHT = "right",
+    RIGHT_START = "right-start",
+    RIGHT_END = "right-end",
+    TOP = "top",
+    TOP_START = "top-start",
+    TOP_END = "top-end",
+    BOTTOM = "bottom",
+    BOTTOM_START = "bottom-start",
+    BOTTOM_END = "bottom-end"
+}
+
+
+export  enum MenuButtonSize {
+    XXS = "16",
+    XS = "24",
+    SMALL = "32",
+    MEDIUM = "40",
+    LARGE = "48"
+}
+export  enum MenuButtonComponentPosition {
+    START = "start",
+    END = "end"
+}
+
+
 export interface IControlProperties {
     control: MenuButtonClass
 }
@@ -64,8 +99,9 @@ function MenuButtonRenderer({ control }: IControlProperties) {
     return (
         <Fragment>
 
-            <MenuButton closeDialogOnContentClick={true} componentPosition={'start'} dialogOffset={{ main: -25, secondary: 30 }}
-                dialogPosition={"right-start"} component={control.vp_Icon} zIndex={10000} size={MenuButton.sizes.XS}
+            <MenuButton closeDialogOnContentClick={true} componentPosition={MenuButtonComponentPosition.START}
+                dialogOffset={{ main: -25, secondary: 30 }}
+                dialogPosition={DialogPosition.BOTTOM} component={control.vp_Icon} zIndex={10000} size={MenuButtonSize.XS}
             >
                 <Menu id="menu" size="medium" >
 

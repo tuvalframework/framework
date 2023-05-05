@@ -1,6 +1,6 @@
 import { ColorConverter } from "./ColorConverter";
 import { int, TMath, float } from '@tuval/core';
-import { alpha, lighten, darken } from './colorManipulator';
+import { alpha, lighten, darken } from './ColorManipulator';
 
 export class _ColorClass {
     public color: string;

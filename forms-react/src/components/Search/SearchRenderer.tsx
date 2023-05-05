@@ -25,7 +25,8 @@ function SearchRenderer({ control }: IControlProperties) {
 
 
     return (
-        <Search
+        <h1>serach</h1>
+       /*  <Search
             wrapperClassName={className}
             tabIndex={control.vp_TabIndex}
             value={control.vp_Value}
@@ -33,7 +34,7 @@ function SearchRenderer({ control }: IControlProperties) {
             size={"medium"}
             //@ts-ignore
             onChange={(e: string) => is.function(control.vp_OnChange) ? control.vp_OnChange(e) : void 0}>
-        </Search>
+        </Search> */
     );
 
 }
