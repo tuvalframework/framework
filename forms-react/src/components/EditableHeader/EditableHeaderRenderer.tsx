@@ -23,6 +23,9 @@ function EditableHeaderRenderer({ control }: IControlProperties) {
     ${control.HoverAppearance.IsEmpty ? '' : '&:hover { ' + control.HoverAppearance.ToString() + ' }'}
     ${control.ActiveAppearance.IsEmpty ? '' : '&:active { ' + control.ActiveAppearance.ToString() + ' }'}
     ${control.FocusAppearance.IsEmpty ? '' : '&:focus { ' + control.FocusAppearance.ToString() + ' }'}
+    & .element-type-h5 {
+        color:  ${control.Appearance['Color']}
+    }
     `;
 
     return (

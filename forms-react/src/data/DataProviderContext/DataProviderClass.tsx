@@ -5,7 +5,7 @@ import DataProtocolRenderer from "./DataProviderRenderer";
 import { UIView } from "../../components/UIView/UIView";
 import { ViewProperty } from "../../components/UIView/ViewProperty";
 import { useAsync } from 'react-async-hook';
-import { is } from "@tuval/core";
+import { Guid, is } from "@tuval/core";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { gql } from "@apollo/client";
 
@@ -128,13 +128,13 @@ export const useProtocol = (provider: any): any => {
 
             // alert(JSON.stringify(domainVariablesDefs.join(',')))
 
-           /*  keys = Object.keys(dataProviderContextValue.config.variables);
-
-            for (let i = 0; i < keys.length; i++) {
-                if (dataProviderContextValue.config.variables[keys[i]] == null) {
-                    delete dataProviderContextValue.config.variables[keys[i]];
-                }
-            } */
+            /*  keys = Object.keys(dataProviderContextValue.config.variables);
+ 
+             for (let i = 0; i < keys.length; i++) {
+                 if (dataProviderContextValue.config.variables[keys[i]] == null) {
+                     delete dataProviderContextValue.config.variables[keys[i]];
+                 }
+             } */
 
             const domainVariables = Object.keys(vars).map(key => {
                 return [key, ':', '$' + key].join('')
@@ -169,10 +169,12 @@ export const useProtocol = (provider: any): any => {
                 // Sometimes the id comes as a string (e.g. when read from the URL in a Show view).
                 // Sometimes the id comes as a number (e.g. when read from a Record in useGetList response).
                 // As the react-query cache is type-sensitive, we always stringify the identifier to get a match
-                [query, { ...vars }],
+                ['__query__', query, { ...vars }],
                 () =>
                     dataProvider['query'](client, _query, vars, dataProviderContextValue.config),
-                {}
+                {
+                    // cacheTime: 0
+                }
             );
             const data = ((_data as any)?.data as any)?.domain;
             return { data: data ? data : {}, isLoading, error };
@@ -183,7 +185,7 @@ export const useProtocol = (provider: any): any => {
 
             const client = useQueryClient();
             const mutation = useMutation((variables: any) => {
-             
+
                 const domainVariablesDefs = Object.keys(variables).map(key => {
                     const value = variables[key];
                     if (is.string(value)) {
@@ -215,10 +217,10 @@ export const useProtocol = (provider: any): any => {
           `
                 }
 
-                return dataProvider['query'](client,_query, variables, dataProviderContextValue.config)
+                return dataProvider['query'](client, _query, variables, dataProviderContextValue.config)
             })
 
-            return [mutation.mutate,mutation.isLoading, mutation.data];
+            return [mutation.mutate, mutation.isLoading, mutation.data];
 
         },
         service: (name: string, _variables: any = {}) => {

@@ -8,20 +8,21 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ModuleLoader, Reflect } from "@tuval/core";
 import { useAsync } from "react-async-hook";
 import { TaskProtocol } from "./Protocols";
+import { query } from "../DataContext/DataContextRenderer";
 
 export interface IControlProperties {
     control: DataProtocolClass<any>
 }
 
 
-const queryClient = new QueryClient({
+/* const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
             staleTime: 5 * 60 * 1000, // 5 minutes
             retry: false
         }
     },
-});
+}); */
 
 /**
  * NEW: The error boundary has a function component wrapper.
@@ -208,7 +209,7 @@ function DataProtocolRenderer({ control }: IControlProperties) {
     }
 
     return (
-        <QueryClientProvider client={queryClient}>
+        <QueryClientProvider client={query}>
             <DataProtocolContext.Provider value={{ dataProtocolContextObject }}>
                 <ProviderContentProxy config={control.vp_Config} content={control.vp_Content}></ProviderContentProxy>
             </DataProtocolContext.Provider>

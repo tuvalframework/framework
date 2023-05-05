@@ -4,6 +4,7 @@ import { UIView } from "../UIView/UIView";
 import { UIViewRenderer } from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import PopupButtonRenderer from "./PopupButtonRenderer";
+import { DialogPosition } from "monday-ui-react-core/dist/types/constants/positions";
 
 export interface IDialogOffset {
     main: int;
