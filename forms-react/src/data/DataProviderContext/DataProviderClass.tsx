@@ -97,7 +97,7 @@ export const useProviderQuery = (query: string, variables: any = {}): any => {
     return { data: data ? data : {}, isLoading, error };
 }
 
-export const useProtocol = (provider: any): any => {
+export const useProtocol = (provider: symbol | string) => {
 
 
     const context = React.useContext(DataProtocolContext);
@@ -223,15 +223,27 @@ export const useProtocol = (provider: any): any => {
             return [mutation.mutate, mutation.isLoading, mutation.data];
 
         },
-        service: (name: string, _variables: any = {}) => {
+        service: (name: string, options: { onSuccess: Function } = {} as any) : any=> {
 
             const dataProvider = dataProviderContextValue.provider;
 
             const client = useQueryClient();
             const mutation = useMutation(variables => {
                 return dataProvider[name](client, variables)
+            }, {
+                onSuccess: (
+                    data: any,
+                    variables: any = {},
+                    context: unknown
+                ) => {
+                    const { onSuccess } = options;
+                    if (is.function(onSuccess)) {
+                        onSuccess(data, variables, context);
+                    }
+                }
             })
 
+            
             const resultObject = {};
             resultObject['isLoading'] = mutation.isLoading;
             resultObject[name] = mutation.mutate;
@@ -242,7 +254,7 @@ export const useProtocol = (provider: any): any => {
                 resultObject['result'] = {};
             }
 
-            return resultObject;
+            return resultObject ;
         }
     }
 }

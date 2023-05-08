@@ -33,7 +33,7 @@ class DialogController extends UIFormController {
         const propsView: DialogView = this.props.view;
         propsView.SetValue = this.SetValue.bind(this);
         propsView.GetValue = this.GetValue.bind(this);
-
+        
         return (
             ReactView(
                 <Dialog header={this.props.view.Header}
@@ -76,6 +76,15 @@ export class DialogView extends UIView {
     @ViewProperty()
     public isValid: boolean;
 
+    public constructor() {
+        super();
+        this.Header = '';
+        this.Width = '';
+        this.Height = '';
+        this.Visible = true;
+        this.Position = 'center';
+        this.ShowHeader = true;
+    }
 
     //public SetValue(name: string, value: any, silent?, isDirty?) { }
     //public GetValue(name: string) { }
