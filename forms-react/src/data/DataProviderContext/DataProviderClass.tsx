@@ -223,13 +223,13 @@ export const useProtocol = (provider: symbol | string) => {
             return [mutation.mutate, mutation.isLoading, mutation.data];
 
         },
-        service: (name: string, options: { onSuccess: Function } = {} as any) : any=> {
+        service: (name: string, options: { onSuccess: Function } = {} as any): any => {
 
             const dataProvider = dataProviderContextValue.provider;
 
             const client = useQueryClient();
             const mutation = useMutation(variables => {
-                return dataProvider[name](client, variables)
+                return dataProvider[name](client, variables, dataProviderContextValue.config || {})
             }, {
                 onSuccess: (
                     data: any,
@@ -238,12 +238,17 @@ export const useProtocol = (provider: symbol | string) => {
                 ) => {
                     const { onSuccess } = options;
                     if (is.function(onSuccess)) {
+                        if (data != null && data.data! != null) {
+                            data = data.data[name];
+                        } else {
+                            data = {};
+                        }
                         onSuccess(data, variables, context);
                     }
                 }
             })
 
-            
+
             const resultObject = {};
             resultObject['isLoading'] = mutation.isLoading;
             resultObject[name] = mutation.mutate;
@@ -254,7 +259,7 @@ export const useProtocol = (provider: symbol | string) => {
                 resultObject['result'] = {};
             }
 
-            return resultObject ;
+            return resultObject;
         }
     }
 }

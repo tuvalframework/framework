@@ -28,6 +28,12 @@ function PopupButtonRenderer({ control }: IControlProperties) {
     & .menu-button--wrapper:focus {
         background-color: transparent;
     }
+    & .dialog-content-container--medium {
+        padding:0px !important;
+    }
+    & .dialog-content-container--popover {
+        padding:0px !important;
+    }
 `;
 
     const WrapperComponent = () => {
@@ -78,57 +84,37 @@ function PopupButtonRenderer({ control }: IControlProperties) {
         const handle = () => setIsOpen(false)
         control.vp_HideHandle(handle);
     }
-    
+
     return (
 
-        <div className={className}>
-            <Dialog
-                isOpen={isOpen}
-                moveBy={computedDialogOffset}
-                content={<DialogContentContainer size={'medium'}
-                    type={'popover'}>
-                    <Content></Content>
-                </DialogContentContainer>}
-                //@ts-ignore
-                showTrigger={showTrigger}
-                hideTrigger={[Dialog.hideShowTriggers.CLICK_OUTSIDE]}
-                //@ts-ignore
-                animationType={'expand'}
-                //@ts-ignore
-                position={control.vp_DialogPosition}
-                dialogOffset={control.vp_DialogOffset}
-                startingEdge={"bottom"}
-                useDerivedStateFromProps={true}
-                onDialogDidShow={onDialogDidShow}
-                onDialogDidHide={onDialogDidHide}
-            >
-                <WrapperComponent></WrapperComponent>
 
-            </Dialog>
+        <Dialog
 
-            {/*    <MenuButton closeDialogOnContentClick={true}
-                //@ts-ignore
-                componentPosition={'start'}
-                dialogOffset={control.vp_DialogOffset}
+            wrapperClassName={className}
+            isOpen={isOpen}
+            moveBy={computedDialogOffset}
+            content={<DialogContentContainer size={'medium'}
+                type={'popover'}>
+                <Content></Content>
+            </DialogContentContainer>}
+            //@ts-ignore
+            showTrigger={showTrigger}
+            hideTrigger={[Dialog.hideShowTriggers.CLICK_OUTSIDE]}
+            //@ts-ignore
+            animationType={'expand'}
+            //@ts-ignore
+            position={control.vp_DialogPosition}
+            dialogOffset={control.vp_DialogOffset}
+            startingEdge={"bottom"}
+            useDerivedStateFromProps={true}
+            onDialogDidShow={onDialogDidShow}
+            onDialogDidHide={onDialogDidHide}
+        >
+            <WrapperComponent></WrapperComponent>
 
-                //@ts-ignore
-                dialogPosition={control.vp_DialogPosition}
-                component={WrapperComponent} zIndex={10000}
-            >
-                <Menu
-                    id="menu"
-                    size="large"
-                >
-                    <MenuGridItem>
-                        <Fragment>
-                            {
-                                control.vp_Children.map(view => <Fragment>{view.render()}</Fragment>)
-                            }
-                        </Fragment>
-                    </MenuGridItem>
-                </Menu>
-            </MenuButton>  */}
-        </div>
+        </Dialog>
+
+
     );
 
 }

@@ -15,6 +15,8 @@ export interface IControlProperties {
 function TextFieldProxy(_props) {
     const props = { ..._props };
 
+
+
     const _className = `textfield-view`;
 
     const children = props.children;
@@ -29,16 +31,20 @@ function TextFieldProxy(_props) {
     delete props['control'];
     delete props['children'];
 
+
+
     if (isMultiline) {
         return (
             <InputTextarea {...props} className={className}></InputTextarea>
         )
     } else {
+        console.log('----------------------------')
+        console.log(props)
         switch (maskType) {
             case MaskTypes.Number:
                 props['onValueChange'] = props['onChange'];
                 return (
-                    <InputNumber {...props} style={{width:'100%'}} inputClassName={className}></InputNumber>
+                    <InputNumber {...props} style={{ width: '100%' }} inputClassName={className}></InputNumber>
                 )
             default:
                 return (
