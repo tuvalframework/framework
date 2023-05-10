@@ -192,11 +192,17 @@ function DataProtocolRenderer({ control }: IControlProperties) {
         
     } */
 
-    debugger
     const providers = window.Reflect.ownKeys(result as any);
-   
+    let variables = control.vp_Config.variables;
+
+    if (dataProtocolContext?.qn === control.vp_qn) {
+        variables = Object.assign({ ...control.vp_Config.variables }, dataProtocolContext.config.variables)
+    }
+
+    Object.assign(control.vp_Config, { variables });
+
     for (let i = 0; i < providers.length; i++) {
-       
+
         if (dataProtocolContext == null) {
             dataProtocolContextObject[providers[i]] = { provider: result[providers[i]], config: control.vp_Config };
         } else if (dataProtocolContext.dataProtocolContextObject == null) {
@@ -210,7 +216,7 @@ function DataProtocolRenderer({ control }: IControlProperties) {
 
     return (
         <QueryClientProvider client={query}>
-            <DataProtocolContext.Provider value={{ dataProtocolContextObject }}>
+            <DataProtocolContext.Provider value={{ qn: control.vp_qn, dataProtocolContextObject, config: control.vp_Config }}>
                 <ProviderContentProxy config={control.vp_Config} content={control.vp_Content}></ProviderContentProxy>
             </DataProtocolContext.Provider>
         </QueryClientProvider>
