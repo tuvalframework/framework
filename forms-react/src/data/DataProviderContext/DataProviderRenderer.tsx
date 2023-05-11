@@ -196,7 +196,7 @@ function DataProtocolRenderer({ control }: IControlProperties) {
     let variables = control.vp_Config.variables;
 
     if (dataProtocolContext?.qn === control.vp_qn) {
-        variables = Object.assign({ ...control.vp_Config.variables }, dataProtocolContext.config.variables)
+        variables = Object.assign({ ...dataProtocolContext.config.variables }, control.vp_Config.variables)
     }
 
     Object.assign(control.vp_Config, { variables });

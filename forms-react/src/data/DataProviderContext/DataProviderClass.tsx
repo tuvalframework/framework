@@ -110,7 +110,7 @@ export const useProtocol = (provider: symbol | string) => {
             const client = useQueryClient();
 
             console.log(dataProviderContextValue.config)
-            const vars = Object.assign({ ...variables }, dataProviderContextValue.config.variables || {});
+            const vars = Object.assign({ ...dataProviderContextValue.config.variables || {} }, variables);
             let keys = Object.keys(vars);
 
             for (let i = 0; i < keys.length; i++) {
