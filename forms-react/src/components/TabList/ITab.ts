@@ -13,5 +13,6 @@ export interface ITab {
     value?: number;
     text?: string;
     disabled?: boolean;
+    view?: ()=> UIView;
 
 }

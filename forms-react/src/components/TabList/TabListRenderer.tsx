@@ -2,7 +2,7 @@ import { DatePicker, Tab, TabList } from "monday-ui-react-core";
 import { Calendar } from "primereact";
 import React from "react";
 import { TabListClass } from "./TabListClass";
-import { moment } from "@tuval/core";
+import { is, moment } from "@tuval/core";
 
 export interface IControlProperties {
     control: TabListClass
@@ -12,7 +12,7 @@ export interface IControlProperties {
 function TabListRenderer({ control }: IControlProperties) {
 
     return (
-        <TabList activeTabId={control.vp_ActiveTabIndex}>
+        <TabList activeTabId={control.vp_ActiveTabIndex} >
             {
                 control.vp_Tabs.map(tab =>
                     <Tab
@@ -25,7 +25,7 @@ function TabListRenderer({ control }: IControlProperties) {
                         onClick={tab.onClick}
                         value={tab.value}
                     >
-                        {tab.text}
+                        {is.function(tab.view) ? tab.view()?.render() as any: tab.text}
                     </Tab>
                 )
             }
