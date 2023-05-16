@@ -260,6 +260,56 @@ export const useProtocol = (provider: symbol | string) => {
             }
 
             return resultObject;
+        },
+        mutation: (query: string, options: { onSuccess: Function } = {} as any): any => {
+
+            query = `
+        mutation provider {
+                   ${query} 
+        }
+      `
+            const dataProvider = dataProviderContextValue.provider;
+
+            const client = useQueryClient();
+            const mutation = useMutation(variables => {
+                const keys = Object.keys(variables);
+                for (let i = 0; i < keys.length; i++) {
+                    const key = keys[i];
+                    if (is.string(variables[key])) {
+                        query = query.replace('$' + key, `"${variables[key]}"`);
+                    }
+                }
+                return dataProvider['mutation'](query, client, variables, dataProviderContextValue.config || {})
+            }, {
+                onSuccess: (
+                    data: any,
+                    variables: any = {},
+                    context: unknown
+                ) => {
+                    /*  const { onSuccess } = options;
+                     if (is.function(onSuccess)) {
+                         if (data != null && data.data! != null) {
+                             data = data.data[name];
+                         } else {
+                             data = {};
+                         }
+                         onSuccess(data, variables, context);
+                     } */
+                }
+            })
+
+
+            const resultObject = {};
+            resultObject['isLoading'] = mutation.isLoading;
+            resultObject['mutate'] = mutation.mutate;
+            const data: any = mutation.data;
+            if (data != null && data.data! != null) {
+                resultObject['result'] = data.data;
+            } else {
+                resultObject['result'] = {};
+            }
+
+            return resultObject;
         }
     }
 }
