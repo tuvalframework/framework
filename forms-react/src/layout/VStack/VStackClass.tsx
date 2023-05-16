@@ -31,6 +31,14 @@ export class VStackClass extends UIView {
         return this;
     }
 
+    /** @internal */
+    @ViewProperty() vp_DragableItems: boolean;
+
+    public dragableItems(value: boolean) {
+        this.vp_DragableItems = value;
+        return this;
+    }
+
     public constructor() {
         super();
         this.Appearance.FlexDirection = 'column';

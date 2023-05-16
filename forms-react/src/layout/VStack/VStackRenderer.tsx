@@ -2,16 +2,52 @@ import { css } from "@emotion/css";
 import { is } from "@tuval/core";
 import { motion } from "framer-motion";
 import { Tooltip } from "monday-ui-react-core";
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import { UIView } from "../../components/UIView/UIView";
 import { VStackClass } from "./VStackClass";
-import { ErrorBoundary } from "../../ErrorBoundary";
-
+import { DndContext, useDraggable } from "@dnd-kit/core";
+import { SortableContext, useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 export interface IControlProperties {
     control: VStackClass
 }
 
+function SortableItem({ id, view }) {
+    const {
+        attributes,
+        listeners,
+        setNodeRef,
+        transform,
+        transition,
+    } = useSortable({ id: id });
+
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+    };
+
+    return (
+        <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+            {view.render()}
+        </div>
+    );
+}
+function Draggable({ view }) {
+    const { attributes, listeners, setNodeRef, transform } = useDraggable({
+        id: 'draggable',
+    });
+    const style = transform ? {
+        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+    } : undefined;
+
+
+    return (
+        <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
+            {view.render()}
+        </div>
+    );
+}
 
 function VStackRenderer({ control }: IControlProperties) {
 
@@ -21,22 +57,10 @@ function VStackRenderer({ control }: IControlProperties) {
     ${control.ActiveAppearance.IsEmpty ? '' : '&:active { ' + control.ActiveAppearance.ToString() + ' }'}
     ${control.FocusAppearance.IsEmpty ? '' : '&:focus { ' + control.FocusAppearance.ToString() + ' }'}
     ${control.BeforeAppearance.IsEmpty ? '' : '&:focus { ' + control.FocusAppearance.ToString() + ' }'}
-    &:before {
-        ${control.BeforeAppearance.ToString()}
-     }
-    &:after {
-        ${control.AfterAppearance.ToString()}
-     }
+`;
 
-    `;
-
-    useEffect(() => {
-        if (control.vp_ScrollTop != null && control.vp_Ref.current) {
-            control.vp_Ref.current.scrollTop = control.vp_ScrollTop;
-        }
-    })
-
-    const events = control.GetEventsObject();
+    const events = {};
+    events['onClick'] = is.function(control.vp_OnClick) ? (e) => control.vp_OnClick(e) : void 0;
 
     const elementProperties = {}
     if (control.renderAsAnimated) {
@@ -91,23 +115,59 @@ function VStackRenderer({ control }: IControlProperties) {
         );
     }
 
-    const finalComponent = (
-        <div ref={control.vp_Ref} className={className} {...events}>
-            {
 
-                is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView, index) => {
-                    if (view == null || !(view instanceof UIView)) {
-                        return null;
-                    }
 
-                    if (control.vp_Spacing && index !== control.vp_Chidren.length - 1) {
-                        view.Appearance.MarginBottom = control.vp_Spacing;
+
+    let finalComponent;
+
+    if (control.vp_DragableItems) {
+        finalComponent = (
+            <div className={className} {...events}>
+                <SortableContext items={control.vp_Chidren.map((item, index) => ({id: index}))}>
+                    {
+                        is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView, index) => {
+                            if (view == null || !(view instanceof UIView)) {
+                                return null;
+                            }
+
+                            if (control.vp_Spacing) {
+                                view.Appearance.MarginBottom = control.vp_Spacing;
+                            }
+
+                            return (
+                                <SortableItem id={index} view={view}></SortableItem>
+                            )
+                        })
                     }
-                    return view.render();
-                })
-            }
-        </div>
-    )
+                </SortableContext>
+            </div>
+        )
+    } else {
+        finalComponent = (
+            <div className={className} {...events}>
+
+                {
+                    is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView) => {
+                        if (view == null || !(view instanceof UIView)) {
+                            return null;
+                        }
+
+                        if (control.vp_Spacing) {
+                            view.Appearance.MarginBottom = control.vp_Spacing;
+                        }
+
+                        return view.render();
+                    })
+                }
+
+            </div>
+        )
+    }
+
+
+
+
+
 
     if (control.vp_Tooltip) {
         return (
@@ -116,11 +176,7 @@ function VStackRenderer({ control }: IControlProperties) {
             </Tooltip>
         )
     }
-    return (
-
-        finalComponent
-
-    )
+    return finalComponent;
 
 
 }
