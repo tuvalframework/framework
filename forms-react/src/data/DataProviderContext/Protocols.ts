@@ -1,5 +1,9 @@
 
-
+export const WorkProtocol = {
+    Workspaces: Symbol('WorkProtocol.Workspaces'),
+    Folders: Symbol('WorkProtocol.Folders'),
+    Applets: Symbol('WorkProtocol.Applets')
+}
 export const TaskProtocol = {
     Tasks: Symbol('TaskProtocol.Tasks')
 }

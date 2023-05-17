@@ -106,77 +106,34 @@ export const useProtocol = (provider: symbol | string) => {
     const dataProviderContextValue = context.dataProtocolContextObject[provider];
     return {
         query: (query: string, variables: any = {}) => {
-            debugger
+
             const client = useQueryClient();
 
-            console.log(dataProviderContextValue.config)
-            const vars = Object.assign({ ...dataProviderContextValue.config.variables || {} }, variables);
-            let keys = Object.keys(vars);
-
+            query = `
+            query {
+                 ${query} 
+            }
+          `
+            const keys = Object.keys(variables);
             for (let i = 0; i < keys.length; i++) {
-                if (vars[keys[i]] == null) {
-                    delete vars[keys[i]];
+                const key = keys[i];
+                if (is.string(variables[key])) {
+                    query = query.replace('$' + key, `"${variables[key]}"`);
                 }
             }
-
-            const domainVariablesDefs = Object.keys(vars).map(key => {
-                const value = vars[key];
-                if (is.string(value)) {
-                    return ['$' + key, ':', 'String'].join('')
-                }
-            })
-
-            // alert(JSON.stringify(domainVariablesDefs.join(',')))
-
-            /*  keys = Object.keys(dataProviderContextValue.config.variables);
- 
-             for (let i = 0; i < keys.length; i++) {
-                 if (dataProviderContextValue.config.variables[keys[i]] == null) {
-                     delete dataProviderContextValue.config.variables[keys[i]];
-                 }
-             } */
-
-            const domainVariables = Object.keys(vars).map(key => {
-                return [key, ':', '$' + key].join('')
-            })
-
-
-            let _query = '';
-            if (Object.keys(vars).length > 0) {
-                _query = `
-        query provider(${domainVariablesDefs})
-            {
-                domain(${domainVariables}) {
-                   ${query}
-                }
-            }
-      `
-            } else {
-                _query = `
-        query provider {
-                domain {
-                   ${query}
-                }
-        }
-      `
-            }
-
-
-
-
             const dataProvider = dataProviderContextValue.provider;
             const { data: _data, isLoading, error } = useQuery(
                 // Sometimes the id comes as a string (e.g. when read from the URL in a Show view).
                 // Sometimes the id comes as a number (e.g. when read from a Record in useGetList response).
                 // As the react-query cache is type-sensitive, we always stringify the identifier to get a match
-                ['__query__', query, { ...vars }],
+                ['__query__', query, { ...variables }],
                 () =>
-                    dataProvider['query'](client, _query, vars, dataProviderContextValue.config),
+                    dataProvider['query'](client, query, variables, dataProviderContextValue.config),
                 {
                     // cacheTime: 0
                 }
             );
-            const data = ((_data as any)?.data as any)?.domain;
+            const data = ((_data as any)?.data as any);
             return { data: data ? data : {}, isLoading, error };
         },
         lazyQuery: (query: string, _variables: any = {}) => {
