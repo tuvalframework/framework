@@ -79,10 +79,6 @@ export const useProviderQuery = (query: string, variables: any = {}): any => {
         }
       `
     }
-
-
-
-
     const dataProvider = dataProviderContextValue.provider;
     const { data: _data, isLoading, error } = useQuery(
         // Sometimes the id comes as a string (e.g. when read from the URL in a Show view).
@@ -111,7 +107,7 @@ export const useProtocol = (provider: symbol | string) => {
 
             query = `
             query {
-                 ${query} 
+                 ${query}
             }
           `
             const keys = Object.keys(variables);
@@ -129,6 +125,36 @@ export const useProtocol = (provider: symbol | string) => {
                 ['__query__', query, { ...variables }],
                 () =>
                     dataProvider['query'](client, query, variables, dataProviderContextValue.config),
+                {
+                    // cacheTime: 0
+                }
+            );
+            const data = ((_data as any)?.data as any);
+            return { data: data ? data : {}, isLoading, error };
+        },
+        _query: (_query: TemplateStringsArray, ...expr: Array<any>) => {
+
+            const client = useQueryClient();
+
+            let query = '';
+            _query.forEach((string, i) => {
+                query += string + ((is.string(expr[i]) ? `"${expr[i]}"` : expr[i]) || '');
+            });
+
+            query = `
+            query {
+                 ${query}
+            }
+          `
+
+            const dataProvider = dataProviderContextValue.provider;
+            const { data: _data, isLoading, error } = useQuery(
+                // Sometimes the id comes as a string (e.g. when read from the URL in a Show view).
+                // Sometimes the id comes as a number (e.g. when read from a Record in useGetList response).
+                // As the react-query cache is type-sensitive, we always stringify the identifier to get a match
+                ['__query__', query],
+                () =>
+                    dataProvider['query'](client, query, {}, dataProviderContextValue.config),
                 {
                     // cacheTime: 0
                 }
@@ -222,7 +248,7 @@ export const useProtocol = (provider: symbol | string) => {
 
             query = `
         mutation provider {
-                   ${query} 
+                   ${query}
         }
       `
             const dataProvider = dataProviderContextValue.provider;
@@ -267,6 +293,67 @@ export const useProtocol = (provider: symbol | string) => {
             }
 
             return resultObject;
+        },
+        _mutation: (_query: TemplateStringsArray, ...expr: Array<any>): { mutate: (variables: any, onSuccess: Function) => void } => {
+
+            let query = '';
+            _query.forEach((string, i) => {
+                query += string + ((is.string(expr[i]) ? `"${expr[i]}"` : expr[i]) || '');
+            });
+
+            query = `
+        mutation provider {
+                   ${query}
+        }
+      `
+            const dataProvider = dataProviderContextValue.provider;
+
+            const client = useQueryClient();
+
+            let _onSuccess = void 0;
+
+            const mutation = useMutation((variables: any, onSuccess: Function = void 0) => {
+                _onSuccess = onSuccess;
+
+                const keys = Object.keys(variables);
+                for (let i = 0; i < keys.length; i++) {
+                    const key = keys[i];
+                    if (is.string(variables[key])) {
+                        query = query.replace('$' + key, `"${variables[key]}"`);
+                    }
+                }
+                return dataProvider['mutation'](query, client, variables, dataProviderContextValue.config || {})
+            }, {
+                onSuccess: (
+                    data: any,
+                    variables: any = {},
+                    context: unknown
+                ) => {
+                    _onSuccess();
+                    /*  const { onSuccess } = options;
+                     if (is.function(onSuccess)) {
+                         if (data != null && data.data! != null) {
+                             data = data.data[name];
+                         } else {
+                             data = {};
+                         }
+                         onSuccess(data, variables, context);
+                     } */
+                }
+            })
+
+
+            const resultObject = {};
+            resultObject['isLoading'] = mutation.isLoading;
+            resultObject['mutate'] = mutation.mutate;
+            const data: any = mutation.data;
+            if (data != null && data.data! != null) {
+                resultObject['result'] = data.data;
+            } else {
+                resultObject['result'] = {};
+            }
+
+            return resultObject as any;
         }
     }
 }
