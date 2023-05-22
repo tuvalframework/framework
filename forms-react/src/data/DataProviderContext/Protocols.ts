@@ -1,14 +1,6 @@
 
-export const WorkProtocol = {
-    Workspaces: Symbol('WorkProtocol.Workspaces'),
-    Folders: Symbol('WorkProtocol.Folders'),
-    Applets: Symbol('WorkProtocol.Applets'),
-    Scopes: Symbol('WorkProtocol.Scopes'),
-    Views: Symbol('WorkProtocol.Views')
-}
-export const TaskProtocol = {
-    Tasks: Symbol('TaskProtocol.Tasks')
-}
+export const WorkProtocol = Symbol('WorkProtocol');
+export const TaskProtocol =  Symbol('TaskProtocol');
 
 export const DriveProtocol = {
     Storage: Symbol('DriveProtocol.Storage'),
