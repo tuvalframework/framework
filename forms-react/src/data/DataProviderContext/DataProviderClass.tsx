@@ -9,6 +9,15 @@ import { Guid, is } from "@tuval/core";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { gql } from "@apollo/client";
 
+type  MutateType = (variables: any, {
+    onError,
+    onSettled,
+    onSuccess,
+}?: {
+    onError?: Function,
+    onSettled?: Function,
+    onSuccess?: Function,
+}) => void;
 
 export const DataProtocolContext = createContext<any>(null!);
 
@@ -294,43 +303,75 @@ export const useProtocol = (provider: symbol | string) => {
 
             return resultObject;
         },
-        _mutation: (_query: TemplateStringsArray, ...expr: Array<any>): { mutate: (variables: any, onSuccess: Function) => void } => {
+        _mutation: (_query: TemplateStringsArray, ...expr: Array<any>): {
+            mutate: (variables: any, {
+                onError,
+                onSettled,
+                onSuccess,
+            }?: {
+                onError?: Function,
+                onSettled?: Function,
+                onSuccess?: Function,
+            }) => void
+        } => {
 
-            let query = '';
+            let query: string = '';
             _query.forEach((string, i) => {
                 query += string + ((is.string(expr[i]) ? `"${expr[i]}"` : expr[i]) || '');
             });
 
-            query = `
-        mutation provider {
-                   ${query}
-        }
-      `
+
             const dataProvider = dataProviderContextValue.provider;
 
             const client = useQueryClient();
 
-            let _onSuccess = void 0;
-
-            const mutation = useMutation((variables: any, onSuccess: Function = void 0) => {
-                _onSuccess = onSuccess;
+            const mutation = useMutation((variables: any) => {
+                const index = query.indexOf('{');
+                const pantesisIndex = query.indexOf('(');
+                const pantesisIndex1 = query.indexOf(')');
 
                 const keys = Object.keys(variables);
+                if (index > -1 && pantesisIndex === -1 && pantesisIndex1 === -1) {
+                    let paramsStr = '';
+                    for (let i = 0; i < keys.length; i++) {
+                        if (i === keys.length - 1) {
+                            paramsStr += `${keys[i]}:$${keys[i]}`;
+                        }
+                        else {
+                            paramsStr += `${keys[i]}:$${keys[i]},`
+                        }
+                    }
+
+                    query = [query.slice(0, index),'(', paramsStr, ')', query.slice(index)].join('');
+
+                    query = `
+                    mutation provider {
+                               ${query}
+                    }
+                  `
+
+                    //alert(query)
+                }
+
+
                 for (let i = 0; i < keys.length; i++) {
                     const key = keys[i];
                     if (is.string(variables[key])) {
                         query = query.replace('$' + key, `"${variables[key]}"`);
+                    } else if (is.nullOrUndefined(variables[key])) {
+                        query = query.replace('$' + key, `null`);
                     }
                 }
+               // alert(query)
                 return dataProvider['mutation'](query, client, variables, dataProviderContextValue.config || {})
-            }, {
+            }/* , {
                 onSuccess: (
                     data: any,
                     variables: any = {},
                     context: unknown
                 ) => {
-                    _onSuccess();
-                    /*  const { onSuccess } = options;
+
+                      const { onSuccess } = options;
                      if (is.function(onSuccess)) {
                          if (data != null && data.data! != null) {
                              data = data.data[name];
@@ -338,14 +379,29 @@ export const useProtocol = (provider: symbol | string) => {
                              data = {};
                          }
                          onSuccess(data, variables, context);
-                     } */
+                     }
                 }
-            })
+            } */
+            )
 
 
             const resultObject = {};
             resultObject['isLoading'] = mutation.isLoading;
-            resultObject['mutate'] = mutation.mutate;
+            resultObject['mutate'] = (variables: any[], options: any) => {
+                mutation.mutate(variables, {
+                    onSuccess: (data: any) => {
+                        if (is.function(options.onSuccess)) {
+                            if (data?.data != null) {
+                                const keys = Object.keys(data.data);
+                                if (keys.length > 0) {
+                                    options.onSuccess(data.data[keys[0]]);
+                                }
+                            }
+                            options.onSuccess();
+                        }
+                    }
+                })
+            }
             const data: any = mutation.data;
             if (data != null && data.data! != null) {
                 resultObject['result'] = data.data;
@@ -389,6 +445,7 @@ export class DataProtocolClass<T> extends UIView {
 
     public constructor() {
         super();
+        this.vp_Config = {};
     }
 
     public render() {

@@ -189,14 +189,14 @@ function DataProtocolRenderer({ control }: IControlProperties) {
     if (isLoading) return null;
 
     /* for(let i=0;i<results.length;i++){
-        
+
     } */
 
     const providers = window.Reflect.ownKeys(result as any);
-    let variables = control.vp_Config.variables;
+    let variables = control.vp_Config?.variables || {};
 
     if (dataProtocolContext?.qn === control.vp_qn) {
-        variables = Object.assign({ ...dataProtocolContext.config.variables }, control.vp_Config.variables)
+        variables = Object.assign({ ...dataProtocolContext.config.variables }, control.vp_Config?.variables || {})
     }
 
     Object.assign(control.vp_Config, { variables });

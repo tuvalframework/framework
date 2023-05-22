@@ -2,7 +2,9 @@
 export const WorkProtocol = {
     Workspaces: Symbol('WorkProtocol.Workspaces'),
     Folders: Symbol('WorkProtocol.Folders'),
-    Applets: Symbol('WorkProtocol.Applets')
+    Applets: Symbol('WorkProtocol.Applets'),
+    Scopes: Symbol('WorkProtocol.Scopes'),
+    Views: Symbol('WorkProtocol.Views')
 }
 export const TaskProtocol = {
     Tasks: Symbol('TaskProtocol.Tasks')
@@ -17,4 +19,6 @@ export const DriveProtocol = {
 
 export const OKRProtocol = Symbol('OKRProtocol');
 export const KanbanProtocol = Symbol('OKRProtocol');
-export const DirectoryProtocol = Symbol('DirectoryProtocol');
+export const DirectoryProtocol = {
+    Employee : Symbol('DirectoryProtocol.Employee')
+}
