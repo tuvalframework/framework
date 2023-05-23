@@ -171,6 +171,36 @@ export const useProtocol = (provider: symbol | string) => {
             const data = ((_data as any)?.data as any);
             return { data: data ? data : {}, isLoading, error };
         },
+        gql: (_query: TemplateStringsArray, ...expr: Array<any>) => {
+
+            const client = useQueryClient();
+
+            let query = '';
+            _query.forEach((string, i) => {
+                query += string + ((is.string(expr[i]) ? `"${expr[i]}"` : expr[i]) || '');
+            });
+
+            query = `
+            query {
+                 ${query}
+            }
+          `
+
+            const dataProvider = dataProviderContextValue.provider;
+            const { data: _data, isLoading, error } = useQuery(
+                // Sometimes the id comes as a string (e.g. when read from the URL in a Show view).
+                // Sometimes the id comes as a number (e.g. when read from a Record in useGetList response).
+                // As the react-query cache is type-sensitive, we always stringify the identifier to get a match
+                ['__query__', query],
+                () =>
+                    dataProvider['query'](client, query, {}, dataProviderContextValue.config),
+                {
+                    // cacheTime: 0
+                }
+            );
+            const data = ((_data as any)?.data as any);
+            return { data: data ? data : {}, isLoading, error };
+        },
         lazyQuery: (query: string, _variables: any = {}) => {
 
             const dataProvider = dataProviderContextValue.provider;
