@@ -9,7 +9,7 @@ import { Guid, is } from "@tuval/core";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { gql } from "@apollo/client";
 
-type  MutateType = (variables: any, {
+type MutateType = (variables: any, {
     onError,
     onSettled,
     onSuccess,
@@ -198,8 +198,14 @@ export const useProtocol = (provider: symbol | string) => {
                     // cacheTime: 0
                 }
             );
+
+            const invalidateQuery = () => {
+                client.invalidateQueries(['__query__', query]);
+            }
+
             const data = ((_data as any)?.data as any);
-            return { data: data ? data : {}, isLoading, error };
+
+            return { data: data ? data : {}, isLoading, error, invalidateQuery };
         },
         lazyQuery: (query: string, _variables: any = {}) => {
 
@@ -372,7 +378,7 @@ export const useProtocol = (provider: symbol | string) => {
                         }
                     }
 
-                    query = [query.slice(0, index),'(', paramsStr, ')', query.slice(index)].join('');
+                    query = [query.slice(0, index), '(', paramsStr, ')', query.slice(index)].join('');
 
                     query = `
                     mutation provider {
@@ -392,7 +398,7 @@ export const useProtocol = (provider: symbol | string) => {
                         query = query.replace('$' + key, `null`);
                     }
                 }
-               // alert(query)
+                // alert(query)
                 return dataProvider['mutation'](query, client, variables, dataProviderContextValue.config || {})
             }/* , {
                 onSuccess: (
@@ -420,14 +426,17 @@ export const useProtocol = (provider: symbol | string) => {
             resultObject['mutate'] = (variables: any[], options: any) => {
                 mutation.mutate(variables, {
                     onSuccess: (data: any) => {
+                      
                         if (is.function(options.onSuccess)) {
                             if (data?.data != null) {
                                 const keys = Object.keys(data.data);
                                 if (keys.length > 0) {
                                     options.onSuccess(data.data[keys[0]]);
                                 }
+                            } else {
+                                options.onSuccess();
                             }
-                            options.onSuccess();
+                            
                         }
                     }
                 })
