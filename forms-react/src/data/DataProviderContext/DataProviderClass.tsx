@@ -348,7 +348,9 @@ export const useProtocol = (provider: symbol | string) => {
                 onError?: Function,
                 onSettled?: Function,
                 onSuccess?: Function,
-            }) => void
+            }) => void,
+            isSuccess: boolean,
+            isLoading: boolean
         } => {
 
             let query: string = '';
@@ -394,12 +396,129 @@ export const useProtocol = (provider: symbol | string) => {
                     const key = keys[i];
                     if (is.string(variables[key])) {
                         query = query.replace('$' + key, `"${variables[key]}"`);
+                    } else if (is.boolean(variables[key])) {
+                        query = variables[key] ? query.replace('$' + key, `true`) : query.replace('$' + key, `false`);
+                    } else if (is.nullOrUndefined(variables[key])) {
+                        query = query.replace('$' + key, `null`);
+                    }
+                }
+                //alert(query)
+                return dataProvider['mutation'](query, client, variables, dataProviderContextValue.config || {})
+            }/* , {
+                onSuccess: (
+                    data: any,
+                    variables: any = {},
+                    context: unknown
+                ) => {
+
+                      const { onSuccess } = options;
+                     if (is.function(onSuccess)) {
+                         if (data != null && data.data! != null) {
+                             data = data.data[name];
+                         } else {
+                             data = {};
+                         }
+                         onSuccess(data, variables, context);
+                     }
+                }
+            } */
+            )
+
+
+            const resultObject = {};
+            resultObject['isLoading'] = mutation.isLoading;
+            resultObject['isSuccess'] = mutation.isSuccess;
+            resultObject['mutate'] = (variables: any[], options: any) => {
+              
+                    mutation.mutate(variables, {
+                        onSuccess: (data: any) => {
+    
+                            if (is.function(options.onSuccess)) {
+                                if (data?.data != null) {
+                                    const keys = Object.keys(data.data);
+                                    if (keys.length > 0) {
+                                        options.onSuccess(data.data[keys[0]]);
+                                    }
+                                } else {
+                                    options.onSuccess();
+                                }
+    
+                            }
+                        }
+                    })
+                
+                
+            }
+            const data: any = mutation.data;
+            if (data != null && data.data! != null) {
+                resultObject['result'] = data.data;
+            } else {
+                resultObject['result'] = {};
+            }
+
+            return resultObject as any;
+        },
+        _service: (_query: TemplateStringsArray, ...expr: Array<any>): {
+            mutate: (variables: any, {
+                onError,
+                onSettled,
+                onSuccess,
+            }?: {
+                onError?: Function,
+                onSettled?: Function,
+                onSuccess?: Function,
+            }) => void
+        } => {
+
+            let query: string = '';
+            _query.forEach((string, i) => {
+                query += string + ((is.string(expr[i]) ? `"${expr[i]}"` : expr[i]) || '');
+            });
+
+
+            const dataProvider = dataProviderContextValue.provider;
+
+            const client = useQueryClient();
+
+            const mutation = useMutation((variables: any) => {
+                const index = query.indexOf('{');
+                const pantesisIndex = query.indexOf('(');
+                const pantesisIndex1 = query.indexOf(')');
+
+                const keys = Object.keys(variables);
+                if (index > -1 && pantesisIndex === -1 && pantesisIndex1 === -1) {
+                    let paramsStr = '';
+                    for (let i = 0; i < keys.length; i++) {
+                        if (i === keys.length - 1) {
+                            paramsStr += `${keys[i]}:$${keys[i]}`;
+                        }
+                        else {
+                            paramsStr += `${keys[i]}:$${keys[i]},`
+                        }
+                    }
+
+                    query = [query.slice(0, index), '(', paramsStr, ')', query.slice(index)].join('');
+
+                    query = `
+                    service provider {
+                               ${query}
+                    }
+                  `
+
+                    //alert(query)
+                }
+
+
+                for (let i = 0; i < keys.length; i++) {
+                    const key = keys[i];
+                    if (is.string(variables[key])) {
+                        query = query.replace('$' + key, `"${variables[key]}"`);
                     } else if (is.nullOrUndefined(variables[key])) {
                         query = query.replace('$' + key, `null`);
                     }
                 }
                 // alert(query)
-                return dataProvider['mutation'](query, client, variables, dataProviderContextValue.config || {})
+                return dataProvider['service'](query, client, variables, dataProviderContextValue.config || {})
             }/* , {
                 onSuccess: (
                     data: any,
@@ -426,7 +545,7 @@ export const useProtocol = (provider: symbol | string) => {
             resultObject['mutate'] = (variables: any[], options: any) => {
                 mutation.mutate(variables, {
                     onSuccess: (data: any) => {
-                      
+
                         if (is.function(options.onSuccess)) {
                             if (data?.data != null) {
                                 const keys = Object.keys(data.data);
@@ -436,7 +555,7 @@ export const useProtocol = (provider: symbol | string) => {
                             } else {
                                 options.onSuccess();
                             }
-                            
+
                         }
                     }
                 })
