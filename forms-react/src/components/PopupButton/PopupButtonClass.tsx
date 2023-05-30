@@ -4,7 +4,7 @@ import { UIView } from "../UIView/UIView";
 import { UIViewRenderer } from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import PopupButtonRenderer from "./PopupButtonRenderer";
-import { DialogPosition } from "monday-ui-react-core/dist/types/constants/positions";
+import { DialogPosition } from "../MenuButton/MenuButtonRenderer";
 
 export interface IDialogOffset {
     main: int;
@@ -31,9 +31,9 @@ export class PopupButtonClass extends UIView {
 
 
     /** @internal */
-    @ViewProperty() vp_DialogPosition: string;
+    @ViewProperty() vp_DialogPosition: DialogPosition;
 
-    public dialogPosition(value: string) {
+    public dialogPosition(value: DialogPosition) {
         this.vp_DialogPosition = value;
         return this;
     }

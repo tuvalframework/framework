@@ -3,7 +3,7 @@ import React from "react";
 import { UIView } from "../UIView/UIView";
 import { UIViewRenderer } from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
-import ColorPickerRenderer from "./MenuButtonRenderer";
+import ColorPickerRenderer, { DialogPosition } from "./MenuButtonRenderer";
 import ChipsRenderer from "./MenuButtonRenderer";
 
 
@@ -31,6 +31,14 @@ export class MenuButtonClass extends UIView {
         this.vp_Icon = value;
         return this;
     }
+
+     /** @internal */
+     @ViewProperty() vp_DialogPosition: DialogPosition;
+
+     public dialogPosition(value: DialogPosition) {
+         this.vp_DialogPosition = value;
+         return this;
+     }
 
     /** @internal */
     @ViewProperty() vp_Value: string;

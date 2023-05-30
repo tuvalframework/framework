@@ -103,9 +103,10 @@ function MenuButtonRenderer({ control }: IControlProperties) {
             closeDialogOnContentClick={true} 
            // componentPosition={MenuButtonComponentPosition.START}
                 dialogOffset={{ main: 0, secondary: 0 }}
-               dialogPosition={DialogPosition.TOP} 
+               dialogPosition={ control.vp_DialogPosition} 
                 component={control.vp_Icon} 
-                //zIndex={10000} size={MenuButtonSize.XS}
+                //zIndex={10000} 
+                size={MenuButtonSize.XS}
             >
                 <Menu id="menu" size="medium" >
 
