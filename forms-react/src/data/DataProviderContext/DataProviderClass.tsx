@@ -358,12 +358,15 @@ export const useProtocol = (provider: symbol | string) => {
                 query += string + ((is.string(expr[i]) ? `"${expr[i]}"` : expr[i]) || '');
             });
 
+           
+
 
             const dataProvider = dataProviderContextValue.provider;
 
             const client = useQueryClient();
 
             const mutation = useMutation((variables: any) => {
+                debugger
                 const index = query.indexOf('{');
                 const pantesisIndex = query.indexOf('(');
                 const pantesisIndex1 = query.indexOf(')');
@@ -382,15 +385,17 @@ export const useProtocol = (provider: symbol | string) => {
 
                     query = [query.slice(0, index), '(', paramsStr, ')', query.slice(index)].join('');
 
-                    query = `
-                    mutation provider {
-                               ${query}
-                    }
-                  `
+                 
 
                     //alert(query)
                 }
 
+                query = `
+                mutation provider {
+                           ${query}
+                }
+              `
+                
 
                 for (let i = 0; i < keys.length; i++) {
                     const key = keys[i];
