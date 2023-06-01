@@ -1,4 +1,4 @@
-import { Guid, int, is } from "@tuval/core";
+import { Guid, foreach, int, is } from "@tuval/core";
 import { AppearanceObject } from "./AppearanceObject";
 import { ViewProperty } from "./ViewProperty";
 import { StyleAttribute } from "./StyleAttribute";
@@ -6,6 +6,7 @@ import { ColorClass } from "./ColorClass";
 import React from "react";
 import { AlignmentType, cBottom, cBottomLeading, cBottomTrailing, cCenter, cHorizontal, cLeading, cLeft, CornerRadiusTypes, cRight, cTop, cTopLeading, cTopTrailing, cTrailing, cVertical, FontWeightModifierTypes, PositionTypes, ShadowTypes, TextAligns, TextTransforms, VerticalAligns } from "../../Constants";
 import { css } from "@emotion/css";
+import { KeyFrameCollection } from './KeyFrameCollection';
 
 const DefaultPaddingValue = '1rem';
 const DefaultMarginValue = '5px';
@@ -23,6 +24,9 @@ export class UIView {
     public EndUpdate() {
         this.silentMode = false;
     }
+
+    @ViewProperty()
+    public KeyFrameCollection: KeyFrameCollection[];
 
     @ViewProperty()
     public vp_Key: string;
@@ -86,6 +90,8 @@ export class UIView {
         // console.log(key);
         this.EndUpdate();
 
+        this.vp_Visible = true;
+
         this.Appearance = new AppearanceObject(this);
         this.HoverAppearance = new AppearanceObject(this);
         this.FocusAppearance = new AppearanceObject(this);
@@ -93,6 +99,8 @@ export class UIView {
         this.DisabledAppearance = new AppearanceObject(this);
         this.BeforeAppearance = new AppearanceObject(this);
         this.AfterAppearance = new AppearanceObject(this);
+
+        this.KeyFrameCollection = [];
 
 
         this.Appearance.Position = PositionTypes.Relative;
@@ -2262,6 +2270,8 @@ export class UIView {
 
         return className;
     }
+
+  
     public render(): React.ReactNode {
         return null;
     }

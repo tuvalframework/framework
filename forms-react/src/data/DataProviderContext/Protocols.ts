@@ -9,6 +9,8 @@ export const DriveProtocol = {
 }
 
 
+export const ProcessMiningProtocol = Symbol('ProcessMiningProtocol');
+
 export const OKRProtocol = Symbol('OKRProtocol');
 export const KanbanProtocol = Symbol('OKRProtocol');
 export const DirectoryProtocol = {

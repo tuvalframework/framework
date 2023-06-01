@@ -7,6 +7,7 @@ import { UIViewRenderer } from "../../components/UIView/UIViewRenderer";
 import { ViewProperty } from "../../components/UIView/ViewProperty";
 import VStackRenderer from "./VStackRenderer";
 import { TooltipPositions } from "../../components/Tooltip/TooltipClass";
+import { KeyFrameCollection } from "../../components/UIView/KeyFrameCollection";
 
 export class VStackClass extends UIView {
 
@@ -161,7 +162,19 @@ export class VStackClass extends UIView {
         }
         return this;
     }
+
+    public animation(value: KeyFrameCollection, time: string): this {
+        this.KeyFrameCollection.push(value);
+
+        // Set animation
+        foreach(this.vp_Chidren as any, (view: UIView) => {
+            view.Appearance.Animation = `${value.Name} ${time}`
+        })
+        return this;
+    }
     public render() {
-        return (<VStackRenderer control={this} ></VStackRenderer>)
+        if (this.vp_Visible) {
+            return (<VStackRenderer control={this} ></VStackRenderer>)
+        }
     }
 }
