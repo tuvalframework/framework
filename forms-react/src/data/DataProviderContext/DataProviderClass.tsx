@@ -395,13 +395,18 @@ export const useProtocol = (provider: symbol | string) => {
                            ${query}
                 }
               `
-                
+                debugger
 
                 for (let i = 0; i < keys.length; i++) {
                     const key = keys[i];
                     if (is.string(variables[key])) {
                         query = query.replace('$' + key, `"${variables[key]}"`);
-                    } else if (is.boolean(variables[key])) {
+                    } else if (is.array(variables[key]) && variables[key].length > 0 && is.string(variables[key][0])) {
+                       
+                        query = query.replace('$' + key, `[${variables[key].map(item => '"' + item + '"').join(',')}]`);
+                      
+
+                    }  else if (is.boolean(variables[key])) {
                         query = variables[key] ? query.replace('$' + key, `true`) : query.replace('$' + key, `false`);
                     } else if (is.nullOrUndefined(variables[key])) {
                         query = query.replace('$' + key, `null`);
