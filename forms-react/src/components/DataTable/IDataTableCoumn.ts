@@ -5,6 +5,7 @@ export interface IDataTableColumn {
     field?: string;
     header?: ((data: any) => UIView) | string;
     body?: ((rowData: any) => UIView);
+    editor?:((rowData: any) => UIView);
     align?: null | "center" | "left" | "right";
     alignFrozen?: "left" | "right";
     alignHeader?: null | "center" | "left" | "right";
@@ -14,7 +15,6 @@ export interface IDataTableColumn {
     colSpan?: number;
     columnKey?: string;
     dataType?: string;
-    editor?: any;
     excludeGlobalFilter?: boolean;
     filter?:	boolean;
     filterApply?: Function;
@@ -23,4 +23,5 @@ export interface IDataTableColumn {
     filterField?: string;
     sortable?:boolean;
     width?: string;
+    rowEditor?:boolean;
 }

@@ -12,6 +12,14 @@ import { IDataTableColumn } from "./IDataTableCoumn";
 
 export class DataTableClass extends UIView  implements IDataTableProperties{
 
+     /** @internal */
+     @ViewProperty() vp_EditMode:  "cell" | "row";
+
+     public editMode(value: "cell" | "row") {
+         this.vp_EditMode = value;
+         return this;
+     }
+
       /** @internal */
       @ViewProperty() vp_Columns: IDataTableColumn[];
 

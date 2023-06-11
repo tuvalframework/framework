@@ -13,6 +13,4 @@ export const ProcessMiningProtocol = Symbol('ProcessMiningProtocol');
 
 export const OKRProtocol = Symbol('OKRProtocol');
 export const KanbanProtocol = Symbol('OKRProtocol');
-export const DirectoryProtocol = {
-    Employee : Symbol('DirectoryProtocol.Employee')
-}
+export const DirectoryProtocol =  Symbol('DirectoryProtocol')

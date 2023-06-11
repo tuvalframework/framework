@@ -10,7 +10,7 @@ import { IDataTableColumn } from "./IDataTableCoumn";
 
 
 
-function DataTableRenderer({ control }: { control: IDataTableProperties }) {
+function DataTableRenderer({ control }: { control: DataTableClass }) {
     const view: DataTableClass = control as any;
 
     const headerRenderer = (column: IDataTableColumn) => {
@@ -37,10 +37,24 @@ function DataTableRenderer({ control }: { control: IDataTableProperties }) {
         }
     }
 
+    const editorRenderer = (column: IDataTableColumn) => {
+        if (is.function(column.editor)) {
+            return (rowData) => {
+                const view = column.editor(rowData);
+                if (view instanceof UIView) {
+                    return view.render()
+                }
+            }
+        }
+    }
+
 
 
     return (
-        <DataTable value={control.vp_Model} filterDisplay="row" tableClassName={view.GetClassName()} tableStyle={{ minWidth: '50rem' }} scrollable scrollHeight="flex" paginator rows={20} rowsPerPageOptions={[20, 50, 100]}>
+        <DataTable value={control.vp_Model} filterDisplay="row"
+            tableClassName={view.GetClassName()} tableStyle={{ minWidth: '50rem' }} scrollable scrollHeight="flex"
+            editMode={control.vp_EditMode}
+            paginator rows={20} rowsPerPageOptions={[20, 50, 100]}>
             {
                 control.vp_Columns.map(column =>
                     <Column
@@ -48,11 +62,13 @@ function DataTableRenderer({ control }: { control: IDataTableProperties }) {
                         field={column.field}
                         header={headerRenderer(column)}
                         body={bodyRenderer(column)}
+                        editor={editorRenderer(column)}
                         style={{ width: column.width, minWidth: column.width, maxWidth: column.width }}
                         sortable={column.sortable}
                         filterField={column.field}
                         filter={column.filter}
                         filterPlaceholder="Search"
+                        rowEditor={column.rowEditor}
                     >
 
                     </Column>
