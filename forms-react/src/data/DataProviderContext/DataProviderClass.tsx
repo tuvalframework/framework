@@ -195,7 +195,7 @@ export const useProtocol = (provider: symbol | string) => {
                 () =>
                     dataProvider['query'](client, query, {}, dataProviderContextValue.config),
                 {
-                    // cacheTime: 0
+                     cacheTime: 0
                 }
             );
 
@@ -358,7 +358,7 @@ export const useProtocol = (provider: symbol | string) => {
                 query += string + ((is.string(expr[i]) ? `"${expr[i]}"` : expr[i]) || '');
             });
 
-           
+
 
 
             const dataProvider = dataProviderContextValue.provider;
@@ -385,7 +385,7 @@ export const useProtocol = (provider: symbol | string) => {
 
                     query = [query.slice(0, index), '(', paramsStr, ')', query.slice(index)].join('');
 
-                 
+
 
                     //alert(query)
                 }
@@ -402,9 +402,9 @@ export const useProtocol = (provider: symbol | string) => {
                     if (is.string(variables[key])) {
                         query = query.replace('$' + key, `"${variables[key]}"`);
                     } else if (is.array(variables[key]) && variables[key].length > 0 && is.string(variables[key][0])) {
-                       
+
                         query = query.replace('$' + key, `[${variables[key].map(item => '"' + item + '"').join(',')}]`);
-                      
+
 
                     }  else if (is.boolean(variables[key])) {
                         query = variables[key] ? query.replace('$' + key, `true`) : query.replace('$' + key, `false`);
@@ -439,10 +439,10 @@ export const useProtocol = (provider: symbol | string) => {
             resultObject['isLoading'] = mutation.isLoading;
             resultObject['isSuccess'] = mutation.isSuccess;
             resultObject['mutate'] = (variables: any[], options: any) => {
-              
+
                     mutation.mutate(variables, {
                         onSuccess: (data: any) => {
-    
+
                             if (is.function(options.onSuccess)) {
                                 if (data?.data != null) {
                                     const keys = Object.keys(data.data);
@@ -452,12 +452,12 @@ export const useProtocol = (provider: symbol | string) => {
                                 } else {
                                     options.onSuccess();
                                 }
-    
+
                             }
                         }
                     })
-                
-                
+
+
             }
             const data: any = mutation.data;
             if (data != null && data.data! != null) {

@@ -10,5 +10,5 @@ export * from 'ra-core'
 export {fetchUtils} from 'ra-core'
 
 
-import * as _jsonServerProvider from 'ra-data-json-server'
+import * as _jsonServerProvider from './json-server';
 export const jsonServerProvider = _jsonServerProvider.default;
