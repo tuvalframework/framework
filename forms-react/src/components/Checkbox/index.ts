@@ -1,4 +1,4 @@
 
 
-//export * from './CheckBox'
+export * from './Checkbox'
 export * from './CheckboxClass'

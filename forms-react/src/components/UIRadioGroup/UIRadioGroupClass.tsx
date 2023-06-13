@@ -14,11 +14,28 @@ export interface IRadioButton {
 
 export class UIRadioGroupClass extends UIView {
 
+     /** @internal */
+     @ViewProperty() vp_Value: string;
+
+     public value(value: string) {
+         this.vp_Value = value;
+         return this;
+     }
+
     @ViewProperty() vp_RadioButtons: IRadioButton[];
     public radioButtons(value:IRadioButton[]): this {
+ 
         this.vp_RadioButtons = value;
         return this;
     }
+
+     /** @internal */
+     @ViewProperty() vp_OnChange: Function;
+
+     public onChange(value: Function) {
+         this.vp_OnChange = value;
+         return this;
+     }
 
     public constructor() {
         super();

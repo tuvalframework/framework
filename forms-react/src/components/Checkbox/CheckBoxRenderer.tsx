@@ -1,8 +1,9 @@
 import { css } from "@emotion/css";
 import { is } from '@tuval/core';
 import { Checkbox } from 'primereact';
-import React from "react";
+import React, { useMemo } from "react";
 import { CheckBoxClass } from "./CheckboxClass";
+import { nanoid } from 'nanoid'
 
 export interface IControlProperties {
     control: CheckBoxClass
@@ -10,6 +11,8 @@ export interface IControlProperties {
 
 
 function CheckBoxRenderer({ control }: IControlProperties) {
+    const key = useMemo(() => nanoid(), [])
+
     const className = css`
     ${control.Appearance.ToString()}
     ${control.HoverAppearance.IsEmpty ? '' : '&:hover { ' + control.HoverAppearance.ToString() + ' }'}
@@ -19,10 +22,10 @@ function CheckBoxRenderer({ control }: IControlProperties) {
 
     return (
         <div className="flex align-items-right">
-            <Checkbox inputId={control.vp_Key} onChange={e => is.function(control.vp_OnChange) ? control.vp_OnChange(e.checked) : void 0} checked={control.vp_Checked}></Checkbox>
+            <Checkbox inputId={key} onChange={e => is.function(control.vp_OnChange) ? control.vp_OnChange(e.checked) : void 0} checked={control.vp_Checked}></Checkbox>
             {
                 control.vp_LabelView && (
-                    <label htmlFor={control.vp_Key} className="ml-2">
+                    <label htmlFor={key} className="ml-2">
                         {control.vp_LabelView.render()}
                     </label>
                 )

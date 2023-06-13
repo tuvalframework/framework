@@ -251,6 +251,16 @@ export class UIFormController extends UIController {
         }
     }
 
+    public GetFormData() {
+      
+        const result = {};
+
+        for (let key in this.formData) {
+            result[key] = this.formData[key]?.value;
+        }
+       return result;
+    }
+
     public GetFieldState(name: string): IFieldState {
         if (name != null) {
             const fieldName = name;

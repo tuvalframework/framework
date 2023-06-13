@@ -35,7 +35,7 @@ function TextFieldProxy(_props) {
 
     if (isMultiline) {
         return (
-            <InputTextarea {...props} className={className}></InputTextarea>
+            <InputTextarea  autoResize {...props} className={className}></InputTextarea>
         )
     } else {
         console.log('----------------------------')
@@ -64,7 +64,7 @@ const MyInputText = (_params) => {
             if (view != null) {
                 return view.render()
             }
-        } else {
+        } else if (!is.nullOrEmpty(params.obj.vp_Label)) {
             return (
                 <label className="font-bold block mb-2">{params.obj.vp_Label}</label>
             )

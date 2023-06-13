@@ -55,6 +55,8 @@ export { css } from "@emotion/css";
 export { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
 export { useQuery, QueryClient } from 'react-query';
 
+export { nanoid } from 'nanoid'
+
 //-------------------
 
 export * from './data'
