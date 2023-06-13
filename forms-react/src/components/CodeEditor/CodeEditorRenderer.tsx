@@ -30,7 +30,7 @@ function CodeEditorRenderer({ control }: IControlProperties) {
              //@ts-ignore
             options={{lineNumbers: false}}
             extensions={[/* javascript({ jsx: true }), */ json()]}
-            onChange={(e) => console.log(e)}
+            onChange={(e) => is.function(control.vp_OnChange) ? control.vp_OnChange(e) : void 0}
         />
     );
 
