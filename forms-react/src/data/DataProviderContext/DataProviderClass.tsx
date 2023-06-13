@@ -119,27 +119,27 @@ export const useProtocol = (provider: symbol | string) => {
                  ${query}
             }
           `
-            const keys = Object.keys(variables);
-            for (let i = 0; i < keys.length; i++) {
-                const key = keys[i];
-                if (is.string(variables[key])) {
-                    query = query.replace('$' + key, `"${variables[key]}"`);
-                }
-            }
+
             const dataProvider = dataProviderContextValue.provider;
             const { data: _data, isLoading, error } = useQuery(
                 // Sometimes the id comes as a string (e.g. when read from the URL in a Show view).
                 // Sometimes the id comes as a number (e.g. when read from a Record in useGetList response).
                 // As the react-query cache is type-sensitive, we always stringify the identifier to get a match
-                ['__query__', query, { ...variables }],
+                ['__query__', query],
                 () =>
-                    dataProvider['query'](client, query, variables, dataProviderContextValue.config),
+                    dataProvider['query'](client, query, {}, dataProviderContextValue.config),
                 {
-                    // cacheTime: 0
+                     cacheTime: 0
                 }
             );
+
+            const invalidateQuery = () => {
+                client.invalidateQueries(['__query__', query]);
+            }
+
             const data = ((_data as any)?.data as any);
-            return { data: data ? data : {}, isLoading, error };
+
+            return { data: data ? data : {}, isLoading, error, invalidateQuery };
         },
         _query: (_query: TemplateStringsArray, ...expr: Array<any>) => {
 
@@ -185,7 +185,7 @@ export const useProtocol = (provider: symbol | string) => {
                  ${query}
             }
           `
-
+            
             const dataProvider = dataProviderContextValue.provider;
             const { data: _data, isLoading, error } = useQuery(
                 // Sometimes the id comes as a string (e.g. when read from the URL in a Show view).

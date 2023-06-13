@@ -5,6 +5,7 @@ import React from "react";
 import { CodeEditorClass } from "./CodeEditorClass";
 import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
+import { json } from '@codemirror/lang-json';
 
 
 export interface IControlProperties {
@@ -28,7 +29,7 @@ function CodeEditorRenderer({ control }: IControlProperties) {
             width="100%"
              //@ts-ignore
             options={{lineNumbers: false}}
-            extensions={[javascript({ jsx: true })]}
+            extensions={[/* javascript({ jsx: true }), */ json()]}
             onChange={(e) => console.log(e)}
         />
     );
