@@ -89,12 +89,12 @@ const MyInputText = (_params) => {
 
     } else {
 
-        controller.register(params.obj.vp_FormField.name, params.obj.vp_FormField.rules);
+        controller.register(params.obj.vp_FormField.name, params.obj.vp_FormField.rules, params.defaultValue);
         const formState = controller.GetFieldState(params.obj.vp_FormField.name);
 
         const record = useRecordContext();
 
-        if (record && !formState.isTouched) {
+        if (record && !formState?.isTouched) {
 
             params['value'] = record[params.obj.vp_FormField.name];
         } else {
@@ -112,14 +112,14 @@ const MyInputText = (_params) => {
 
 
         const fieldState = controller.GetFieldState(params.obj.vp_FormField.name);
-        if (fieldState.errors.length > 0) {
+        if (fieldState != null && fieldState.errors.length > 0) {
             delete params['height']; // we do not want 100% height
         }
         return (
             <Fragment>
                 {getLabel()}
                 <TextFieldProxy control={params.obj} {...params} />
-                {fieldState.errors.map(error => (
+                {fieldState?.errors.map(error => (
                     <small className="p-error">{error}</small>
                 ))}
 
@@ -135,6 +135,7 @@ function TextFieldRenderer({ control }: IControlProperties) {
     ${control.HoverAppearance.IsEmpty ? '' : '&:hover { ' + control.HoverAppearance.ToString() + ' }'}
     ${control.ActiveAppearance.IsEmpty ? '' : '&:active { ' + control.ActiveAppearance.ToString() + ' }'}
     ${control.FocusAppearance.IsEmpty ? '' : '&:focus { ' + control.FocusAppearance.ToString() + ' }'}
+    ${control.DisabledAppearance.IsEmpty ? '' : '&:disabled { ' + control.DisabledAppearance.ToString() + ' }'}
     `;
 
     const attributes = {}
@@ -152,6 +153,8 @@ function TextFieldRenderer({ control }: IControlProperties) {
             className={className}
             obj={control}
             renderer={this}
+            disabled={control.vp_Disabled}
+            defaultValue={control.vp_DefaultValue}
             tabIndex={control.vp_TabIndex}
             {...attributes}
             value={control.vp_Value}

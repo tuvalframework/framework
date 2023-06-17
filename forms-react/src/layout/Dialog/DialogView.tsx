@@ -10,6 +10,7 @@ import { clone, int } from "@tuval/core";
 import { ReactView } from "../../components/ReactView/ReactView";
 import { query } from "../../data/DataContext/DataContextRenderer";
 import { getAppFullName } from "../Application/Application";
+import * as  objectPath from "object-path";
 
 interface IDialogControllerProps {
     view: DialogView
@@ -33,7 +34,7 @@ class DialogController extends UIFormController {
         const propsView: DialogView = this.props.view;
         propsView.SetValue = this.SetValue.bind(this);
         propsView.GetValue = this.GetValue.bind(this);
-        
+
         return (
             ReactView(
                 <Dialog header={this.props.view.Header}
@@ -73,6 +74,9 @@ export class DialogView extends UIView {
     @ViewProperty()
     private formData: { [key: string]: IField };
 
+    @State()
+    private fieldValues: any;
+
     @ViewProperty()
     public isValid: boolean;
 
@@ -92,6 +96,7 @@ export class DialogView extends UIView {
     public ShowDialog() {
         const appName = getAppFullName();
         this.formData = {};
+        this.fieldValues = {};
         this.Visible = true;
 
         if (ModalDialogs[appName] == null) {
@@ -215,9 +220,14 @@ export class DialogView extends UIView {
 
     public ResetForm() {
         this.formData = {};
+        this.fieldValues = {};
         /*  for (let key in this.formData) {
              this.SetValue(key, null);
          } */
+    }
+
+    public GetFormData() {
+        return { ...this.fieldValues };
     }
 
     public ClearErrors() { }
@@ -230,8 +240,9 @@ export class DialogView extends UIView {
             if (this.formData[fieldName] == null) {
                 this.formData[fieldName] = clone(defaultField);
             }
-            const fieldInfo = this.formData[fieldName];
-            fieldInfo.value = value;
+            const path = name.indexOf('/') === 0 ? name.substring(1, name.length).split('/') : name;
+            objectPath.set(this.fieldValues, path, value)
+
 
             if (!silent) {
                 this.formData = { ...this.formData };
@@ -246,8 +257,10 @@ export class DialogView extends UIView {
             if (this.formData[fieldName] == null) {
                 this.formData[fieldName] = clone(defaultField);
             }
-            const fieldInfo = this.formData[fieldName];
-            return fieldInfo.value;
+
+            const path = name.indexOf('/') === 0 ? name.substring(1, name.length).split('/') : name;
+            return objectPath.get(this.fieldValues, path, null);
+
         }
     }
 
@@ -294,15 +307,23 @@ export class DialogView extends UIView {
         }
     }
 
-    public register(name: string, rules: ValidateRule[]) {
+    public register(name: string, rules: ValidateRule[], defaultValue?: any) {
         if (name != null) {
             const fieldName = name;
+
+            if (this.formData[fieldName] != null) {
+                return;
+            }
 
             if (this.formData[fieldName] == null) {
                 this.formData[fieldName] = clone(defaultField);
             }
             const fieldInfo = this.formData[fieldName];
             fieldInfo.options.rules = rules;
+
+            const path = name.indexOf('/') === 0 ? name.substring(1, name.length).split('/') : name;
+            objectPath.set(this.fieldValues, path, defaultValue);
+
 
         }
     }

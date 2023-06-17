@@ -21,6 +21,15 @@ export class TextFieldClass extends UIView {
     }
 
     /** @internal */
+    @ViewProperty() vp_DefaultValue: string;
+
+    public defaultValue(value: string) {
+        this.vp_DefaultValue = value;
+        return this;
+    }
+
+
+    /** @internal */
     @ViewProperty() vp_Placeholder: string;
 
     public placeholder(value: string) {
@@ -69,7 +78,7 @@ export class TextFieldClass extends UIView {
         this.vp_Label = value;
         return this;
     }
-    
+
     @ViewProperty()
     public vp_LabelTemplate: (label: string) => UIView;
     public labelTemplate(value: (label: string) => UIView): this {

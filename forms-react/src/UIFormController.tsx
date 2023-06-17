@@ -4,6 +4,7 @@ import { createContext } from "react";
 import { useParams } from "react-router-dom";
 import { query } from "./data/DataContext/DataContextRenderer";
 import { State, UIController } from "./UIController";
+import * as  objectPath from "object-path";
 
 export const UIFormContext = createContext(null!);
 export const UIControllerContext = createContext(null!);
@@ -152,13 +153,17 @@ export class UIFormController extends UIController {
     private formData: { [key: string]: IField };
 
     @State()
+    private fieldValues: any;
+
+    @State()
     public isValid: boolean;
 
     constructor(props) {
         super(props);
 
         this.state = {
-            formData: {}
+            formData: {},
+            fieldValues: {}
         }
     }
 
@@ -215,6 +220,7 @@ export class UIFormController extends UIController {
 
     public ResetForm() {
         this.formData = {};
+        this.fieldValues = {};
         /*  for (let key in this.formData) {
              this.SetValue(key, null);
          } */
@@ -230,11 +236,11 @@ export class UIFormController extends UIController {
             if (this.formData[fieldName] == null) {
                 this.formData[fieldName] = clone(defaultField);
             }
-            const fieldInfo = this.formData[fieldName];
-            fieldInfo.value = value;
+            const path = name.indexOf('/') === 0 ? name.substring(1, name.length).split('/') : name;
+            objectPath.set(this.fieldValues, path, value)
 
             if (!silent) {
-                this.formData = { ...this.formData };
+                this.fieldValues = { ...this.fieldValues };
             }
         }
     }
@@ -246,19 +252,14 @@ export class UIFormController extends UIController {
             if (this.formData[fieldName] == null) {
                 this.formData[fieldName] = clone(defaultField);
             }
-            const fieldInfo = this.formData[fieldName];
-            return fieldInfo.value;
+
+            const path = name.indexOf('/') === 0 ? name.substring(1, name.length).split('/') : name;
+            return objectPath.get(this.fieldValues, path, null);
         }
     }
 
     public GetFormData() {
-      
-        const result = {};
-
-        for (let key in this.formData) {
-            result[key] = this.formData[key]?.value;
-        }
-       return result;
+        return { ...this.fieldValues };
     }
 
     public GetFieldState(name: string): IFieldState {
@@ -304,9 +305,13 @@ export class UIFormController extends UIController {
         }
     }
 
-    public register(name: string, rules: ValidateRule[]) {
+    public register(name: string, rules: ValidateRule[], defaultValue?: any) {
         if (name != null) {
             const fieldName = name;
+
+            if (this.formData[fieldName] != null) {
+                return;
+            }
 
             if (this.formData[fieldName] == null) {
                 this.formData[fieldName] = clone(defaultField);
@@ -314,6 +319,8 @@ export class UIFormController extends UIController {
             const fieldInfo = this.formData[fieldName];
             fieldInfo.options.rules = rules;
 
+            const path = name.indexOf('/') === 0 ? name.substring(1, name.length).split('/') : name;
+            objectPath.set(this.fieldValues, path, defaultValue);
         }
     }
 
