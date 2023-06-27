@@ -38,6 +38,7 @@ export function UIControllerProxy({ children, controller }) {
 
 export abstract class ValidateRule {
     public Field: IField;
+    public value: any;
     public ErrorMessage: string;
 
     public constructor(errorMessage: string) {
@@ -48,16 +49,18 @@ export abstract class ValidateRule {
     public setField(field: IField) {
         this.Field = field;
     }
+    public setFieldValue(value: any) {
+        this.value = value;
+    }
 
     abstract validate(): boolean;
 }
 
 export class RequiredRule extends ValidateRule {
     public validate(): boolean {
-        if (is.nullOrEmpty(this.Field.value)) {
+        if (is.nullOrEmpty(this.value)) {
             return false;
         }
-
         return true;
     }
 }
@@ -71,13 +74,12 @@ export class RegExRule extends ValidateRule {
     }
 
     public validate(): boolean {
-        if (this.regEx.test(this.Field.value)) {
+        if (this.regEx.test(this.value)) {
             return true;
         }
         else {
             return false;
         }
-
     }
 }
 
@@ -90,7 +92,7 @@ export class CustomRule extends ValidateRule {
     }
 
     public validate(): boolean {
-        return this.func(this.Field.value);
+        return this.func(this.value);
     }
 }
 
@@ -104,10 +106,10 @@ export class MaxLengthRule extends ValidateRule {
         this.maxLength = maxLength;
     }
     public validate(): boolean {
-        if (is.nullOrEmpty(this.Field.value)) {
+        if (is.nullOrEmpty(this.value)) {
             return true;
         } else {
-            if (Convert.ToString(this.Field.value).length > this.maxLength) {
+            if (Convert.ToString(this.value).length > this.maxLength) {
                 return false;
             }
         }
@@ -126,13 +128,11 @@ export interface IFieldOptions {
 }
 
 export interface IField {
-    value: any;
     state: IFieldState;
     options: IFieldOptions;
 }
 
 export const defaultField: IField = {
-    value: null,
     options: {
         rules: []
     },
@@ -179,6 +179,7 @@ export class UIFormController extends UIController {
             for (let i = 0; i < field.options.rules.length; i++) {
                 const rule = field.options.rules[i];
                 rule.setField(field);
+                rule.setFieldValue(this.GetValue(key))
                 const validate = rule.validate();
                 if (!validate) {
                     errorCount++;
@@ -190,12 +191,12 @@ export class UIFormController extends UIController {
         if (errorCount === 0) {
             this.formData = { ...this.formData }
 
-            const data = {};
+          /*   const data = {};
             for (let key in this.formData) {
-                data[key] = this.formData[key].value;
-            }
+                data[key] = this.GetValue(key);
+            } */
 
-            return [true, data];
+            return [true, this.GetFormData()];
             //this.OnSubmit(data);
         } else {
             for (let key in this.formData) {

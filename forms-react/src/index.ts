@@ -41,6 +41,7 @@ export * from './data/DataProviderContext'
 export * from './UIController'
 export * from './UIFormController'
 export * from './Constants'
+export * from './formbuilder/FormBuilder'
 
 export * from './UIAppearance'
 
@@ -52,7 +53,6 @@ export { useState , useEffect, useMemo} from 'react'
 export {useGetList, useStore, useRecordContext} from 'ra-core'
 export { css } from "@emotion/css";
 
-export { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
 export { useQuery, QueryClient } from 'react-query';
 
 export { nanoid } from 'nanoid'

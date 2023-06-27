@@ -69,7 +69,7 @@ function HStackRenderer({ control }: IControlProperties) {
         if (control._exit != null) {
             elementProperties['exit'] = control._exit;
         }
-        console.log(elementProperties)
+
 
 
         return (
@@ -93,13 +93,13 @@ function HStackRenderer({ control }: IControlProperties) {
     const beforeStyleObject = control.BeforeAppearance.GetStyleObject();
     let beforeElement = null;
     /*  if (!!Object.keys(beforeStyleObject).length) {
- 
+
          const style = {};
          style['position'] = 'absolute';
          style['width'] = '100%';
          style['height'] = '100%';
          style['zIndex'] = '-1000';
- 
+
          beforeElement = (<i className={'before-element'} style={style}></i>)
      } */
 

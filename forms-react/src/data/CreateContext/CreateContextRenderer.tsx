@@ -18,6 +18,7 @@ function CreateContextRenderer({ control }: IControlProperties) {
     const [create, { isLoading, isSuccess }] = useCreate();
 
     const handleCreate = () => {
+
         const [isValid, data] = formController.validateForm();
         if (isValid) {
             create(control.vp_Resource, { data: data }, {

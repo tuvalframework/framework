@@ -25,7 +25,7 @@ export function getAppName() {
         const str = window.location.href;
 
         let m;
-        console.log(m = regex.exec(str))
+
         return m[3];
     }
     catch {
@@ -66,12 +66,12 @@ const AppMainColorCache = {}
 export const Paths = {}
 
 export const ApplicationLoader = () => {
-    
+
     function measureInteraction() {
         // performance.now() returns the number of ms
         // elapsed since the page was opened
         const startTimestamp = performance.now();
-      
+
         return {
           end() {
             const endTimestamp = performance.now();
@@ -139,9 +139,9 @@ export const ApplicationLoader = () => {
     const appInfo: any = usePromise(fetchController, [app_name]);
 
     Tracker.removeMetadata("app");
-   
+
     Tracker.addMetadata("app", getAppFullName());
-   
+
 
     return (<Application name={app_name} controller={appInfo.controller} theme={appInfo.theme} mainColor={appInfo.app_main_color}></Application>)
 };
@@ -149,14 +149,12 @@ export const ApplicationLoader = () => {
 export class DesktopController extends UIController {
 
     public override LoadView(): UIView {
-        const handleRender = (id, phase, actualDuration) => {
+        /* const handleRender = (id, phase, actualDuration) => {
             console.log(
                 `The ${id} interaction took ` +
                 `${actualDuration}ms to render (${phase})`,
             );
-            // Would log “The ComposeButton interaction
-            // took 25.2999999970197678ms to render (update)”
-        };
+        }; */
 
         return (
             ReactView(
@@ -178,9 +176,9 @@ export class DesktopController extends UIController {
 
                         } >
                             <ErrorBoundary>
-                                <Profiler id="ComposeButton" onRender={handleRender}>
+                                {/* <Profiler id="ComposeButton" onRender={handleRender}> */}
                                     <ApplicationLoader></ApplicationLoader>
-                                </Profiler>
+                               {/*  </Profiler> */}
                             </ErrorBoundary>
                         </React.Suspense>
                     )}

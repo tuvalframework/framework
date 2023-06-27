@@ -1,7 +1,7 @@
 import { defaultField, IField, IFieldState, UIControllerContext, UIFormContext, UIFormController, ValidateRule } from "../../UIFormController";
 import { Dialog } from "primereact";
 import { State } from "../../UIController";
-import React, { useState } from "react";
+import React, { createContext, useState } from "react";
 import { UIView } from "../../components/UIView/UIView";
 import { ViewProperty } from "../../components/UIView/ViewProperty";
 import { ModalDialogs, noAppDialogs } from "./DialogContainerClass";
@@ -15,6 +15,10 @@ import * as  objectPath from "object-path";
 interface IDialogControllerProps {
     view: DialogView
 }
+export const DialogContext = createContext(null!);
+
+export const useDialog = (): DialogView =>
+    React.useContext(DialogContext);
 
 class DialogController extends UIFormController {
     public override LoadView(): UIView {
@@ -129,6 +133,10 @@ export class DialogView extends UIView {
 
     }
 
+    public OnOK(param: any) {
+        this.ShowDialogAsyncResolve(param);
+        this.Hide();
+    }
 
 
     public Hide() {
@@ -150,7 +158,10 @@ export class DialogView extends UIView {
         return (
             <UIFormContext.Provider value={this}>
                 <UIControllerContext.Provider value={this}>
-                    <DialogController view={this}> </DialogController>
+                    <DialogContext.Provider value={this}>
+                        <DialogController view={this}> </DialogController>
+                    </DialogContext.Provider>
+
                 </UIControllerContext.Provider>
 
             </UIFormContext.Provider>
@@ -179,6 +190,7 @@ export class DialogView extends UIView {
             for (let i = 0; i < field.options.rules.length; i++) {
                 const rule = field.options.rules[i];
                 rule.setField(field);
+                rule.setFieldValue(this.GetValue(key));
                 const validate = rule.validate();
                 if (!validate) {
                     errorCount++;
@@ -190,12 +202,12 @@ export class DialogView extends UIView {
         if (errorCount === 0) {
             this.formData = { ...this.formData }
 
-            const data = {};
-            for (let key in this.formData) {
-                data[key] = this.formData[key].value;
-            }
+            /*  const data = {};
+             for (let key in this.formData) {
+                 data[key] = this.formData[key].value;
+             } */
 
-            return [true, data];
+            return [true, this.GetFormData()];
             //this.OnSubmit(data);
         } else {
             for (let key in this.formData) {

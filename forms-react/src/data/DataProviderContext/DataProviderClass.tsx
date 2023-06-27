@@ -5,9 +5,8 @@ import DataProtocolRenderer from "./DataProviderRenderer";
 import { UIView } from "../../components/UIView/UIView";
 import { ViewProperty } from "../../components/UIView/ViewProperty";
 import { useAsync } from 'react-async-hook';
-import { Guid, is } from "@tuval/core";
+import { Convert, Encoding, Guid, is } from "@tuval/core";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { gql } from "@apollo/client";
 
 type MutateType = (variables: any, {
     onError,
@@ -18,6 +17,12 @@ type MutateType = (variables: any, {
     onSettled?: Function,
     onSuccess?: Function,
 }) => void;
+
+const EncodeParamsObject = (params: object = {}) => {
+    const paramsString = JSON.stringify(params);
+    const bytes = Encoding.UTF8.GetBytes(paramsString);
+    return Convert.ToBase64String(bytes);
+}
 
 export const DataProtocolContext = createContext<any>(null!);
 
@@ -110,8 +115,7 @@ export const useProtocol = (provider: symbol | string) => {
     //return context.dataProtocolContextObject[provider];
     const dataProviderContextValue = context.dataProtocolContextObject[provider];
     return {
-        query: (query: string, variables: any = {}) => {
-
+        query: (query: string) => {
             const client = useQueryClient();
 
             query = `
@@ -119,6 +123,7 @@ export const useProtocol = (provider: symbol | string) => {
                  ${query}
             }
           `
+
 
             const dataProvider = dataProviderContextValue.provider;
             const { data: _data, isLoading, error } = useQuery(
@@ -129,7 +134,7 @@ export const useProtocol = (provider: symbol | string) => {
                 () =>
                     dataProvider['query'](client, query, {}, dataProviderContextValue.config),
                 {
-                     cacheTime: 0
+                    cacheTime: 0
                 }
             );
 
@@ -185,7 +190,8 @@ export const useProtocol = (provider: symbol | string) => {
                  ${query}
             }
           `
-            
+
+
             const dataProvider = dataProviderContextValue.provider;
             const { data: _data, isLoading, error } = useQuery(
                 // Sometimes the id comes as a string (e.g. when read from the URL in a Show view).
@@ -195,7 +201,7 @@ export const useProtocol = (provider: symbol | string) => {
                 () =>
                     dataProvider['query'](client, query, {}, dataProviderContextValue.config),
                 {
-                     cacheTime: 0
+                    cacheTime: 0
                 }
             );
 
@@ -406,7 +412,7 @@ export const useProtocol = (provider: symbol | string) => {
                         query = query.replace('$' + key, `[${variables[key].map(item => '"' + item + '"').join(',')}]`);
 
 
-                    }  else if (is.boolean(variables[key])) {
+                    } else if (is.boolean(variables[key])) {
                         query = variables[key] ? query.replace('$' + key, `true`) : query.replace('$' + key, `false`);
                     } else if (is.nullOrUndefined(variables[key])) {
                         query = query.replace('$' + key, `null`);
@@ -440,22 +446,121 @@ export const useProtocol = (provider: symbol | string) => {
             resultObject['isSuccess'] = mutation.isSuccess;
             resultObject['mutate'] = (variables: any[], options: any) => {
 
-                    mutation.mutate(variables, {
-                        onSuccess: (data: any) => {
+                mutation.mutate(variables, {
+                    onSuccess: (data: any) => {
 
-                            if (is.function(options.onSuccess)) {
-                                if (data?.data != null) {
-                                    const keys = Object.keys(data.data);
-                                    if (keys.length > 0) {
-                                        options.onSuccess(data.data[keys[0]]);
-                                    }
-                                } else {
-                                    options.onSuccess();
+                        if (is.function(options.onSuccess)) {
+                            if (data?.data != null) {
+                                const keys = Object.keys(data.data);
+                                if (keys.length > 0) {
+                                    options.onSuccess(data.data[keys[0]]);
                                 }
-
+                            } else {
+                                options.onSuccess();
                             }
+
                         }
-                    })
+                    }
+                })
+
+
+            }
+            const data: any = mutation.data;
+            if (data != null && data.data! != null) {
+                resultObject['result'] = data.data;
+            } else {
+                resultObject['result'] = {};
+            }
+
+            return resultObject as any;
+        },
+        __mutation: (_query: TemplateStringsArray, ...expr: Array<any>): {
+            mutate: (variables: any, {
+                onError,
+                onSettled,
+                onSuccess,
+            }?: {
+                onError?: Function,
+                onSettled?: Function,
+                onSuccess?: Function,
+            }) => void,
+            isSuccess: boolean,
+            isLoading: boolean
+        } => {
+
+            let query: string = '';
+            _query.forEach((string, i) => {
+                query += string + ((expr[i]) || '');
+            });
+
+
+
+
+            const dataProvider = dataProviderContextValue.provider;
+
+            const client = useQueryClient();
+
+            const mutation = useMutation((variables: any) => {
+                debugger
+                const index = query.indexOf('{');
+
+                if (index === -1) {
+                    query = `${query}(params:"${EncodeParamsObject(variables)}")`
+                } else {
+                    query = `${query.substring(0, index)}(params:"${EncodeParamsObject(variables)}")${query.substring(index, query.length)}`
+                }
+                query = `
+                mutation provider {
+                           ${query}
+                }
+              `
+                alert(query)
+                debugger
+
+                return dataProvider['mutation'](query, client, variables, dataProviderContextValue.config || {})
+            }/* , {
+                onSuccess: (
+                    data: any,
+                    variables: any = {},
+                    context: unknown
+                ) => {
+
+                      const { onSuccess } = options;
+                     if (is.function(onSuccess)) {
+                         if (data != null && data.data! != null) {
+                             data = data.data[name];
+                         } else {
+                             data = {};
+                         }
+                         onSuccess(data, variables, context);
+                     }
+                }
+            } */
+            )
+
+
+            const resultObject = {};
+            resultObject['isLoading'] = mutation.isLoading;
+            resultObject['isSuccess'] = mutation.isSuccess;
+            resultObject['mutate'] = (variables: any[], options: any) => {
+
+                mutation.mutate(variables, {
+                    onSuccess: (data: any) => {
+
+                        if (is.function(options.onSuccess)) {
+                            if (data?.data != null) {
+                                const keys = Object.keys(data.data);
+                                if (keys.length > 0) {
+                                    const {dataBag} = data.data[keys[0]];
+                                    options.onSuccess(dataBag);
+                                }
+                            } else {
+                                options.onSuccess();
+                            }
+
+                        }
+                    }
+                })
 
 
             }

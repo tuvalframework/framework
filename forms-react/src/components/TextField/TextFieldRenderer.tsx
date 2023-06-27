@@ -38,8 +38,7 @@ function TextFieldProxy(_props) {
             <InputTextarea  autoResize {...props} className={className}></InputTextarea>
         )
     } else {
-        console.log('----------------------------')
-        console.log(props)
+
         switch (maskType) {
             case MaskTypes.Number:
                 props['onValueChange'] = props['onChange'];
@@ -95,10 +94,9 @@ const MyInputText = (_params) => {
         const record = useRecordContext();
 
         if (record && !formState?.isTouched) {
-
-            params['value'] = record[params.obj.vp_FormField.name];
+            params['value'] = record[params.obj.vp_FormField.name] || params.defaultValue;
         } else {
-            params['value'] = controller.GetValue(params.obj.vp_FormField.name);
+            params['value'] = controller.GetValue(params.obj.vp_FormField.name) || params.defaultValue;
         }
 
 
@@ -143,6 +141,8 @@ function TextFieldRenderer({ control }: IControlProperties) {
         attributes['autofocus'] = true;
     }
 
+    const events = control.GetEventsObject();
+
     /*
     if (control.vp_myLostFocus) {
         attributes['onfocusout'] = (e) => (obj.vp_myLostFocus(e));
@@ -157,6 +157,7 @@ function TextFieldRenderer({ control }: IControlProperties) {
             defaultValue={control.vp_DefaultValue}
             tabIndex={control.vp_TabIndex}
             {...attributes}
+            {...events}
             value={control.vp_Value}
             placeholder={control.vp_Placeholder}
             onChange={(e) => is.function(control.vp_OnChange) ? control.vp_OnChange(e.value == null ? e.target?.value : e.value) : void 0}>
