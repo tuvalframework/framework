@@ -1,12 +1,7 @@
-import { css } from "@emotion/css";
-import { is } from "@tuval/core";
-import { Button } from "primereact";
-import { Button as MondayButton } from "monday-ui-react-core";
 import React, { Fragment, useEffect, useState } from "react";
-import { WidgetClass } from "./WidgetClass";
-import { useLocation } from "react-router-dom";
-import { VStack } from "../../layout/VStack/VStack";
 import { Spinner } from "../../components/UISpinner/UISpinner";
+import { VStack } from "../../layout/VStack/VStack";
+import { WidgetClass } from "./WidgetClass";
 import { WidgetLoader } from "./WidgetLoader";
 
 export interface IControlProperties {
@@ -18,12 +13,12 @@ export interface IControlProperties {
  */
 function ErrorBoundary({ children }) {
     const [hasError, setHasError] = useState(false);
-    const location = useLocation();
+    let location ;
     useEffect(() => {
         if (hasError) {
             setHasError(false);
         }
-    }, [location.key]);
+    }, []);
     return (
         /**
          * NEW: The class component error boundary is now

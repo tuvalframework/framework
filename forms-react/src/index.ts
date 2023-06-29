@@ -49,8 +49,10 @@ export * from './Bios'
 
 //--------------------
 export { useNavigate, useLocation, useParams, Link } from 'react-router-dom'
-export { useState , useEffect, useMemo} from 'react'
-export {useGetList, useStore, useRecordContext} from 'ra-core'
+export { useState, useEffect, useMemo } from 'react'
+/* import ReactDOM from 'react-dom/client';
+export { ReactDOM as ReactDOM }; */
+export { useGetList, useStore, useRecordContext } from 'ra-core'
 export { css } from "@emotion/css";
 
 export { useQuery, QueryClient } from 'react-query';

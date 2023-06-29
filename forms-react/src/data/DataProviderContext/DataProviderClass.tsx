@@ -449,7 +449,7 @@ export const useProtocol = (provider: symbol | string) => {
                 mutation.mutate(variables, {
                     onSuccess: (data: any) => {
 
-                        if (is.function(options.onSuccess)) {
+                        if (is.function(options?.onSuccess)) {
                             if (data?.data != null) {
                                 const keys = Object.keys(data.data);
                                 if (keys.length > 0) {
@@ -504,17 +504,31 @@ export const useProtocol = (provider: symbol | string) => {
                 debugger
                 const index = query.indexOf('{');
 
-                if (index === -1) {
-                    query = `${query}(params:"${EncodeParamsObject(variables)}")`
-                } else {
-                    query = `${query.substring(0, index)}(params:"${EncodeParamsObject(variables)}")${query.substring(index, query.length)}`
+                let params = [];
+                for (let key in variables) {
+                    if (is.string(variables[key])) {
+                        params.push([key, `"${encodeURIComponent(variables[key])}"`].join(':'))
+                    } else if (is.object(variables[key])) {
+                        params.push([key, `"${encodeURIComponent(JSON.stringify(variables[key]))}"`].join(':'))
+                    } else {
+                        params.push([key, `${variables[key]}`].join(':'))
+                    }
                 }
+
+                if (index === -1) {
+                    query = `${query}(${params.join(',')})`
+                } else {
+                    query = `${query.substring(0, index)}(${params.join(',')})${query.substring(index, query.length)}`
+                }
+
+
+
                 query = `
                 mutation provider {
                            ${query}
                 }
               `
-                alert(query)
+                //alert(query)
                 debugger
 
                 return dataProvider['mutation'](query, client, variables, dataProviderContextValue.config || {})
@@ -547,11 +561,11 @@ export const useProtocol = (provider: symbol | string) => {
                 mutation.mutate(variables, {
                     onSuccess: (data: any) => {
 
-                        if (is.function(options.onSuccess)) {
+                        if (is.function(options?.onSuccess)) {
                             if (data?.data != null) {
                                 const keys = Object.keys(data.data);
                                 if (keys.length > 0) {
-                                    const {dataBag} = data.data[keys[0]];
+                                    const { dataBag } = data.data[keys[0]];
                                     options.onSuccess(dataBag);
                                 }
                             } else {
