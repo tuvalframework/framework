@@ -41,7 +41,7 @@ export const TextFormView = (fieldInfo: any) => {
         return (
             VStack({ alignment: cTopLeading })(
                 //Text(FormBuilder.canRender(visibleWhen, formController).toString()),
-                label(fieldInfo),
+                //label(fieldInfo),
                 HStack({ alignment: cLeading, spacing: 5 })(
                     startAdornment && Text(startAdornment).foregroundColor('#677A89').fontSize(17).fontFamily('source sans pro').lineHeight(22),
                     formula != null ?
@@ -72,7 +72,7 @@ export const TextFormView = (fieldInfo: any) => {
                     endAdornment && endAdornment && Text(endAdornment).foregroundColor('#677A89').fontSize(17).fontFamily('source sans pro').lineHeight(22),
 
                 ).height(),
-                description &&
+                /* description &&
                 Text(description).multilineTextAlignment(TextAlignment.leading)
 
                     .foregroundColor('#95ABBC')
@@ -80,7 +80,7 @@ export const TextFormView = (fieldInfo: any) => {
                     .fontFamily('"Roboto", "Helvetica", "Arial", sans-serif')
                     .kerning('0.03333em')
                     .lineHeight('20px')
-                    .marginTop('4px')
+                    .marginTop('4px') */
             ).height().marginBottom('16px')
         )
     }
