@@ -8,8 +8,6 @@ import { UIView } from "../UIView/UIView";
 import { IDataTableColumn } from "./IDataTableCoumn";
 
 
-
-
 function DataTableRenderer({ control }: { control: DataTableClass }) {
     const view: DataTableClass = control as any;
 
@@ -48,13 +46,14 @@ function DataTableRenderer({ control }: { control: DataTableClass }) {
         }
     }
 
-
-
     return (
-        <DataTable value={control.vp_Model} filterDisplay="row"
-            tableClassName={view.GetClassName()} tableStyle={{ minWidth: '50rem' }} scrollable scrollHeight="flex"
+        <DataTable value={control.vp_Model}
+            filterDisplay= {control.vp_ShowFilterRow ? "row" : ""}
+            tableClassName={view.GetClassName()}
+            tableStyle={{ minWidth: '50rem' }} scrollable scrollHeight="flex"
             editMode={control.vp_EditMode}
-            paginator rows={20} rowsPerPageOptions={[20, 50, 100]}>
+            paginator rows={20}
+            rowsPerPageOptions={[20, 50, 100]}>
             {
                 control.vp_Columns.map(column =>
                     <Column

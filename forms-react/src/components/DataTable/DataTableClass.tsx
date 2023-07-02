@@ -36,6 +36,14 @@ export class DataTableClass extends UIView  implements IDataTableProperties{
         return this;
     }
 
+     /** @internal */
+     @ViewProperty() vp_ShowFilterRow: boolean;
+
+     public showFilterRow(value: boolean) {
+         this.vp_ShowFilterRow = value;
+         return this;
+     }
+
     public constructor() {
         super();
         this.vp_Columns = [];
