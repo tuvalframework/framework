@@ -5,7 +5,7 @@ import React, { Fragment } from "react";
 import { UIFormController, useFormController } from "../../../UIFormController";
 import { UIView } from "../../UIView/UIView";
 import { DropdownClass } from "../DropdownClass";
-import { useGetList, useGetOne } from "ra-core";
+import { useGetList, useGetOne, useRecordContext } from "ra-core";
 import { ReactView } from "../../ReactView/ReactView";
 
 
@@ -40,15 +40,25 @@ const MyDropDown = (_params) => {
     } else {
 
         controller.register(params.obj.vp_FormField.name, params.obj.vp_FormField.rules);
+        const formState = controller.GetFieldState(params.obj.vp_FormField.name);
 
-        // const context = useFormContext(); // retrieve all hook methods
-        // console.log(context.getFieldState('name'))
+        const record = useRecordContext();
 
-        // console.log(context)
+        if (record && !formState?.isTouched) {
+            if (params.defaultValue != null) {
+                controller.SetValue(params.obj.vp_FormField.name, params.defaultValue, true);
+            }
+            params['value'] = record[params.obj.vp_FormField.name] || params.defaultValue;
+        } else {
+            if (params.defaultValue != null) {
+                controller.SetValue(params.obj.vp_FormField.name, params.defaultValue, true);
+            }
+            params['value'] = controller.GetValue(params.obj.vp_FormField.name) || params.defaultValue;
+        }
 
-        params['value'] = controller.GetValue(params.obj.vp_FormField.name);
 
         params['onChange'] = (e) => {
+            controller.SetFieldState(params.obj.vp_FormField.name, { isTouched: true });
             controller.SetValue(params.obj.vp_FormField.name, e.target.value)
         }
 
@@ -144,7 +154,7 @@ function PrimeRenderer({ control }: IControlProperties) {
         },
         {
             onError : (err:any) => {
-              
+
                 if (err.status === 401){
                     window.location.href = '/logout'
                 }
@@ -154,6 +164,7 @@ function PrimeRenderer({ control }: IControlProperties) {
         return (
             <MyDropDown
                 className={className}
+                defaultValue={control.vp_DefaultValue}
                 obj={control}
                 onFocus={(e) => is.function(control.vp_OnFocus) ? control.vp_OnFocus(e) : void 0}
                 onBlur={(e) => is.function(control.vp_OnBlur) ? control.vp_OnBlur(e) : void 0}
@@ -172,6 +183,7 @@ function PrimeRenderer({ control }: IControlProperties) {
         return (
             <MyDropDown
                 className={className}
+                defaultValue={control.vp_DefaultValue}
                 obj={control}
                 onFocus={(e) => is.function(control.vp_OnFocus) ? control.vp_OnFocus(e) : void 0}
                 onBlur={(e) => is.function(control.vp_OnBlur) ? control.vp_OnBlur(e) : void 0}
@@ -185,11 +197,11 @@ function PrimeRenderer({ control }: IControlProperties) {
                 options={control.vp_Model}
                 onChange={(e) => { control.vp_OnChange(e.value) }}
                 placeholder={control.vp_Placeholder} />
-           
+
         );
     }
 
-   
+
 
 }
 

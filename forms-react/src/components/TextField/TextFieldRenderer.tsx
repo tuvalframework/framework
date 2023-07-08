@@ -94,8 +94,14 @@ const MyInputText = (_params) => {
         const record = useRecordContext();
 
         if (record && !formState?.isTouched) {
+            if (params.defaultValue != null) {
+                controller.SetValue(params.obj.vp_FormField.name, params.defaultValue, true);
+            }
             params['value'] = record[params.obj.vp_FormField.name] || params.defaultValue;
         } else {
+            if (params.defaultValue != null) {
+                controller.SetValue(params.obj.vp_FormField.name, params.defaultValue, true);
+            }
             params['value'] = controller.GetValue(params.obj.vp_FormField.name) || params.defaultValue;
         }
 

@@ -18,17 +18,18 @@ function HeadingRenderer({ control }: IControlProperties) {
     ${control.HoverAppearance.IsEmpty ? '' : '&:hover { ' + control.HoverAppearance.ToString() + ' }'}
     ${control.ActiveAppearance.IsEmpty ? '' : '&:active { ' + control.ActiveAppearance.ToString() + ' }'}
     ${control.FocusAppearance.IsEmpty ? '' : '&:focus { ' + control.FocusAppearance.ToString() + ' }'}
-    `; 
+    `;
 
     return (
-       
-            <Heading className={className} 
+
+            <Heading className={className}
             ellipsis={control.vp_Ellipsis}
             ellipsisMaxLines={control.vp_EllipsisMaxLines}
-            value={control.vp_Value} 
-            type={control.vp_Type} 
-            size={control.vp_Size as any} />
-       
+            value={control.vp_Value}
+            type={control.vp_Type}
+            size={control.vp_Size as any}
+            />
+
     );
 
 }

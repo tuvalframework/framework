@@ -4,6 +4,7 @@ import { Renderer } from '../../RendererDecorator';
 import React from "react";
 import { UIViewRenderer } from '../UIView/UIViewRenderer';
 import { ViewProperty } from '../UIView/ViewProperty';
+import { int } from '@tuval/core';
 
 
 export enum RenderingTypes {
@@ -45,7 +46,11 @@ export class TextClass extends UIView {
     /** @internal */
     @ViewProperty() vp_Text: string;
 
-   
+     /** @internal */
+     @ViewProperty() vp_EllipsisMaxLines: int;
+
+
+
 
     public constructor() {
         super();
@@ -94,6 +99,11 @@ export class TextClass extends UIView {
     }
     public searchWords(value: string[]): this {
         this.SearchWords = value;
+        return this;
+    }
+
+    public ellipsisMaxLines(value: int): this {
+        this.vp_EllipsisMaxLines = value;
         return this;
     }
 

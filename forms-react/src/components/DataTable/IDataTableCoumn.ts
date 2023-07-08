@@ -4,7 +4,7 @@ import { UIView } from "../UIView/UIView";
 export interface IDataTableColumn {
     field?: string;
     header?: ((data: any) => UIView) | string;
-    body?: ((rowData: any) => UIView);
+    body?: ((rowData: any) => UIView) | string;
     editor?:((rowData: any) => UIView);
     align?: null | "center" | "left" | "right";
     alignFrozen?: "left" | "right";

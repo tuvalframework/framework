@@ -66,6 +66,7 @@ export * from './data'
 import './exports';
 import { Navigate } from 'react-router-dom';
 
+export * from './SvgIcon'
 export * from './tracker'
 export * from './thema-system'
 export * from './If'

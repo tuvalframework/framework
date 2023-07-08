@@ -481,22 +481,54 @@ export class FormBuilder {
                     <UIFormBuilderContext.Provider value={contextValue}>
                         {
                             UIViewBuilder(() => {
+                                let invalidateResource = null;
                                 let formMutate = null;
+                                let createMutate = null;
+                                let updateMutate = null;
+                                let isFormMutateExcuting = false;
                                 let isFormLoading = false;
 
                                 const views = []
                                 const { fieldMap, layout, mode, resource, resourceId, title, protocol, mutation, query } = formMeta as any;
 
                                 if (protocol) {
-                                    const { query: _query, __mutation } = useProtocol(protocol);
+                                    const { query: _query, __mutation, getOne, create, update } = useProtocol(protocol);
 
+                                    if (mode === 'create') {
+                                        const { mutate, isLoading, invalidateResourceCache } = create(resource);
+                                        createMutate = mutate;
+                                        invalidateResource = invalidateResourceCache;
+                                        isFormMutateExcuting = isLoading;
+                                    }
+
+                                    if (mode === 'update') {
+                                        const {mutate,  isLoading , invalidateResourceCache} = update(resource);
+                                        updateMutate = mutate;
+                                        invalidateResource = invalidateResourceCache;
+                                        isFormMutateExcuting = isLoading;
+                                    }
 
                                     if (is.string(mutation)) {
-                                        const { mutate } = __mutation`${mutation}`;
+                                        const { mutate, isLoading: isMutateLoading } = __mutation`${mutation}`;
                                         formMutate = mutate;
+                                        isFormMutateExcuting = isMutateLoading;
                                     }
                                     if (is.string(query)) {
                                         const { data, isLoading } = _query(query);
+                                        isFormLoading = isLoading;
+                                        if (!isLoading) {
+                                            if (!formController.IsLoaded) {
+                                                const keys = Object.keys(data);
+                                                for (let i = 0; i < keys.length; i++) {
+                                                    const key = keys[i];
+                                                    formController.SetValue(key, data[key]);
+                                                }
+                                                formController.IsLoaded = true;
+                                            }
+                                        }
+                                    }
+                                    if (is.string(resource) && (is.string(resourceId) || is.number(resourceId))) {
+                                        const { data, isLoading } = getOne(resource, { id: resourceId });
                                         isFormLoading = isLoading;
                                         if (!isLoading) {
                                             if (!formController.IsLoaded) {
@@ -558,40 +590,65 @@ export class FormBuilder {
 
                                 return (
                                     isFormLoading ? Spinner() :
-                                    VStack(
-                                        title && FormTitle(title),
-                                        ScrollView({ axes: cVertical, alignment: cTopLeading })(
-                                            VStack({ alignment: cTopLeading })(
-                                                // Text(JSON.stringify(formController.GetFormData())),
+                                        VStack(
+                                            title && FormTitle(title),
+                                            // Text(JSON.stringify(formController.GetFormData())),
+                                            ScrollView({ axes: cVertical, alignment: cTopLeading })(
                                                 VStack({ alignment: cTopLeading })(
-                                                    ...ForEach(views)(view => view)
+                                                    // Text(JSON.stringify(formController.GetFormData())),
+                                                    VStack({ alignment: cTopLeading })(
+                                                        ...ForEach(views)(view => view)
+                                                    )
+                                                        .height()
+                                                        .background('#F8FAFF')
+                                                        .padding('24px 24px 0px')
+
+                                                )
+                                                    .background('#F8FAFF')
+                                            ),
+                                            (!is.function(formMutate) && !is.function(createMutate) && !is.function(updateMutate)) ? Fragment() :
+                                                HStack({ alignment: cLeading })(
+                                                    Button(
+                                                        Text('Save')
+                                                    )
+                                                        .loading(isFormMutateExcuting)
+                                                        .onClick(() => {
+                                                            if (createMutate != null) {
+                                                                createMutate(formController.GetFormData(), {
+                                                                    onSuccess: () => {
+                                                                        if (is.function(invalidateResource)) {
+                                                                            invalidateResource();
+                                                                        }
+                                                                        dialog.Hide();
+                                                                    }
+                                                                });
+                                                            }
+                                                            if (updateMutate != null) {
+                                                                updateMutate(  resourceId, formController.GetFormData() , {
+                                                                    onSuccess: () => {
+                                                                        if (is.function(invalidateResource)) {
+                                                                            invalidateResource();
+                                                                        }
+                                                                        dialog.Hide();
+                                                                    }
+                                                                });
+                                                            }
+                                                            // formController.SetValue('tenant_id', useSessionService().TenantId);
+                                                            if (is.function(formMutate)) {
+                                                                //alert(JSON.stringify(formController.GetFormData()))
+                                                                formMutate(formController.GetFormData(), {
+                                                                    onSuccess: () => {
+                                                                        dialog.Hide();
+                                                                    }
+                                                                });
+                                                            }
+                                                        })
                                                 )
                                                     .height()
-                                                    .background('#F8FAFF')
-                                                    .padding('24px 24px 0px')
+                                                    .padding()
+                                                    .borderTop('1px solid #D6E4ED')
 
-                                            )
-                                                .background('#F8FAFF')
-                                        ),
-                                        !is.function(formMutate) ? Fragment() :
-                                            HStack({ alignment: cLeading })(
-                                                Button(
-                                                    Text('Save')
-                                                )
-                                                    // .loading(isLoading)
-                                                    .onClick(() => {
-                                                        // formController.SetValue('tenant_id', useSessionService().TenantId);
-                                                        if (is.function(formMutate)) {
-                                                            alert(JSON.stringify(formController.GetFormData()))
-                                                            formMutate(formController.GetFormData());
-                                                        }
-                                                    })
-                                            )
-                                                .height()
-                                                .padding()
-                                                .borderTop('1px solid #D6E4ED')
-
-                                    )
+                                        )
 
                                 )
 

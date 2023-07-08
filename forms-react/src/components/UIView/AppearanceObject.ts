@@ -1075,6 +1075,14 @@ export class AppearanceObject {
     @Skin('-webkit-font-smoothing')
     public WebkitFontSmoothing: string;
 
+    @Skin('-webkit-line-clamp')
+    public WebkitLineClamp: string;
+
+    @Skin('-webkit-box-orient')
+    public WebkitBoxOrient: string;
+
+
+
 
     public constructor(obj: UIView) {
         this.control = obj;

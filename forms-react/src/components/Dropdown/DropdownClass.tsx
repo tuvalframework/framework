@@ -17,6 +17,14 @@ export class DropdownClass extends UIView {
          return this;
      }
 
+      /** @internal */
+    @ViewProperty() vp_DefaultValue: string;
+
+    public defaultValue(value: string) {
+        this.vp_DefaultValue = value;
+        return this;
+    }
+
      /** @internal */
      @ViewProperty() vp_Resource: string;
 

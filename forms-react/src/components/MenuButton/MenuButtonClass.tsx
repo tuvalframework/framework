@@ -10,6 +10,7 @@ import ChipsRenderer from "./MenuButtonRenderer";
 export interface IMenuItemModel {
     icon?: UIView | SubIcon;
     title?: string;
+    color?: string;
     type?: 'Divider' | 'MenuItem' | 'Title';
     onClick?: Function;
 

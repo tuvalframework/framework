@@ -52,16 +52,24 @@ function TextRenderer({ control }: IControlProperties) {
         style['text-overflow'] = control.TextOverflow;
         style['width'] = 'auto';
         style['white-space'] = control.WhiteSpace;
+
+        if (control.vp_EllipsisMaxLines) {
+            style['display'] = '-webkit-box';
+            style['-webkit-box-orient'] = 'vertical';
+            style['-webkit-line-clamp'] = String(control.vp_EllipsisMaxLines);
+            style['overflow'] = 'hidden';
+        }
+
         return (
             <span style={style}>{control.vp_Text}</span>
         )
 
-    } else if (control.RenderingType === RenderingTypes.Markdown)  {
+    } else if (control.RenderingType === RenderingTypes.Markdown) {
 
         return (
             <div className='markdown-body' dangerouslySetInnerHTML={{ __html: !is.nullOrEmpty(control.vp_Text) ? md.render(control.vp_Text) : '' }}></div>
         )
-    } else if (control.RenderingType === RenderingTypes.Html)  {
+    } else if (control.RenderingType === RenderingTypes.Html) {
 
         return (
             <span dangerouslySetInnerHTML={{ __html: !is.nullOrEmpty(control.vp_Text) ? control.vp_Text : '' }}></span>

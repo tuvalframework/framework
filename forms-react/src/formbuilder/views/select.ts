@@ -12,7 +12,17 @@ import { is } from "@tuval/core";
 
 export const SelectFormView = (textData: any) => {
     const formController = useFormController();
-    const { query, options } = textData;
+    let { name, query, options, defaultValue, fieldId } = textData;
+
+    if (defaultValue == null) {
+        defaultValue = formController.GetValue(fieldId);
+    }
+
+    const formState = formController.GetFieldState(name);
+    if (!formState.isTouched && defaultValue != null) {
+        formController.SetValue(name, defaultValue, true);
+    }
+
     if (query != null) {
         const { body, resource, text, key } = query;
 
@@ -24,7 +34,6 @@ export const SelectFormView = (textData: any) => {
 
                 return (
                     VStack({ alignment: cTopLeading })(
-                        label(textData),
                         Dropdown((option) =>
                             HStack({ alignment: cLeading })(
                                 Text(option[text])

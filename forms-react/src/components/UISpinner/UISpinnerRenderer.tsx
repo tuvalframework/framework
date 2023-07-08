@@ -13,11 +13,10 @@ export interface IControlProperties {
 
 function UISpinnerRenderer({ control }: IControlProperties) {
 
-   
+    /* <Loader size={control.vp_Size} /> */
     return (
-        <Loader size={control.vp_Size} />
+        <div className="dot-elastic-small"></div>
     )
-
 }
 
 export default UISpinnerRenderer;

@@ -6,7 +6,8 @@ import { DataTableClass } from "./DataTableClass";
 import { IDataTableProperties } from "./IDataTableProperties";
 import { UIView } from "../UIView/UIView";
 import { IDataTableColumn } from "./IDataTableCoumn";
-
+import * as Handlebars from 'handlebars';
+import { StringHelpers } from "../../formbuilder/helpers/string";
 
 function DataTableRenderer({ control }: { control: DataTableClass }) {
     const view: DataTableClass = control as any;
@@ -27,11 +28,21 @@ function DataTableRenderer({ control }: { control: DataTableClass }) {
     const bodyRenderer = (column: IDataTableColumn) => {
         if (is.function(column.body)) {
             return (rowData) => {
-                const view = column.body(rowData);
+                const view = (column as any).body(rowData);
                 if (view instanceof UIView) {
                     return view.render()
                 }
             }
+        } else if (is.string(column.body)) {
+            return (rowData) => {
+                const template = Handlebars.compile(column.body);
+                return template(rowData, {
+                    helpers: {
+                        ...StringHelpers
+                    }
+                })
+            }
+
         }
     }
 
@@ -48,7 +59,7 @@ function DataTableRenderer({ control }: { control: DataTableClass }) {
 
     return (
         <DataTable value={control.vp_Model}
-            filterDisplay= {control.vp_ShowFilterRow ? "row" : ""}
+            filterDisplay={control.vp_ShowFilterRow ? "row" : ""}
             tableClassName={view.GetClassName()}
             tableStyle={{ minWidth: '50rem' }} scrollable scrollHeight="flex"
             editMode={control.vp_EditMode}

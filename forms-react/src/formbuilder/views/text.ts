@@ -28,14 +28,20 @@ export interface TextFieldInfo {
 
 
 export const TextFormView = (fieldInfo: any) => {
-   // v.validate(fieldInfo, schema).valid;
+    // v.validate(fieldInfo, schema).valid;
 
     const formController = useFormController();
-    let { visibleWhen, required, multiline, description, formula, defaultValue, defaultDisabled, startAdornment, endAdornment } = fieldInfo;
+    let { visibleWhen, required, multiline, description, formula, defaultValue, defaultDisabled,
+        startAdornment, endAdornment, fieldId, name } = fieldInfo;
 
     let canRender = FormBuilder.canRender(fieldInfo, formController);
 
     defaultValue = FormBuilder.compileFormula(defaultValue);
+
+    if (defaultValue == null) {
+        defaultValue = formController.GetValue(fieldId);
+    }
+
 
     if (canRender) {
         return (

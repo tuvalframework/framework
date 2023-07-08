@@ -107,7 +107,7 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson): DataProvider => ({
     update: (resource, params) =>
         httpClient(`${apiUrl}/${resource}/${params.id}`, {
             method: 'PUT',
-            body: params.data.dataBag != null ?  JSON.stringify(params.data.dataBag) : JSON.stringify(params.data),
+            body: params.data?.dataBag != null ?  JSON.stringify(params.data.dataBag) : JSON.stringify(params.data),
         }).then(({ json }) => ({ data: json })),
 
     // json-server doesn't handle filters on UPDATE route, so we fallback to calling UPDATE n times instead

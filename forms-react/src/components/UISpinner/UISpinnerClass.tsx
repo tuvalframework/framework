@@ -27,7 +27,7 @@ export class UISpinnerClass extends UIView {
          return this;
      }
 
-     
+
      /** @internal */
     @ViewProperty() vp_HeaderTemplate:UIView;
     public headerTemplate(value: UIView): this {
@@ -44,6 +44,6 @@ export class UISpinnerClass extends UIView {
 
 
     public render() {
-        return (<UIViewRenderer wrap={true} control={this} renderer={UISpinnerRenderer}></UIViewRenderer>)
+        return (<UIViewRenderer wrap={false} control={this} renderer={UISpinnerRenderer}></UIViewRenderer>)
     }
 }

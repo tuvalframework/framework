@@ -30,14 +30,14 @@ export enum DialogPosition {
 }
 
 
-export  enum MenuButtonSize {
+export enum MenuButtonSize {
     XXS = "16",
     XS = "24",
     SMALL = "32",
     MEDIUM = "40",
     LARGE = "48"
 }
-export  enum MenuButtonComponentPosition {
+export enum MenuButtonComponentPosition {
     START = "start",
     END = "end"
 }
@@ -76,8 +76,14 @@ function MenuButtonRenderer({ control }: IControlProperties) {
                         <MenuTitle caption={menuItem.title} />
                     )
                 default:
+                    const className = css`
+                    & {
+                        color: ${menuItem.color}
+                    }
+                    `
                     return (
                         <MenuItem
+                            className={className}
                             icon={menuItem.icon instanceof UIView ? IconWrapper : menuItem.icon}
                             // iconType={"SVG" as any}
                             onClick={
@@ -98,14 +104,14 @@ function MenuButtonRenderer({ control }: IControlProperties) {
 
     return (
         <Fragment>
-            <MenuButton 
-            
-            closeDialogOnContentClick={true} 
-           // componentPosition={MenuButtonComponentPosition.START}
+            <MenuButton
+
+                closeDialogOnContentClick={true}
+                // componentPosition={MenuButtonComponentPosition.START}
                 dialogOffset={{ main: 0, secondary: 0 }}
-               dialogPosition={ control.vp_DialogPosition} 
-                component={control.vp_Icon} 
-                //zIndex={10000} 
+                dialogPosition={control.vp_DialogPosition}
+                component={control.vp_Icon}
+                //zIndex={10000}
                 size={MenuButtonSize.XS}
             >
                 <Menu id="menu" size="medium" >
