@@ -25,6 +25,10 @@ import { ObjectHelpers } from "./helpers/object";
 import { useProtocol } from "../data/DataProviderContext";
 import { label } from "./components/label";
 import { description } from "./components/description";
+import { SaveAction } from "./actions/SaveAction";
+import beautify from "json-beautify";
+import { NextFormAction } from "./actions/NextFormAction";
+import { RouterHelpers } from "./helpers/router";
 
 
 export const UIFormBuilderContext = createContext(null!);
@@ -43,7 +47,8 @@ export function compileFormula(formData: any, code: string) {
         helpers: {
             counter: () => 1000,
             ...MathHelpers,
-            ...ObjectHelpers
+            ...ObjectHelpers,
+            ...RouterHelpers
         }
     })
 }
@@ -360,13 +365,17 @@ const KeyValueView = (textData: any) => {
 
 
 
-
+const test_me_up = 0;
 export class FormBuilder {
     public static viewFactories = {};
+    public static actionFactories = {};
     public static layoutFactories = {};
     public static containerFactories = {};
     public static injectView(viewType: string, viewFactory: any) {
         FormBuilder.viewFactories[viewType] = viewFactory;
+    }
+    public static injectAction(actionType: string, actionFactory: any) {
+        FormBuilder.actionFactories[actionType] = actionFactory;
     }
     public static injectLayout(layoutType: string, viewFactory: any) {
         FormBuilder.layoutFactories[layoutType] = viewFactory;
@@ -390,6 +399,7 @@ export class FormBuilder {
 
     public static canRender(fieldInfo: any, formController?: UIFormController) {
         formController = useFormController();
+        const { name } = fieldInfo;
 
         const { visibleWhen } = fieldInfo;
 
@@ -435,18 +445,21 @@ export class FormBuilder {
                         }
                     }
                 }
-                if (!found) {
-                    fails.push(0)
+                /*  if (!found) {
+                     fails.push(0)
+                 } */
+                if (found) {
+                    canRender = true;
+                    break;
                 }
             }
-            if (fails.length === 0) {
-                canRender = true;
-            }
-
         } else {
             canRender = true;
         }
 
+        if (!canRender) {
+            formController.SetValue(name, null, true);
+        }
         return canRender;
     }
 
@@ -456,6 +469,7 @@ export class FormBuilder {
         }
 
         const [formIndex, setFormIndex] = useState(0);
+        const [formMode, setFormMode] = useState('form')
 
 
         //const [formMeta, setFormMeta] = useState(is.array(_formMeta) ? _formMeta[0] : _formMeta);
@@ -472,47 +486,49 @@ export class FormBuilder {
         const dialog = useDialog();
         const contextValue = {
             nextForm: () => {
-                setFormIndex(formIndex + 1)
+                setFormIndex(Math.min(formIndex + 1, is.array(_formMeta) ? _formMeta.length : 0))
+            },
+            prevForm: () => {
+                setFormIndex(Math.max(0, formIndex - 1))
             }
         }
         return (
+
+            //.onChange((e) => this.code = e),
             UIViewBuilder(() =>
                 ReactView(
                     <UIFormBuilderContext.Provider value={contextValue}>
                         {
                             UIViewBuilder(() => {
                                 let invalidateResource = null;
-                                let formMutate = null;
-                                let createMutate = null;
-                                let updateMutate = null;
-                                let isFormMutateExcuting = false;
+
                                 let isFormLoading = false;
 
                                 const views = []
-                                const { fieldMap, layout, mode, resource, resourceId, title, protocol, mutation, query } = formMeta as any;
+                                const { fieldMap, layout, mode, resource, resourceId, title, protocol, mutation, query, actions } = formMeta as any;
 
                                 if (protocol) {
                                     const { query: _query, __mutation, getOne, create, update } = useProtocol(protocol);
 
-                                    if (mode === 'create') {
-                                        const { mutate, isLoading, invalidateResourceCache } = create(resource);
-                                        createMutate = mutate;
-                                        invalidateResource = invalidateResourceCache;
-                                        isFormMutateExcuting = isLoading;
-                                    }
-
-                                    if (mode === 'update') {
-                                        const {mutate,  isLoading , invalidateResourceCache} = update(resource);
-                                        updateMutate = mutate;
-                                        invalidateResource = invalidateResourceCache;
-                                        isFormMutateExcuting = isLoading;
-                                    }
-
-                                    if (is.string(mutation)) {
-                                        const { mutate, isLoading: isMutateLoading } = __mutation`${mutation}`;
-                                        formMutate = mutate;
-                                        isFormMutateExcuting = isMutateLoading;
-                                    }
+                                    /*   if (mode === 'create') {
+                                          const { mutate, isLoading, invalidateResourceCache } = create(resource);
+                                          createMutate = mutate;
+                                          invalidateResource = invalidateResourceCache;
+                                          isFormMutateExcuting = isLoading;
+                                      }
+  
+                                      if (mode === 'update') {
+                                          const { mutate, isLoading, invalidateResourceCache } = update(resource);
+                                          updateMutate = mutate;
+                                          invalidateResource = invalidateResourceCache;
+                                          isFormMutateExcuting = isLoading;
+                                      }
+  
+                                      if (is.string(mutation)) {
+                                          const { mutate, isLoading: isMutateLoading } = __mutation`${mutation}`;
+                                          formMutate = mutate;
+                                          isFormMutateExcuting = isMutateLoading;
+                                      } */
                                     if (is.string(query)) {
                                         const { data, isLoading } = _query(query);
                                         isFormLoading = isLoading;
@@ -590,63 +606,45 @@ export class FormBuilder {
 
                                 return (
                                     isFormLoading ? Spinner() :
-                                        VStack(
+                                        VStack({ alignment: cTopLeading })(
                                             title && FormTitle(title),
-                                            // Text(JSON.stringify(formController.GetFormData())),
-                                            ScrollView({ axes: cVertical, alignment: cTopLeading })(
-                                                VStack({ alignment: cTopLeading })(
-                                                    // Text(JSON.stringify(formController.GetFormData())),
+                                         //   Text(formMode).onClick(() => setFormMode(formMode === 'form' ? 'code' : 'form')),
+                                            formMode === 'code' ?
+                                                CodeEditor()
+                                                    .value(beautify(formMeta, null, 2, 50))
+                                                    .width('100%')
+                                                    .height('100%') :
+                                                // Text(JSON.stringify(formController.GetFormData())),
+                                                ScrollView({ axes: cVertical, alignment: cTopLeading })(
                                                     VStack({ alignment: cTopLeading })(
-                                                        ...ForEach(views)(view => view)
-                                                    )
-                                                        .height()
-                                                        .background('#F8FAFF')
-                                                        .padding('24px 24px 0px')
+                                                        // Text(JSON.stringify(formController.GetFormData())),
+                                                        VStack({ alignment: cTopLeading })(
+                                                            ...ForEach(views)(view => view)
+                                                        )
+                                                            .height()
+                                                            .background('#F8FAFF')
+                                                            .padding('24px 24px 0px')
 
-                                                )
-                                                    .background('#F8FAFF')
-                                            ),
-                                            (!is.function(formMutate) && !is.function(createMutate) && !is.function(updateMutate)) ? Fragment() :
-                                                HStack({ alignment: cLeading })(
-                                                    Button(
-                                                        Text('Save')
                                                     )
-                                                        .loading(isFormMutateExcuting)
-                                                        .onClick(() => {
-                                                            if (createMutate != null) {
-                                                                createMutate(formController.GetFormData(), {
-                                                                    onSuccess: () => {
-                                                                        if (is.function(invalidateResource)) {
-                                                                            invalidateResource();
-                                                                        }
-                                                                        dialog.Hide();
-                                                                    }
-                                                                });
-                                                            }
-                                                            if (updateMutate != null) {
-                                                                updateMutate(  resourceId, formController.GetFormData() , {
-                                                                    onSuccess: () => {
-                                                                        if (is.function(invalidateResource)) {
-                                                                            invalidateResource();
-                                                                        }
-                                                                        dialog.Hide();
-                                                                    }
-                                                                });
-                                                            }
-                                                            // formController.SetValue('tenant_id', useSessionService().TenantId);
-                                                            if (is.function(formMutate)) {
-                                                                //alert(JSON.stringify(formController.GetFormData()))
-                                                                formMutate(formController.GetFormData(), {
-                                                                    onSuccess: () => {
-                                                                        dialog.Hide();
-                                                                    }
-                                                                });
-                                                            }
-                                                        })
-                                                )
-                                                    .height()
-                                                    .padding()
-                                                    .borderTop('1px solid #D6E4ED')
+                                                        .background('#F8FAFF')
+                                                ),
+
+                                            HStack({ alignment: cLeading })(
+                                                ...ForEach(actions || [])((action: any) => {
+                                                    if (FormBuilder.actionFactories[action?.type]) {
+                                                        return FormBuilder.actionFactories[action?.type](formMeta, action)
+                                                    }
+                                                    /* if (action?.type === 'save') {
+                                                        return SaveAction(formMeta, action)
+                                                    } else if (action?.type === 'next') {
+                                                        return NextFormAction(formMeta, action)
+                                                    } */
+                                                })
+
+                                            )
+                                                .height()
+                                                .padding()
+                                                .borderTop('1px solid #D6E4ED')
 
                                         )
 
@@ -657,6 +655,7 @@ export class FormBuilder {
                     </UIFormBuilderContext.Provider>
                 )
             )
+
 
         )
     }
@@ -693,3 +692,6 @@ FormBuilder.injectView('virtual', VirtualView);
 //FormBuilder.injectView('positionselect', PositionSelectView);
 FormBuilder.injectView('widget', WidgetView);
 FormBuilder.injectView('datatable', DataTableView);
+
+FormBuilder.injectAction('save', SaveAction);
+FormBuilder.injectAction('next', NextFormAction);

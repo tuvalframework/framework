@@ -2,6 +2,7 @@
 
 import { useFormController } from "../../UIFormController";
 import { Fragment } from "../../components/Fragment/Fragment";
+import { FormBuilder } from "../FormBuilder";
 
 //const v = new Validator();
 
@@ -22,10 +23,11 @@ export interface TextFieldInfo {
 
 
 export const VirtualView = (fieldInfo: any) => {
-    const { name, value } = fieldInfo;
+    let { name, value } = fieldInfo;
+    value = FormBuilder.compileFormula(value);
 
     const formController = useFormController();
-    const currentValue = formController.GetValue(name);
+    let currentValue = formController.GetValue(name);
 
     if (currentValue !== value){
         formController.SetValue(name, value);

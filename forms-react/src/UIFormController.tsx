@@ -191,10 +191,10 @@ export class UIFormController extends UIController {
         if (errorCount === 0) {
             this.formData = { ...this.formData }
 
-          /*   const data = {};
-            for (let key in this.formData) {
-                data[key] = this.GetValue(key);
-            } */
+            /*   const data = {};
+              for (let key in this.formData) {
+                  data[key] = this.GetValue(key);
+              } */
 
             return [true, this.GetFormData()];
             //this.OnSubmit(data);
@@ -232,16 +232,25 @@ export class UIFormController extends UIController {
     public SetValue(name: string, value: any, silent: boolean = false, isDirty: boolean = false) {
 
         if (name != null) {
-            const fieldName = name;
+            if (value == null) {
+                delete this.fieldValues[name];
 
-            if (this.formData[fieldName] == null) {
-                this.formData[fieldName] = clone(defaultField);
-            }
-            const path = name.indexOf('/') === 0 ? name.substring(1, name.length).split('/') : name;
-            objectPath.set(this.fieldValues, path, value)
+                if (!silent) {
+                    this.fieldValues = { ...this.fieldValues };
+                }
+                
+            } else {
+                const fieldName = name;
 
-            if (!silent) {
-                this.fieldValues = { ...this.fieldValues };
+                if (this.formData[fieldName] == null) {
+                    this.formData[fieldName] = clone(defaultField);
+                }
+                const path = name.indexOf('/') === 0 ? name.substring(1, name.length).split('/') : name;
+                objectPath.set(this.fieldValues, path, value)
+
+                if (!silent) {
+                    this.fieldValues = { ...this.fieldValues };
+                }
             }
         }
     }

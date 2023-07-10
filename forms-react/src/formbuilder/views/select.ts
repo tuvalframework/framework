@@ -62,7 +62,7 @@ export const SelectFormView = (textData: any) => {
     } else {
         return (
             VStack({ alignment: cTopLeading })(
-                Text(textData.label).kerning('0.00938em').lineHeight('24px').foregroundColor('#333D47').fontSize(14),
+              
                 Dropdown((option) =>
                     HStack({ alignment: cLeading })(
                         Text(option.text)

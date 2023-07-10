@@ -59,6 +59,8 @@ export { useQuery, QueryClient } from 'react-query';
 
 export { nanoid } from 'nanoid'
 
+export { confirmDialog } from 'primereact/confirmdialog';
+
 //-------------------
 
 export * from './data'

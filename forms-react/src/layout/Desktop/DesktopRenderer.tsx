@@ -1,7 +1,7 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { DesktopController } from "../../DesktopController";
 import { DesktopClass } from "./DesktopClass";
-
+import { ConfirmDialog} from 'primereact/confirmdialog';
 
 
 export interface IControlProperties {
@@ -11,7 +11,11 @@ export interface IControlProperties {
 
 function DesktopRenderer({ control }: IControlProperties) {
     return (
-       <DesktopController baseUrl={control.vp_BaseUrl}/>
+        <Fragment>
+             <ConfirmDialog />
+            <DesktopController baseUrl={control.vp_BaseUrl} />
+        </Fragment>
+
     );
 }
 

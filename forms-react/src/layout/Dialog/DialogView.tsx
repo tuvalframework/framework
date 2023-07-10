@@ -247,17 +247,27 @@ export class DialogView extends UIView {
     public SetValue(name: string, value: any, silent: boolean = false, isDirty: boolean = false) {
 
         if (name != null) {
-            const fieldName = name;
 
-            if (this.formData[fieldName] == null) {
-                this.formData[fieldName] = clone(defaultField);
-            }
-            const path = name.indexOf('/') === 0 ? name.substring(1, name.length).split('/') : name;
-            objectPath.set(this.fieldValues, path, value)
+            if (value == null) {
+                delete this.fieldValues[name];
+
+                if (!silent) {
+                    this.fieldValues = { ...this.fieldValues };
+                }
+
+            } else {
+                const fieldName = name;
+
+                if (this.formData[fieldName] == null) {
+                    this.formData[fieldName] = clone(defaultField);
+                }
+                const path = name.indexOf('/') === 0 ? name.substring(1, name.length).split('/') : name;
+                objectPath.set(this.fieldValues, path, value)
 
 
-            if (!silent) {
-                this.formData = { ...this.formData };
+                if (!silent) {
+                    this.formData = { ...this.formData };
+                }
             }
         }
     }
