@@ -10,10 +10,10 @@ import { EventBus, is, ModuleLoader } from "@tuval/core";
 import { Loader } from "monday-ui-react-core";
 import { Toast } from 'primereact'
 import { HStack, VStack } from "./layout";
-import { Heading } from "./components";
 import { TrackJS } from 'trackjs';
 import { Tracker } from "./tracker";
 import { Theme } from "./thema-system";
+import { Heading } from "./components/Heading";
 
 export function getAppName() {
     try {

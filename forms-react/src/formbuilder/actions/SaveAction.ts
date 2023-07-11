@@ -1,6 +1,6 @@
 import { is } from "@tuval/core";
 import { useFormController } from "../../UIFormController";
-import { Text } from "../../components";
+import { Text, UIViewBuilder } from "../../components";
 import { Button } from "../../components/Button";
 import { useDialog } from "../../layout";
 import { useProtocol } from "../../data/DataProviderContext/DataProviderClass";
@@ -8,7 +8,7 @@ import { Fragment } from "../../components/Fragment";
 import { compileFormula, useFormBuilder } from "../FormBuilder";
 import { useNavigate } from "react-router-dom";
 
-export const SaveAction = (formMeta, action) => {
+export const SaveAction = (formMeta, action) => UIViewBuilder(() => {
     const { label, successAction, successActions } = action;
     const formController = useFormController();
     const dialog = useDialog();
@@ -79,7 +79,7 @@ export const SaveAction = (formMeta, action) => {
                                             formBuilder.nextForm();
                                         } else if (successAction.type === 'hide') {
                                             dialog.Hide();
-                                        }else if (successAction.type === 'navigate') {
+                                        } else if (successAction.type === 'navigate') {
                                             navigate(compileFormula(e, successAction.url))
                                         }
                                     })
@@ -122,3 +122,4 @@ export const SaveAction = (formMeta, action) => {
                 })
     )
 }
+)
