@@ -11,8 +11,9 @@ export interface IMenuItemModel {
     icon?: UIView | SubIcon;
     title?: string;
     color?: string;
-    type?: 'Divider' | 'MenuItem' | 'Title';
+    type?: 'Divider' | 'MenuItem' | 'Title' | 'View';
     onClick?: Function;
+    view?: ()=> UIView;
 
 }
 export class MenuButtonClass extends UIView {

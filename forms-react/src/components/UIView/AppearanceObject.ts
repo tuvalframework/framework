@@ -436,6 +436,8 @@ export class AppearanceObject {
     @Skin('color')
     public Color: string;
 
+    @Skin('gap')
+    public Gap: string;
     /**
      * Specifies the number of columns in a multi-column element.
      */

@@ -4,6 +4,7 @@ export * from './RecordsContext'
 export * from './CreateContext'
 export * from './UpdateContext'
 export * from './DeleteContext'
+export * from './OptionsContext'
 
 export * from 'ra-core'
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { UIView } from "../UIView/UIView";
-import {UIViewRenderer} from "../UIView/UIViewRenderer";
+import { UIViewRenderer } from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import IconRenderer from "./IconRenderer";
 
@@ -13,13 +13,13 @@ export class IconClass extends UIView {
         return this;
     }
 
-     /** @internal */
-     @ViewProperty(16) vp_Size: string | number;
+    /** @internal */
+    @ViewProperty(16) vp_Size: string | number;
 
-     public size(value: string | number) {
-         this.vp_Size = value;
-         return this;
-     }
+    public size(value: string | number) {
+        this.vp_Size = value;
+        return this;
+    }
 
     /** @internal */
     @ViewProperty() vp_IconType: string;
@@ -27,6 +27,12 @@ export class IconClass extends UIView {
     public iconType(value: string) {
         this.vp_IconType = value;
         return this;
+    }
+
+    public constructor() {
+        super();
+        this.Appearance.Display = 'flex';
+        this.Appearance.AlignItems = 'center';
     }
     public render() {
         return (<UIViewRenderer wrap={true} control={this} renderer={IconRenderer}></UIViewRenderer>)

@@ -8,7 +8,7 @@ export const DriveProtocol = {
     File: Symbol('DriveProtocol.File')
 }
 
-
+export const ProcessDefinitionProtocol = Symbol('ProcessDefinitionProtocol');
 export const ProcessMiningProtocol = Symbol('ProcessMiningProtocol');
 
 export const OKRProtocol = Symbol('OKRProtocol');

@@ -7,6 +7,7 @@ import { is } from '@tuval/core';
 import { InputSwitchClass } from "./InputSwitchClass";
 import { InputSwitch } from "primereact";
 import BootstrapSwitchButton from "./BootstrapSwitchButton";
+import { Toggle } from "monday-ui-react-core";
 
 
 export interface IControlProperties {
@@ -22,7 +23,17 @@ function InputSwitchRenderer({ control }: IControlProperties) {
     `;
 
     return (
-        <BootstrapSwitchButton
+        <Toggle
+            onOverrideText={control.vp_OnLabel ? control.vp_OnLabel : ''}
+            offOverrideText={control.vp_offLabel ? control.vp_offLabel : ''}
+            isDefaultSelected={false}
+            isSelected={control.vp_Checked}
+            onChange={(e) => is.function(control.vp_OnChange) ? control.vp_OnChange(e) : void 0} />
+
+        /*   <InputSwitch checked={control.vp_Checked} onChange={(e) => is.function(control.vp_OnChange) ? control.vp_OnChange(e.value) : void 0} /> */
+    )
+
+    /* <BootstrapSwitchButton
             checked={control.vp_Checked}
             onlabel={control.vp_OnLabel ? control.vp_OnLabel  : 'On'}
             onstyle='primary'
@@ -31,9 +42,7 @@ function InputSwitchRenderer({ control }: IControlProperties) {
             width={control.Appearance.Width?.replace('px', '')}
             height={control.Appearance.Height?.replace('px', '')}
             onChange={(e) => is.function(control.vp_OnChange) ? control.vp_OnChange(e) : void 0}
-        />
-        /*   <InputSwitch checked={control.vp_Checked} onChange={(e) => is.function(control.vp_OnChange) ? control.vp_OnChange(e.value) : void 0} /> */
-    )
+        /> */
 
 }
 

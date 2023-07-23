@@ -269,48 +269,57 @@ export const useProtocol = (provider: symbol | string) => {
 
             return { data: data ? data : {}, isLoading, error, invalidateQuery };
         },
-        lazyQuery: (query: string, _variables: any = {}) => {
+        lazyQuery: () => {
 
             const dataProvider = dataProviderContextValue.provider;
 
             const client = useQueryClient();
             const mutation = useMutation((variables: any) => {
 
-                const domainVariablesDefs = Object.keys(variables).map(key => {
-                    const value = variables[key];
-                    if (is.string(value)) {
-                        return ['$' + key, ':', 'String'].join('')
-                    }
-                })
-
-                const domainVariables = Object.keys(variables).map(key => {
-                    return [key, ':', '$' + key].join('')
-                })
-
-                let _query = '';
-                if (Object.keys(variables).length > 0) {
-                    _query = `
-            query provider(${domainVariablesDefs})
-                {
-                    domain(${domainVariables}) {
-                       ${query}
-                    }
+                const query = `
+                query {
+                     ${variables.query}
                 }
-          `
-                } else {
-                    _query = `
-            query provider {
-                    domain {
-                       ${query}
-                    }
-            }
-          `
-                }
-
-                return dataProvider['query'](client, _query, variables, dataProviderContextValue.config)
+              `
+             
+               
+                return dataProvider['query'](client, query, variables, dataProviderContextValue.config)
             })
 
-            return [mutation.mutate, mutation.isLoading, mutation.data];
+            
+
+            const resultObject = {};
+            resultObject['isLoading'] = mutation.isLoading;
+            resultObject['isSuccess'] = mutation.isSuccess;
+            resultObject['query'] = (variables: any[], options: any) => {
+
+                mutation.mutate(variables, {
+                    onSuccess: (data: any) => {
+
+                        if (is.function(options?.onSuccess)) {
+                            if (data?.data != null) {
+                                const keys = Object.keys(data.data);
+                                if (keys.length > 0) {
+                                    options.onSuccess(data.data[keys[0]]);
+                                }
+                            } else {
+                                options.onSuccess();
+                            }
+
+                        }
+                    }
+                })
+
+
+            }
+            const data: any = mutation.data;
+            if (data != null && data.data! != null) {
+                resultObject['result'] = data.data;
+            } else {
+                resultObject['result'] = {};
+            }
+
+            return resultObject as any;
 
         },
         service: (name: string, options: { onSuccess: Function } = {} as any): any => {
@@ -1578,7 +1587,7 @@ export const useProtocol = (provider: symbol | string) => {
                     setTimeout(
                         () =>
                             reactMutationOptions.onSuccess(
-                                { ...previousRecord, ...{data} },
+                                { ...previousRecord, ...{ data } },
                                 { resource: resource, ...{ id: String(id), data } },
                                 { snapshot: snapshot.current }
                             ),

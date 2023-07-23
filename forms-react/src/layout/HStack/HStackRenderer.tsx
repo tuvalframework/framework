@@ -17,6 +17,7 @@ export interface IControlProperties {
 function HStackRenderer({ control }: IControlProperties) {
 
 
+    control.Appearance.Gap = control.vp_Spacing;
     const className = css`
     ${control.Appearance.ToString()}
     ${control.HoverAppearance.IsEmpty ? '' : '&:hover { ' + control.HoverAppearance.ToString() + ' }'}
@@ -80,9 +81,9 @@ function HStackRenderer({ control }: IControlProperties) {
                             return null;
                         }
 
-                        if (control.vp_Spacing) {
+                        /* if (control.vp_Spacing) {
                             view.Appearance.MarginRight = control.vp_Spacing;
-                        }
+                        } */
                         return view.render();
                     })
                 }
@@ -113,9 +114,9 @@ function HStackRenderer({ control }: IControlProperties) {
                             return null;
                         }
 
-                        if (control.vp_Spacing && index !== control.vp_Chidren.length - 1) {
+                       /*  if (control.vp_Spacing && index !== control.vp_Chidren.length - 1) {
                             view.Appearance.MarginRight = control.vp_Spacing;
-                        }
+                        } */
                         return view.render();
                     } catch (e) {
                         alert(e)
