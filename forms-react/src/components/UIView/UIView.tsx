@@ -393,6 +393,13 @@ export class UIView {
     public height(value: string): this;
     public height(value: StyleAttribute): this;
     public height(...args: any[]): this {
+    
+        //if için
+        if (args.length === 1 && args[0] === null){
+           
+            return;
+        }
+
         if (args.length === 0) {
             this.Appearance.Height = 'fit-content';
             return this;
