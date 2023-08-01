@@ -481,7 +481,8 @@ export class FormBuilder {
         } catch (e) {
             return Text(e.toString())
         }
-
+        debugger;
+        console.log("rendered")
         const formController = useFormController();
         const dialog = useDialog();
         const contextValue = {
@@ -492,6 +493,8 @@ export class FormBuilder {
                 setFormIndex(Math.max(0, formIndex - 1))
             }
         }
+
+       
         return (
 
             //.onChange((e) => this.code = e),
@@ -559,6 +562,8 @@ export class FormBuilder {
                                     }
                                 }
 
+                               
+
                                 if (layout != null && layout.type != null) {
                                     const factoryFunc = FormBuilder.layoutFactories[layout.type];
                                     if (factoryFunc == null) {
@@ -569,6 +574,8 @@ export class FormBuilder {
                                         }
                                     }
                                 }
+
+                                
 
                                 if (layout != null && layout.type == null && is.array(layout.containers)) {
                                     for (let i = 0; i < layout.containers.length; i++) {
@@ -587,6 +594,8 @@ export class FormBuilder {
                                     }
                                 }
 
+                               
+                               
 
                                 if (layout == null) {
                                     for (let key in fieldMap) {
@@ -602,7 +611,7 @@ export class FormBuilder {
                                             }
                                         }
                                     }
-                                }
+                                }                               
 
                                 return (
                                     isFormLoading ? Spinner() :

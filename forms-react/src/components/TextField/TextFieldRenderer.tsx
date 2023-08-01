@@ -110,6 +110,7 @@ const MyInputText = (_params) => {
 
         params['onChange'] = (e) => {
             controller.SetFieldState(params.obj.vp_FormField.name, { isTouched: true });
+           
             controller.SetValue(params.obj.vp_FormField.name, e.target.value);
         }
 
@@ -166,7 +167,8 @@ function TextFieldRenderer({ control }: IControlProperties) {
             {...events}
             value={control.vp_Value}
             placeholder={control.vp_Placeholder}
-            onChange={(e) => is.function(control.vp_OnChange) ? control.vp_OnChange(e.value == null ? e.target?.value : e.value) : void 0}>
+            onChange={(e) => is.function(control.vp_OnChange) ? control.vp_OnChange(e.value == null ? e.target?.value : e.value) : void 0}
+            >
         </MyInputText>
     );
 

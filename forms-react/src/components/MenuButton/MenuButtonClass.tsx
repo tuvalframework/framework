@@ -12,8 +12,10 @@ export interface IMenuItemModel {
     title?: string;
     color?: string;
     type?: 'Divider' | 'MenuItem' | 'Title' | 'View';
+    selected?: boolean;
     onClick?: Function;
     view?: ()=> UIView;
+    items?:IMenuItemModel[]
 
 }
 export class MenuButtonClass extends UIView {
