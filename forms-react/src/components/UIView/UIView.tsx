@@ -230,7 +230,14 @@ export class UIView {
             this.Appearance.MaxWidth = 'fit-content';
             this.Appearance.MinWidth = 'fit-content';
             return this;
-        } else if (args.length === 1 && is.number(args[0])) {
+        } else if (args.length === 1 && args[0] === null) {
+            // no set width
+            this.Appearance.Width = '';
+            this.Appearance.MaxWidth = '';
+            this.Appearance.MinWidth = '';
+            return this;
+        }
+        else if (args.length === 1 && is.number(args[0])) {
             const value = args[0];
             this.Appearance.Width = `${value}px`;
 
@@ -395,9 +402,16 @@ export class UIView {
     public height(...args: any[]): this {
     
         //if için
-        if (args.length === 1 && args[0] === null){
+       /*  if (args.length === 1 && args[0] === null){
            
             return;
+        }
+        else */ if (args.length === 1 && args[0] === null) {
+            // no set width
+            this.Appearance.Height = '';
+            this.Appearance.MaxHeight = '';
+            this.Appearance.MinHeight = '';
+            return this;
         }
 
         if (args.length === 0) {
@@ -1029,6 +1043,44 @@ export class UIView {
             return this;
         }
         throw 'Argument Exception in ' + this.constructor.name + '::border function.';
+    }
+
+    public transformOrigin(value: StyleAttribute): this;
+    public transformOrigin(value: string): this;
+    public transformOrigin(...args: any[]): this {
+        if (args.length === 1 && is.string(args[0])) {
+            const value = args[0];
+            this.Appearance.TransformOrigin = value;
+            return this;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.TransformOrigin = styleAttribute.default instanceof ColorClass ? styleAttribute.default.color : styleAttribute.default;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.TransformOrigin = styleAttribute.hover instanceof ColorClass ? styleAttribute.hover.color : styleAttribute.hover;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.TransformOrigin = styleAttribute.active instanceof ColorClass ? styleAttribute.active.color : styleAttribute.active;
+            }
+            if (styleAttribute.disabled != null) {
+                this.DisabledAppearance.TransformOrigin = styleAttribute.disabled instanceof ColorClass ? styleAttribute.disabled.color : styleAttribute.disabled;
+            }
+
+
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.TransformOrigin = styleAttribute.focus instanceof ColorClass ? styleAttribute.focus.color : styleAttribute.focus;
+            }
+            if (styleAttribute.before != null) {
+                this.BeforeAppearance.TransformOrigin = styleAttribute.before instanceof ColorClass ? styleAttribute.before.color : styleAttribute.before;
+            }
+
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.TransformOrigin = styleAttribute.after as any;
+            }
+            return this;
+        }
+        throw 'Argument Exception in ' + this.constructor.name + '::TransformOrigin function.';
     }
 
 
