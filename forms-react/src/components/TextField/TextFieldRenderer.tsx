@@ -56,6 +56,7 @@ function TextFieldProxy(_props) {
 
 const MyInputText = (_params) => {
 
+   
     const params = { ..._params };
     const getLabel = () => {
         if (is.function(params.obj.vp_LabelTemplate)) {
@@ -102,7 +103,7 @@ const MyInputText = (_params) => {
             if (params.defaultValue != null) {
                 controller.SetValue(params.obj.vp_FormField.name, params.defaultValue, true);
             }
-            params['value'] = controller.GetValue(params.obj.vp_FormField.name) || params.defaultValue;
+            params['value'] = controller.GetValue(params.obj.vp_FormField.name) || '' /* || params.defaultValue */;
         }
 
 

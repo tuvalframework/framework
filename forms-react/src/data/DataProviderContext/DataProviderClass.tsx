@@ -167,6 +167,7 @@ export const useProtocol = (provider: symbol | string) => {
 
 
     const context = React.useContext(DataProtocolContext);
+    const queryClient = useQueryClient();
 
     //return context.dataProtocolContextObject[provider];
     const dataProviderContextValue = context.dataProtocolContextObject[provider];
@@ -410,6 +411,7 @@ export const useProtocol = (provider: symbol | string) => {
 
             return resultObject;
         },
+
         _mutation: (_query: TemplateStringsArray, ...expr: Array<any>): {
             mutate: (variables: any, {
                 onError,
@@ -1023,7 +1025,7 @@ export const useProtocol = (provider: symbol | string) => {
             const resultObject = {};
             resultObject['isLoading'] = mutation.isLoading;
             resultObject['isSuccess'] = mutation.isSuccess;
-            resultObject['mutate'] = (data: any, createOptions: any) => {
+            resultObject['mutate'] = (data: any, createOptions: any = {}) => {
 
                 const {
                     returnPromise = options.returnPromise,
@@ -1131,7 +1133,13 @@ export const useProtocol = (provider: symbol | string) => {
             return resultObject as any;
         },
 
-        update: (resource?: any, params: any = {}, options: any = {}): any => {
+        update: (resource?: any, params: any = {}, options: any = {}): {
+            mutate?: (id: string, data?: any, options?: {
+                onError?: Function,
+                onSettled?: Function,
+                onSuccess?: Function,
+            }) => void, isLoading?: boolean, isSuccess?: boolean, invalidateResourceCache?: Function
+        } => {
 
             const dataProvider = dataProviderContextValue.provider;
 
@@ -1986,7 +1994,7 @@ export const useProtocol = (provider: symbol | string) => {
 
                 if (mode.current === 'pessimistic') {
                     return mutation.mutate(
-                        { resource: resource, ...{id} },
+                        { resource: resource, ...{ id } },
                         { onSuccess, onSettled, onError }
                     );
                 }
@@ -2053,7 +2061,7 @@ export const useProtocol = (provider: symbol | string) => {
                         () =>
                             reactMutationOptions.onSuccess(
                                 callTimePreviousData,
-                                { resource: resource, ...{id} },
+                                { resource: resource, ...{ id } },
                                 { snapshot: snapshot.current }
                             ),
                         0
@@ -2063,7 +2071,7 @@ export const useProtocol = (provider: symbol | string) => {
                 if (mode.current === 'optimistic') {
                     // call the mutate method without success side effects
                     return mutation.mutate(
-                        { resource: resource, ...{id} },
+                        { resource: resource, ...{ id } },
                         { onSettled, onError }
                     );
                 } else {
@@ -2077,7 +2085,7 @@ export const useProtocol = (provider: symbol | string) => {
                         } else {
                             // call the mutate method without success side effects
                             mutation.mutate(
-                                { resource: resource, ...{id} },
+                                { resource: resource, ...{ id } },
                                 { onSettled, onError }
                             );
                         }
@@ -2094,6 +2102,10 @@ export const useProtocol = (provider: symbol | string) => {
 
             resultObject['invalidateResourceCache'] = invalidateResourceCache;
             return resultObject as any;
+        },
+
+        invalidateResource: (resource: string): void => {
+            queryClient.invalidateQueries([provider, resource]);
         }
     }
 

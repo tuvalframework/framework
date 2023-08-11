@@ -29,6 +29,7 @@ import { SaveAction } from "./actions/SaveAction";
 import beautify from "json-beautify";
 import { NextFormAction } from "./actions/NextFormAction";
 import { RouterHelpers } from "./helpers/router";
+import { PostToCallerAction } from "./actions/PostToCallerAction";
 
 
 export const UIFormBuilderContext = createContext(null!);
@@ -704,3 +705,6 @@ FormBuilder.injectView('datatable', DataTableView);
 
 FormBuilder.injectAction('save', SaveAction);
 FormBuilder.injectAction('next', NextFormAction);
+FormBuilder.injectAction('post', PostToCallerAction);
+
+

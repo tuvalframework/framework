@@ -145,6 +145,7 @@ function PrimeRenderer({ control }: IControlProperties) {
     style['backgroundColor'] = control.Appearance.BackgroundColor;
     style['background'] = control.Appearance.Background;
     style['color'] = control.Appearance.Color;
+    style['border'] = control.Appearance.Border;
 
     if (control.vp_Resource != null) {
         const { data, total, isLoading, error, refetch } = useGetList(control.vp_Resource, {
