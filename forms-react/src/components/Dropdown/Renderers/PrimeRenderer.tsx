@@ -69,7 +69,7 @@ const MyDropDown = (_params) => {
         return (
             <Fragment>
                 {getLabel()}
-                <Dropdown  {...params} />
+                <Dropdown  {...params}  />
                 {fieldState.errors.map(error => (
                     <small className="p-error">{error}</small>
                 ))}
@@ -119,11 +119,11 @@ function PrimeRenderer({ control }: IControlProperties) {
         // console.log(option)
 
 
-        if (option && is.function(control.vp_selectedItemTemplate)) {
+        if (is.function(control.vp_selectedItemTemplate)) {
             const view: UIView = control.vp_selectedItemTemplate(option);
 
             if (view != null) {
-                console.groupEnd();
+                //console.groupEnd();
 
                 return view.render();
             }
