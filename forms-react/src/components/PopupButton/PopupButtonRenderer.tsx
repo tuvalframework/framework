@@ -13,11 +13,26 @@ export interface IControlProperties {
 }
 
 
+const WrapperComponent = ({control}) => {
+    return (
+      /*   <div style={{background:'yellow', width:'30px', height:'30px'}}>AAA</div> */
+        <Fragment>
+            {control.vp_View.render()}
+        </Fragment> 
+    )
+}
+
+const Content = ({control}) => {
+    return (
+        <Fragment>
+            {
+                control.vp_Children.map(view => <Fragment>{view.render()}</Fragment>)
+            }
+        </Fragment>
+    )
+}
 
 function PopupButtonRenderer({ control }: IControlProperties) {
-
-
-
     const className = css`
     & .menu-button--wrapper--open {
         background-color: transparent;
@@ -36,23 +51,7 @@ function PopupButtonRenderer({ control }: IControlProperties) {
     }
 `;
 
-    const WrapperComponent = () => {
-        return (
-            <Fragment>
-                {control.vp_View.render()}
-            </Fragment>
-        )
-    }
-
-    const Content = () => {
-        return (
-            <Fragment>
-                {
-                    control.vp_Children.map(view => <Fragment>{view.render()}</Fragment>)
-                }
-            </Fragment>
-        )
-    }
+  
 
     const showTrigger = ['click', 'enter'];
 
@@ -86,15 +85,14 @@ function PopupButtonRenderer({ control }: IControlProperties) {
     }
 
     return (
-
-
         <Dialog
             wrapperClassName={className}
+            open={control.vp_Open}
             isOpen={isOpen}
             moveBy={computedDialogOffset}
             content={<DialogContentContainer size={'medium'}
                 type={'popover'}>
-                <Content></Content>
+                <Content control={control}></Content>
             </DialogContentContainer>}
             //@ts-ignore
             showTrigger={showTrigger}
@@ -110,7 +108,7 @@ function PopupButtonRenderer({ control }: IControlProperties) {
             onDialogDidShow={onDialogDidShow}
             onDialogDidHide={onDialogDidHide}
         >
-            <WrapperComponent></WrapperComponent>
+             <WrapperComponent control={control}></WrapperComponent> 
 
         </Dialog>
 

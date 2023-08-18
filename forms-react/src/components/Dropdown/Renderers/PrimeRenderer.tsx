@@ -119,7 +119,7 @@ function PrimeRenderer({ control }: IControlProperties) {
         // console.log(option)
 
 
-        if (is.function(control.vp_selectedItemTemplate)) {
+        if (option != null && is.function(control.vp_selectedItemTemplate)) {
             const view: UIView = control.vp_selectedItemTemplate(option);
 
             if (view != null) {
