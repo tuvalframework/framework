@@ -14,7 +14,7 @@ import { VirtualView } from "./views/virtual";
 import { WidgetView } from "./views/widget";
 
 import React, { createContext, useState } from "react";
-import { Button, CheckBox, CodeEditor, Spinner, Text, TextAlignment, TextField, UIViewBuilder } from "../components";
+import { Button, CheckBox, CodeEditor, DateField, Segmented, Spinner, Text, TextAlignment, TextField, UIViewBuilder } from "../components";
 import { ReactView } from "../components/ReactView/ReactView";
 import { ForEach } from "../components/UIView/ForEach";
 import { UICreateContext, UIUpdateContext } from "../data";
@@ -30,6 +30,9 @@ import beautify from "json-beautify";
 import { NextFormAction } from "./actions/NextFormAction";
 import { RouterHelpers } from "./helpers/router";
 import { PostToCallerAction } from "./actions/PostToCallerAction";
+import { DatePickerView } from "./views/datefield";
+import { DateTimePickerView } from "./views/datetimepicker";
+import { SegmentedView } from "./views/segmented";
 
 
 export const UIFormBuilderContext = createContext(null!);
@@ -688,6 +691,9 @@ export class FormBuilder {
 
 FormBuilder.injectView('editor', EditorView);
 FormBuilder.injectView('text', TextFormView);
+FormBuilder.injectView('datepicker', DatePickerView);
+FormBuilder.injectView('datetimepicker', DateTimePickerView);
+FormBuilder.injectView('segmented', SegmentedView);
 FormBuilder.injectView('checkbox', CheckBoxFormView);
 FormBuilder.injectView('radiogroup', RadioGroupoFormView);
 FormBuilder.injectView('select', SelectFormView);

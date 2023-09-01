@@ -149,7 +149,7 @@ function MenuButtonRenderer({ control }: IControlProperties) {
                 // componentPosition={MenuButtonComponentPosition.START}
                 dialogOffset={{ main: 0, secondary: 0 }}
                 dialogPosition={control.vp_DialogPosition}
-                component={control.vp_Icon}
+                component={control.vp_View ? () => control.vp_View().render() : control.vp_Icon}
                 //zIndex={10000}
                 size={MenuButtonSize.XS}
             >

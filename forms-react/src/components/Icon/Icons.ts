@@ -187,6 +187,10 @@ import Security from "monday-ui-react-core/dist/icons/Security";
 import Send from "monday-ui-react-core/dist/icons/Send";
 import Settings from "monday-ui-react-core/dist/icons/Settings";
 import SettingsKnobs from "monday-ui-react-core/dist/icons/SettingsKnobs";
+import Share from "monday-ui-react-core/dist/icons/Share";
+import Show from "monday-ui-react-core/dist/icons/Show";
+
+import Shredder from "monday-ui-react-core/dist/icons/Shredder";
 
 import Workspace from "monday-ui-react-core/dist/icons/Workspace";
 
@@ -378,6 +382,9 @@ export const Icons = {
     Send: Send,
     Settings: Settings,
     SettingsKnobs: SettingsKnobs,
+    Share: Share,
+    Show: Show,
+    Shredder:Shredder,
     
     Workspace: Workspace
 }

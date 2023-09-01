@@ -3,28 +3,9 @@ import { UIView } from "../UIView/UIView";
 import {UIViewRenderer} from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import ButtonRenderer from "./ButtonRenderer";
+import { ButtonSize, ButtonType, ColorType, IButtonProperties } from "./IButtonProperties";
 
-
-
-export  enum ButtonType {
-    PRIMARY = "primary",
-    SECONDARY = "secondary",
-    TERTIARY = "tertiary"
-}
-
-export  enum ButtonSize {
-     SMALL= "small",
-     MEDIUM= "medium",
-     LARGE= "large",
-     XXS= "xxs",
-     XS= "xs"
-}
-
-export type ColorType = 'primary' | 'secondary' | 'danger' | 'success';
-
-
-
-export class ButtonClass extends UIView {
+export class ButtonClass extends UIView implements IButtonProperties {
 
    /** @internal */
    @ViewProperty() vp_Label: string;
@@ -74,6 +55,6 @@ export class ButtonClass extends UIView {
         this.size(ButtonSize.MEDIUM);
     }
     public render() {
-        return (<UIViewRenderer wrap={false} control={this} renderer={ButtonRenderer}></UIViewRenderer>)
+        return (<UIViewRenderer wrap={false} control={this} renderer={this.vp_Renderer || ButtonRenderer}></UIViewRenderer>)
     }
 }

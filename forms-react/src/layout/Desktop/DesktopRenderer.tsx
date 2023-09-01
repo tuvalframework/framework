@@ -4,6 +4,9 @@ import { DesktopClass } from "./DesktopClass";
 import { ConfirmDialog } from 'primereact/confirmdialog';
 import { Button, Toast } from "monday-ui-react-core";
 import { EventBus, is } from "@tuval/core";
+import  "monday-ui-react-core/dist/main.css";
+import  "monday-ui-react-core/dist/Toast.css";
+import { css } from "@emotion/css";
 
 
 export interface IControlProperties {
@@ -11,7 +14,10 @@ export interface IControlProperties {
 }
 
 const DesktopToast = () => {
-
+    const className = css`
+        width:fit-content;
+        z-index:1;
+    `
     
     const [positive, setPositive] = useState<any>({ opened: false });
     const [normal, setNormal] = useState<any>({ opened: false });
@@ -56,7 +62,7 @@ const DesktopToast = () => {
 
     return (
         <Fragment>
-            <Toast open={normal.opened} type={Toast.types.NORMAL} action={
+            <Toast className={className} open={normal.opened} type={Toast.types.NORMAL}  action={
                 is.nullOrEmpty(normal.actionName) ? null :
                     <Button color={Button.colors.ON_PRIMARY_COLOR} kind={Button.kinds.SECONDARY} size="small" marginRight onClick={() => normal.action()}>
                         {normal.actionName}
@@ -66,7 +72,7 @@ const DesktopToast = () => {
                 {normal.content}
             </Toast>
 
-            <Toast open={positive.opened} type={Toast.types.POSITIVE} action={
+            <Toast className={className} open={positive.opened} type={Toast.types.POSITIVE} action={
                 is.nullOrEmpty(positive.actionName) ? null :
                     <Button color={Button.colors.ON_PRIMARY_COLOR} kind={Button.kinds.SECONDARY} size="small" marginRight onClick={() => positive.action()}>
                         {positive.actionName}
@@ -76,7 +82,7 @@ const DesktopToast = () => {
                 {positive.content}
             </Toast>
 
-            <Toast open={negative.opened} type={Toast.types.NEGATIVE} action={
+            <Toast className={className} open={negative.opened} type={Toast.types.NEGATIVE} action={
                 is.nullOrEmpty(negative.actionName) ? null :
                     <Button color={Button.colors.ON_PRIMARY_COLOR} kind={Button.kinds.SECONDARY} size="small" marginRight onClick={() => negative.action()}>
                         {negative.actionName}

@@ -1,6 +1,7 @@
 
 export const WorkProtocol = Symbol('WorkProtocol');
 export const TaskProtocol =  Symbol('TaskProtocol');
+export const MeetingProtocol =  Symbol('MeetingProtocol');
 
 export const DriveProtocol = {
     Storage: Symbol('DriveProtocol.Storage'),

@@ -1,5 +1,6 @@
 import { css } from "@emotion/css";
 import { Heading } from "monday-ui-react-core";
+import  "monday-ui-react-core/dist/Heading.css";
 
 
 

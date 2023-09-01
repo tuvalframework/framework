@@ -3,7 +3,7 @@ import { AppearanceObject } from "./AppearanceObject";
 import { ViewProperty } from "./ViewProperty";
 import { StyleAttribute } from "./StyleAttribute";
 import { ColorClass } from "./ColorClass";
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { AlignmentType, cBottom, cBottomLeading, cBottomTrailing, cCenter, cHorizontal, cLeading, cLeft, CornerRadiusTypes, cRight, cTop, cTopLeading, cTopTrailing, cTrailing, cVertical, FontWeightModifierTypes, PositionTypes, ShadowTypes, TextAligns, TextTransforms, VerticalAligns } from "../../Constants";
 import { css } from "@emotion/css";
 import { KeyFrameCollection } from './KeyFrameCollection';
@@ -120,12 +120,70 @@ export class UIView {
     //-------------Events--------
     /** @internal */
     @ViewProperty((): void => { })
+    public vp_OnDragStart: Function;
+
+    public onDragStart(value: Function) {
+        this.vp_OnDragStart = value;
+        return this;
+    }
+
+    protected  onDragStartInternal(e: any): void {}
+
+    /** @internal */
+    @ViewProperty((): void => { })
+    public vp_OnDragOver: Function;
+
+    public onDragOver(value: Function) {
+        this.vp_OnDragOver = value;
+        return this;
+    }
+
+    protected onDragOverInternal(e: any): void {}
+
+    /** @internal */
+    @ViewProperty((): void => { })
+    public vp_OnDrop: Function;
+
+    public onDrop(value: Function) {
+        this.vp_OnDrop = value;
+        return this;
+    }
+
+    protected onDropInternal(e: any): void {}
+
+
+    /** @internal */
+    @ViewProperty((): void => { })
+    public vp_OnDragEnter: Function;
+
+    public onDragEnter(value: Function) {
+        this.vp_OnDragEnter = value;
+        return this;
+    }
+
+    protected onDragEnterInternal(e: any): void {}
+
+    /** @internal */
+    @ViewProperty((): void => { })
+    public vp_OnDragLeave: Function;
+
+    public onDragLeave(value: Function) {
+        this.vp_OnDragLeave = value;
+        return this;
+    }
+
+    protected  onDragLeaveInternal(e: any): void {}
+
+    /** @internal */
+    @ViewProperty((): void => { })
     public vp_OnClick: Function;
 
     public onClick(value: Function) {
         this.vp_OnClick = value;
         return this;
     }
+
+    protected onClickInternal(e: any): void {}
 
     /** @internal */
     @ViewProperty((): void => { })
@@ -136,6 +194,8 @@ export class UIView {
         return this;
     }
 
+    protected onMouseDownInternal(e: any): void {}
+
     /** @internal */
     @ViewProperty((): void => { })
     public vp_OnFocus: Function;
@@ -145,14 +205,20 @@ export class UIView {
         return this;
     }
 
-     /** @internal */
-     @ViewProperty((): void => { })
-     public vp_OnFocusOut: Function;
+    protected onFocusInternal(e: any): void {}
 
-     public onFocusOut(value: Function) {
-         this.vp_OnFocusOut = value;
-         return this;
-     }
+    /** @internal */
+    @ViewProperty((): void => { })
+    public vp_OnFocusOut: Function;
+
+    public onFocusOut(value: Function) {
+        this.vp_OnFocusOut = value;
+        return this;
+    }
+
+    protected onFocusOutInternal(e: any): void {}
+
+
 
     /** @internal */
     @ViewProperty((): void => { })
@@ -163,14 +229,18 @@ export class UIView {
         return this;
     }
 
-       /** @internal */
-       @ViewProperty((): void => { })
-       public vp_OnScroll: Function;
+    protected onBlurInternal(e: any): void {}
 
-       public onScroll(value: Function) {
-           this.vp_OnScroll = value;
-           return this;
-       }
+    /** @internal */
+    @ViewProperty((): void => { })
+    public vp_OnScroll: Function;
+
+    public onScroll(value: Function) {
+        this.vp_OnScroll = value;
+        return this;
+    }
+
+    protected onScrollInternal(e: any): void {}
 
     //-------------------------
 
@@ -209,14 +279,14 @@ export class UIView {
     }
 
 
-       /** @internal */
-       @ViewProperty()
-       public vp_ScrollTop: number;
+    /** @internal */
+    @ViewProperty()
+    public vp_ScrollTop: number;
 
-       public scrollTop(value: number) {
-           this.vp_ScrollTop = value;
-           return this;
-       }
+    public scrollTop(value: number) {
+        this.vp_ScrollTop = value;
+        return this;
+    }
 
     public ForceUpdate() { }
 
@@ -400,7 +470,7 @@ export class UIView {
     public height(value: string): this;
     public height(value: StyleAttribute): this;
     public height(...args: any[]): this {
-    
+
         //if için
        /*  if (args.length === 1 && args[0] === null){
            
@@ -1166,9 +1236,9 @@ export class UIView {
     }
 
 
-    public fontSmoothing(value: (view: UIView) => void): this;
+    public fontSmoothing(value: string): this;
     public fontSmoothing(...args: any[]): this {
-        if (args.length === 1 && is.function(args[0])) {
+        if (args.length === 1 ) {
             const value = args[0];
             this.Appearance.StylePropertyBag['-webkit-font-smoothing'] = value;
             this.Appearance.StylePropertyBag['-moz-osx-font-smoothing'] = value;
@@ -2264,6 +2334,14 @@ export class UIView {
         return this;
     }
 
+    /** @internal */
+    @ViewProperty() vp_Renderer: FunctionComponent<any>;;
+
+    public renderer(value: FunctionComponent<any>) {
+        this.vp_Renderer = value;
+        return this;
+    }
+
     // Animate Props
 
     @ViewProperty() renderAsAnimated: boolean;
@@ -2322,11 +2400,56 @@ export class UIView {
 
     public GetEventsObject(): Object {
         const events = {};
-        events['onClick'] = is.function(this.vp_OnClick) ? (e) => this.vp_OnClick(e) : void 0;
-        events['onMouseDown'] = is.function(this.vp_OnMouseDown) ? (e) => this.vp_OnMouseDown(e) : void 0;
-        events['onScroll'] = is.function(this.vp_OnScroll) ? (e) => this.vp_OnScroll(this.vp_Ref.current?.scrollTop) : void 0;
-        events['onBlur'] = is.function(this.vp_OnBlur) ? (e) => this.vp_OnBlur(e) : void 0;
-        events['onFocusOut'] = is.function(this.vp_OnFocusOut) ? (e) => this.vp_OnFocusOut(e) : void 0;
+
+        events['onClick'] = is.function(this.vp_OnClick) ? (e) => {
+            this.onClickInternal(e);
+            this.vp_OnClick(e);
+        } : void 0;
+
+        events['onMouseDown'] = is.function(this.vp_OnMouseDown) ? (e) => {
+            this.onMouseDownInternal(e);
+            this.vp_OnMouseDown(e);
+        } : void 0;
+
+        events['onScroll'] = is.function(this.vp_OnScroll) ? (e) => {
+            this.onScrollInternal(e);
+            this.vp_OnScroll(this.vp_Ref.current?.scrollTop)
+        } : void 0;
+
+        events['onBlur'] = is.function(this.vp_OnBlur) ? (e) => {
+            this.onBlurInternal(e);
+            this.vp_OnBlur(e);
+        } : void 0;
+
+        events['onFocusOut'] = is.function(this.vp_OnFocusOut) ? (e) => {
+            this.onFocusOutInternal(e);
+            this.vp_OnFocusOut(e);
+        } : void 0;
+
+        events['onDragStart'] = is.function(this.vp_OnDragStart) ? (e) => {
+            this.onDragStartInternal(e);
+            this.vp_OnDragStart(e);
+        } : void 0;
+
+        events['onDragOver'] = is.function(this.vp_OnDragOver) ? (e) => {
+            this.onDragOverInternal(e);
+            this.vp_OnDragOver(e);
+        } : void 0;
+
+        events['onDrop'] = is.function(this.vp_OnDrop) ? (e) => {
+            this.onDropInternal(e);
+            this.vp_OnDrop(e);
+        } : void 0;
+
+        events['onDragEnter'] = is.function(this.vp_OnDragEnter) ? (e) => {
+            this.onDragEnterInternal(e);
+            this.vp_OnDragEnter(e);
+        } : void 0;
+
+        events['onDragLeave'] = is.function(this.vp_OnDragLeave) ? (e) => {
+            this.onDragLeaveInternal(e);
+            this.vp_OnDragLeave(e);
+        } : void 0;
         return events;
     }
 

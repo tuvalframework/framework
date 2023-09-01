@@ -74,7 +74,7 @@ function HStackRenderer({ control }: IControlProperties) {
 
 
         return (
-            <motion.div className={className} {...events} {...elementProperties}>
+            <motion.div className={className} {...control.GetEventsObject()} {...elementProperties}>
                 {
                     is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView) => {
                         if (view == null) {
@@ -106,7 +106,7 @@ function HStackRenderer({ control }: IControlProperties) {
 
 
     const finalComponent = (
-        <div ref={control.vp_Ref} className={className} {...events}>
+        <div ref={control.vp_Ref} className={className} {...control.GetEventsObject()} draggable={control.vp_Draggable}>
             {
                 is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView, index) => {
                     try {
@@ -114,9 +114,9 @@ function HStackRenderer({ control }: IControlProperties) {
                             return null;
                         }
 
-                       /*  if (control.vp_Spacing && index !== control.vp_Chidren.length - 1) {
-                            view.Appearance.MarginRight = control.vp_Spacing;
-                        } */
+                        /*  if (control.vp_Spacing && index !== control.vp_Chidren.length - 1) {
+                             view.Appearance.MarginRight = control.vp_Spacing;
+                         } */
                         return view.render();
                     } catch (e) {
                         alert(e)

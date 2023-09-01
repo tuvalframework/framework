@@ -17,7 +17,7 @@ export class UIRouteClass extends UIView {
 
     public render() {
         return (
-            <Navigate to={this.vp_To} />
+            <Navigate to={this.vp_To} replace={true} />
         )
     }
 }

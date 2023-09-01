@@ -172,6 +172,14 @@ export class VStackClass extends UIView {
         })
         return this;
     }
+
+    /** @internal */
+    @ViewProperty() vp_Draggable: boolean;
+    public draggable(value: boolean) {
+        this.vp_Draggable = value;
+        return this;
+    }
+
     public render() {
         if (this.vp_Visible) {
             return (<VStackRenderer control={this} ></VStackRenderer>)

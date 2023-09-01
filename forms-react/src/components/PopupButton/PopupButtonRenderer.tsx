@@ -8,6 +8,18 @@ import { AnimationType, HideShowEvent } from "monday-ui-react-core/dist/types/co
 import { DialogEvent } from "monday-ui-react-core/dist/types/components/Dialog/Dialog";
 import { is } from "@tuval/core";
 
+export enum DialogType {
+    MODAL = "modal",
+    POPOVER = "popover"
+}
+export enum DialogSize {
+    NONE = "none",
+    SMALL = "small",
+    MEDIUM = "medium",
+    LARGE = "large"
+}
+
+
 export interface IControlProperties {
     control: PopupButtonClass
 }
@@ -90,8 +102,8 @@ function PopupButtonRenderer({ control }: IControlProperties) {
             open={control.vp_Open}
             isOpen={isOpen}
             moveBy={computedDialogOffset}
-            content={<DialogContentContainer size={'medium'}
-                type={'popover'}>
+            content={<DialogContentContainer size={DialogSize.MEDIUM}
+                type={DialogType.POPOVER}>
                 <Content control={control}></Content>
             </DialogContentContainer>}
             //@ts-ignore

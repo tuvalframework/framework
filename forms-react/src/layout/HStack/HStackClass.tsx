@@ -163,6 +163,15 @@ export class HStackClass extends UIView {
         }
         return this;
     }
+
+    /** @internal */
+    @ViewProperty() vp_Draggable: boolean;
+    public draggable(value: boolean) {
+        this.vp_Draggable = value;
+        return this;
+     }
+
+
     public render() {
         return (<HStackRenderer control={this}></HStackRenderer>)
     }

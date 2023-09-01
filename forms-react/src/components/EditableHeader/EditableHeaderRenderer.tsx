@@ -1,7 +1,8 @@
 import { css } from "@emotion/css";
 import { is } from "@tuval/core";
-import { Heading, Icon, Menu, MenuButton, MenuItem, MenuTitle } from "monday-ui-react-core";
-import EditableHeading from "monday-ui-react-core/dist/EditableHeading";
+import { EditableHeading, Heading, Icon, Menu, MenuButton, MenuItem, MenuTitle } from "monday-ui-react-core";
+//import EditableHeading from "monday-ui-react-core/dist/EditableHeading";
+import  "monday-ui-react-core/dist/EditableHeading.css";
 
 import Bolt from "monday-ui-react-core/dist/icons/Bolt";
 
@@ -32,7 +33,7 @@ function EditableHeaderRenderer({ control }: IControlProperties) {
         <Fragment>
             <EditableHeading
                 className={className}
-                type={control.vp_Type}
+                type={control.vp_Type as any}
                 size={control.vp_Size as any}
                 placeholder={control.vp_Placeholder}
                 //@ts-ignore

@@ -5,6 +5,7 @@ import { InputText } from 'primereact';
 
 import React from "react";
 import { IconClass } from "./IconClass";
+import  "monday-ui-react-core/dist/Icon.css";
 
 
 
@@ -30,6 +31,9 @@ function IconRenderer({ control }: IControlProperties) {
         color:${control.Appearance.Color};
         &:before {
             content: "${control.vp_Icon}"
+        }
+        &:after {
+            content: "${control.vp_Icon2}"
         }
         `;
         return (

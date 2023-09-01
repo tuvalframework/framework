@@ -29,6 +29,14 @@ export class MenuButtonClass extends UIView {
     }
 
     /** @internal */
+    @ViewProperty() vp_View: ()=> UIView;
+
+    public view(value:  ()=> UIView) {
+        this.vp_Icon = value;
+        return this;
+    }
+
+    /** @internal */
     @ViewProperty() vp_Icon: any;
 
     public icon(value: any) {

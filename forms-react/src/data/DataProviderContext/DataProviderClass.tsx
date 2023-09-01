@@ -802,11 +802,12 @@ export const useProtocol = (provider: symbol | string) => {
                 {
                     ...options,
                     onSuccess: value => {
+                        debugger;
                         // optimistically populate the getOne cache
                         value?.data?.forEach(record => {
                             queryClient.setQueryData(
                                 [provider, resource, 'getOne', { id: String(record.id), meta }],
-                                oldRecord => oldRecord ?? record
+                                oldRecord => /* oldRecord ?? */ record
                             );
                         });
                         // execute call-time onSuccess if provided
