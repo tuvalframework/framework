@@ -9,6 +9,7 @@ export class WidgetComponent extends React.Component<any, any> {
         this.state = {};
     }
     public render(): React.ReactNode {
+      
         return (
 
             <this.props.controller config={this.props.config} data={this.props.data} onSave={this.props.onSave}></this.props.controller>
