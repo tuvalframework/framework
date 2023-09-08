@@ -1455,6 +1455,7 @@ export class UIView {
     }
 
     public cornerRadius(): this;
+    public cornerRadius(value: StyleAttribute): this;
     public cornerRadius(value: CornerRadiusTypes): this;
     public cornerRadius(value: string): this;
     public cornerRadius(value: int): this;
@@ -1470,9 +1471,67 @@ export class UIView {
             const value: int = args[0];
             this.Appearance.BorderRadius = `${value}px`;
             return this;
+        }else if (args.length === 1 && typeof args[0] === 'object') {
+             const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.BorderRadius = styleAttribute.default instanceof ColorClass ? styleAttribute.default.color : styleAttribute.default;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.BorderRadius = styleAttribute.hover instanceof ColorClass ? styleAttribute.hover.color : styleAttribute.hover;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.BorderRadius = styleAttribute.active instanceof ColorClass ? styleAttribute.active.color : styleAttribute.active;
+            }
+            if (styleAttribute.disabled != null) {
+                this.DisabledAppearance.BorderRadius = styleAttribute.disabled instanceof ColorClass ? styleAttribute.disabled.color : styleAttribute.disabled;
+            }
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.BorderRadius = styleAttribute.focus instanceof ColorClass ? styleAttribute.focus.color : styleAttribute.focus;
+            }
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.BorderRadius = styleAttribute.after instanceof ColorClass ? styleAttribute.after.color : styleAttribute.after;
+            }
+            return this;
         }
         throw 'ArgumentOutOfRange Exception in ' + this.constructor.name + '::cornerRadius function.';
     }
+
+    public pointerEvents(): this;
+    public pointerEvents(value: StyleAttribute): this;
+    public pointerEvents(value: string): this;
+    public pointerEvents(...args: any[]): this {
+        if (args.length === 0) {
+            this.Appearance.PointerEvents = 'none';;
+            return this;
+        } else if (args.length === 1 && is.string(args[0])) {
+            const value: string = args[0];
+            this.Appearance.PointerEvents = value;
+            return this;
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+             const styleAttribute: StyleAttribute = args[0];
+            if (styleAttribute.default != null) {
+                this.Appearance.PointerEvents = styleAttribute.default instanceof ColorClass ? styleAttribute.default.color : styleAttribute.default;
+            }
+            if (styleAttribute.hover != null) {
+                this.HoverAppearance.PointerEvents = styleAttribute.hover instanceof ColorClass ? styleAttribute.hover.color : styleAttribute.hover;
+            }
+            if (styleAttribute.active != null) {
+                this.ActiveAppearance.PointerEvents = styleAttribute.active instanceof ColorClass ? styleAttribute.active.color : styleAttribute.active;
+            }
+            if (styleAttribute.disabled != null) {
+                this.DisabledAppearance.PointerEvents = styleAttribute.disabled instanceof ColorClass ? styleAttribute.disabled.color : styleAttribute.disabled;
+            }
+            if (styleAttribute.focus != null) {
+                this.FocusAppearance.PointerEvents = styleAttribute.focus instanceof ColorClass ? styleAttribute.focus.color : styleAttribute.focus;
+            }
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.PointerEvents = styleAttribute.after instanceof ColorClass ? styleAttribute.after.color : styleAttribute.after;
+            }
+            return this;
+        }
+        throw 'ArgumentOutOfRange Exception in ' + this.constructor.name + '::PointerEvents function.';
+    }
+
 
     public outline(value: StyleAttribute): this;
     public outline(value: string): this;
@@ -2084,6 +2143,9 @@ export class UIView {
             }
             if (styleAttribute.focus != null) {
                 this.FocusAppearance.BoxShadow = styleAttribute.focus instanceof ColorClass ? styleAttribute.focus.color : styleAttribute.focus;
+            }
+            if (styleAttribute.after != null) {
+                this.AfterAppearance.BoxShadow = styleAttribute.after instanceof ColorClass ? styleAttribute.after.color : styleAttribute.after;
             }
             return this;
         }

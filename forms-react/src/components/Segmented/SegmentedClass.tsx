@@ -11,6 +11,21 @@ const RendererNotFound = () => {
     )
 }
 export class SegmentedClass extends UIView implements ISegmentedProperties {
+
+    /** @internal */
+    @ViewProperty() vp_DefaultValue: string | number;
+    public defaultValue(value: string | number) {
+        this.vp_DefaultValue = value;
+        return this;
+    }
+
+    /** @internal */
+    @ViewProperty() vp_Value: string | number;
+    public value(value: string | number) {
+        this.vp_Value = value;
+        return this;
+    }
+
     /** @internal */
     @ViewProperty() vp_Size: SizeType;
     public size(value: SizeType) {
@@ -19,9 +34,9 @@ export class SegmentedClass extends UIView implements ISegmentedProperties {
     }
 
     /** @internal */
-    @ViewProperty() vp_Options: string[] | number[] | Array<{ label: ReactNode, value: string, icon?: ReactNode, disabled?: boolean, className?: string }>;
+    @ViewProperty() vp_Options: string[] | number[] | Array<{ label: (()=> UIView) | string, value: string, icon?: (()=>UIView) | string, disabled?: boolean, className?: string }>;
 
-    public options(value: string[] | number[] | Array<{ label: ReactNode, value: string, icon?: ReactNode, disabled?: boolean, className?: string }>) {
+    public options(value: string[] | number[] | Array<{ label: (()=> UIView) | string, value: string, icon?: (()=>UIView) | string, disabled?: boolean, className?: string }>) {
         this.vp_Options = value;
         return this;
     }

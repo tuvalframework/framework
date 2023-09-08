@@ -14,10 +14,10 @@ import { VirtualView } from "./views/virtual";
 import { WidgetView } from "./views/widget";
 
 import React, { createContext, useState } from "react";
-import { Button, CheckBox, CodeEditor, DateField, Segmented, Spinner, Text, TextAlignment, TextField, UIViewBuilder } from "../components";
+import { Button, CheckBox, CodeEditor, DateField, Segmented, Spinner, Text, TextAlignment, TextField, TreeSelect, UIViewBuilder } from "../components";
 import { ReactView } from "../components/ReactView/ReactView";
 import { ForEach } from "../components/UIView/ForEach";
-import { UICreateContext, UIUpdateContext } from "../data";
+import { ConfigContext, UICreateContext, UIUpdateContext } from "../data";
 import { HStack, ScrollView, Spacer, VStack, useDialog } from "../layout";
 import { Fragment } from "../components/Fragment/Fragment";
 import { Icon, Icons } from "../components/Icon";
@@ -33,6 +33,8 @@ import { PostToCallerAction } from "./actions/PostToCallerAction";
 import { DatePickerView } from "./views/datefield";
 import { DateTimePickerView } from "./views/datetimepicker";
 import { SegmentedView } from "./views/segmented";
+import { TreeSelectView } from "./views/treeselect";
+import { SelectView } from "./views/_select";
 
 
 export const UIFormBuilderContext = createContext(null!);
@@ -498,176 +500,181 @@ export class FormBuilder {
             }
         }
 
-       
+        const { config } = formMeta as any;
+
+
+
         return (
+            ConfigContext(() =>
+                UIViewBuilder(() =>
+                    ReactView(
+                        <UIFormBuilderContext.Provider value={contextValue}>
+                            {
+                                UIViewBuilder(() => {
+                                    let invalidateResource = null;
 
-            //.onChange((e) => this.code = e),
-            UIViewBuilder(() =>
-                ReactView(
-                    <UIFormBuilderContext.Provider value={contextValue}>
-                        {
-                            UIViewBuilder(() => {
-                                let invalidateResource = null;
+                                    let isFormLoading = false;
 
-                                let isFormLoading = false;
+                                    const views = []
+                                    const { fieldMap, layout, mode, resource, resourceId, title, protocol, mutation, query, actions } = formMeta as any;
 
-                                const views = []
-                                const { fieldMap, layout, mode, resource, resourceId, title, protocol, mutation, query, actions } = formMeta as any;
+                                    if (protocol) {
+                                        const { query: _query, __mutation, getOne, create, update } = useProtocol(protocol);
 
-                                if (protocol) {
-                                    const { query: _query, __mutation, getOne, create, update } = useProtocol(protocol);
-
-                                    /*   if (mode === 'create') {
-                                          const { mutate, isLoading, invalidateResourceCache } = create(resource);
-                                          createMutate = mutate;
-                                          invalidateResource = invalidateResourceCache;
-                                          isFormMutateExcuting = isLoading;
-                                      }
-  
-                                      if (mode === 'update') {
-                                          const { mutate, isLoading, invalidateResourceCache } = update(resource);
-                                          updateMutate = mutate;
-                                          invalidateResource = invalidateResourceCache;
-                                          isFormMutateExcuting = isLoading;
-                                      }
-  
-                                      if (is.string(mutation)) {
-                                          const { mutate, isLoading: isMutateLoading } = __mutation`${mutation}`;
-                                          formMutate = mutate;
-                                          isFormMutateExcuting = isMutateLoading;
-                                      } */
-                                    if (is.string(query)) {
-                                        const { data, isLoading } = _query(query);
-                                        isFormLoading = isLoading;
-                                        if (!isLoading) {
-                                            if (!formController.IsLoaded) {
-                                                const keys = Object.keys(data);
-                                                for (let i = 0; i < keys.length; i++) {
-                                                    const key = keys[i];
-                                                    formController.SetValue(key, data[key]);
-                                                }
-                                                formController.IsLoaded = true;
-                                            }
-                                        }
-                                    }
-                                    if (is.string(resource) && (is.string(resourceId) || is.number(resourceId))) {
-                                        const { data, isLoading } = getOne(resource, { id: resourceId });
-                                        isFormLoading = isLoading;
-                                        if (!isLoading) {
-                                            if (!formController.IsLoaded) {
-                                                const keys = Object.keys(data);
-                                                for (let i = 0; i < keys.length; i++) {
-                                                    const key = keys[i];
-                                                    formController.SetValue(key, data[key]);
-                                                }
-                                                formController.IsLoaded = true;
-                                            }
-                                        }
-                                    }
-                                }
-
-                               
-
-                                if (layout != null && layout.type != null) {
-                                    const factoryFunc = FormBuilder.layoutFactories[layout.type];
-                                    if (factoryFunc == null) {
-                                        views.push(Text(layout.type + ' not found'))
-                                    } else {
-                                        if (FormBuilder.canRender(fieldMap)) {
-                                            views.push(factoryFunc(layout, fieldMap))
-                                        }
-                                    }
-                                }
-
-                                
-
-                                if (layout != null && layout.type == null && is.array(layout.containers)) {
-                                    for (let i = 0; i < layout.containers.length; i++) {
-                                        const container = layout.containers[i];
-                                        if (container != null && container.type != null) {
-                                            const factoryFunc = FormBuilder.containerFactories[container.type];
-                                            if (factoryFunc == null) {
-                                                views.push(Text(layout.type + ' not found'))
-                                            } else {
-                                                if (FormBuilder.canRender(fieldMap)) {
-                                                    views.push(factoryFunc(container, fieldMap))
-                                                }
-                                            }
-                                        }
-
-                                    }
-                                }
-
-                               
-                               
-
-                                if (layout == null) {
-                                    for (let key in fieldMap) {
-                                        const viewType = fieldMap[key].type;
-                                        const factoryFunc = FormBuilder.viewFactories[viewType];
-                                        if (factoryFunc == null) {
-                                            views.push(Text(viewType + ' not found'))
-                                        } else {
-                                            if (FormBuilder.canRender(fieldMap[key])) {
-                                                views.push(label(fieldMap[key]));
-                                                views.push(factoryFunc(fieldMap[key]));
-                                                views.push(description(fieldMap[key]));
-                                            }
-                                        }
-                                    }
-                                }                               
-
-                                return (
-                                    isFormLoading ? Spinner() :
-                                        VStack({ alignment: cTopLeading })(
-                                            title && FormTitle(title),
-                                         //   Text(formMode).onClick(() => setFormMode(formMode === 'form' ? 'code' : 'form')),
-                                            formMode === 'code' ?
-                                                CodeEditor()
-                                                    .value(beautify(formMeta, null, 2, 50))
-                                                    .width('100%')
-                                                    .height('100%') :
-                                                // Text(JSON.stringify(formController.GetFormData())),
-                                                ScrollView({ axes: cVertical, alignment: cTopLeading })(
-                                                    VStack({ alignment: cTopLeading })(
-                                                        // Text(JSON.stringify(formController.GetFormData())),
-                                                        VStack({ alignment: cTopLeading })(
-                                                            ...ForEach(views)(view => view)
-                                                        )
-                                                            .height()
-                                                            .background('#F8FAFF')
-                                                            .padding('24px 24px 0px')
-
-                                                    )
-                                                        .background('#F8FAFF')
-                                                ),
-
-                                            HStack({ alignment: cLeading })(
-                                                ...ForEach(actions || [])((action: any) => {
-                                                    if (FormBuilder.actionFactories[action?.type]) {
-                                                        return FormBuilder.actionFactories[action?.type](formMeta, action)
+                                        /*   if (mode === 'create') {
+                                              const { mutate, isLoading, invalidateResourceCache } = create(resource);
+                                              createMutate = mutate;
+                                              invalidateResource = invalidateResourceCache;
+                                              isFormMutateExcuting = isLoading;
+                                          }
+        
+                                          if (mode === 'update') {
+                                              const { mutate, isLoading, invalidateResourceCache } = update(resource);
+                                              updateMutate = mutate;
+                                              invalidateResource = invalidateResourceCache;
+                                              isFormMutateExcuting = isLoading;
+                                          }
+        
+                                          if (is.string(mutation)) {
+                                              const { mutate, isLoading: isMutateLoading } = __mutation`${mutation}`;
+                                              formMutate = mutate;
+                                              isFormMutateExcuting = isMutateLoading;
+                                          } */
+                                        if (is.string(query)) {
+                                            const { data, isLoading } = _query(query);
+                                            isFormLoading = isLoading;
+                                            if (!isLoading) {
+                                                if (!formController.IsLoaded) {
+                                                    const keys = Object.keys(data);
+                                                    for (let i = 0; i < keys.length; i++) {
+                                                        const key = keys[i];
+                                                        formController.SetValue(key, data[key]);
                                                     }
-                                                    /* if (action?.type === 'save') {
-                                                        return SaveAction(formMeta, action)
-                                                    } else if (action?.type === 'next') {
-                                                        return NextFormAction(formMeta, action)
-                                                    } */
-                                                })
+                                                    formController.IsLoaded = true;
+                                                }
+                                            }
+                                        }
+                                        if (is.string(resource) && (is.string(resourceId) || is.number(resourceId))) {
+                                            const { data, isLoading } = getOne(resource, { id: resourceId });
+                                            isFormLoading = isLoading;
+                                            if (!isLoading) {
+                                                if (!formController.IsLoaded) {
+                                                    const keys = Object.keys(data);
+                                                    for (let i = 0; i < keys.length; i++) {
+                                                        const key = keys[i];
+                                                        formController.SetValue(key, data[key]);
+                                                    }
+                                                    formController.IsLoaded = true;
+                                                }
+                                            }
+                                        }
+                                    }
+
+
+
+                                    if (layout != null && layout.type != null) {
+                                        const factoryFunc = FormBuilder.layoutFactories[layout.type];
+                                        if (factoryFunc == null) {
+                                            views.push(Text(layout.type + ' not found'))
+                                        } else {
+                                            if (FormBuilder.canRender(fieldMap)) {
+                                                views.push(factoryFunc(layout, fieldMap))
+                                            }
+                                        }
+                                    }
+
+
+
+                                    if (layout != null && layout.type == null && is.array(layout.containers)) {
+                                        for (let i = 0; i < layout.containers.length; i++) {
+                                            const container = layout.containers[i];
+                                            if (container != null && container.type != null) {
+                                                const factoryFunc = FormBuilder.containerFactories[container.type];
+                                                if (factoryFunc == null) {
+                                                    views.push(Text(layout.type + ' not found'))
+                                                } else {
+                                                    if (FormBuilder.canRender(fieldMap)) {
+                                                        views.push(factoryFunc(container, fieldMap))
+                                                    }
+                                                }
+                                            }
+
+                                        }
+                                    }
+
+
+
+
+                                    if (layout == null) {
+                                        for (let key in fieldMap) {
+                                            const viewType = fieldMap[key].type;
+                                            const factoryFunc = FormBuilder.viewFactories[viewType];
+                                            if (factoryFunc == null) {
+                                                views.push(Text(viewType + ' not found'))
+                                            } else {
+                                                if (FormBuilder.canRender(fieldMap[key])) {
+                                                    views.push(label(fieldMap[key]));
+                                                    views.push(factoryFunc(fieldMap[key]));
+                                                    views.push(description(fieldMap[key]));
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    return (
+                                        isFormLoading ? Spinner() :
+                                            VStack({ alignment: cTopLeading })(
+                                                title && FormTitle(title),
+                                                //   Text(formMode).onClick(() => setFormMode(formMode === 'form' ? 'code' : 'form')),
+                                                formMode === 'code' ?
+                                                    CodeEditor()
+                                                        .value(beautify(formMeta, null, 2, 50))
+                                                        .width('100%')
+                                                        .height('100%') :
+                                                    // Text(JSON.stringify(formController.GetFormData())),
+                                                    ScrollView({ axes: cVertical, alignment: cTopLeading })(
+                                                        VStack({ alignment: cTopLeading })(
+                                                            // Text(JSON.stringify(formController.GetFormData())),
+                                                            VStack({ alignment: cTopLeading })(
+                                                                ...ForEach(views)(view => view)
+                                                            )
+                                                                .height()
+                                                                .background('#F8FAFF')
+                                                                .padding('24px 24px 0px')
+
+                                                        )
+                                                            .background('#F8FAFF')
+                                                    ),
+
+                                                HStack({ alignment: cLeading })(
+                                                    ...ForEach(actions || [])((action: any) => {
+                                                        if (FormBuilder.actionFactories[action?.type]) {
+                                                            return FormBuilder.actionFactories[action?.type](formMeta, action)
+                                                        }
+                                                        /* if (action?.type === 'save') {
+                                                            return SaveAction(formMeta, action)
+                                                        } else if (action?.type === 'next') {
+                                                            return NextFormAction(formMeta, action)
+                                                        } */
+                                                    })
+
+                                                )
+                                                    .height()
+                                                    .padding()
+                                                    .borderTop('1px solid #D6E4ED')
 
                                             )
-                                                .height()
-                                                .padding()
-                                                .borderTop('1px solid #D6E4ED')
 
-                                        )
+                                    )
 
-                                )
-
-                            }).render()
-                        }
-                    </UIFormBuilderContext.Provider>
+                                }).render()
+                            }
+                        </UIFormBuilderContext.Provider>
+                    )
                 )
-            )
+            ).config(config)
+            //.onChange((e) => this.code = e),
+
 
 
         )
@@ -694,9 +701,11 @@ FormBuilder.injectView('text', TextFormView);
 FormBuilder.injectView('datepicker', DatePickerView);
 FormBuilder.injectView('datetimepicker', DateTimePickerView);
 FormBuilder.injectView('segmented', SegmentedView);
+FormBuilder.injectView('treeselect', TreeSelectView);
 FormBuilder.injectView('checkbox', CheckBoxFormView);
 FormBuilder.injectView('radiogroup', RadioGroupoFormView);
 FormBuilder.injectView('select', SelectFormView);
+FormBuilder.injectView('_select', SelectView);
 FormBuilder.injectView('keyvalue', KeyValueView);
 
 FormBuilder.injectLayout('column', ColumnFormView);

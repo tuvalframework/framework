@@ -1068,6 +1068,8 @@ export class AppearanceObject {
     @Skin('word-wrap')
     public WordWrap: string;
 
+    @Skin('pointer-events')
+    public PointerEvents: string;
     /**
      * Specifies a layering or stacking order for positioned elements.
      */

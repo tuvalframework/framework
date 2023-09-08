@@ -168,6 +168,9 @@ function TextFieldRenderer({ control }: IControlProperties) {
             {...events}
             value={control.vp_Value}
             placeholder={control.vp_Placeholder}
+            onInput={control.vp_OnInput}
+            onFocus={control.vp_OnFocus}
+            onSelectionChange={control.vp_OnSelectionchange}
             onChange={(e) => is.function(control.vp_OnChange) ? control.vp_OnChange(e.value == null ? e.target?.value : e.value) : void 0}
             >
         </MyInputText>

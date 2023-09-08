@@ -93,6 +93,20 @@ export class TextFieldClass extends UIView {
          return this;
      }
 
+     /** @internal */
+     @ViewProperty() vp_OnInput: Function;
+     public onInput(value: Function) {
+         this.vp_OnInput = value;
+         return this;
+     }
+
+      /** @internal */
+      @ViewProperty() vp_OnSelectionchange: Function;
+      public onSelectionchange(value: Function) {
+          this.vp_OnSelectionchange = value;
+          return this;
+      }
+
     public constructor() {
         super();
 
