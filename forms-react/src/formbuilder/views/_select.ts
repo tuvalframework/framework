@@ -12,7 +12,7 @@ import { is } from "@tuval/core";
 
 export const SelectView = (textData: any) => {
     const formController = useFormController();
-    let { name, options, defaultValue, fieldId, protocol, resource, filter, sort, text, key } = textData;
+    let { name, options, defaultValue, fieldId, protocol, resource, filter, sort, textField, valueField } = textData;
 
     if (defaultValue == null) {
         defaultValue = formController.GetValue(fieldId);
@@ -34,9 +34,12 @@ export const SelectView = (textData: any) => {
                 return (
 
                     Select().options(data?.map(item => {
-                        return { label: item[text], value: item[key] }
+                        return { label: item[textField], value: item[valueField] }
                     })
                     )
+                    .onChange((value, option)=> {
+                        formController.SetValue(name, value);
+                    })
                 )
             })
         )
@@ -47,6 +50,9 @@ export const SelectView = (textData: any) => {
                     return { label: item.label, value: item.value }
                 })
                 )
+                .onChange((value, option)=> {
+                    formController.SetValue(name, value);
+                })
             ).height().marginBottom('16px')
         )
     }

@@ -4,7 +4,7 @@ import { UIViewRenderer } from "../UIView/UIViewRenderer";
 import { ViewProperty } from "../UIView/ViewProperty";
 import { useConfig } from "../../data";
 import { RangePickerProtocol } from "./RangePicker";
-import { IRangePickerProperties, RangeValue } from "./IRangePickerProperties";
+import { IRangePickerProperties, PresetDate, RangeValue } from "./IRangePickerProperties";
 
 
 
@@ -32,6 +32,14 @@ const RendererProxy = (control: UIView) => {
 }
 
 export class RangePickerShell extends UIView implements IRangePickerProperties {
+
+     /** @internal */
+     @ViewProperty() vp_Presets:  PresetDate<Exclude<RangeValue, null>>[];
+
+     public presets(value: PresetDate<Exclude<RangeValue, null>>[]) {
+         this.vp_Presets = value;
+         return this;
+     }
 
     /** @internal */
     @ViewProperty() vp_OnChange: (values: RangeValue, formatString: [string, string]) => void;

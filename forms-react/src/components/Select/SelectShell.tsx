@@ -40,11 +40,27 @@ export class SelectShell extends UIView implements ISelectProperties {
         return this;
     }
 
+     /** @internal */
+     @ViewProperty() vp_Value: any;
+
+     public value(value: any) {
+         this.vp_Value = value;
+         return this;
+     }
+
     /** @internal */
     @ViewProperty() vp_Options: any[];
 
     public options(value: any[]) {
         this.vp_Options = value;
+        return this;
+    }
+
+    /** @internal */
+    @ViewProperty() vp_OnChange: (value: any, option: any) => void;
+
+    public onChange(value: (value: any, option: any) => void) {
+        this.vp_OnChange = value;
         return this;
     }
 

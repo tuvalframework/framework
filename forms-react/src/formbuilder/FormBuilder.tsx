@@ -35,6 +35,7 @@ import { DateTimePickerView } from "./views/datetimepicker";
 import { SegmentedView } from "./views/segmented";
 import { TreeSelectView } from "./views/treeselect";
 import { SelectView } from "./views/_select";
+import { RangePickerView } from "./views/rangepicker";
 
 
 export const UIFormBuilderContext = createContext(null!);
@@ -702,6 +703,7 @@ FormBuilder.injectView('datepicker', DatePickerView);
 FormBuilder.injectView('datetimepicker', DateTimePickerView);
 FormBuilder.injectView('segmented', SegmentedView);
 FormBuilder.injectView('treeselect', TreeSelectView);
+FormBuilder.injectView('rangepicker', RangePickerView);
 FormBuilder.injectView('checkbox', CheckBoxFormView);
 FormBuilder.injectView('radiogroup', RadioGroupoFormView);
 FormBuilder.injectView('select', SelectFormView);

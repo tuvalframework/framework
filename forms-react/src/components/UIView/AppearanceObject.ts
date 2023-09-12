@@ -1076,6 +1076,10 @@ export class AppearanceObject {
     @Skin('z-index')
     public ZIndex: string;
 
+
+    @Skin('writing-mode')
+    public WritingMode: string;
+
     @Skin('-webkit-font-smoothing')
     public WebkitFontSmoothing: string;
 
@@ -1107,7 +1111,7 @@ export class AppearanceObject {
         this.StylePropertyBag = Object.assign(this.StylePropertyBag, other.GetStyleObject());
     }
 
-    public Hash:number;
+    public Hash: number;
     private generateHash() {
         let hash = 0, i, chr;
         if (this.content.length === 0) return hash;
@@ -1117,7 +1121,7 @@ export class AppearanceObject {
             hash |= 0; // Convert to 32bit integer
         }
 
-        this.Hash =  hash;
+        this.Hash = hash;
 
     }
 

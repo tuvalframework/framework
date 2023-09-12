@@ -186,6 +186,32 @@ export class DesktopController extends UIController {
                             alert(JSON.stringify(params))
                         }}
                     />
+                      <Route path={this.props.baseUrl + "/:access_type/app/:app_name/*"} element={(
+                        <React.Suspense fallback={
+                            <Fragment>
+                                {
+                                    VStack(
+                                        Heading(getAppName()).h2(),
+                                        ReactView(
+                                            <Loader size={Loader.sizes.MEDIUM} />
+                                        )
+                                    ).render()
+                                }
+
+                            </Fragment>
+
+                        } >
+                            <ErrorBoundary>
+                                {/* <Profiler id="ComposeButton" onRender={handleRender}> */}
+                                    <ApplicationLoader></ApplicationLoader>
+                               {/*  </Profiler> */}
+                            </ErrorBoundary>
+                        </React.Suspense>
+                    )}
+                        action={async ({ params, request }) => {
+                            alert(JSON.stringify(params))
+                        }}
+                    />
 
                 </Routes>
             )
