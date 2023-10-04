@@ -89,7 +89,7 @@ export const SaveAction = (formMeta, action) => UIViewBuilder(() => {
                     }
                     if (updateMutate != null) {
                         updateMutate(resourceId, formController.GetFormData(), {
-                            onSuccess: () => {
+                            onSuccess: (e) => {
                                 if (is.function(invalidateResource)) {
                                     invalidateResource();
                                 }
@@ -99,6 +99,20 @@ export const SaveAction = (formMeta, action) => UIViewBuilder(() => {
                                     formBuilder.nextForm();
                                 } else if (successAction === 'hide') {
                                     dialog.Hide();
+                                }
+
+                                if (is.array(successActions)) {
+                                    successActions.forEach(successAction => {
+                                        if (successAction.type === 'prev') {
+                                            formBuilder.prevForm();
+                                        } else if (successAction.type === 'next') {
+                                            formBuilder.nextForm();
+                                        } else if (successAction.type === 'hide') {
+                                            dialog.Hide();
+                                        } else if (successAction.type === 'navigate') {
+                                            navigate(compileFormula(e, successAction.url))
+                                        }
+                                    })
                                 }
                             }
                         });

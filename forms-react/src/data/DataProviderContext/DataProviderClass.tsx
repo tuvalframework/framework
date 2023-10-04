@@ -773,6 +773,83 @@ export const useProtocol = (provider: symbol | string) => {
             client.invalidateQueries(['__query__', provider]);
 
         },
+
+        getListLazy: (resource: string, params: any = {}, options?: any) => {
+            const {
+                pagination = { page: 1, perPage: 25 },
+                sort = { field: 'id', order: 'DESC' },
+                filter = {},
+                meta,
+            } = params;
+
+            const queryClient = useQueryClient();
+
+            const dataProvider = dataProviderContextValue.provider;
+
+            const result: any = useMutation(
+                [provider, resource, 'getListLazy', { pagination, sort, filter, meta }],
+                () =>
+                    dataProvider['getList'](resource, {
+                        pagination,
+                        sort,
+                        filter,
+                        meta,
+                    })
+                        .then(({ data, total, pageInfo }) => ({
+                            data,
+                            total,
+                            pageInfo,
+                        })),
+                {
+                    ...options,
+                    onSuccess: (value: any) => {
+                        // optimistically populate the getOne cache
+                        value?.data?.forEach(record => {
+                            queryClient.setQueryData(
+                                [provider, resource, 'getOne', { id: String(record.id), meta }],
+                                oldRecord => /* oldRecord ?? */ record
+                            );
+                        });
+                        // execute call-time onSuccess if provided
+                        if (options?.onSuccess) {
+                            options.onSuccess(value);
+                        }
+                    }
+                }
+            );
+
+
+            return useMemo(
+                () =>
+                    result.mutate
+                        ? {
+                            ...result,
+                            data: result.data?.data,
+                            total: result.data?.total,
+                            pageInfo: result.data?.pageInfo,
+                        }
+                        : result,
+                [result]
+            );
+
+
+            /*  const { data: _data, isLoading, error } = useQuery(
+               [provider, resource],
+               () =>
+                   dataProvider['getList'](client, resource, filter),
+               {
+                   //cacheTime: 0
+               }
+           );
+
+           const invalidateQuery = () => {
+               client.invalidateQueries([provider, resource]);
+           }
+
+           const data = ((_data as any)?.data as any);
+
+           return { data: data ? data : {}, isLoading, error, invalidateQuery };  */
+        },
         getList: (resource: string, params: any = {}, options?: any) => {
             const {
                 pagination = { page: 1, perPage: 25 },

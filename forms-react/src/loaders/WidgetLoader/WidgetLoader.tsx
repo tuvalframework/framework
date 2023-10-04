@@ -6,7 +6,7 @@ import { WidgetComponent } from "./WidgetComponent";
 const WidgetCache = {}
 export const Paths = {}
 
-export const WidgetLoader = ({ widget, config, data, onSave }) => {
+export const WidgetLoader = ({ alwaysNew, widget, config, data, onSave }) => {
 
     const controllerPromise = new Promise((resolve, reject) => {
         if (WidgetCache[widget]) {
@@ -40,5 +40,5 @@ export const WidgetLoader = ({ widget, config, data, onSave }) => {
     const fetchController = input => controllerPromise.then(res => res);
     const contoller: any = usePromise(fetchController, [widget]);
 
-    return (<WidgetComponent name={widget} controller={contoller} config={config} data={data} onSave={onSave}></WidgetComponent>)
+    return (<WidgetComponent name={widget} controller={alwaysNew ? class extends contoller { } : contoller} config={config} data={data} onSave={onSave}></WidgetComponent>)
 }

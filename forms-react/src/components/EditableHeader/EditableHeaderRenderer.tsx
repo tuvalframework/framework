@@ -33,6 +33,8 @@ function EditableHeaderRenderer({ control }: IControlProperties) {
         <Fragment>
             <EditableHeading
                 className={className}
+                headingClassName={className}
+                inputClassName={className}
                 type={control.vp_Type as any}
                 size={control.vp_Size as any}
                 placeholder={control.vp_Placeholder}

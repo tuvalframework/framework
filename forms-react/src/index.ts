@@ -48,14 +48,14 @@ export * from './UIAppearance'
 export * from './Bios'
 
 //--------------------
-export { useNavigate, useLocation, useParams, Link } from 'react-router-dom'
+export { useNavigate, useLocation, useParams, Link, HashRouter, Routes, Router, Route } from 'react-router-dom'
 export { useState, useEffect, useMemo } from 'react'
 /* import ReactDOM from 'react-dom/client';
 export { ReactDOM as ReactDOM }; */
 export { useGetList, useStore, useRecordContext } from 'ra-core'
 export { css } from "@emotion/css";
 
-export { useQuery, QueryClient } from 'react-query';
+export { useQuery, QueryClient, QueryClientProvider, useQueryClient, useMutation } from 'react-query';
 
 export { nanoid } from 'nanoid'
 

@@ -10,6 +10,12 @@ import WidgetRenderer from "./WidgetRenderer";
 
 export class WidgetClass extends UIView {
 
+     /** @internal */
+   @ViewProperty() vp_AlwaysNew: boolean;
+   public alwaysNew(value: boolean): this {
+       this.vp_AlwaysNew = value;
+       return this;
+   }
    /** @internal */
    @ViewProperty() vp_Config: any;
    public config(value: any): this {

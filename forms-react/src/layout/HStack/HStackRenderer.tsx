@@ -1,12 +1,13 @@
 import { css } from "@emotion/css";
 import { is } from "@tuval/core";
-import React, { Fragment } from "react";
+import React, { Fragment as ReactFragment, useRef } from "react";
 import { UIView } from "../../components/UIView/UIView";
 import { HStackClass } from "./HStackClass";
 import { motion } from "framer-motion"
 import { Tooltip } from "monday-ui-react-core";
 import { ErrorBoundary } from "../../ErrorBoundary";
 import { Text, TextClass } from "../../components";
+import { Fragment } from "../../components/Fragment/Fragment";
 
 
 export interface IControlProperties {
@@ -16,7 +17,7 @@ export interface IControlProperties {
 
 function HStackRenderer({ control }: IControlProperties) {
 
-
+    const ref = useRef(null);
     control.Appearance.Gap = control.vp_Spacing;
     const className = css`
     ${control.Appearance.ToString()}
@@ -74,11 +75,11 @@ function HStackRenderer({ control }: IControlProperties) {
 
 
         return (
-            <motion.div className={className} {...control.GetEventsObject()} {...elementProperties}>
+            <motion.div ref={control.vp_Ref} className={className} {...control.GetEventsObject()} {...elementProperties}>
                 {
                     is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView) => {
-                        if (view == null) {
-                            return null;
+                        if (!(view instanceof UIView)) {
+                            return Fragment().render();
                         }
 
                         /* if (control.vp_Spacing) {
@@ -110,8 +111,8 @@ function HStackRenderer({ control }: IControlProperties) {
             {
                 is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView, index) => {
                     try {
-                        if (view == null) {
-                            return null;
+                        if (!(view instanceof UIView)) {
+                            return Fragment().render();
                         }
 
                         /*  if (control.vp_Spacing && index !== control.vp_Chidren.length - 1) {

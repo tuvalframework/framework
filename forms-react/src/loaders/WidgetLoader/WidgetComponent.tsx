@@ -12,7 +12,7 @@ export class WidgetComponent extends React.Component<any, any> {
       
         return (
 
-            <this.props.controller config={this.props.config} data={this.props.data} onSave={this.props.onSave}></this.props.controller>
+            <this.props.controller alwaysNew={this.props.alwaysNew} config={this.props.config} data={this.props.data} onSave={this.props.onSave}></this.props.controller>
 
         )
     }
