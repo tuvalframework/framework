@@ -1,6 +1,6 @@
 import { convertLegacyDataProvider, DataProviderContext } from "ra-core";
 import React from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { UIView } from "../../components/UIView/UIView";
 import { DataContextClass } from "./DataContextClass";
 

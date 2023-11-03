@@ -1,7 +1,5 @@
-import { convertLegacyDataProvider, DataProviderContext, RecordContextProvider, useGetList, useGetOne } from "ra-core";
+import { useGetList } from "ra-core";
 import React, { Fragment } from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { UIView } from "../../components/UIView/UIView";
 import { RecordsContextClass } from "./RecordsContextClass";
 
 

@@ -105,7 +105,7 @@ const getMenuItem = (menuItem) => {
                     // iconType={"SVG" as any}
                     onClick={
                         (e) => {
-                            is.function(menuItem.onClick) ? menuItem.onClick() : void 0;
+                            is.function(menuItem.onClick) ? setTimeout(()=> menuItem.onClick(), 100) : void 0;
 
 
                         }

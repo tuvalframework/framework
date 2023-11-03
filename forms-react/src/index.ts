@@ -55,7 +55,7 @@ export { ReactDOM as ReactDOM }; */
 export { useGetList, useStore, useRecordContext } from 'ra-core'
 export { css } from "@emotion/css";
 
-export { useQuery, QueryClient, QueryClientProvider, useQueryClient, useMutation } from 'react-query';
+export { useQuery, QueryClient, QueryClientProvider, useQueryClient, useMutation } from '@tanstack/react-query';
 
 export { nanoid } from 'nanoid'
 

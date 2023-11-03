@@ -58,10 +58,14 @@ function DataTableRenderer({ control }: { control: DataTableClass }) {
     }
 
     return (
-        <DataTable value={control.vp_Model}
+        <DataTable 
+        value={control.vp_Model}
             filterDisplay={control.vp_ShowFilterRow ? "row" : ""}
             tableClassName={view.GetClassName()}
-            tableStyle={{ minWidth: '50rem' }} scrollable scrollHeight="flex"
+            tableStyle={{ minWidth: '50rem' }} 
+            showGridlines
+            scrollable 
+            scrollHeight="flex"
             editMode={control.vp_EditMode}
             paginator rows={20}
             rowsPerPageOptions={[20, 50, 100]}>

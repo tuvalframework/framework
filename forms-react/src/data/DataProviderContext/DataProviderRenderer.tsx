@@ -4,7 +4,7 @@ import { ProviderLoader } from "./ProviderLoader";
 import { VStack } from "../../layout/VStack/VStack";
 import { Spinner } from "../../components/UISpinner/UISpinner";
 import { useLocation } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ModuleLoader, Reflect } from "@tuval/core";
 import { useAsync } from "react-async-hook";
 import { TaskProtocol } from "./Protocols";

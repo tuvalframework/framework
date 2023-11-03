@@ -6,7 +6,7 @@ import { UIView } from "../../components/UIView/UIView";
 import { ViewProperty } from "../../components/UIView/ViewProperty";
 import { useAsync } from 'react-async-hook';
 import { Convert, Encoding, Guid, is } from "@tuval/core";
-import { MutateOptions, QueryKey, UseInfiniteQueryResult, UseMutationOptions, UseMutationResult, useMutation, useQuery, useQueryClient } from "react-query";
+import { MutateOptions, QueryKey, UseInfiniteQueryResult, UseMutationOptions, UseMutationResult, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CreateParams, DeleteParams, Identifier, MutationMode, RaRecord, UseDeleteMutateParams, UseDeleteOptions, UseDeleteResult, useEvent, GetListResult as OriginalGetListResult, GetInfiniteListResult, undoableEventEmitter } from "ra-core";
 
 
@@ -167,6 +167,11 @@ export const useProtocol = (provider: symbol | string) => {
 
 
     const context = React.useContext(DataProtocolContext);
+    
+    if (context == null) {
+        return null;
+    }
+
     const queryClient = useQueryClient();
 
     //return context.dataProtocolContextObject[provider];

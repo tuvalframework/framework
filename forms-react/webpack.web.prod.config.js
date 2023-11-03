@@ -12,7 +12,7 @@ var libraryName = '@tuval/core';
 const webConfig = {
     target: 'web',
     //target: 'es5',
-    //mode: 'development',
+    mode: 'development',
     //devtool: 'source-map',
     entry: './src/tuval-core.ts',
     module: {

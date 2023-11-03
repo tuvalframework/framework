@@ -1,8 +1,6 @@
 import { is } from "@tuval/core";
-import { convertLegacyDataProvider, DataProviderContext, RecordContextProvider, useCreate, useGetOne } from "ra-core";
+import { useCreate } from "ra-core";
 import React, { Fragment } from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { UIView } from "../../components/UIView/UIView";
 import { useFormController } from "../../UIFormController";
 import { CreateContextClass } from "./CreateContextClass";
 
