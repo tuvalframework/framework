@@ -8,6 +8,7 @@ import { Tooltip } from "monday-ui-react-core";
 import { ErrorBoundary } from "../../ErrorBoundary";
 import { Text, TextClass } from "../../components";
 import { Fragment } from "../../components/Fragment/Fragment";
+import { useClickAway } from "../../hooks/hooks";
 
 
 export interface IControlProperties {
@@ -17,7 +18,11 @@ export interface IControlProperties {
 
 function HStackRenderer({ control }: IControlProperties) {
 
-    const ref = useRef(null);
+    const [isOpen, setIsOpen] = React.useState(false);
+    const ref = useClickAway(() => {
+        control.vp_OnClickAway?.();
+    });
+
     control.Appearance.Gap = control.vp_Spacing;
     const className = css`
     ${control.Appearance.ToString()}
@@ -75,7 +80,7 @@ function HStackRenderer({ control }: IControlProperties) {
 
 
         return (
-            <motion.div ref={control.vp_Ref} className={className} {...control.GetEventsObject()} {...elementProperties}>
+            <motion.div ref={ref/* control.vp_Ref */} className={className} {...control.GetEventsObject()} {...elementProperties}>
                 {
                     is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView) => {
                         if (!(view instanceof UIView)) {
@@ -107,7 +112,7 @@ function HStackRenderer({ control }: IControlProperties) {
 
 
     const finalComponent = (
-        <div ref={control.vp_Ref} className={className} {...control.GetEventsObject()} draggable={control.vp_Draggable}>
+        <div ref={ref/* control.vp_Ref */} className={className} {...control.GetEventsObject()} draggable={control.vp_Draggable}>
             {
                 is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView, index) => {
                     try {

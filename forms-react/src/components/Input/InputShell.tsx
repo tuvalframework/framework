@@ -33,6 +33,22 @@ const RendererProxy = (control: UIView) => {
 
 export class InputShell extends UIView implements IInputProperties {
 
+     /** @internal */
+     @ViewProperty() vp_Prefix: UIView;
+
+     public prefix(value: UIView) {
+         this.vp_Prefix = value;
+         return this;
+     }
+
+     /** @internal */
+     @ViewProperty() vp_AutoFocus: boolean;
+
+     public autoFocus(value: boolean) {
+         this.vp_AutoFocus = value;
+         return this;
+     }
+
     /** @internal */
     @ViewProperty() vp_Placeholder: string;
 
@@ -48,6 +64,14 @@ export class InputShell extends UIView implements IInputProperties {
          this.vp_Value = value;
          return this;
      }
+
+      /** @internal */
+      @ViewProperty() vp_DefaultValue: any;
+
+      public defaultValue(value: any) {
+          this.vp_DefaultValue = value;
+          return this;
+      }
 
     /** @internal */
     @ViewProperty() vp_Options: any[];

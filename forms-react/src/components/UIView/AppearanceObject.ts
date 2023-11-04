@@ -1050,6 +1050,9 @@ export class AppearanceObject {
     @Skin('width')
     public Width: string;
 
+    @Skin('inset')
+    public Inset: string;
+
     /**
      * 	Specifies how to break lines within words.
      */

@@ -9,3 +9,4 @@ export * from './Spacer/Spacer';
 export * from './Theme';
 export * from './ErrorBoundary';
 export * from './SortableList';
+export * from './Geometry';

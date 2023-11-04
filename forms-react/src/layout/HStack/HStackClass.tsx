@@ -26,7 +26,14 @@ export class HStackClass extends UIView {
     @ViewProperty() vp_Alignment: string;
 
     /** @internal */
-    @ViewProperty() vp_Chidren: UIView[];
+    @ViewProperty() vp_Chidren: UIView[] | Function;
+
+     /** @internal */
+     @ViewProperty() vp_OnClickAway: Function;
+     public onClickAway(value: Function) {
+        this.vp_OnClickAway = value;
+        return this;
+     }
 
     public children(...value: UIView[]) {
         this.vp_Chidren = value;
