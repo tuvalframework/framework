@@ -106,7 +106,7 @@ export class DialogView extends UIView {
         if (ModalDialogs[appName] == null) {
             noAppDialogs.Add(this);
         } else {
-            ModalDialogs[appName].Add(this);
+            ModalDialogs[appName]?.Add(this);
         }
 
     }
@@ -124,7 +124,7 @@ export class DialogView extends UIView {
             if (ModalDialogs[appName] == null) {
                 noAppDialogs.Add(this);
             } else {
-                ModalDialogs[appName].Add(this);
+                ModalDialogs[appName]?.Add(this);
             }
             // this.OnShown();
             this.ShowDialogAsyncResolve = resolve;
@@ -146,7 +146,7 @@ export class DialogView extends UIView {
         if (ModalDialogs[appName] == null) {
             noAppDialogs.Remove(this);
         } else {
-            ModalDialogs[appName].Remove(this);
+            ModalDialogs[appName]?.Remove(this);
         }
     }
 

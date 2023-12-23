@@ -4,6 +4,7 @@ import { UIView } from "../../components/UIView/UIView";
 import { getAppFullName, useApplication } from "../Application/Application";
 import VStackRenderer from "../VStack/VStackRenderer";
 import { DialogView } from "./DialogView";
+import { Text } from "../../components";
 
 
 
@@ -65,12 +66,13 @@ export function DialogContainer() {
         }
     })
 
+    console.log(ModalDialogs)
     return (
         <Fragment>
             {
                 application == null ?
-                    noAppDialogs.ToArray().map(dialog => dialog.render()) :
-                    ModalDialogs[appName].ToArray().map(dialog => dialog.render())
+                    noAppDialogs?.ToArray().map(dialog => dialog.render()) :
+                    ModalDialogs[appName]?.ToArray().map(dialog => dialog.render())
             }
         </Fragment>
     )

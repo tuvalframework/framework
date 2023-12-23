@@ -54,6 +54,8 @@ export class Application extends React.Component<IApplication, any> {
 
     public render(): React.ReactNode {
 
+        
+
         const r: any = document.querySelector(':root');
         r.style.setProperty('--main-theme-color', this.props.mainColor);
 
@@ -62,6 +64,7 @@ export class Application extends React.Component<IApplication, any> {
         if (ModalDialogs[appName] == null) {
             ModalDialogs[appName] = new ModalCollection();
         }
+
 
         return (
             <ApplicationContext.Provider value={this}>

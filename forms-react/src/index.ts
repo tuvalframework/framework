@@ -45,7 +45,6 @@ export * from './formbuilder/FormBuilder'
 
 export * from './UIAppearance'
 
-export * from './Bios'
 
 //--------------------
 export { useNavigate, useLocation, useParams, Link, HashRouter, Routes, Router, Route } from 'react-router-dom'
@@ -79,3 +78,4 @@ export * from './RealmHttpClient'
 export * from './utils'
 export * from './hooks/hooks'
 export * from './queryParams'
+export * from './bios'
