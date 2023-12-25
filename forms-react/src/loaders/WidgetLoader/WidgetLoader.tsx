@@ -15,7 +15,7 @@ export const WidgetLoader = ({ alwaysNew, widget, config, data, onSave }) => {
 
             const app_path = `/realmocean/store/widget/open-testing/${widget}`;
             // alert(app_path)
-            const app_path_local = `/static/applications/${widget}`;
+            const app_path_local = `/system/${widget}`;
 
             // const app_path_local = `/static/applications/${widget}`;
             ModuleLoader.LoadBundledModuleWithDecode(/* is.localhost() ? */ app_path_local /* : app_path */, widget).then((_app: any) => {

@@ -105,7 +105,7 @@ class ErrorBoundaryInner extends React.Component<any, any> {
 const LoadProvider = (providerName: string) => {
     const app_path = `/realmocean/store/widget/open-testing/${providerName}`;
     // alert(app_path)
-    const app_path_local = `/static/applications/${providerName}`;
+    const app_path_local = `/system/${providerName}`;
 
     return new Promise((resolve, reject) => {
         ModuleLoader.LoadBundledModuleWithDecode(/* is.localhost() ? */ app_path_local /* : app_path */, providerName).then((_app: any) => {

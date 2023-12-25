@@ -106,7 +106,7 @@ export const ApplicationLoader = () => {
         } else {
             const app_path = `/realmocean/store/app/open-testing/${app_name}`;
             // alert(app_path)
-            const app_path_local = `/static/applications/${app_name}.app`; //`http://localhost:5002/v1/store/app/open-testing/${app_name}`
+            const app_path_local = `/system/${app_name}.app`; //`http://localhost:5002/v1/store/app/open-testing/${app_name}`
 
             const interaction = measureInteraction();
             ModuleLoader.LoadBundledModuleWithDecode(is.localhost() ? app_path_local : app_path, app_name).then((_app: any) => {
