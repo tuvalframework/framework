@@ -51,7 +51,7 @@ export const ProviderLoader = ({ widget, config,content, onSave }) => {
             const app_path_local = `/system/${widget}`;
 
             // const app_path_local = `/static/applications/${widget}`;
-            ModuleLoader.LoadBundledModuleWithDecode(/* is.localhost() ? */ app_path_local /* : app_path */, widget).then((_app: any) => {
+            ModuleLoader.LoadBundledModule(/* is.localhost() ? */ app_path_local /* : app_path */, widget).then((_app: any) => {
                 if (_app != null) {
                     const app = new _app();
                     ProviderCache[widget] = app.GetMainController();

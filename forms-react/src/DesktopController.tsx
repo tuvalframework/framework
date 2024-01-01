@@ -109,7 +109,7 @@ export const ApplicationLoader = () => {
             const app_path_local = `/system/${app_name}.app`; //`http://localhost:5002/v1/store/app/open-testing/${app_name}`
 
             const interaction = measureInteraction();
-            ModuleLoader.LoadBundledModuleWithDecode(is.localhost() ? app_path_local : app_path, app_name).then((_app: any) => {
+            ModuleLoader.LoadBundledModule(is.localhost() ? app_path_local : app_path, app_name).then((_app: any) => {
                 if (_app != null) {
                     const app = new _app();
                     AppCache[app_name] = app.GetMainController();
