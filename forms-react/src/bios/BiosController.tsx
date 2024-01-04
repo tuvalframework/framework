@@ -5,6 +5,7 @@ import { ReactView } from "../components/ReactView/ReactView";
 import { Fragment as UIFragment } from "../components/Fragment";
 import { UIView } from "../components/UIView/UIView";
 import { DialogContainer } from "../layout";
+import { PrimeReactProvider } from 'primereact'
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -23,14 +24,14 @@ export abstract class BiosController extends UIController {
         return (
             ReactView(
 
-
-                <QueryClientProvider client={queryClient}>
-                    <DialogContainer></DialogContainer>
-                    {
-                        view.render()
-                    }
-                </QueryClientProvider>
-
+                <PrimeReactProvider value={{ unstyled: true }}>
+                    <QueryClientProvider client={queryClient}>
+                        <DialogContainer></DialogContainer>
+                        {
+                            view.render()
+                        }
+                    </QueryClientProvider>
+                </PrimeReactProvider>
             )
         )
     }

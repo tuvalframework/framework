@@ -11,6 +11,7 @@ import { ReactView } from "../../components/ReactView/ReactView";
 import { query } from "../../data/DataContext/DataContextRenderer";
 import { getAppFullName } from "../Application/Application";
 import * as  objectPath from "object-path";
+import { css } from "@emotion/css";
 
 interface IDialogControllerProps {
     view: DialogView
@@ -22,6 +23,42 @@ export const useDialog = (): DialogView =>
 
 class DialogController extends UIFormController {
     public override LoadView(): UIView {
+
+        const className = css`
+            display: flex;
+            flex-direction: column;
+            pointer-events: auto;
+            position: relative;
+            border-radius: 15px;
+            /* border-radius: 12px; */
+            border: 1px solid white !important;
+            /* outline: rgba(120, 120, 120, 10%) solid 1px; */
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            overflow: hidden;
+            background: white;
+            max-height: 100%;
+    `;
+
+        const mask = css`
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            transition-property: background-color;
+            transition-duration: 0.15s;
+            display:flex;
+            background-color: rgba(46, 67, 84, 0.38) !important;
+            z-index: 100 !important;
+            
+    `;
+
+    const content = css`
+            height: 100%; 
+    `;
+
 
         const [value, setValue] = useState(0);
         this.props.view.ForceUpdate = () => {
@@ -45,10 +82,18 @@ class DialogController extends UIFormController {
                     position={this.props.view.Position}
                     showHeader={this.props.view.ShowHeader}
                     visible={this.props.view.Visible}
-                    style={{ width: this.props.view.Width, height: this.props.view.Height }} onHide={() => this.props.view.Hide()}>
+                    style={{ width: this.props.view.Width, height: this.props.view.Height }}
+                    onHide={() => this.props.view.Hide()}
+                    pt={{
+                        root: { className: className },
+                        mask: { className: mask },
+                        content: {className:content}
+                    }}
+                >
                     {
                         view.render()
                     }
+
                 </Dialog>
             )
         )

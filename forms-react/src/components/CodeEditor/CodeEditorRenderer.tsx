@@ -3,8 +3,8 @@ import { is } from "@tuval/core";
 import { InputTextarea } from 'primereact';
 import React from "react";
 import { CodeEditorClass } from "./CodeEditorClass";
-import CodeMirror from '@uiw/react-codemirror';
-import { javascript } from '@codemirror/lang-javascript';
+/* import CodeMirror from '@uiw/react-codemirror';
+import { javascript } from '@codemirror/lang-javascript'; */
 import { json } from '@codemirror/lang-json';
 
 
@@ -22,16 +22,16 @@ function CodeEditorRenderer({ control }: IControlProperties) {
     `;
 
     return (
-       
-        <CodeMirror
+       <div></div>
+    /*     <CodeMirror
             value={control.vp_Value}
             height="100%"
             width="100%"
-             //@ts-ignore
+         
             options={{lineNumbers: false}}
-            extensions={[/* javascript({ jsx: true }), */ json()]}
+            extensions={[ json()]}
             onChange={(e) => is.function(control.vp_OnChange) ? control.vp_OnChange(e) : void 0}
-        />
+        /> */
     );
 
 }

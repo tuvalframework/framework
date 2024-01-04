@@ -21,7 +21,7 @@ function TextFieldProxy(_props) {
 
     const children = props.children;
 
-    let className = props.className;
+    // let className = props.className;
 
 
     const isMultiline = props.control.vp_Multiline;
@@ -31,11 +31,28 @@ function TextFieldProxy(_props) {
     delete props['control'];
     delete props['children'];
 
+    const className = css`
+        border-color: #609af8 !important;
+        font-family: "Inter var", sans-serif;
+        font-feature-settings: "cv02","cv03","cv04","cv11";
+        font-size: 1rem;
+        color: #4b5563;
+        background: #ffffff;
+        padding: 0.75rem 0.75rem;
+        border: 1px solid #d1d5db;
+        transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+        appearance: none;
+        border-radius: 6px;
+        width: 100%;
+        min-height: 32px;
+    `;
 
 
     if (isMultiline) {
         return (
-            <InputTextarea  autoResize {...props} className={className}></InputTextarea>
+            <InputTextarea autoResize {...props} pt={{
+                root: { className: className }
+            }} ></InputTextarea>
         )
     } else {
 
@@ -43,11 +60,15 @@ function TextFieldProxy(_props) {
             case MaskTypes.Number:
                 props['onValueChange'] = props['onChange'];
                 return (
-                    <InputNumber {...props} style={{ width: '100%' }} inputClassName={className}></InputNumber>
+                    <InputNumber {...props} style={{ width: '100%' }} pt={{
+                        root: { className: className }
+                    }}></InputNumber>
                 )
             default:
                 return (
-                    <InputText {...props} className={className}></InputText>
+                    <InputText {...props} pt={{
+                        root: { className: className }
+                    }}></InputText>
                 )
         }
 
@@ -56,7 +77,7 @@ function TextFieldProxy(_props) {
 
 const MyInputText = (_params) => {
 
-   
+
     const params = { ..._params };
     const getLabel = () => {
         if (is.function(params.obj.vp_LabelTemplate)) {
@@ -111,7 +132,7 @@ const MyInputText = (_params) => {
 
         params['onChange'] = (e) => {
             controller.SetFieldState(params.obj.vp_FormField.name, { isTouched: true });
-           
+
             controller.SetValue(params.obj.vp_FormField.name, e.target.value);
         }
 
@@ -172,7 +193,7 @@ function TextFieldRenderer({ control }: IControlProperties) {
             onFocus={control.vp_OnFocus}
             onSelectionChange={control.vp_OnSelectionchange}
             onChange={(e) => is.function(control.vp_OnChange) ? control.vp_OnChange(e.value == null ? e.target?.value : e.value) : void 0}
-            >
+        >
         </MyInputText>
     );
 

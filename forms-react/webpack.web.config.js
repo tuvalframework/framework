@@ -37,7 +37,7 @@ const opts = {
 
 const umdConfig = {
     target: 'web',
- //   mode: 'development',
+   // mode: 'development',
     devtool: 'source-map',
     entry: './src/index.ts',
     externals: {
@@ -121,7 +121,7 @@ const umdConfig = {
     },
     plugins: [
         //new DtsBundlePlugin(),
-       // new BundleAnalyzerPlugin(),
+      //  new BundleAnalyzerPlugin(),
 
         {
             apply: (compiler) => {

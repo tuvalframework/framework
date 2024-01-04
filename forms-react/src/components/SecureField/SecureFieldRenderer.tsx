@@ -28,6 +28,8 @@ const MyInputText = (_params) => {
     }
 
 
+
+
     const controller: UIFormController = useFormController();
     // console.log(controller);
 
@@ -91,7 +93,7 @@ export function SecureFieldProxy(_props) {
 
     const children = props.children;
 
-    let className = props.className;
+   // let className = props.className;
 
 
     const isMultiline = props.control.vp_Multiline;
@@ -101,8 +103,35 @@ export function SecureFieldProxy(_props) {
     delete props['children'];
 
 
+    const className = css`
+        border-color: #609af8 !important;
+        font-family: "Inter var", sans-serif;
+        font-feature-settings: "cv02","cv03","cv04","cv11";
+        font-size: 1rem;
+        color: #4b5563;
+        
+        
+        border: 1px solid #d1d5db;
+        transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+        appearance: none;
+        border-radius: 6px;
+        width: 100%;
+        min-height: 32px;
+
+        & input {
+            border: 0px;
+            padding: 0.75rem 0.75rem;
+            background: #ffffff;
+            border-radius: 6px;
+            width: 100%;
+            height: 100%;
+        }
+    `;
+
     return (
-        <Password feedback={false} {...props} style={{ width: '100%' }} inputClassName={className}></Password>
+        <Password feedback={false} {...props}  pt={{
+            root: { className: className }
+        }}></Password>
     )
 
 }
