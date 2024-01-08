@@ -47,7 +47,24 @@ export * from './UIAppearance'
 
 
 //--------------------
-export { useNavigate, useLocation, useParams, Link, HashRouter, Routes, Router, Route } from 'react-router-dom'
+import { useParams as _useParams} from 'react-router-dom';
+
+export function useParams() {
+    const params = _useParams();
+    const newParams = {};
+    for (let key in params) {
+        const splitted = params[key].split('-');
+        if (splitted.length === 2) {
+            newParams[key] = splitted[1];
+        } else {
+            newParams[key] = params[key];
+        }
+    }
+    return newParams as any;
+}   
+
+
+export { useNavigate, useLocation,  Link, HashRouter, Routes, Router, Route } from 'react-router-dom'
 export { useState, useEffect, useMemo } from 'react'
 /* import ReactDOM from 'react-dom/client';
 export { ReactDOM as ReactDOM }; */
