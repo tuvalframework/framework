@@ -73,7 +73,9 @@ export { css } from "@emotion/css";
 
 export { useQuery, QueryClient, QueryClientProvider, useQueryClient, useMutation } from '@tanstack/react-query';
 
-export { nanoid } from 'nanoid'
+import { customAlphabet } from 'nanoid'
+export const nanoid = customAlphabet('1234567890abcdefghijklmnopqrstuvwxyz', 20)
+//export { nanoid } from 'nanoid'
 
 export { confirmDialog } from 'primereact/confirmdialog';
 
