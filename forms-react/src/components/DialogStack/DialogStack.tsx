@@ -31,7 +31,11 @@ export interface IDialogStackItem {
     view: UIView;
 }
 
-export const DialogStack = ({ children }) => {
+interface Props {
+    title: string;
+    children:any;
+}
+export const DialogStack = ({ title = '' ,children }) => {
     const [dialogs, setDialogs] = React.useState<IDialogStackItem[]>([]);
     const [currentDialogIndex, setCurrentDialogIndex] = React.useState<number>(0);
 
@@ -57,6 +61,7 @@ export const DialogStack = ({ children }) => {
             {
                 HStack({ alignment: cTopLeading, spacing: 10 })(
                     (dialogs.length > 1 && currentDialogIndex > 0) ? HStack({ alignment: cLeading })(
+                        (title as any) instanceof UIView ? (title as any) :
                         Text('Tasks')
                             .fontSize(14).fontSmoothing('auto')
                             .fontFamily('ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"')

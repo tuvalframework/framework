@@ -2273,6 +2273,11 @@ export class UIView {
         return this;
     }
 
+    public float(value: string) {
+        this.Appearance.Float = value;
+        return this;
+    }
+
     public shadow(value: StyleAttribute): this;
     public shadow(value: ShadowTypes): this;
     public shadow(value: string): this;
