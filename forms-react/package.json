@@ -177,7 +177,7 @@
         "history": "^5.3.0",
         "http-server": "^14.1.1",
         "json-beautify": "^1.1.1",
-        "monday-ui-react-core": "^2.26.0",
+        "monday-ui-react-core": "^2.82.0",
         "nanoid": "^4.0.2",
         "object-path": "^0.11.8",
         "primereact": "10.2.1",
