@@ -1092,6 +1092,9 @@ export class AppearanceObject {
     @Skin('-webkit-box-orient')
     public WebkitBoxOrient: string;
 
+    @Skin('grid-template-rows')
+    public GridTemplateRows: string;
+
 
 
 

@@ -94,7 +94,7 @@ export const DialogStack = ({ title = '' ,children }) => {
 
                                 ),
                             )
-                                .cornerRadius(10)
+                                //.cornerRadius(10)
                                 //.background('white')
                                 .overflow('hidden')
                                 .shadow('0 1px 6px 0 rgba(42,56,68,.08)'),
@@ -190,7 +190,7 @@ export const DialogStack = ({ title = '' ,children }) => {
                     .top('0')
                     .left('0')
                     .overflowX('auto')
-                    .padding().background('#F9FAFB')
+                    .padding('0.5rem').background('#F9FAFB')
                     .render()
             }
         </Fragment>

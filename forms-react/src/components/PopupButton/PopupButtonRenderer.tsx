@@ -25,16 +25,16 @@ export interface IControlProperties {
 }
 
 
-const WrapperComponent = ({control}) => {
+const WrapperComponent = ({ control }) => {
     return (
-      /*   <div style={{background:'yellow', width:'30px', height:'30px'}}>AAA</div> */
+        /*   <div style={{background:'yellow', width:'30px', height:'30px'}}>AAA</div> */
         <Fragment>
             {control.vp_View.render()}
-        </Fragment> 
+        </Fragment>
     )
 }
 
-const Content = ({control}) => {
+const Content = ({ control }) => {
     return (
         <Fragment>
             {
@@ -46,24 +46,11 @@ const Content = ({control}) => {
 
 function PopupButtonRenderer({ control }: IControlProperties) {
     const className = css`
-    & .menu-button--wrapper--open {
-        background-color: transparent;
-    }
-    & .menu-button--wrapper:hover {
-        background-color: transparent;
-    }
-    & .menu-button--wrapper:focus {
-        background-color: transparent;
-    }
-    & .dialog-content-container--medium {
-        padding:0px !important;
-    }
-    & .dialog-content-container--popover {
-        padding:0px !important;
-    }
+    ${control.Appearance.ToString()}
 `;
 
-  
+
+
 
     const showTrigger = ['click', 'enter'];
 
@@ -98,29 +85,32 @@ function PopupButtonRenderer({ control }: IControlProperties) {
 
     return (
         <Dialog
-            wrapperClassName={className}
+           
             open={control.vp_Open}
             isOpen={isOpen}
-            moveBy={computedDialogOffset}
-            content={<DialogContentContainer size={DialogSize.MEDIUM}
+            //moveBy={computedDialogOffset}
+            content={<DialogContentContainer className={className} size={DialogSize.NONE}
                 type={DialogType.POPOVER}>
                 <Content control={control}></Content>
             </DialogContentContainer>}
             //@ts-ignore
             showTrigger={showTrigger}
-            hideTrigger={[Dialog.hideShowTriggers.CLICK_OUTSIDE/* ,Dialog.hideShowTriggers.CONTENT_CLICK */ ]}
+            hideTrigger={[Dialog.hideShowTriggers.CLICK_OUTSIDE/* ,Dialog.hideShowTriggers.CONTENT_CLICK */]}
             //@ts-ignore
             animationType={'expand'}
             //@ts-ignore
             position={control.vp_DialogPosition}
             //@ts-ignore
-            moveBy={control.vp_DialogOffset}
-            startingEdge={"bottom"}
+            // moveBy={control.vp_DialogOffset}
+            // startingEdge={"bottom"}
             useDerivedStateFromProps={true}
             onDialogDidShow={onDialogDidShow}
             onDialogDidHide={onDialogDidHide}
         >
-             <WrapperComponent control={control}></WrapperComponent> 
+            <div style={{ width: '100%' }}>
+                <WrapperComponent control={control}></WrapperComponent>
+            </div>
+
 
         </Dialog>
 

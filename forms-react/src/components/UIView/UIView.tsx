@@ -278,6 +278,18 @@ export class UIView {
         return this;
     }
 
+  
+
+    public visibility(value: string): this {
+        this.Appearance.Visibility = value
+        return this;
+    }
+
+    public gridTemplateRows(value: string): this {
+        this.Appearance.GridTemplateRows = value
+        return this;
+    }
+
 
     /** @internal */
     @ViewProperty()
