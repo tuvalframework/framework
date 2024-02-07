@@ -44,6 +44,38 @@ export class DataTableClass extends UIView  implements IDataTableProperties{
          return this;
      }
 
+      /** @internal */
+      @ViewProperty() vp_DataTablePT: any;
+
+      public dataTablePT(value: any) {
+          this.vp_DataTablePT = value;
+          return this;
+      }
+
+      /** @internal */
+      @ViewProperty() vp_ColumnPT: any;
+
+      public columnPT(value: any) {
+          this.vp_ColumnPT = value;
+          return this;
+      }
+
+      /** @internal */
+      @ViewProperty() vp_ColumnGroupPT: any;
+
+      public columnGroupPT(value: any) {
+          this.vp_ColumnGroupPT = value;
+          return this;
+      }
+
+       /** @internal */
+       @ViewProperty() vp_RowPT: any;
+
+       public rowPT(value: any) {
+           this.vp_RowPT = value;
+           return this;
+       }
+
     public constructor() {
         super();
         this.vp_Columns = [];

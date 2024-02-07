@@ -66,6 +66,14 @@ export class PopupButtonClass extends UIView {
         }
         return this;
     }
+
+     /** @internal */
+     @ViewProperty() vp_OnDidHide: Function;
+
+     public onDidHide(value: Function) {
+       this.vp_OnDidHide = value;
+         return this;
+     }
     public render() {
         return (<UIViewRenderer wrap={false} control={this} renderer={PopupButtonRenderer}></UIViewRenderer>)
     }

@@ -26,26 +26,20 @@ function TextFieldProxy(_props) {
 
     const isMultiline = props.control.vp_Multiline;
     const maskType = props.control.vp_MaskType;
+    const appearance = props.control.Appearance;
+
+    const className = css`
+        ${appearance?.ToString()}
+        &:focus {
+            ${props.control.FocusAppearance?.ToString()}
+        }
+    `;
 
     delete props['className'];
     delete props['control'];
     delete props['children'];
 
-    const className = css`
-        border-color: #609af8 !important;
-        font-family: "Inter var", sans-serif;
-        font-feature-settings: "cv02","cv03","cv04","cv11";
-        font-size: 1rem;
-        color: #4b5563;
-        background: #ffffff;
-        padding: 0.75rem 0.75rem;
-        border: 1px solid #d1d5db;
-        transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
-        appearance: none;
-        border-radius: 6px;
-        width: 100%;
-        min-height: 32px;
-    `;
+    
 
 
     if (isMultiline) {

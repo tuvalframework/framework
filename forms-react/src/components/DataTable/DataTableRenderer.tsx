@@ -10,6 +10,8 @@ import * as Handlebars from 'handlebars';
 import { StringHelpers } from "../../formbuilder/helpers/string";
 
 function DataTableRenderer({ control }: { control: DataTableClass }) {
+
+  
     const view: DataTableClass = control as any;
 
     const headerRenderer = (column: IDataTableColumn) => {
@@ -58,17 +60,18 @@ function DataTableRenderer({ control }: { control: DataTableClass }) {
     }
 
     return (
-        <DataTable 
-        value={control.vp_Model}
+        <DataTable
+            value={control.vp_Model}
             filterDisplay={control.vp_ShowFilterRow ? "row" : ""}
             tableClassName={view.GetClassName()}
-            tableStyle={{ minWidth: '50rem' }} 
+            tableStyle={{ minWidth: '50rem' }}
             showGridlines
-            scrollable 
+            scrollable
             scrollHeight="flex"
             editMode={control.vp_EditMode}
             paginator rows={20}
-            rowsPerPageOptions={[20, 50, 100]}>
+            rowsPerPageOptions={[20, 50, 100]}
+            pt={{ ...control.vp_DataTablePT }}>
             {
                 control.vp_Columns.map(column =>
                     <Column
@@ -83,6 +86,8 @@ function DataTableRenderer({ control }: { control: DataTableClass }) {
                         filter={column.filter}
                         filterPlaceholder="Search"
                         rowEditor={column.rowEditor}
+                        pt={{ ...control.vp_ColumnPT }}
+
                     >
 
                     </Column>

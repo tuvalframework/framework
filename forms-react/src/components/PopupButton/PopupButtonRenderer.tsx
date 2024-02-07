@@ -73,6 +73,9 @@ function PopupButtonRenderer({ control }: IControlProperties) {
     const onDialogDidHide = useCallback(
         (event: DialogEvent, hideEvent: string) => {
             setIsOpen(false);
+            if (is.function(control.vp_OnDidHide)) {
+                control.vp_OnDidHide();
+            }
 
         },
         [setIsOpen]
