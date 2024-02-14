@@ -30,6 +30,9 @@ function TextFieldProxy(_props) {
 
     const className = css`
         ${appearance?.ToString()}
+        &:hover {
+            ${props.control.HoverAppearance?.ToString()}
+        }
         &:focus {
             ${props.control.FocusAppearance?.ToString()}
         }
@@ -54,13 +57,13 @@ function TextFieldProxy(_props) {
             case MaskTypes.Number:
                 props['onValueChange'] = props['onChange'];
                 return (
-                    <InputNumber {...props} style={{ width: '100%' }} pt={{
+                    <InputNumber  {...props} style={{ width: '100%' }} pt={{
                         root: { className: className }
                     }}></InputNumber>
                 )
             default:
                 return (
-                    <InputText {...props} pt={{
+                    <InputText type="search" autocomplete="off" {...props} pt={{
                         root: { className: className }
                     }}></InputText>
                 )

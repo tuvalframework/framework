@@ -46,8 +46,8 @@ export class TextClass extends UIView {
     /** @internal */
     @ViewProperty() vp_Text: string;
 
-     /** @internal */
-     @ViewProperty() vp_EllipsisMaxLines: int;
+    /** @internal */
+    @ViewProperty() vp_EllipsisMaxLines: int;
 
 
 
@@ -66,7 +66,7 @@ export class TextClass extends UIView {
         this.MultilineTextAlignment = TextAlignment.center;
         this.RenderingType = RenderingTypes.Normal;
 
-
+        this.fontSize('var(--font-size)');
         this.SearchWords = [];
     }
 

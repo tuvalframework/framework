@@ -38,7 +38,7 @@ function UIControllerProxy({ children, controller }) {
     if (view != null) {
         return (
             <Fragment>
-                {controller.LoadView().render()}
+                {controller.LoadViewInternal().render()}
             </Fragment>
         )
     }
@@ -66,6 +66,10 @@ export class UIController extends React.Component<any, any> {
 
     public LoadView(): UIView {
         return null;
+    }
+
+    protected LoadViewInternal(): UIView {
+        return this.LoadView();
     }
 
     public render(): React.ReactNode {

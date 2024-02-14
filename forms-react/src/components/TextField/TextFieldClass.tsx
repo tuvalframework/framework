@@ -117,6 +117,7 @@ export class TextFieldClass extends UIView {
 
 
         this.vp_Autofocus = false;
+        
     }
 
 
