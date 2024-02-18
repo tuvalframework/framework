@@ -13,7 +13,7 @@ export interface IControlProperties {
  */
 function ErrorBoundary({ children }) {
     const [hasError, setHasError] = useState(false);
-    let location ;
+    let location;
     useEffect(() => {
         if (hasError) {
             setHasError(false);
@@ -88,11 +88,17 @@ class ErrorBoundaryInner extends React.Component<any, any> {
 
 
 function WidgetRenderer({ control }: IControlProperties) {
-
+    const [showLoading, setShowLoading] = useState(false);
+    setTimeout(() => {
+        if (control.vp_Loading) {
+            setShowLoading(true);
+        }
+    }, 1000)
     return (
         <React.Suspense fallback={
             <Fragment>
                 {
+                    showLoading &&
                     VStack(
                         Spinner()
                     ).render()
