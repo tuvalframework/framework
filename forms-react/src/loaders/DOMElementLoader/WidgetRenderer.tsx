@@ -1,11 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Spinner } from "../../components/UISpinner/UISpinner";
 import { VStack } from "../../layout/VStack/VStack";
-import { WidgetClass } from "./WidgetClass";
+import { UIDomElementClass } from "./WidgetClass";
 import { WidgetLoader } from "./WidgetLoader";
 
 export interface IControlProperties {
-    control: WidgetClass
+    control: UIDomElementClass
 }
 
 /**

@@ -1,10 +1,13 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, redirect } from "react-router-dom";
 import { UIView } from "../../UIView/UIView";
-import {UIViewRenderer} from "../../UIView/UIViewRenderer";
+import { UIViewRenderer } from "../../UIView/UIViewRenderer";
 import { ViewProperty } from "../../UIView/ViewProperty";
 import { ControllerConstructor } from "./UIRoute";
 import UIRouteRenderer from "./UIRouteRenderer";
+import { nanoid } from "nanoid";
+import { HStack } from "../../../layout";
+import { Text } from "../../Text";
 
 export class UIRouteClass extends UIView {
 
@@ -51,7 +54,17 @@ export class UIRouteClass extends UIView {
 
     public render() {
         return (
-            <Route path={this.vp_RoutePath} element={React.createElement(this.vp_RouteController, {}, [])}>
+            <Route path={this.vp_RoutePath} element={React.createElement(this.vp_RouteController, {}, [])}
+                errorElement={
+                    HStack(
+                        Text('afsdfsdfsdfsdfsdf')
+                    ).render()
+                }
+            /*   loader={() => {
+                  const id = 'v2' + nanoid()
+                  return redirect(`/r/${id}`)
+              }} */
+            >
                 {
                     this.vp_Chidren?.map((view: UIView) => view.render())
                 }

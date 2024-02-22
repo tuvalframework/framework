@@ -183,6 +183,17 @@ export class UIView {
         return this;
     }
 
+     /** @internal */
+     @ViewProperty((): void => { })
+     public vp_OnPointerDown: Function;
+ 
+     public onPointerDown(value: Function) {
+         this.vp_OnPointerDown = value;
+         return this;
+     }
+
+    
+
     protected onClickInternal(e: any): void {}
 
     /** @internal */
@@ -2637,6 +2648,11 @@ export class UIView {
         events['onClick'] = is.function(this.vp_OnClick) ? (e) => {
             this.onClickInternal(e);
             this.vp_OnClick(e);
+        } : void 0;
+
+        events['onPointerDown'] = is.function(this.vp_OnPointerDown) ? (e) => {
+            this.vp_OnPointerDown(e);
+            //this.vp_OnClick(e);
         } : void 0;
 
         events['onMouseDown'] = is.function(this.vp_OnMouseDown) ? (e) => {

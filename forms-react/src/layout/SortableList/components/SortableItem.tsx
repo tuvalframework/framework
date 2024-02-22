@@ -52,9 +52,10 @@ export function SortableItem({ children, id }: PropsWithChildren<Props>) {
   const SortableItemClassName = css`
   & {
     display: flex;
-   /* justify-content: space-between;*/
     flex-grow: 1;
-    /*align-items: center;*/
+    flex-direction: column;
+    align-items: start;
+    justify-items: start;
   }
 `;
 

@@ -36,6 +36,7 @@ export * from './components/Icon'
 export * from './UITemplate'
 
 export * from './loaders/WidgetLoader'
+export * from './loaders/DOMElementLoader'
 export * from './data/DataProviderContext'
 
 export * from './UIController'
