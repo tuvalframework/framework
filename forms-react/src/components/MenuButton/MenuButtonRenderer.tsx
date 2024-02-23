@@ -10,7 +10,6 @@ import { MenuButtonClass } from "./MenuButtonClass";
 import { Fragment as _Fragment } from "../Fragment/Fragment";
 import { HStack } from "../../layout/HStack/HStack";
 import { cLeading } from "../../Constants";
-
 export enum BasePosition {
     START = "Start",
     CENTER = "Center",
@@ -152,8 +151,9 @@ function MenuButtonRenderer({ control }: IControlProperties) {
                 component={control.vp_View ? () => control.vp_View().render() : control.vp_Icon}
                 //zIndex={10000}
                 size={MenuButtonSize.XS}
+                
             >
-                <Menu id="menu" size="medium" >
+                <Menu id="menu" size="small" >
 
                     {
                         menuItems
