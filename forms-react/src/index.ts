@@ -55,8 +55,8 @@ export function useParams() {
     const newParams = {};
     for (let key in params) {
         const splitted = params[key].split('-');
-        if (splitted.length === 2) {
-            newParams[key] = splitted[1];
+        if (splitted.length > 1) {
+            newParams[key] = splitted[splitted.length - 1];
         } else {
             newParams[key] = params[key];
         }

@@ -51,6 +51,8 @@ function Draggable({ view }) {
 
 function VStackRenderer({ control }: IControlProperties) {
 
+    control.Appearance.Gap = control.vp_Spacing;
+
     const className = css`
     ${control.Appearance.ToString()}
     ${control.HoverAppearance.IsEmpty ? '' : '&:hover { ' + control.HoverAppearance.ToString() + ' }'}
@@ -107,9 +109,9 @@ function VStackRenderer({ control }: IControlProperties) {
                             return null;
                         }
 
-                        if (control.vp_Spacing) {
+                       /*  if (control.vp_Spacing) {
                             view.Appearance.MarginRight = control.vp_Spacing;
-                        }
+                        } */
                         return view.render();
                     })
                 }
@@ -132,9 +134,9 @@ function VStackRenderer({ control }: IControlProperties) {
                                 return null;
                             }
 
-                            if (control.vp_Spacing) {
+                           /*  if (control.vp_Spacing) {
                                 view.Appearance.MarginBottom = control.vp_Spacing;
-                            }
+                            } */
 
                             return (
                                 <SortableItem id={index} view={view}></SortableItem>
@@ -154,9 +156,9 @@ function VStackRenderer({ control }: IControlProperties) {
                             return null;
                         }
 
-                        if (control.vp_Spacing) {
+                      /*   if (control.vp_Spacing) {
                             view.Appearance.MarginBottom = control.vp_Spacing;
-                        }
+                        } */
 
                         return view.render();
                     })
