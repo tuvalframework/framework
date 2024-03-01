@@ -253,6 +253,15 @@ export class UIView {
 
     protected onScrollInternal(e: any): void {}
 
+     /** @internal */
+     @ViewProperty((): void => { })
+     public vp_OnKeyDown: Function;
+ 
+     public onKeyDown(value: Function) {
+         this.vp_OnKeyDown = value;
+         return this;
+     }
+
     //-------------------------
 
     /** @internal */
@@ -2699,6 +2708,12 @@ export class UIView {
             this.onDragLeaveInternal(e);
             this.vp_OnDragLeave(e);
         } : void 0;
+
+        events['onKeyDown'] = is.function(this.vp_OnKeyDown) ? (e) => {
+            //this.onClickInternal(e);
+            this.vp_OnKeyDown(e);
+        } : void 0;
+
         return events;
     }
 

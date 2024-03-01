@@ -69,8 +69,8 @@ function DataTableRenderer({ control }: { control: DataTableClass }) {
             scrollable
             scrollHeight="flex"
             editMode={control.vp_EditMode}
-            paginator rows={20}
-            rowsPerPageOptions={[20, 50, 100]}
+          //  paginator rows={20}
+           // rowsPerPageOptions={[20, 50, 100]}
             pt={{ ...control.vp_DataTablePT }}>
             {
                 control.vp_Columns.map(column =>

@@ -15,7 +15,7 @@ export class PopupButtonClass extends UIView {
       /** @internal */
       @ViewProperty() vp_Open: boolean;
 
-      /** @internal */
+    
       public open(value: boolean) {
           this.vp_Open = value;
           return this;
