@@ -156,11 +156,6 @@ const CheckBoxFormView = (textData: any) => {
     )
 }
 
-
-
-
-
-
 const ColumnFormView = (columnInfo: any, fieldMap) => {
 
     const views = [];

@@ -67,7 +67,7 @@ function DataTableRenderer({ control }: { control: DataTableClass }) {
             tableStyle={{ minWidth: '50rem' }}
             showGridlines
             scrollable
-            scrollHeight="flex"
+            //scrollHeight="flex"
             editMode={control.vp_EditMode}
           //  paginator rows={20}
            // rowsPerPageOptions={[20, 50, 100]}
