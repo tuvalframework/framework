@@ -98,7 +98,7 @@ function PopupButtonRenderer({ control }: IControlProperties) {
             </DialogContentContainer>}
             //@ts-ignore
             showTrigger={showTrigger}
-            hideTrigger={[Dialog.hideShowTriggers.CLICK_OUTSIDE/* ,Dialog.hideShowTriggers.CONTENT_CLICK */]}
+            hideTrigger={[/* Dialog.hideShowTriggers.CLICK_OUTSIDE *//* ,Dialog.hideShowTriggers.CONTENT_CLICK */]}
             //@ts-ignore
             animationType={'expand'}
             //@ts-ignore

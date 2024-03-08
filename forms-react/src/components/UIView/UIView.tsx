@@ -320,6 +320,15 @@ export class UIView {
         return this;
     }
 
+      /** @internal */
+      @ViewProperty()
+      public vp_Style: string;
+  
+      public style(value: string) {
+          this.vp_Style = value;
+          return this;
+      }
+
     public ForceUpdate() { }
 
     public width(): this;

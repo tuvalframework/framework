@@ -62,6 +62,7 @@ function VStackRenderer({ control }: IControlProperties) {
     ${control.AfterAppearance.IsEmpty ? '' : '&:after { ' + control.AfterAppearance.ToString() + ' }'}
 `;
 
+    const className2 = control.vp_Style ? css(control.vp_Style) : '';
 
     const events = {};
     events['onClick'] = is.function(control.vp_OnClick) ? (e) => control.vp_OnClick(e) : void 0;
@@ -102,16 +103,16 @@ function VStackRenderer({ control }: IControlProperties) {
 
 
         return (
-            <motion.div ref={control.vp_Ref} className={className} {...control.GetEventsObject()} {...elementProperties}>
+            <motion.div ref={control.vp_Ref} className={`${className} ${className2}`} {...control.GetEventsObject()} {...elementProperties}>
                 {
                     is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView) => {
                         if (view == null) {
                             return null;
                         }
 
-                       /*  if (control.vp_Spacing) {
-                            view.Appearance.MarginRight = control.vp_Spacing;
-                        } */
+                        /*  if (control.vp_Spacing) {
+                             view.Appearance.MarginRight = control.vp_Spacing;
+                         } */
                         return view.render();
                     })
                 }
@@ -126,7 +127,7 @@ function VStackRenderer({ control }: IControlProperties) {
 
     if (control.vp_DragableItems) {
         finalComponent = (
-            <div ref={control.vp_Ref} className={className} {...control.GetEventsObject()} draggable={control.vp_Draggable}>
+            <div ref={control.vp_Ref} className={`${className} ${className2}`} {...control.GetEventsObject()} draggable={control.vp_Draggable}>
                 <SortableContext items={control.vp_Chidren.map((item, index) => ({ id: index }))}>
                     {
                         is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView, index) => {
@@ -134,9 +135,9 @@ function VStackRenderer({ control }: IControlProperties) {
                                 return null;
                             }
 
-                           /*  if (control.vp_Spacing) {
-                                view.Appearance.MarginBottom = control.vp_Spacing;
-                            } */
+                            /*  if (control.vp_Spacing) {
+                                 view.Appearance.MarginBottom = control.vp_Spacing;
+                             } */
 
                             return (
                                 <SortableItem id={index} view={view}></SortableItem>
@@ -148,7 +149,7 @@ function VStackRenderer({ control }: IControlProperties) {
         )
     } else {
         finalComponent = (
-            <div ref={control.vp_Ref} className={className} {...control.GetEventsObject()} draggable={control.vp_Draggable}>
+            <div ref={control.vp_Ref} className={`${className} ${className2}`} {...control.GetEventsObject()} draggable={control.vp_Draggable}>
 
                 {
                     is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView) => {
@@ -156,9 +157,9 @@ function VStackRenderer({ control }: IControlProperties) {
                             return null;
                         }
 
-                      /*   if (control.vp_Spacing) {
-                            view.Appearance.MarginBottom = control.vp_Spacing;
-                        } */
+                        /*   if (control.vp_Spacing) {
+                              view.Appearance.MarginBottom = control.vp_Spacing;
+                          } */
 
                         return view.render();
                     })

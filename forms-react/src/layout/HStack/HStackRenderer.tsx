@@ -37,6 +37,10 @@ function HStackRenderer({ control }: IControlProperties) {
      }
 `;
 
+     const className2 = control.vp_Style ? css(control.vp_Style) : '';
+
+
+
     if (!control.BeforeAppearance.IsEmpty) {
         console.log(control.BeforeAppearance.ToString())
     }
@@ -80,7 +84,7 @@ function HStackRenderer({ control }: IControlProperties) {
 
 
         return (
-            <motion.div ref={ref/* control.vp_Ref */} className={className} {...control.GetEventsObject()} {...elementProperties}>
+            <motion.div ref={ref/* control.vp_Ref */} className={`${className} ${className2}`} {...control.GetEventsObject()} {...elementProperties}>
                 {
                     is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView) => {
                         if (!(view instanceof UIView)) {
@@ -112,7 +116,7 @@ function HStackRenderer({ control }: IControlProperties) {
 
 
     const finalComponent = (
-        <div ref={ref/* control.vp_Ref */} className={className} {...control.GetEventsObject()} draggable={control.vp_Draggable}>
+        <div ref={ref/* control.vp_Ref */} className={`${className} ${className2}`} {...control.GetEventsObject()} draggable={control.vp_Draggable}>
             {
                 is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView, index) => {
                     try {
