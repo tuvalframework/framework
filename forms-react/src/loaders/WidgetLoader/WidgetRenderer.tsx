@@ -106,7 +106,7 @@ function WidgetRenderer({ control }: IControlProperties) {
             </Fragment>
         } >
             <ErrorBoundary>
-                <WidgetLoader alwaysNew={control.vp_AlwaysNew} widget={control.vp_qn} config={control.vp_Config} data={control.vp_Data} onSave={(content) => {
+                <WidgetLoader alwaysNew={control.vp_AlwaysNew} widget={control.vp_qn} type={control.vp_type} config={control.vp_Config} data={control.vp_Data} onSave={(content) => {
                 }}></WidgetLoader>
             </ErrorBoundary>
         </React.Suspense>

@@ -115,6 +115,19 @@ export class UIView {
         this.isInRenderProcess = false;
     }
 
+    public SetViewProperty(propertyName, value?: any): void/* PropertyDecorator */ {
+
+        if (this.propertyBag == null) {
+            this.propertyBag = {};
+        }
+
+        if (this.propertyBag[propertyName] !== value) {
+            this.propertyBag[propertyName] = value;
+            if (!this.silentMode) {
+                this.ForceUpdate()
+            }
+        }
+    }
 
 
     //-------------Events--------
@@ -127,7 +140,7 @@ export class UIView {
         return this;
     }
 
-    protected  onDragStartInternal(e: any): void {}
+    protected onDragStartInternal(e: any): void { }
 
     /** @internal */
     @ViewProperty((): void => { })
@@ -138,7 +151,7 @@ export class UIView {
         return this;
     }
 
-    protected onDragOverInternal(e: any): void {}
+    protected onDragOverInternal(e: any): void { }
 
     /** @internal */
     @ViewProperty((): void => { })
@@ -149,7 +162,7 @@ export class UIView {
         return this;
     }
 
-    protected onDropInternal(e: any): void {}
+    protected onDropInternal(e: any): void { }
 
 
     /** @internal */
@@ -161,7 +174,7 @@ export class UIView {
         return this;
     }
 
-    protected onDragEnterInternal(e: any): void {}
+    protected onDragEnterInternal(e: any): void { }
 
     /** @internal */
     @ViewProperty((): void => { })
@@ -172,7 +185,7 @@ export class UIView {
         return this;
     }
 
-    protected  onDragLeaveInternal(e: any): void {}
+    protected onDragLeaveInternal(e: any): void { }
 
     /** @internal */
     @ViewProperty((): void => { })
@@ -183,18 +196,18 @@ export class UIView {
         return this;
     }
 
-     /** @internal */
-     @ViewProperty((): void => { })
-     public vp_OnPointerDown: Function;
- 
-     public onPointerDown(value: Function) {
-         this.vp_OnPointerDown = value;
-         return this;
-     }
+    /** @internal */
+    @ViewProperty((): void => { })
+    public vp_OnPointerDown: Function;
 
-    
+    public onPointerDown(value: Function) {
+        this.vp_OnPointerDown = value;
+        return this;
+    }
 
-    protected onClickInternal(e: any): void {}
+
+
+    protected onClickInternal(e: any): void { }
 
     /** @internal */
     @ViewProperty((): void => { })
@@ -205,7 +218,7 @@ export class UIView {
         return this;
     }
 
-    protected onMouseDownInternal(e: any): void {}
+    protected onMouseDownInternal(e: any): void { }
 
     /** @internal */
     @ViewProperty((): void => { })
@@ -216,7 +229,7 @@ export class UIView {
         return this;
     }
 
-    protected onFocusInternal(e: any): void {}
+    protected onFocusInternal(e: any): void { }
 
     /** @internal */
     @ViewProperty((): void => { })
@@ -227,7 +240,7 @@ export class UIView {
         return this;
     }
 
-    protected onFocusOutInternal(e: any): void {}
+    protected onFocusOutInternal(e: any): void { }
 
 
 
@@ -240,7 +253,7 @@ export class UIView {
         return this;
     }
 
-    protected onBlurInternal(e: any): void {}
+    protected onBlurInternal(e: any): void { }
 
     /** @internal */
     @ViewProperty((): void => { })
@@ -251,16 +264,16 @@ export class UIView {
         return this;
     }
 
-    protected onScrollInternal(e: any): void {}
+    protected onScrollInternal(e: any): void { }
 
-     /** @internal */
-     @ViewProperty((): void => { })
-     public vp_OnKeyDown: Function;
- 
-     public onKeyDown(value: Function) {
-         this.vp_OnKeyDown = value;
-         return this;
-     }
+    /** @internal */
+    @ViewProperty((): void => { })
+    public vp_OnKeyDown: Function;
+
+    public onKeyDown(value: Function) {
+        this.vp_OnKeyDown = value;
+        return this;
+    }
 
     //-------------------------
 
@@ -298,7 +311,7 @@ export class UIView {
         return this;
     }
 
-  
+
 
     public visibility(value: string): this {
         this.Appearance.Visibility = value
@@ -320,14 +333,14 @@ export class UIView {
         return this;
     }
 
-      /** @internal */
-      @ViewProperty()
-      public vp_Style: string;
-  
-      public style(value: string) {
-          this.vp_Style = value;
-          return this;
-      }
+    /** @internal */
+    @ViewProperty()
+    public vp_Style: string;
+
+    public style(value: string) {
+        this.vp_Style = value;
+        return this;
+    }
 
     public ForceUpdate() { }
 
@@ -1396,7 +1409,7 @@ export class UIView {
 
     public fontSmoothing(value: string): this;
     public fontSmoothing(...args: any[]): this {
-        if (args.length === 1 ) {
+        if (args.length === 1) {
             const value = args[0];
             this.Appearance.StylePropertyBag['-webkit-font-smoothing'] = value;
             this.Appearance.StylePropertyBag['-moz-osx-font-smoothing'] = value;
@@ -1629,8 +1642,8 @@ export class UIView {
             const value: int = args[0];
             this.Appearance.BorderRadius = `${value}px`;
             return this;
-        }else if (args.length === 1 && typeof args[0] === 'object') {
-             const styleAttribute: StyleAttribute = args[0];
+        } else if (args.length === 1 && typeof args[0] === 'object') {
+            const styleAttribute: StyleAttribute = args[0];
             if (styleAttribute.default != null) {
                 this.Appearance.BorderRadius = styleAttribute.default instanceof ColorClass ? styleAttribute.default.color : styleAttribute.default;
             }
@@ -1666,7 +1679,7 @@ export class UIView {
             this.Appearance.PointerEvents = value;
             return this;
         } else if (args.length === 1 && typeof args[0] === 'object') {
-             const styleAttribute: StyleAttribute = args[0];
+            const styleAttribute: StyleAttribute = args[0];
             if (styleAttribute.default != null) {
                 this.Appearance.PointerEvents = styleAttribute.default instanceof ColorClass ? styleAttribute.default.color : styleAttribute.default;
             }

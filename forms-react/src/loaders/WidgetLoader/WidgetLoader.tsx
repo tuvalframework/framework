@@ -7,11 +7,16 @@ const WidgetCache = {}
 const LoadingWidgets = {}
 export const Paths = {}
 
-export const WidgetLoader = ({ alwaysNew, widget, config, data, onSave }) => {
+export const WidgetLoader = ({ alwaysNew, widget, type, config, data, onSave }) => {
 
     const controllerPromise = new Promise((resolve, reject) => {
         if (WidgetCache[widget]) {
-            resolve(WidgetCache[widget]);
+            if (type == null) {
+                resolve(WidgetCache[widget]);
+            } else {
+                resolve(WidgetCache[widget][type]);
+            }
+
         } else if (LoadingWidgets[widget]) {
             LoadingWidgets[widget].push(resolve);
         }
@@ -30,7 +35,11 @@ export const WidgetLoader = ({ alwaysNew, widget, config, data, onSave }) => {
                     WidgetCache[widget] = controller;
                     LoadingWidgets[widget].forEach(resolve => resolve(controller));
                     delete LoadingWidgets[widget];
-                    resolve(controller);
+                    if (type == null) {
+                        resolve(controller);
+                    } else {
+                        resolve(controller[type]);
+                    }
                 } else {
 
                 }

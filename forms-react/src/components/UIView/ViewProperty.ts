@@ -24,3 +24,4 @@ export function ViewProperty(defaultValue?: any): any/* PropertyDecorator */ {
         Object.defineProperty(target, key, eventDescriptor);
     };
 }
+

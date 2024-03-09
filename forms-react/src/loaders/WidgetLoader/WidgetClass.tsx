@@ -46,6 +46,14 @@ export class WidgetClass extends UIView {
          return this;
      }
 
+     /** @internal */
+     @ViewProperty() vp_type: string;
+     public type(value: string): this {
+         this.vp_type = value;
+         return this;
+     }
+
+
      
 
     public constructor() {

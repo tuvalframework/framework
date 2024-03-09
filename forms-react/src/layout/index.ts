@@ -1,5 +1,7 @@
 export * from './HStack/HStack';
+export * from './HStack/HStackClass';
 export * from './VStack/VStack';
+export * from './VStack/VStackClass';
 export * from './ZStack/ZStack';
 export * from './UIScene/UIScene';
 export * from './ScrollView/ScrollView';
