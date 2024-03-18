@@ -7,7 +7,7 @@ const iconNames = [
 
 export const SvgIcon = (iconName: string, color: string = 'gray', width: string = '16px', height: string = '16px') => (
     () =>
-        <svg style={{ color: color, width: width, height: height }}>
+        <svg style={{ color: color, width: width, height: height }} fill={color}>
             <use href={`/images/workbench_icons.svg#${iconName}`}></use>
         </svg>
 

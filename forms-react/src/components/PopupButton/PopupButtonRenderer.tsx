@@ -98,13 +98,13 @@ function PopupButtonRenderer({ control }: IControlProperties) {
             </DialogContentContainer>}
             //@ts-ignore
             showTrigger={showTrigger}
-            hideTrigger={[/* Dialog.hideShowTriggers.CLICK_OUTSIDE *//* ,Dialog.hideShowTriggers.CONTENT_CLICK */]}
+            hideTrigger={[ Dialog.hideShowTriggers.CLICK_OUTSIDE /* ,Dialog.hideShowTriggers.CONTENT_CLICK */]}
             //@ts-ignore
             animationType={'expand'}
             //@ts-ignore
             position={control.vp_DialogPosition}
             //@ts-ignore
-            // moveBy={control.vp_DialogOffset}
+            moveBy={control.vp_DialogOffset}
             // startingEdge={"bottom"}
             useDerivedStateFromProps={true}
             onDialogDidShow={onDialogDidShow}
