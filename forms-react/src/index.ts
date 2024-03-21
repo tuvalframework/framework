@@ -50,13 +50,25 @@ export * from './UIAppearance'
 //--------------------
 import { useParams as _useParams} from 'react-router-dom';
 
+function getSelected(param: string) {
+    const regex = /\[(.*?)\]/;
+    const match = param.match(regex);
+
+    if (match && match[1]) {
+        return match[1];
+    } else {
+        return null;
+    }
+}
+
 export function useParams() {
     const params = _useParams();
     const newParams = {};
     for (let key in params) {
         const splitted = params[key].split('-');
         if (splitted.length > 1) {
-            newParams[key] = splitted[splitted.length - 1];
+            const param = getSelected(splitted[splitted.length - 1]) ?? splitted[splitted.length - 1];
+            newParams[key] = param;
         } else {
             newParams[key] = params[key];
         }
