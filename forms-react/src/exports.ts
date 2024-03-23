@@ -16,10 +16,12 @@ if (is.workerContext()) {
 /// #endif
 
 import React from 'react'
+import _ReactDOM from 'react-dom';
 import ReactDOM from 'react-dom/client';
 
 globalObject['tuval$react'] = React;
 globalObject['tuval$react$dom'] = ReactDOM;
+globalObject['tuval$react$_dom'] = _ReactDOM;
 
 globalObject['tuval$forms'] = forms;
 
