@@ -96,11 +96,12 @@ function PopupButtonRenderer({ control }: IControlProperties) {
                 type={DialogType.POPOVER}>
                 <Content control={control}></Content>
             </DialogContentContainer>}
+            showDelay={30}
             //@ts-ignore
             showTrigger={showTrigger}
             hideTrigger={[ Dialog.hideShowTriggers.CLICK_OUTSIDE /* ,Dialog.hideShowTriggers.CONTENT_CLICK */]}
             //@ts-ignore
-            animationType={'expand'}
+            animationType={'opacity-and-slide'}
             //@ts-ignore
             position={control.vp_DialogPosition}
             //@ts-ignore
