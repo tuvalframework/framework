@@ -68,11 +68,12 @@ export function SortableList<T extends BaseItem>({
       onDragStart={({ active }) => {
         setActive(active);
       }}
+      
       onDragEnd={({ active, over }) => {
         if (over && active.id !== over?.id) {
           const activeIndex = items.findIndex(({ id }) => id === active.id);
           const overIndex = items.findIndex(({ id }) => id === over.id);
-
+       
           onChange(arrayMove(items, activeIndex, overIndex));
         }
         setActive(null);
