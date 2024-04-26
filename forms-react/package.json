@@ -184,6 +184,7 @@
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-sortable-hoc": "^2.0.0",
-        "trackjs": "^3.10.1"
+        "trackjs": "^3.10.1",
+        "usehooks-ts": "^3.1.0"
     }
 }

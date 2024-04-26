@@ -7,7 +7,7 @@ export * from './DeleteContext'
 export * from './OptionsContext'
 export * from './ConfigContext'
 
-export * from 'ra-core'
+
 
 export {fetchUtils} from 'ra-core'
 

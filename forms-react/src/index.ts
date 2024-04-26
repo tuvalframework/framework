@@ -94,6 +94,7 @@ export { confirmDialog } from 'primereact/confirmdialog';
 
 export {dayjs} from './dayjs'
 
+export * from 'usehooks-ts'
 //-------------------
 
 export * from './data'
@@ -108,6 +109,5 @@ export * from './If'
 export * from './IconLibrary'
 export * from './RealmHttpClient'
 export * from './utils'
-export * from './hooks/hooks'
 export * from './queryParams'
 export * from './bios'
