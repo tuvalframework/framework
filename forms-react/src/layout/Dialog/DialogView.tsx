@@ -29,7 +29,7 @@ class DialogController extends UIFormController {
             flex-direction: column;
             pointer-events: auto;
             position: relative;
-            border-radius: 15px;
+             border-radius: 5px; 
             /* border-radius: 12px; */
             border: 1px solid white !important;
             /* outline: rgba(120, 120, 120, 10%) solid 1px; */
