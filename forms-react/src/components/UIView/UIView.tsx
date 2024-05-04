@@ -8,7 +8,7 @@ import { AlignmentType, cBottom, cBottomLeading, cBottomTrailing, cCenter, cHori
 import { css } from "@emotion/css";
 import { KeyFrameCollection } from './KeyFrameCollection';
 
-const DefaultPaddingValue = '1rem';
+const DefaultPaddingValue = '10px';
 const DefaultMarginValue = '5px';
 
 export class UIView {
