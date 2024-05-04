@@ -2,7 +2,7 @@ import { css } from "@emotion/css";
 import { is } from "@tuval/core";
 import { motion } from "framer-motion";
 import { Tooltip } from "monday-ui-react-core";
-import React, { Fragment } from "react";
+import React, { Fragment, ReactNode } from "react";
 import { UIView } from "../../components/UIView/UIView";
 import { VStackClass } from "./VStackClass";
 import { DndContext, useDraggable } from "@dnd-kit/core";
@@ -29,7 +29,9 @@ function SortableItem({ id, view }) {
 
     return (
         <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-            {view.render()}
+            {
+                view instanceof UIView ? view.render() : view
+            }
         </div>
     );
 }
@@ -105,7 +107,7 @@ function VStackRenderer({ control }: IControlProperties) {
         return (
             <motion.div ref={control.vp_Ref} className={`${className} ${className2}`} {...control.GetEventsObject()} {...elementProperties}>
                 {
-                    is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView) => {
+                    is.array(control.vp_Chidren) && control.vp_Chidren.map((view: (UIView | ReactNode)) => {
                         if (view == null) {
                             return null;
                         }
@@ -113,7 +115,12 @@ function VStackRenderer({ control }: IControlProperties) {
                         /*  if (control.vp_Spacing) {
                              view.Appearance.MarginRight = control.vp_Spacing;
                          } */
-                        return view.render();
+                        if (view instanceof UIView) {
+                            return view.render();
+                        } else {
+                            return view;
+                        }
+
                     })
                 }
             </motion.div>
@@ -130,8 +137,8 @@ function VStackRenderer({ control }: IControlProperties) {
             <div ref={control.vp_Ref} className={`${className} ${className2}`} {...control.GetEventsObject()} draggable={control.vp_Draggable}>
                 <SortableContext items={control.vp_Chidren.map((item, index) => ({ id: index }))}>
                     {
-                        is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView, index) => {
-                            if (view == null || !(view instanceof UIView)) {
+                        is.array(control.vp_Chidren) && control.vp_Chidren.map((view: (UIView | ReactNode), index) => {
+                            if (view == null) {
                                 return null;
                             }
 
@@ -152,8 +159,8 @@ function VStackRenderer({ control }: IControlProperties) {
             <div ref={control.vp_Ref} className={`${className} ${className2}`} {...control.GetEventsObject()} draggable={control.vp_Draggable}>
 
                 {
-                    is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView) => {
-                        if (view == null || !(view instanceof UIView)) {
+                    is.array(control.vp_Chidren) && control.vp_Chidren.map((view: (UIView | ReactNode)) => {
+                        if (view == null) {
                             return null;
                         }
 
@@ -161,7 +168,7 @@ function VStackRenderer({ control }: IControlProperties) {
                               view.Appearance.MarginBottom = control.vp_Spacing;
                           } */
 
-                        return view.render();
+                        return view instanceof UIView ? view.render() : view;
                     })
                 }
 

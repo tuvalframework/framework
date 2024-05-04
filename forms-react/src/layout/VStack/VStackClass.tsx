@@ -1,5 +1,5 @@
 import { foreach, int, is } from "@tuval/core";
-import React from "react";
+import React, { ReactNode } from "react";
 import { AlignmentType, cBottom, cBottomLeading, cBottomTrailing, cCenter, cLeading, cTop, cTopLeading, cTopTrailing, cTrailing } from "../../Constants";
 import { UIController } from "../../UIController";
 import { UIView } from "../../components/UIView/UIView";
@@ -25,9 +25,9 @@ export class VStackClass extends UIView {
     @ViewProperty() vp_Alignment: string;
 
     /** @internal */
-    @ViewProperty() vp_Chidren: UIView[];
+    @ViewProperty() vp_Chidren: (UIView | ReactNode)[];
 
-    public children(...value: UIView[]) {
+    public children(...value: (UIView | ReactNode)[]) {
         this.vp_Chidren = value;
         return this;
     }
