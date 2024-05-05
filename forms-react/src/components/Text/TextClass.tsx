@@ -109,7 +109,7 @@ export class TextClass extends UIView {
     }
 
     public render() {
-        return (<UIViewRenderer wrap={true} control={this} renderer={TextRenderer}></UIViewRenderer>)
+        return (<TextRenderer  control={this} ></TextRenderer>)
 
     }
 }
