@@ -59,9 +59,9 @@ export class TextClass extends UIView {
         this.Appearance.FontSize = 'inherit'
         //'var(--font-size)';
         // Sola yaslanmıyor
-        this.Appearance.Display = 'flex';
-        this.Appearance.AlignItems = 'inherit';
-        this.Appearance.JustifyContent = 'inherit';
+        this.Appearance.Display = 'inline';
+       // this.Appearance.AlignItems = 'inherit';
+       // this.Appearance.JustifyContent = 'inherit';
 
         this.MultilineTextAlignment = TextAlignment.center;
         this.RenderingType = RenderingTypes.Normal;
