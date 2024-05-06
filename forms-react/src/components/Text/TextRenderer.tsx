@@ -32,6 +32,11 @@ function TextRenderer({ control }: IControlProperties) {
 `;
 
     const style = {};
+    style['display'] = 'inline';
+    style['font-family'] = control.Appearance.FontFamily;
+    style['font-size'] = control.Appearance.FontSize;
+    style['font-weight'] = control.Appearance.FontWeight;
+    style['line-height'] = control.Appearance.LineHeight;
     /*   if (obj.RenderingType === RenderingTypes.Normal) {
           if (obj.MultilineTextAlignment === TextAlignment.center) {
               this.WriteStyleAttrVal('text-align', 'center');
@@ -76,7 +81,7 @@ function TextRenderer({ control }: IControlProperties) {
         }
 
         return (
-            <span className={className} style={style}>{control.vp_Text}</span>
+            <span style={style}>{control.vp_Text}</span>
         )
 
     } else if (control.RenderingType === RenderingTypes.Markdown) {
