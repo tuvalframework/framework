@@ -2,6 +2,7 @@ import { is } from "@tuval/core";
 import * as MarkdownIt from "markdown-it";
 import React from "react";
 import { RenderingTypes, TextAlignment, TextClass } from "./TextClass";
+import { css } from "@emotion/css";
 
 export interface IControlProperties {
     control: TextClass
@@ -16,6 +17,19 @@ const md = new MarkdownIt({
 
 
 function TextRenderer({ control }: IControlProperties) {
+
+    const className = css`
+    ${control.Appearance.ToString()}
+    ${control.HoverAppearance.IsEmpty ? '' : '&:hover { ' + control.HoverAppearance.ToString() + ' }'}
+    ${control.ActiveAppearance.IsEmpty ? '' : '&:active { ' + control.ActiveAppearance.ToString() + ' }'}
+    ${control.FocusAppearance.IsEmpty ? '' : '&:focus { ' + control.FocusAppearance.ToString() + ' }'}
+    &:before {
+        ${control.BeforeAppearance.ToString()}
+     }
+    &:after {
+        ${control.AfterAppearance.ToString()}
+     }
+`;
 
     const style = {};
     /*   if (obj.RenderingType === RenderingTypes.Normal) {
@@ -35,6 +49,7 @@ function TextRenderer({ control }: IControlProperties) {
           this.WriteStyleAttrVal('white-space', obj.WhiteSpace);
           this.WriteTextBody(obj.Text);
       } */
+
 
     if (control.RenderingType === RenderingTypes.Normal) {
         if (control.MultilineTextAlignment === TextAlignment.center) {
@@ -61,7 +76,7 @@ function TextRenderer({ control }: IControlProperties) {
         }
 
         return (
-            <span style={style}>{control.vp_Text}</span>
+            <span className={className} style={style}>{control.vp_Text}</span>
         )
 
     } else if (control.RenderingType === RenderingTypes.Markdown) {
