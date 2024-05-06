@@ -33,10 +33,11 @@ function TextRenderer({ control }: IControlProperties) {
 
     const style = {};
     style['display'] = 'inline';
-    style['font-family'] = control.Appearance.FontFamily;
-    style['font-size'] = control.Appearance.FontSize;
-    style['font-weight'] = control.Appearance.FontWeight;
-    style['line-height'] = control.Appearance.LineHeight;
+    style['fontFamily'] = control.Appearance.FontFamily;
+    style['fontSize'] = control.Appearance.FontSize;
+    style['fontWeight'] = control.Appearance.FontWeight;
+    style['lineHeight'] = control.Appearance.LineHeight;
+    style['color'] = control.Appearance.Color;
     /*   if (obj.RenderingType === RenderingTypes.Normal) {
           if (obj.MultilineTextAlignment === TextAlignment.center) {
               this.WriteStyleAttrVal('text-align', 'center');
