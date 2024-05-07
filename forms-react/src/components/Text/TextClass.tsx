@@ -66,7 +66,7 @@ export class TextClass extends UIView {
         this.MultilineTextAlignment = TextAlignment.center;
         this.RenderingType = RenderingTypes.Normal;
 
-       // this.fontSize('var(--font-size)');
+        this.fontSize('var(--font-size)');
         this.multilineTextAlignment(TextAlignment.leading);
         this.SearchWords = [];
     }
