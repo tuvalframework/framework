@@ -3,9 +3,9 @@ import React from "react";
 import usePromise from "react-promise-suspense";
 import { WidgetComponent } from "./WidgetComponent";
 
-const WidgetCache = {}
-const LoadingWidgets = {}
-export const Paths = {}
+export const WidgetCache = {}
+export const LoadingWidgets = {}
+ 
 
 export const WidgetLoader = ({ alwaysNew, widget, type, config, data, onSave }) => {
 
