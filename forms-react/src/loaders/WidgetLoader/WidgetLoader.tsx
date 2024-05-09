@@ -5,21 +5,15 @@ import { WidgetComponent } from "./WidgetComponent";
 
 export const WidgetCache = {}
 export const LoadingWidgets = {}
- 
+
 
 export const WidgetLoader = ({ alwaysNew, widget, type, config, data, onSave }) => {
 
-    var controllerPromise = function (widget, type) {
+    var controllerPromise = function (widget) {
         return new Promise(function (resolve, reject) {
 
             if (WidgetCache[widget]) {
-               
-                if (type == null) {
-                    resolve(WidgetCache[widget]);
-                } else {
-                    resolve(WidgetCache[widget][type]);
-                }
-
+                resolve(WidgetCache[widget]);
             } else if (LoadingWidgets[widget]) {
                 LoadingWidgets[widget].push(resolve);
             }
@@ -38,11 +32,9 @@ export const WidgetLoader = ({ alwaysNew, widget, type, config, data, onSave }) 
                         WidgetCache[widget] = controller;
                         LoadingWidgets[widget].forEach(resolve => resolve(controller));
                         delete LoadingWidgets[widget];
-                        if (type == null) {
-                            resolve(controller);
-                        } else {
-                            resolve(controller[type]);
-                        }
+
+                        resolve(controller);
+
                     } else {
 
                     }
@@ -59,9 +51,12 @@ export const WidgetLoader = ({ alwaysNew, widget, type, config, data, onSave }) 
 
 
 
-    const fetchController = (widget, type) => controllerPromise(widget, type);
+    const fetchController = (widget, type) => controllerPromise(widget);
 
-    const contoller: any = usePromise(fetchController, [widget, type]);
- 
+    let contoller: any = usePromise(fetchController, [widget, type]);
+    if (type != null) {
+        contoller = contoller[type];
+    }
+
     return (<WidgetComponent name={widget} controller={alwaysNew ? class extends contoller { } : contoller} config={config} data={data} onSave={onSave}></WidgetComponent>)
 }
