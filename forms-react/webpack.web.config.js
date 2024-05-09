@@ -37,8 +37,8 @@ const opts = {
 
 const umdConfig = {
     target: 'web',
-    mode: 'development',
-    devtool: 'source-map',
+    //mode: 'development',
+    //devtool: 'source-map',
     entry: './src/index.ts',
     externals: {
         '@tuval/core': 'tuval$core',
