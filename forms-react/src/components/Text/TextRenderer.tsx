@@ -31,7 +31,8 @@ function TextRenderer({ control }: IControlProperties) {
      }
 `;
 
-    const style = {};
+    const style = control.Appearance.GetStyleObject();
+    ;
     style['display'] = 'inline';
     style['fontFamily'] = control.Appearance.FontFamily;
     style['fontSize'] = control.Appearance.FontSize;
