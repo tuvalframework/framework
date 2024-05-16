@@ -140,6 +140,14 @@ export class UIView {
         return this;
     }
 
+    @ViewProperty((): void => { })
+    public vp_OnDragEnd: Function;
+
+    public onDragEnd(value: Function) {
+        this.vp_OnDragEnd = value;
+        return this;
+    }
+
     protected onDragStartInternal(e: any): void { }
 
     /** @internal */
@@ -2709,6 +2717,11 @@ export class UIView {
         events['onDragStart'] = is.function(this.vp_OnDragStart) ? (e) => {
             this.onDragStartInternal(e);
             this.vp_OnDragStart(e);
+        } : void 0;
+
+        events['onDragEnd'] = is.function(this.vp_OnDragEnd) ? (e) => {
+           // this.onDragStartInternal(e);
+            this.vp_OnDragEnd(e);
         } : void 0;
 
         events['onDragOver'] = is.function(this.vp_OnDragOver) ? (e) => {

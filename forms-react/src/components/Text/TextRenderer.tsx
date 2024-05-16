@@ -31,14 +31,16 @@ function TextRenderer({ control }: IControlProperties) {
      }
 `;
 
-    const style = control.Appearance.GetStyleObject();
-    ;
-    style['display'] = 'inline';
-    style['fontFamily'] = control.Appearance.FontFamily;
-    style['fontSize'] = control.Appearance.FontSize;
-    style['fontWeight'] = control.Appearance.FontWeight;
-    style['lineHeight'] = control.Appearance.LineHeight;
-    style['color'] = control.Appearance.Color;
+    const style = {...control.Appearance.GetStyleObject()};
+    
+   
+        style['display'] = 'inline';
+        style['fontFamily'] = control.Appearance.FontFamily;
+        style['fontSize'] = control.Appearance.FontSize;
+        style['fontWeight'] = control.Appearance.FontWeight;
+        style['lineHeight'] = control.Appearance.LineHeight;
+        style['color'] = control.Appearance.Color;
+   
     /*   if (obj.RenderingType === RenderingTypes.Normal) {
           if (obj.MultilineTextAlignment === TextAlignment.center) {
               this.WriteStyleAttrVal('text-align', 'center');
