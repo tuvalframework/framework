@@ -54,15 +54,16 @@ function Draggable({ view }) {
 function VStackRenderer({ control }: IControlProperties) {
 
     control.Appearance.Gap = control.vp_Spacing;
+    
 
-    const className = css`
+    const className = control.vp_ClassName == null ? css`
     ${control.Appearance.ToString()}
     ${control.HoverAppearance.IsEmpty ? '' : '&:hover { ' + control.HoverAppearance.ToString() + ' }'}
     ${control.ActiveAppearance.IsEmpty ? '' : '&:active { ' + control.ActiveAppearance.ToString() + ' }'}
     ${control.FocusAppearance.IsEmpty ? '' : '&:focus { ' + control.FocusAppearance.ToString() + ' }'}
     ${control.BeforeAppearance.IsEmpty ? '' : '&:before { ' + control.BeforeAppearance.ToString() + ' }'}
     ${control.AfterAppearance.IsEmpty ? '' : '&:after { ' + control.AfterAppearance.ToString() + ' }'}
-`;
+` : control.vp_ClassName;
 
     const className2 = control.vp_Style ? css(control.vp_Style) : '';
 

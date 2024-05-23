@@ -55,6 +55,12 @@ export class UIView {
         return this;
     }
 
+    @ViewProperty() vp_ClassName: string;
+    public className(value: string): this {
+        this.vp_ClassName = value;
+        return this;
+    }
+
 
 
 
