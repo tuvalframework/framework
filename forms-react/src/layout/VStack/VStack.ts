@@ -11,7 +11,7 @@ interface VStackParams {
     spacing?: int;
 }
 
-type FunctionVStack = (...views: UIView[]) => VStackClass;
+type FunctionVStack = (...views: (UIView | ReactNode)[]) => VStackClass;
 
 
 /* export function VStack(value: string): FunctionVStack; */
@@ -54,12 +54,12 @@ export function VStack(...args: any[]): FunctionVStack | VStackClass {
                  break;
          } */
 
-        return (...views: (UIView| ReactNode)[]) => {
-                return new VStackClass().children(...views).alignment(params.alignment).spacing(params.spacing)
+        return (...views: (UIView | ReactNode)[]) => {
+            return new VStackClass().children(...views).alignment(params.alignment).spacing(params.spacing)
         }
     } else {
 
-            return new VStackClass().children(...args);
+        return new VStackClass().children(...args);
 
     }
 }

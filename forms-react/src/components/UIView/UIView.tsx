@@ -148,7 +148,7 @@ export class UIView {
         return this;
     }
 
-    protected onDragStartInternal(e: any): void { }
+   // protected onDragStartInternal(e: any): void { }
 
     /** @internal */
     @ViewProperty((): void => { })
@@ -159,7 +159,7 @@ export class UIView {
         return this;
     }
 
-    protected onDragOverInternal(e: any): void { }
+   // protected onDragOverInternal(e: any): void { }
 
     /** @internal */
     @ViewProperty((): void => { })
@@ -182,7 +182,7 @@ export class UIView {
         return this;
     }
 
-    protected onDragEnterInternal(e: any): void { }
+   // protected onDragEnterInternal(e: any): void { }
 
     /** @internal */
     @ViewProperty((): void => { })
@@ -193,7 +193,7 @@ export class UIView {
         return this;
     }
 
-    protected onDragLeaveInternal(e: any): void { }
+   // protected onDragLeaveInternal(e: any): void { }
 
     /** @internal */
     @ViewProperty((): void => { })
@@ -2715,7 +2715,7 @@ export class UIView {
         } : void 0;
 
         events['onDragStart'] = is.function(this.vp_OnDragStart) ? (e) => {
-            this.onDragStartInternal(e);
+          //  this.onDragStartInternal(e);
             this.vp_OnDragStart(e);
         } : void 0;
 
@@ -2725,7 +2725,7 @@ export class UIView {
         } : void 0;
 
         events['onDragOver'] = is.function(this.vp_OnDragOver) ? (e) => {
-            this.onDragOverInternal(e);
+         //   this.onDragOverInternal(e);
             this.vp_OnDragOver(e);
         } : void 0;
 
@@ -2735,12 +2735,12 @@ export class UIView {
         } : void 0;
 
         events['onDragEnter'] = is.function(this.vp_OnDragEnter) ? (e) => {
-            this.onDragEnterInternal(e);
+           // this.onDragEnterInternal(e);
             this.vp_OnDragEnter(e);
         } : void 0;
 
         events['onDragLeave'] = is.function(this.vp_OnDragLeave) ? (e) => {
-            this.onDragLeaveInternal(e);
+           // this.onDragLeaveInternal(e);
             this.vp_OnDragLeave(e);
         } : void 0;
 

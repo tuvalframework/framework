@@ -9,14 +9,14 @@ interface ZStackParams {
     spacing?: int;
 }
 
-type FunctionVStack = (...views: UIView[]) => ZStackClass;
+type FunctionZStack = (...views: UIView[]) => ZStackClass;
 
 
 /* export function VStack(value: string): FunctionVStack; */
 export function ZStack(): ZStackClass;
 export function ZStack(...views: (UIView)[]): ZStackClass;
-export function ZStack(value: ZStackParams): FunctionVStack;
-export function ZStack(...args: any[]): FunctionVStack | ZStackClass {
+export function ZStack(value: ZStackParams): FunctionZStack;
+export function ZStack(...args: any[]): FunctionZStack | ZStackClass {
     if (args.length === 0) {
         return new ZStackClass();
     } else if (args.length === 1 && typeof args[0] === 'object' && args[0].constructor === Object && !(args[0] instanceof UIView)) {
