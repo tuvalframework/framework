@@ -1139,7 +1139,7 @@ export class AppearanceObject {
             const focusStyleObject = this.GetStyleObject();
             if (Object.keys(focusStyleObject).length > 0) {
                 for (let key in focusStyleObject) {
-                    sb.AppendLine(`${key}:${focusStyleObject[key]} !important;`);
+                    sb.AppendLine(`${key}:${focusStyleObject[key]};`);
                 }
 
             }

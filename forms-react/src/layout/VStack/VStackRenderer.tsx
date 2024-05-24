@@ -106,7 +106,7 @@ function VStackRenderer({ control }: IControlProperties) {
 
 
         return (
-            <motion.div ref={control.vp_Ref} className={` ${className2} ${control.vp_ClassName} ${className}`} {...control.GetEventsObject()} {...elementProperties}>
+            <motion.div ref={control.vp_Ref} className={`${className} ${control.vp_ClassName} ${className2}`} {...control.GetEventsObject()} {...elementProperties}>
                 {
                     is.array(control.vp_Chidren) && control.vp_Chidren.map((view: (UIView | ReactNode)) => {
                         if (view == null) {
@@ -135,7 +135,7 @@ function VStackRenderer({ control }: IControlProperties) {
 
     if (control.vp_DragableItems) {
         finalComponent = (
-            <div ref={control.vp_Ref} className={` ${className2} ${control.vp_ClassName} ${className}`} {...control.GetEventsObject()} draggable={control.vp_Draggable}>
+            <div ref={control.vp_Ref} className={`${className} ${control.vp_ClassName} ${className2}`} {...control.GetEventsObject()} draggable={control.vp_Draggable}>
                 <SortableContext items={control.vp_Chidren.map((item, index) => ({ id: index }))}>
                     {
                         is.array(control.vp_Chidren) && control.vp_Chidren.map((view: (UIView | ReactNode), index) => {
