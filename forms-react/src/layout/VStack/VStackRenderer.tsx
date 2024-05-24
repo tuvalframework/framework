@@ -56,14 +56,14 @@ function VStackRenderer({ control }: IControlProperties) {
     control.Appearance.Gap = control.vp_Spacing;
     
 
-    const className = control.vp_ClassName == null ? css`
+    const className =  css`
     ${control.Appearance.ToString()}
     ${control.HoverAppearance.IsEmpty ? '' : '&:hover { ' + control.HoverAppearance.ToString() + ' }'}
     ${control.ActiveAppearance.IsEmpty ? '' : '&:active { ' + control.ActiveAppearance.ToString() + ' }'}
     ${control.FocusAppearance.IsEmpty ? '' : '&:focus { ' + control.FocusAppearance.ToString() + ' }'}
     ${control.BeforeAppearance.IsEmpty ? '' : '&:before { ' + control.BeforeAppearance.ToString() + ' }'}
     ${control.AfterAppearance.IsEmpty ? '' : '&:after { ' + control.AfterAppearance.ToString() + ' }'}
-` : control.vp_ClassName;
+`;
 
     const className2 = control.vp_Style ? css(control.vp_Style) : '';
 
@@ -106,7 +106,7 @@ function VStackRenderer({ control }: IControlProperties) {
 
 
         return (
-            <motion.div ref={control.vp_Ref} className={`${className} ${className2}`} {...control.GetEventsObject()} {...elementProperties}>
+            <motion.div ref={control.vp_Ref} className={` ${className2} ${control.vp_ClassName} ${className}`} {...control.GetEventsObject()} {...elementProperties}>
                 {
                     is.array(control.vp_Chidren) && control.vp_Chidren.map((view: (UIView | ReactNode)) => {
                         if (view == null) {
@@ -135,7 +135,7 @@ function VStackRenderer({ control }: IControlProperties) {
 
     if (control.vp_DragableItems) {
         finalComponent = (
-            <div ref={control.vp_Ref} className={`${className} ${className2}`} {...control.GetEventsObject()} draggable={control.vp_Draggable}>
+            <div ref={control.vp_Ref} className={` ${className2} ${control.vp_ClassName} ${className}`} {...control.GetEventsObject()} draggable={control.vp_Draggable}>
                 <SortableContext items={control.vp_Chidren.map((item, index) => ({ id: index }))}>
                     {
                         is.array(control.vp_Chidren) && control.vp_Chidren.map((view: (UIView | ReactNode), index) => {

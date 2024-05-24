@@ -25,7 +25,7 @@ function HStackRenderer({ control }: IControlProperties) {
 
     control.Appearance.Gap = control.vp_Spacing;
 
-    const className = control.vp_ClassName == null ? css`
+    const className = css`
     ${control.Appearance.ToString()}
     ${control.HoverAppearance.IsEmpty ? '' : '&:hover { ' + control.HoverAppearance.ToString() + ' }'}
     ${control.ActiveAppearance.IsEmpty ? '' : '&:active { ' + control.ActiveAppearance.ToString() + ' }'}
@@ -36,7 +36,7 @@ function HStackRenderer({ control }: IControlProperties) {
     &:after {
         ${control.AfterAppearance.ToString()}
      }
-` : control.vp_ClassName;
+`;
 
      const className2 = control.vp_Style ? css(control.vp_Style) : '';
 
@@ -85,7 +85,7 @@ function HStackRenderer({ control }: IControlProperties) {
 
 
         return (
-            <motion.div ref={ref/* control.vp_Ref */} className={`${className} ${className2}`} {...control.GetEventsObject()} {...elementProperties}>
+            <motion.div ref={ref/* control.vp_Ref */} className={` ${className2} ${control.vp_ClassName} ${className}`} {...control.GetEventsObject()} {...elementProperties}>
                 {
                     is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView) => {
                         if (!(view instanceof UIView)) {
@@ -117,7 +117,7 @@ function HStackRenderer({ control }: IControlProperties) {
 
 
     const finalComponent = (
-        <div ref={ref/* control.vp_Ref */} className={`${className} ${className2}`} {...control.GetEventsObject()} draggable={control.vp_Draggable}>
+        <div ref={ref/* control.vp_Ref */} className={` ${className2} ${control.vp_ClassName} ${className}`} {...control.GetEventsObject()} draggable={control.vp_Draggable}>
             {
                 is.array(control.vp_Chidren) && control.vp_Chidren.map((view: UIView, index) => {
                     try {
