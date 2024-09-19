@@ -332,6 +332,7 @@ export const Icons = {
     Microphone: Microphone,
     Minimize: Minimize,
     Mirror: Mirror,
+    
     Mobile: Mobile,
     Moon: Moon,
     MoreActions: MoreActions,

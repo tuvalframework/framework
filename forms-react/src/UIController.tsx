@@ -69,6 +69,7 @@ export class UIController extends React.Component<any, any> {
     }
 
     protected LoadViewInternal(): UIView {
+        this.OnControllerLoaded();
         return this.LoadView();
     }
 
